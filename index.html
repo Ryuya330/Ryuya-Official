@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>りゅうや × 紫苑 - Cyberspace Nexus</title>
+    
+    <!-- External Libraries & Fonts -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* ==============================================
+        CSS STYLES
+        - Added styles for the page transition effect.
+        ==============================================
+        */
+
+        /* 基本スタイル */
+        :root {
+            --primary-color: #8139f5;
+            --secondary-color: #00cde9;
+            --accent-color: #ff00ff;
+            --text-color: #e0e0e0;
+            --bg-color: #000;
+            --bg-glass: rgba(18, 18, 18, 0.8);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            overflow-x: hidden;
+            background-color: var(--bg-color);
+            position: relative;
+        }
+
+        /* ヘッダー */
+        header {
+            background-color: var(--bg-glass);
+            backdrop-filter: blur(10px);
+            padding: 15px 20px;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            border-bottom: 2px solid rgba(129, 57, 245, 0.5);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            box-sizing: border-box;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5em;
+            font-weight: bold;
+            text-shadow: 0 0 15px var(--primary-color), 0 0 30px var(--primary-color);
+            position: relative;
+            color: #fff;
+            transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.2s ease;
+            cursor: pointer;
+            letter-spacing: 2px;
+        }
+
+        .logo:hover {
+            color: var(--primary-color);
+            text-shadow: 0 0 20px var(--primary-color), 0 0 40px var(--primary-color), 0 0 60px var(--primary-color);
+            transform: scale(1.05);
+        }
+        
+        .main-nav {
+            display: block;
+        }
+
+        .main-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        .main-nav li {
+            margin: 0 20px;
+        }
+
+        .main-nav a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 1.2em;
+            padding: 8px 0;
+            position: relative;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+        }
+
+        .main-nav a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 4px;
+            background-color: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+        
+        .main-nav a.active::after,
+        .main-nav a:hover::after {
+            width: 100%;
+        }
+        
+        .main-nav a.active,
+        .main-nav a:hover {
+            color: var(--secondary-color);
+            text-shadow: 0 0 10px var(--secondary-color);
+        }
+
+        .shion-name {
+            font-family: 'Major Mono Display', monospace;
+            font-size: 2em;
+            color: #e0e0e0;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+            letter-spacing: 1px;
+        }
+        
+        /* Hamburger Menu */
+        .hamburger-btn {
+            display: none;
+            width: 30px;
+            height: 25px;
+            position: relative;
+            cursor: pointer;
+            z-index: 1002;
+            background: none;
+            border: none;
+        }
+        .hamburger-btn span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: var(--text-color);
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+        .hamburger-btn span:nth-child(1) { top: 0px; }
+        .hamburger-btn span:nth-child(2) { top: 10px; }
+        .hamburger-btn span:nth-child(3) { top: 20px; }
+
+        .hamburger-btn.is-active span:nth-child(1) { top: 10px; transform: rotate(135deg); }
+        .hamburger-btn.is-active span:nth-child(2) { opacity: 0; left: -30px; }
+        .hamburger-btn.is-active span:nth-child(3) { top: 10px; transform: rotate(-135deg); }
+
+        /* Mobile Navigation Panel */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 280px;
+            height: 100%;
+            background: rgba(10, 0, 20, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 1001;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            padding-top: 100px;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+        }
+        .mobile-nav.is-active {
+            transform: translateX(0);
+        }
+        .mobile-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .mobile-nav li {
+            width: 100%;
+            text-align: center;
+        }
+        .mobile-nav a {
+            display: block;
+            padding: 20px;
+            font-size: 1.5em;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .mobile-nav a:hover {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+
+        /* Page Transition Overlay */
+        #page-transition-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            pointer-events: none;
+            display: flex;
+        }
+        .transition-panel {
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), 
+                        repeating-linear-gradient(0deg, var(--primary-color) 0, var(--primary-color) 1px, transparent 1px, transparent 5px),
+                        repeating-linear-gradient(90deg, var(--secondary-color) 0, var(--secondary-color) 1px, transparent 1px, transparent 5px);
+            transition: transform 0.6s cubic-bezier(0.86, 0, 0.07, 1);
+        }
+        .transition-panel-left {
+            transform: translateX(-100%);
+        }
+        .transition-panel-right {
+            transform: translateX(100%);
+        }
+        #page-transition-overlay.is-active .transition-panel {
+            transform: translateX(0);
+        }
+
+        /* メインコンテンツ */
+        main {
+            padding: 20px;
+            padding-top: 120px; /* Header height + margin */
+            position: relative;
+            z-index: 5;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        /* SPA Page Content Styling */
+        .page-content { display: none; }
+        .page-content.is-active { display: block; animation: fadeInPage 0.8s ease-in-out 0.3s; animation-fill-mode: backwards; }
+        @keyframes fadeInPage { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .hero { text-align: center; padding: 120px 20px; background-color: rgba(0, 0, 0, 0.7); margin-bottom: 50px; border-radius: 15px; box-shadow: 0 0 30px rgba(129, 57, 245, 0.5); position: relative; overflow: hidden; }
+        .hero h1 { font-size: 4em; margin-bottom: 25px; color: #fff; text-shadow: 0 0 20px rgba(255, 255, 255, 0.9), 0 0 40px rgba(255, 255, 255, 0.6); letter-spacing: 3px; }
+        .hero p { font-size: 1.4em; line-height: 1.7; max-width: 900px; margin: 0 auto 40px; color: #e0e0e0; }
+
+        .button, .content-button { padding: 18px 35px; font-size: 1.3em; background-color: var(--secondary-color); color: #fff; border: none; border-radius: 8px; cursor: pointer; transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; position: relative; overflow: hidden; text-transform: uppercase; letter-spacing: 1px; }
+        .button:hover, .content-button:hover { background-color: #00ddff; transform: translateY(-5px); box-shadow: 0 12px 25px rgba(0, 188, 212, 0.5); }
+
+        .content { background-color: rgba(0, 0, 0, 0.8); padding: 50px; margin-bottom: 40px; border-radius: 12px; box-shadow: 0 0 25px rgba(129, 57, 245, 0.4); border: 1px solid rgba(129, 57, 245, 0.3); }
+        .content h2 { font-size: 3em; color: var(--primary-color); margin-bottom: 25px; border-bottom: 3px solid rgba(129, 57, 245, 0.6); padding-bottom: 15px; text-shadow: 0 0 15px rgba(129, 57, 245, 0.8); letter-spacing: 1.5px; }
+        .content p { font-size: 1.2em; line-height: 1.9; color: #c0c0c0; }
+
+        footer { background-color: var(--bg-glass); padding: 25px; text-align: center; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; border-top: 2px solid rgba(0, 200, 255, 0.5); box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.5); }
+        footer p { margin: 0; color: #aaa; font-size: 0.95em; }
+        footer nav ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; justify-content: center; }
+        footer nav li { margin: 0 12px; }
+        footer nav a { text-decoration: none; color: #aaa; transition: color 0.3s ease; cursor: pointer; }
+        footer nav a:hover { color: var(--secondary-color); }
+
+        #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -2; }
+        #opening-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #000; z-index: 9999; display: flex; justify-content: center; align-items: center; flex-direction: column; overflow: hidden; color: #0f0; transition: opacity 1s ease-out; }
+        #opening-text { font-family: 'Consolas', 'Monaco', monospace; font-size: 1.5em; color: #0f0; text-shadow: 0 0 8px rgba(0, 255, 0, 0.8); margin-bottom: 20px; opacity: 0; transition: opacity 0.5s; text-align: center; }
+        #start-button { padding: 20px 40px; font-size: 1.8em; background-color: var(--primary-color); color: #fff; border: none; border-radius: 8px; cursor: pointer; transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; position: relative; overflow: hidden; text-transform: uppercase; letter-spacing: 2px; box-shadow: 0 0 15px rgba(129, 57, 245, 0.7); z-index: 10001; }
+        #start-button:hover { background-color: #9b5af7; transform: translateY(-5px); box-shadow: 0 10px 30px rgba(129, 57, 245, 0.9); }
+        #neon-gateway-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.8s ease-in-out; pointer-events: none; z-index: 9999; }
+        #digital-inferno-logo { position: absolute; font-family: 'Orbitron', sans-serif; font-size: 5em; font-weight: bold; color: #fff; text-shadow: 0 0 10px #f0f, 0 0 20px #f0f, 0 0 30px #f0f, 0 0 40px #f0f; opacity: 0; filter: blur(5px); z-index: 10000; }
+        @keyframes digitalInferno { 0% { opacity: 0; transform: scale(0.5) translateY(20px); filter: blur(50px); text-shadow: none; } 30% { opacity: 1; transform: scale(1.1) translateY(-10px); filter: blur(0px); text-shadow: 0 0 15px #ff0, 0 0 30px #ff0, 0 0 45px #ff0; } 100% { opacity: 0; transform: scale(1.5) translateY(-50px); filter: blur(20px); } }
+        #flash-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 1); z-index: 10002; opacity: 0; pointer-events: none; }
+
+        /* ----------- Artist Profile Cards ----------- */
+        .profile-card { display: flex; gap: 40px; align-items: center; padding: 40px; border-radius: 15px; margin-bottom: 50px; }
+        .profile-photo { width: 200px; height: 200px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+        .profile-info { flex-grow: 1; }
+        .profile-info h2 { font-family: 'Major Mono Display', monospace; font-size: 3.5em; margin: 0 0 15px 0; }
+        .profile-info .bio { font-size: 1.1em; line-height: 1.8; margin-bottom: 25px; }
+
+        .ryuya-card { background-color: rgba(25, 25, 50, 0.3); border: 1px solid var(--primary-color); box-shadow: 0 0 30px rgba(129, 57, 245, 0.3); }
+        .ryuya-card .profile-photo { border: 4px solid var(--primary-color); box-shadow: 0 0 20px var(--primary-color); }
+        .ryuya-card .profile-info h2 { color: var(--primary-color); text-shadow: 0 0 15px var(--primary-color); }
+        .ryuya-card .profile-info .bio { color: #d0d0f0; }
+
+        .shion-card { background-color: rgba(50, 0, 50, 0.3); border: 1px solid var(--accent-color); box-shadow: 0 0 30px rgba(255, 0, 255, 0.3); }
+        .shion-card .profile-photo { border: 4px solid var(--accent-color); box-shadow: 0 0 20px var(--accent-color); }
+        .shion-card .profile-info h2 { color: var(--accent-color); text-shadow: 0 0 15px var(--accent-color); }
+        .shion-card .profile-info .bio { color: #f0d0f0; }
+        
+        .social-icons { display: flex; gap: 20px; }
+        .social-icons a { color: #f0d0f0; font-size: 1.8em; transition: color 0.3s, transform 0.3s, text-shadow 0.3s; }
+        .social-icons a:hover { color: #fff; transform: scale(1.2); text-shadow: 0 0 15px #fff; }
+
+        /* ----------- page1 (りゅうやの活動) ----------- */
+        .ryuya-gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; padding: 30px; background-color: rgba(0, 0, 0, 0.7); border-radius: 15px; box-shadow: 0 0 20px rgba(0, 200, 255, 0.3); position: relative; overflow: hidden; }
+        .ryuya-gallery-item { position: relative; overflow: hidden; border-radius: 10px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); border: 1px solid rgba(0, 200, 255, 0.2); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .ryuya-gallery-item:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 10px 25px rgba(0, 200, 255, 0.6); }
+        .ryuya-gallery-item img { width: 100%; height: 250px; object-fit: cover; display: block; border-radius: 10px; }
+        .ryuya-gallery-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; border-radius: 10px; padding: 15px; text-align: center; }
+        .ryuya-gallery-item:hover .ryuya-gallery-overlay { opacity: 1; }
+        .ryuya-gallery-overlay h3 { color: var(--secondary-color); font-size: 1.5em; margin-bottom: 10px; text-shadow: 0 0 8px var(--secondary-color); }
+        .ryuya-gallery-overlay p { color: #c0e0e0; font-size: 0.9em; line-height: 1.4; max-height: 60px; overflow: hidden; text-overflow: ellipsis; }
+
+        /* ----------- page2 (紫苑の活動) ----------- */
+        .music-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
+        .track-card { background-color: rgba(10, 10, 10, 0.8); border-radius: 10px; overflow: hidden; text-align: center; border: 1px solid rgba(255, 0, 255, 0.3); box-shadow: 0 5px 15px rgba(0,0,0,0.6); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; }
+        .track-card:hover { transform: translateY(-10px); box-shadow: 0 10px 25px rgba(255, 0, 255, 0.5); }
+        .jacket-container { position: relative; }
+        .jacket-image { width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; display: block; }
+        .play-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; font-size: 4em; color: #fff; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+        .track-card:hover .play-overlay { opacity: 1; }
+        .track-info { padding: 15px; }
+        .track-info h3 { margin: 0; font-size: 1.2em; color: var(--text-color); }
+
+        /* ----------- page3 (コンタクト) ----------- */
+        .contact-info { text-align: center; margin-top: 40px; }
+        .contact-info h3 { font-size: 2em; color: var(--secondary-color); margin-bottom: 20px; }
+        .contact-info p { font-size: 1.2em; }
+        .contact-info a { text-decoration: none; color: var(--secondary-color); }
+        .contact-info ul { list-style: none; padding: 0; display: flex; justify-content: center; gap: 20px; font-size: 1.5em; }
+        .contact-info ul a { color: var(--secondary-color); text-decoration: none; }
+        .contact-info ul a[href*="instagram"] { color: var(--accent-color); }
+        .contact-info ul a[href*="github"] { color: #39f581; }
+
+        /* レスポンシブデザイン */
+        @media (max-width: 992px) {
+            .profile-card { flex-direction: column; text-align: center; }
+            .social-icons { justify-content: center; }
+        }
+        @media (max-width: 768px) {
+            .main-nav { display: none; }
+            .hamburger-btn { display: block; }
+            header { justify-content: space-between; }
+            .shion-name { display: none; }
+            .hero h1 { font-size: 2.8em; }
+            .hero p { font-size: 1.1em; }
+            .content h2 { font-size: 2.2em; }
+            #start-button { font-size: 1.5em; padding: 15px 30px; }
+            #opening-text { font-size: 1.2em; }
+            #digital-inferno-logo { font-size: 3em; }
+            .profile-info h2 { font-size: 2.8em; }
+        }
+        @media (max-width: 480px) {
+            .logo { font-size: 2em; }
+            .hero h1 { font-size: 2.2em; }
+            .profile-photo { width: 150px; height: 150px; }
+            .profile-info h2 { font-size: 2.5em; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Page Transition -->
+    <div id="page-transition-overlay">
+        <div class="transition-panel transition-panel-left"></div>
+        <div class="transition-panel transition-panel-right"></div>
+    </div>
+
+    <!-- オープニング画面 -->
+    <div id="opening-screen">
+        <div id="opening-text"></div>
+        <button id="start-button">START SYSTEM</button>
+    </div>
+    <div id="neon-gateway-container"><div id="digital-inferno-logo">りゅうや</div></div>
+    <div id="flash-overlay"></div>
+
+    <!-- ヘッダー -->
+    <header data-aos="fade-down" data-aos-duration="1000">
+        <div class="logo" data-text="りゅうや">りゅうや</div>
+        <nav class="main-nav">
+            <ul>
+                <li><a data-page="page-home" class="nav-link active">ホーム</a></li>
+                <li><a data-page="page-ryuya" class="nav-link">りゅうやの活動</a></li>
+                <li><a data-page="page-shion" class="nav-link">紫苑の活動</a></li>
+                <li><a data-page="page-contact" class="nav-link">コンタクト</a></li>
+            </ul>
+        </nav>
+        <div class="shion-name">紫苑</div>
+        <button class="hamburger-btn" id="hamburger-btn"><span></span><span></span><span></span></button>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav" id="mobile-nav">
+        <ul>
+            <li><a data-page="page-home" class="nav-link active">ホーム</a></li>
+            <li><a data-page="page-ryuya" class="nav-link">りゅうやの活動</a></li>
+            <li><a data-page="page-shion" class="nav-link">紫苑の活動</a></li>
+            <li><a data-page="page-contact" class="nav-link">コンタクト</a></li>
+        </ul>
+    </nav>
+
+    <!-- メインコンテンツ -->
+    <main>
+        <div id="particles-js"></div>
+        <section id="page-home" class="page-content is-active">
+            <div class="hero"><h1 class="glitch" data-text="新しい拠点へようこそ">新しい拠点へようこそ</h1><p>AIクリエイター「りゅうや」とアーティスト「紫苑」の世界へ</p><button class="button gradient-hover">詳細を見る</button></div>
+            <section class="content" data-aos="fade-up"><h2 class="glitch" data-text="りゅうやの創造性">りゅうやの創造性</h2><p>AIが紡ぎ出す無限のアートワークと、その背後にある思考プロセスを探索します。</p><button class="content-button gradient-hover nav-link" data-page="page-ryuya">ギャラリーへ</button></section>
+            <section class="content" data-aos="fade-up"><h2 class="glitch" data-text="紫苑の音世界">紫苑の音世界</h2><p>感情とテクノロジーが織りなすサウンドスケープ。心揺さぶる楽曲の数々をお楽しみください。</p><button class="content-button gradient-hover nav-link" data-page="page-shion">楽曲を聴く</button></section>
+        </section>
+        <section id="page-ryuya" class="page-content">
+            <div class="profile-card ryuya-card" data-aos="fade-down"><img src="https://i.ibb.co/RK3h7KM/l-IHf-Ng-Nre-Zw-Mxg68efb-Xa.png" alt="りゅうや アイコン" class="profile-photo"><div class="profile-info"><h2>りゅうや</h2><p class="bio">AIが紡ぎ出す無限のアートワークと、その背後にある思考プロセスを探索するAIクリエイター。</p></div></div>
+            <section class="content" data-aos="fade-up"><h2>AIイラストギャラリー</h2><div class="ryuya-gallery-grid"><div class="ryuya-gallery-item"><img src="https://placehold.co/600x400/8139f5/FFFFFF?text=未来都市" alt="AI Illustration 1"><div class="ryuya-gallery-overlay"><h3>未来都市の夜景</h3><p>ネオンが輝くサイバーパンク都市の風景。</p></div></div><div class="ryuya-gallery-item"><img src="https://placehold.co/600x400/00cde9/FFFFFF?text=幻影の森" alt="AI Illustration 2"><div class="ryuya-gallery-overlay"><h3>幻影の森</h3><p>デジタルと自然が融合した、幻想的な森。</p></div></div><div class="ryuya-gallery-item"><img src="https://placehold.co/600x400/39f581/FFFFFF?text=アンドロイド" alt="AI Illustration 3"><div class="ryuya-gallery-overlay"><h3>アンドロイドの肖像</h3><p>感情を持つかのようなアンドロイドのポートレート。</p></div></div><div class="ryuya-gallery-item"><img src="https://placehold.co/600x400/f58139/FFFFFF?text=宇宙回廊" alt="AI Illustration 4"><div class="ryuya-gallery-overlay"><h3>宇宙のデータ回廊</h3><p>情報が流れる宇宙空間をイメージしたアート。</p></div></div></div></section>
+        </section>
+        <section id="page-shion" class="page-content">
+            <div class="profile-card shion-card" data-aos="fade-down"><img src="https://i.ibb.co/4RzdYgbF/bt0n-Pu-Cotf55-R6-ARKv0o-O.jpg" onerror="this.onerror=null;this.src='https://placehold.co/200x200/ff00ff/FFFFFF?text=紫苑';" alt="紫苑 アーティスト写真" class="profile-photo"><div class="profile-info"><h2>紫苑</h2><p class="bio">シンガーソングライターの紫苑です。 バラードを中心に作詞作曲しています。 誰かの心に寄り添えるような歌を届けたいです。</p><div class="social-icons"><a href="https://big-up.style/artists/302804" target="_blank" title="BIG UP!"><i class="fas fa-music"></i></a></div></div></div>
+            <div class="music-grid" data-aos="fade-up"></div>
+        </section>
+        <section id="page-contact" class="page-content">
+            <section class="content" data-aos="fade-up"><h2>お問い合わせ</h2><p>りゅうや、紫苑の活動に関するご質問、お仕事のご依頼、コラボレーションのご相談など、お気軽にお問い合わせください。</p><div class="contact-info"><h3>連絡先情報</h3><p><strong>メール:</strong> <a href="mailto:info@ryuya-shion.com" class="gradient-hover">info@ryuya-shion.com</a></p><p><strong>SNS:</strong></p><ul><li><a href="#" target="_blank" class="gradient-hover">X (旧Twitter)</a></li><li><a href="#" target="_blank" class="gradient-hover">Instagram</a></li><li><a href="#" target="_blank" class="gradient-hover">GitHub</a></li></ul></div></section>
+        </section>
+    </main>
+
+    <!-- フッター -->
+    <footer>
+        <p>&copy; 2025 りゅうや × 紫苑 - Cyberspace Nexus</p>
+        <nav><ul><li><a class="nav-link" data-page="page-home">ホーム</a></li><li><a class="nav-link" data-page="page-ryuya">りゅうやの活動</a></li><li><a class="nav-link" data-page="page-shion">紫苑の活動</a></li><li><a class="nav-link" data-page="page-contact">コンタクト</a></li></ul></nav>
+    </footer>
+
+    <!-- モーダル -->
+    <div id="modal" class="modal"><div class="modal-content"><span class="close">&times;</span><h2>システムレポート</h2><p>現在、すべてのシステムは正常に稼働しています。</p></div></div>
+
+    <!-- External JS Libraries -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    
+    <!-- particles.js library -->
+    <script>
+        /* particles.js v2.0.0 | MIT license | https://github.com/VincentGarreau/particles.js */
+        var pJS=function(e,a){var t=document.querySelector("#"+e+" > .particles-js-canvas-el");this.pJS={canvas:{el:t,w:t.offsetWidth,h:t.offsetHeight},particles:{number:{value:400,density:{enable:!0,value_area:800}},color:{value:"#fff"},shape:{type:"circle",stroke:{width:0,color:"#ff0000"},polygon:{nb_sides:5},image:{src:"",width:100,height:100}},opacity:{value:1,random:!1,anim:{enable:!1,speed:2,opacity_min:0,sync:!1}},size:{value:20,random:!1,anim:{enable:!1,speed:20,size_min:0,sync:!1}},line_linked:{enable:!0,distance:100,color:"#fff",opacity:1,width:1},move:{enable:!0,speed:2,direction:"none",random:!1,straight:!1,out_mode:"out",bounce:!1,attract:{enable:!1,rotateX:3e3,rotateY:3e3}},array:[]},interactivity:{detect_on:"canvas",events:{onhover:{enable:!0,mode:"grab"},onclick:{enable:!0,mode:"push"},resize:!0},modes:{grab:{distance:100,line_linked:{opacity:1}},bubble:{distance:200,size:80,duration:.4},repulse:{distance:200,duration:.4},push:{particles_nb:4},remove:{particles_nb:2}},mouse:{}},retina_detect:!1,fn:{interact:{},modes:{},vendors:{}},tmp:{}};var i=this.pJS;a&&Object.deepExtend(i,a),i.tmp.obj={size_value:i.particles.size.value,size_anim_speed:i.particles.size.anim.speed,move_speed:i.particles.move.speed,line_linked_distance:i.particles.line_linked.distance,line_linked_width:i.particles.line_linked.width,mode_grab_distance:i.interactivity.modes.grab.distance,mode_bubble_distance:i.interactivity.modes.bubble.distance,mode_bubble_size:i.interactivity.modes.bubble.size,mode_repulse_distance:i.interactivity.modes.repulse.distance},i.fn.retinaInit=function(){i.retina_detect&&window.devicePixelRatio>1?(i.canvas.pxratio=window.devicePixelRatio,i.tmp.retina=!0):(i.canvas.pxratio=1,i.tmp.retina=!1),i.canvas.w=i.canvas.el.offsetWidth*i.canvas.pxratio,i.canvas.h=i.canvas.el.offsetHeight*i.canvas.pxratio,i.particles.size.value=i.tmp.obj.size_value*i.canvas.pxratio,i.particles.size.anim.speed=i.tmp.obj.size_anim_speed*i.canvas.pxratio,i.particles.move.speed=i.tmp.obj.move_speed*i.canvas.pxratio,i.particles.line_linked.distance=i.tmp.obj.line_linked_distance*i.canvas.pxratio,i.interactivity.modes.grab.distance=i.tmp.obj.mode_grab_distance*i.canvas.pxratio,i.interactivity.modes.bubble.distance=i.tmp.obj.mode_bubble_distance*i.canvas.pxratio,i.particles.line_linked.width=i.tmp.obj.line_linked_width*i.canvas.pxratio,i.interactivity.modes.bubble.size=i.tmp.obj.mode_bubble_size*i.canvas.pxratio,i.interactivity.modes.repulse.distance=i.tmp.obj.mode_repulse_distance*i.canvas.pxratio},i.fn.canvasInit=function(){i.canvas.ctx=i.canvas.el.getContext("2d")},i.fn.canvasSize=function(){i.canvas.el.width=i.canvas.w,i.canvas.el.height=i.canvas.h,i&&i.interactivity.events.resize&&window.addEventListener("resize",function(){i.canvas.w=i.canvas.el.offsetWidth,i.canvas.h=i.canvas.el.offsetHeight,i.tmp.retina&&(i.canvas.w*=i.canvas.pxratio,i.canvas.h*=i.canvas.pxratio),i.canvas.el.width=i.canvas.w,i.canvas.el.height=i.canvas.h,i.particles.move.enable||(i.fn.particlesEmpty(),i.fn.particlesCreate(),i.fn.particlesDraw(),i.fn.vendors.densityAutoParticles()),i.fn.vendors.densityAutoParticles()})},i.fn.canvasPaint=function(){i.canvas.ctx.fillRect(0,0,i.canvas.w,i.canvas.h)},i.fn.canvasClear=function(){i.canvas.ctx.clearRect(0,0,i.canvas.w,i.canvas.h)},i.fn.particle=function(e,a,t){function s(e){var a=/^#?([a-f\d])([a-f\d])([a-f\d])$/i;e=e.replace(a,function(e,a,t,i){return a+a+t+t+i+i});var t=/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(e);return t?{r:parseInt(t[1],16),g:parseInt(t[2],16),b:parseInt(t[3],16)}:null}if(this.radius=(i.particles.size.random?Math.random():1)*i.particles.size.value,i.particles.size.anim.enable&&(this.size_status=!1,this.vs=i.particles.size.anim.speed/100,i.particles.size.anim.sync||(this.vs=this.vs*Math.random())),this.x=t?t.x:Math.random()*i.canvas.w,this.y=t?t.y:Math.random()*i.canvas.h,this.x>i.canvas.w-2*this.radius?this.x=this.x-this.radius:this.x<2*this.radius&&(this.x=this.x+this.radius),this.y>i.canvas.h-2*this.radius?this.y=this.y-this.radius:this.y<2*this.radius&&(this.y=this.y+this.radius),i.particles.move.bounce&&i.fn.vendors.checkOverlap(this,t),this.color={},"object"==typeof e.value)if(e.value instanceof Array){var n=e.value[Math.floor(Math.random()*i.particles.color.value.length)];this.color.rgb=s(n)}else void 0!=e.value.r&&void 0!=e.value.g&&void 0!=e.value.b&&(this.color.rgb={r:e.value.r,g:e.value.g,b:e.value.b}),void 0!=e.value.h&&void 0!=e.value.s&&void 0!=e.value.l&&(this.color.hsl={h:e.value.h,s:e.value.s,l:e.value.l});else"random"==e.value?this.color.rgb={r:Math.floor(256*Math.random())+0,g:Math.floor(256*Math.random())+0,b:Math.floor(256*Math.random())+0}:"string"==typeof e.value&&(this.color=e,this.color.rgb=s(this.color.value));this.opacity=(i.particles.opacity.random?Math.random():1)*i.particles.opacity.value,i.particles.opacity.anim.enable&&(this.opacity_status=!1,this.vo=i.particles.opacity.anim.speed/100,i.particles.opacity.anim.sync||(this.vo=this.vo*Math.random()));var r={};switch(i.particles.move.direction){case"top":r={x:0,y:-1};break;case"top-right":r={x:.5,y:-.5};break;case"right":r={x:1,y:-0};break;case"bottom-right":r={x:.5,y:.5};break;case"bottom":r={x:0,y:1};break;case"bottom-left":r={x:-.5,y:1};break;case"left":r={x:-1,y:0};break;case"top-left":r={x:-.5,y:-.5};break;default:r={x:0,y:0}}i.particles.move.straight?(this.vx=r.x,this.vy=r.y,i.particles.move.random&&(this.vx=this.vx*Math.random(),this.vy=this.vy*Math.random())):(this.vx=r.x+Math.random()-.5,this.vy=r.y+Math.random()-.5),this.vx_i=this.vx,this.vy_i=this.vy;var o=i.particles.shape.type;if("object"==typeof o){if(o instanceof Array){var c=o[Math.floor(Math.random()*o.length)];this.shape=c}}else this.shape=o;if("image"==this.shape){var l=i.particles.shape;this.img={src:l.image.src,ratio:l.image.width/l.image.height},this.img.ratio||(this.img.ratio=1),"svg"==i.tmp.img_type&&void 0!=i.tmp.source_svg&&(i.fn.vendors.createSvgImg(this),i.tmp.pushing&&(this.img.loaded=!1))}},i.fn.particle.prototype.draw=function(){var e,a,t,s,n,r,o,c,l,d,p,u,m,f,h,g,y,w,x,b,k,S,M,R,z,I,C,O,A,P,T,E,D,L,q,_,B,F,V,H,U,W,G,X,Y,Z,Q,J,K,ee,ae,te,ie,ne,re,oe,ce,le,de,pe,ue;e=this,void 0!=e.radius_bubble?a=e.radius_bubble:a=e.radius,void 0!=e.opacity_bubble?t=e.opacity_bubble:t=e.opacity,e.color.rgb?s="rgba("+e.color.rgb.r+","+e.color.rgb.g+","+e.color.rgb.b+","+t+")":s="hsla("+e.color.hsl.h+","+e.color.hsl.s+"%,"+e.color.hsl.l+"%,"+t+")",i.canvas.ctx.fillStyle=s,i.canvas.ctx.beginPath(),function(){switch(e.shape){case"circle":i.canvas.ctx.arc(e.x,e.y,a,0,2*Math.PI,!1);break;case"edge":i.canvas.ctx.rect(e.x-a,e.y-a,2*a,2*a);break;case"triangle":i.fn.vendors.drawShape(i.canvas.ctx,e.x-a,e.y+a/1.66,2*a,3,2);break;case"polygon":i.fn.vendors.drawShape(i.canvas.ctx,e.x-a/(i.particles.shape.polygon.nb_sides/3.5),e.y-a/.76,2.66*a/(i.particles.shape.polygon.nb_sides/3),i.particles.shape.polygon.nb_sides,1);break;case"star":i.fn.vendors.drawShape(i.canvas.ctx,e.x-2*a/(i.particles.shape.polygon.nb_sides/4),e.y-a/1.52,2*a*2.66/(i.particles.shape.polygon.nb_sides/3),i.particles.shape.polygon.nb_sides,2);break;case"image":"svg"==i.tmp.img_type?n=e.img.obj:n=i.tmp.img_obj,n&&i.canvas.ctx.drawImage(n,e.x-a,e.y-a,2*a,2*a/e.img.ratio)}}(),i.canvas.ctx.closePath(),i.particles.shape.stroke.width>0&&(i.canvas.ctx.strokeStyle=i.particles.shape.stroke.color,i.canvas.ctx.lineWidth=i.particles.shape.stroke.width,i.canvas.ctx.stroke()),i.canvas.ctx.fill()},i.fn.particlesCreate=function(){for(var e=0;e<i.particles.number.value;e++)i.particles.array.push(new i.fn.particle(i.particles.color,i.particles.opacity.value))},i.fn.particlesUpdate=function(){for(var e=0;e<i.particles.array.length;e++){var a,t,s,n;if(a=i.particles.array[e],i.particles.move.enable){var r=i.particles.move.speed/2;a.x+=a.vx*r,a.y+=a.vy*r}if(i.particles.opacity.anim.enable&&(1==a.opacity_status?(a.opacity>=i.particles.opacity.value&&(a.opacity_status=!1),a.opacity+=a.vo):(a.opacity<=i.particles.opacity.anim.opacity_min&&(a.opacity_status=!0),a.opacity-=a.vo),a.opacity<0&&(a.opacity=0)),i.particles.size.anim.enable&&(1==a.size_status?(a.radius>=i.particles.size.value&&(a.size_status=!1),a.radius+=a.vs):(a.radius<=i.particles.size.anim.size_min&&(a.size_status=!0),a.radius-=a.vs),a.radius<0&&(a.radius=0)),"bounce"==i.particles.move.out_mode?t={x_left:a.radius,x_right:i.canvas.w,y_top:a.radius,y_bottom:i.canvas.h}:t={x_left:-a.radius,x_right:i.canvas.w+a.radius,y_top:-a.radius,y_bottom:i.canvas.h+a.radius},a.x-a.radius>i.canvas.w?(a.x=t.x_left,a.y=Math.random()*i.canvas.h):a.x+a.radius<0&&(a.x=t.x_right,a.y=Math.random()*i.canvas.h),a.y-a.radius>i.canvas.h?(a.y=t.y_top,a.x=Math.random()*i.canvas.w):a.y+a.radius<0&&(a.y=t.y_bottom,a.x=Math.random()*i.canvas.w),function(){switch(i.particles.move.out_mode){case"bounce":a.x+a.radius>i.canvas.w?a.vx=-a.vx:a.x-a.radius<0&&(a.vx=-a.vx),a.y+a.radius>i.canvas.h?a.vy=-a.vy:a.y-a.radius<0&&(a.vy=-a.vy)}}(),(isInArray("grab",i.interactivity.events.onhover.mode)&&i.fn.modes.grabParticle(a),(isInArray("bubble",i.interactivity.events.onhover.mode)||isInArray("bubble",i.interactivity.events.onclick.mode))&&i.fn.modes.bubbleParticle(a),(isInArray("repulse",i.interactivity.events.onhover.mode)||isInArray("repulse",i.interactivity.events.onclick.mode))&&i.fn.modes.repulseParticle(a),i.particles.line_linked.enable||i.particles.move.attract.enable))for(s=e+1;s<i.particles.array.length;s++)n=i.particles.array[s],i.particles.line_linked.enable&&i.fn.interact.linkParticles(a,n),i.particles.move.attract.enable&&i.fn.interact.attractParticles(a,n),i.particles.move.bounce&&i.fn.interact.bounceParticles(a,n)}},i.fn.particlesDraw=function(){i.canvas.ctx.clearRect(0,0,i.canvas.w,i.canvas.h),i.fn.particlesUpdate();for(var e=0;e<i.particles.array.length;e++){i.particles.array[e].draw()}},i.fn.particlesEmpty=function(){i.particles.array=[]},i.fn.particlesRefresh=function(){cancelRequestAnimFrame(i.fn.checkAnimFrame),cancelRequestAnimFrame(i.fn.drawAnimFrame),i.tmp.source_svg=void 0,i.tmp.img_obj=void 0,i.tmp.count_svg=0,i.fn.particlesEmpty(),i.fn.canvasClear(),i.fn.vendors.start()},i.fn.interact.linkParticles=function(e,a){var t=e.x-a.x,s=e.y-a.y,n=Math.sqrt(t*t+s*s);if(n<=i.particles.line_linked.distance){var r=i.particles.line_linked.opacity-n/(1/i.particles.line_linked.opacity)/i.particles.line_linked.distance;if(r>0){var o=i.particles.line_linked.color_rgb_line;i.canvas.ctx.strokeStyle="rgba("+o.r+","+o.g+","+o.b+","+r+")",i.canvas.ctx.lineWidth=i.particles.line_linked.width,i.canvas.ctx.beginPath(),i.canvas.ctx.moveTo(e.x,e.y),i.canvas.ctx.lineTo(a.x,a.y),i.canvas.ctx.stroke(),i.canvas.ctx.closePath()}}},i.fn.interact.attractParticles=function(e,a){var t=e.x-a.x,s=e.y-a.y,n=Math.sqrt(t*t+s*s);if(n<=i.particles.line_linked.distance){var r=t/(1e3*i.particles.move.attract.rotateX),o=s/(1e3*i.particles.move.attract.rotateY);e.vx-=r,e.vy-=o,a.vx+=r,a.vy+=o}},i.fn.interact.bounceParticles=function(e,a){var t=e.x-a.x,s=e.y-a.y,n=Math.sqrt(t*t+s*s);e.radius+a.radius>=n&&(e.vx=-e.vx,e.vy=-e.vy,a.vx=-a.vx,a.vy=-a.vy)},i.fn.modes.pushParticles=function(e,a){i.tmp.pushing=!0;for(var t=0;t<e;t++)i.particles.array.push(new i.fn.particle(i.particles.color,i.particles.opacity.value,{x:a?a.pos_x:Math.random()*i.canvas.w,y:a?a.pos_y:Math.random()*i.canvas.h})),t==e-1&&(i.particles.move.enable||i.fn.particlesDraw(),i.tmp.pushing=!1)},i.fn.modes.removeParticles=function(e){i.particles.array.splice(0,e),i.particles.move.enable||i.fn.particlesDraw()},i.fn.modes.bubbleParticle=function(e){var a,t,s,n,r,o,c,l,d,p,u,m,f;if(i.interactivity.events.onhover.enable&&isInArray("bubble",i.interactivity.events.onhover.mode)){if(a=e.x-i.interactivity.mouse.pos_x,t=e.y-i.interactivity.mouse.pos_y,s=1-(n=Math.sqrt(a*a+t*a*t))/i.interactivity.modes.bubble.distance,n<=i.interactivity.modes.bubble.distance){if(s>=0&&"mousemove"==i.interactivity.status){if(i.interactivity.modes.bubble.size!=i.particles.size.value)if(i.interactivity.modes.bubble.size>i.particles.size.value){if((r=e.radius+i.interactivity.modes.bubble.size*s)>=0)e.radius_bubble=r}else o=e.radius-i.interactivity.modes.bubble.size,r=e.radius-o*s,e.radius_bubble=r>0?r:0;if(i.interactivity.modes.bubble.opacity!=i.particles.opacity.value)if(i.interactivity.modes.bubble.opacity>i.particles.opacity.value)(c=i.interactivity.modes.bubble.opacity*s)>e.opacity&&c<=i.interactivity.modes.bubble.opacity&&(e.opacity_bubble=c);else(c=e.opacity-(i.particles.opacity.value-i.interactivity.modes.bubble.opacity)*s)<e.opacity&&c>=i.interactivity.modes.bubble.opacity&&(e.opacity_bubble=c)}}else l=e.opacity,d=e.radius;return"mouseleave"==i.interactivity.status&&(l=e.opacity,d=e.radius),void(e.opacity_bubble=l,e.radius_bubble=d)}if(i.interactivity.events.onclick.enable&&isInArray("bubble",i.interactivity.events.onclick.mode)){if(i.tmp.bubble_clicking){if(p=Math.sqrt(Math.pow(e.x-i.interactivity.mouse.click_pos_x,2)+Math.pow(e.y-i.interactivity.mouse.click_pos_y,2)),u=((new Date).getTime()-i.interactivity.mouse.click_time)/1e3,u>i.interactivity.modes.bubble.duration&&(i.tmp.bubble_duration_end=!0),u>2*i.interactivity.modes.bubble.duration)i.tmp.bubble_clicking=!1,i.tmp.bubble_duration_end=!1}i.tmp.bubble_clicking&&(m=i.interactivity.modes.bubble.size,f=i.particles.size.value,h=e.radius_bubble,g=e.radius,y=p,w="size",x=u,b=i.interactivity.modes.bubble.duration,k=i.tmp.bubble_duration_end,void 0,m!=f&&(k?void 0!=h&&(S=h+x*(g-h)/b,e.radius_bubble=S):y<=i.interactivity.modes.bubble.distance?void 0!=(M=h)?(S=M+x*(g-M)/b,e.radius_bubble=S):e.radius_bubble=g:e.radius_bubble=void 0),S=i.interactivity.modes.bubble.opacity,M=i.particles.opacity.value,R=e.opacity_bubble,z=e.opacity,I=p,C="opacity",O=u,A=i.interactivity.modes.bubble.duration,P=i.tmp.bubble_duration_end,void 0,S!=M&&(P?void 0!=R&&(T=R+O*(z-R)/A,e.opacity_bubble=T):I<=i.interactivity.modes.bubble.distance?void 0!=(E=R)?(T=E+O*(z-E)/A,e.opacity_bubble=T):e.opacity_bubble=z:e.opacity_bubble=void 0))}},i.fn.modes.repulseParticle=function(e){var a,t,s,n,r,o,c,l,d,p,u,m,f,h;if(i.interactivity.events.onhover.enable&&isInArray("repulse",i.interactivity.events.onhover.mode)&&"mousemove"==i.interactivity.status){if(a=e.x-i.interactivity.mouse.pos_x,t=e.y-i.interactivity.mouse.pos_y,s=Math.sqrt(a*a+t*t),n=a/s,r=t/s,o=clamp(1/(c=i.interactivity.modes.repulse.distance)*(-1*Math.pow(s/c,2)+1)*c*100,0,50),l={x:e.x+n*o,y:e.y+r*o},"bounce"==i.particles.move.out_mode){if(l.x-e.radius>0&&l.x+e.radius<i.canvas.w)e.x=l.x;if(l.y-e.radius>0&&l.y+e.radius<i.canvas.h)e.y=l.y}else e.x=l.x,e.y=l.y}else if(i.interactivity.events.onclick.enable&&isInArray("repulse",i.interactivity.events.onclick.mode)){if(i.tmp.repulse_finish||(i.tmp.repulse_count++,i.tmp.repulse_count==i.particles.array.length&&(i.tmp.repulse_finish=!0)),i.tmp.repulse_clicking){if(d=Math.pow(i.interactivity.modes.repulse.distance/6,3),p=i.interactivity.mouse.click_pos_x-e.x,u=i.interactivity.mouse.click_pos_y-e.y,m=p*p+u*u,f=-d/m*1,d>=m)h=Math.atan2(u,p),e.vx=f*Math.cos(h),e.vy=f*Math.sin(h),"bounce"==i.particles.move.out_mode&&({x:e.x+e.vx,y:e.y+e.vy}.x+e.radius>i.canvas.w?e.vx=-e.vx:{x:e.x+e.vx,y:e.y+e.vy}.x-e.radius<0&&(e.vx=-e.vx),{x:e.x+e.vx,y:e.y+e.vy}.y+e.radius>i.canvas.h?e.vy=-e.vy:{x:e.x+e.vx,y:e.y+e.vy}.y-e.radius<0&&(e.vy=-e.vy))}else 0==i.tmp.repulse_clicking&&(e.vx=e.vx_i,e.vy=e.vy_i)}},i.fn.modes.grabParticle=function(e){var a,t,s,n,r,o;i.interactivity.events.onhover.enable&&"mousemove"==i.interactivity.status&&(a=e.x-i.interactivity.mouse.pos_x,t=e.y-i.interactivity.mouse.pos_y,s=Math.sqrt(a*a+t*t),s<=i.interactivity.modes.grab.distance&&(n=i.interactivity.modes.grab.line_linked.opacity-s/(1/i.interactivity.modes.grab.line_linked.opacity)/i.interactivity.modes.grab.distance,n>0&&(r=i.particles.line_linked.color_rgb_line,i.canvas.ctx.strokeStyle="rgba("+r.r+","+r.g+","+r.b+","+n+")",i.canvas.ctx.lineWidth=i.particles.line_linked.width,i.canvas.ctx.beginPath(),i.canvas.ctx.moveTo(e.x,e.y),i.canvas.ctx.lineTo(i.interactivity.mouse.pos_x,i.interactivity.mouse.pos_y),i.canvas.ctx.stroke(),i.canvas.ctx.closePath())))},i.fn.vendors.eventsListeners=function(){"window"==i.interactivity.detect_on?i.interactivity.el=window:i.interactivity.el=i.canvas.el,(i.interactivity.events.onhover.enable||i.interactivity.events.onclick.enable)&&(i.interactivity.el.addEventListener("mousemove",function(e){var a,t;i.interactivity.el==window?(a=e.clientX,t=e.clientY):(a=e.offsetX||e.clientX,t=e.offsetY||e.clientY),i.interactivity.mouse.pos_x=a,i.interactivity.mouse.pos_y=t,i.tmp.retina&&(i.interactivity.mouse.pos_x*=i.canvas.pxratio,i.interactivity.mouse.pos_y*=i.canvas.pxratio),i.interactivity.status="mousemove"}),i.interactivity.el.addEventListener("mouseleave",function(e){i.interactivity.mouse.pos_x=null,i.interactivity.mouse.pos_y=null,i.interactivity.status="mouseleave"})),i.interactivity.events.onclick.enable&&i.interactivity.el.addEventListener("click",function(){if(i.interactivity.mouse.click_pos_x=i.interactivity.mouse.pos_x,i.interactivity.mouse.click_pos_y=i.interactivity.mouse.pos_y,i.interactivity.mouse.click_time=(new Date).getTime(),i.interactivity.events.onclick.enable)switch(i.interactivity.events.onclick.mode){case"push":i.particles.move.enable?i.fn.modes.pushParticles(i.interactivity.modes.push.particles_nb,i.interactivity.mouse):1==i.interactivity.modes.push.particles_nb?i.fn.modes.pushParticles(i.interactivity.modes.push.particles_nb,i.interactivity.mouse):i.interactivity.modes.push.particles_nb>1&&i.fn.modes.pushParticles(i.interactivity.modes.push.particles_nb);break;case"remove":i.fn.modes.removeParticles(i.interactivity.modes.remove.particles_nb);break;case"bubble":i.tmp.bubble_clicking=!0;break;case"repulse":i.tmp.repulse_clicking=!0,i.tmp.repulse_count=0,i.tmp.repulse_finish=!1,setTimeout(function(){i.tmp.repulse_clicking=!1},1e3*i.interactivity.modes.repulse.duration)}})},i.fn.vendors.densityAutoParticles=function(){if(i.particles.number.density.enable){var e=i.canvas.el.width*i.canvas.el.height/1e3;i.tmp.retina&&(e/=2*i.canvas.pxratio);var a=e*i.particles.number.value/i.particles.number.density.value_area,t=i.particles.array.length-a;t<0?i.fn.modes.pushParticles(Math.abs(t)):i.fn.modes.removeParticles(t)}},i.fn.vendors.checkOverlap=function(e,a){for(var t=0;t<i.particles.array.length;t++){var s=i.particles.array[t],n=e.x-s.x,r=e.y-s.y;Math.sqrt(n*n+r*r)<=e.radius+s.radius&&(e.x=a?a.x:Math.random()*i.canvas.w,e.y=a?a.y:Math.random()*i.canvas.h,i.fn.vendors.checkOverlap(e))}},i.fn.vendors.createSvgImg=function(e){var a,t,s,n,r,o,c;a=i.tmp.source_svg,t=/#([0-9A-F]{3,6})/gi,s=a.replace(t,function(a,t,s,n){var r;if(e.color.rgb)r="rgba("+e.color.rgb.r+","+e.color.rgb.g+","+e.color.rgb.b+","+e.opacity+")";else r="hsla("+e.color.hsl.h+","+e.color.hsl.s+"%,"+e.color.hsl.l+"%,"+e.opacity+")";return r}),n=new Blob([s],{type:"image/svg+xml;charset=utf-8"}),r=window.URL||window.webkitURL||window,o=r.createObjectURL(n),c=new Image,c.addEventListener("load",function(){e.img.obj=c,e.img.loaded=!0,r.revokeObjectURL(o),i.tmp.count_svg++}),c.src=o},i.fn.vendors.destroypJS=function(){cancelAnimationFrame(i.fn.drawAnimFrame),t.remove(),pJSDom=null},i.fn.vendors.drawShape=function(e,a,t,s,n,r){var o=n*r,c=n/r,l=180*(c-2)/c,d=Math.PI-Math.PI*l/180;e.save(),e.beginPath(),e.translate(a,t),e.moveTo(0,0);for(var i=0;i<o;i++)e.lineTo(s,0),e.translate(s,0),e.rotate(d);e.fill(),e.restore()},i.fn.vendors.exportImg=function(){window.open(i.canvas.el.toDataURL("image/png"),"_blank")},i.fn.vendors.loadImg=function(e){var a,t;if(i.tmp.img_error=void 0,""!=i.particles.shape.image.src)if("svg"==e)a=new XMLHttpRequest,a.open("GET",i.particles.shape.image.src),a.onreadystatechange=function(e){4==a.readyState&&(200==a.status?(i.tmp.source_svg=e.currentTarget.response,i.fn.vendors.checkBeforeDraw()):(console.log("Error pJS - Image not found"),i.tmp.img_error=!0))},a.send();else t=new Image,t.addEventListener("load",function(){i.tmp.img_obj=t,i.fn.vendors.checkBeforeDraw()}),t.src=i.particles.shape.image.src;else console.log("Error pJS - No image.src"),i.tmp.img_error=!0},i.fn.vendors.draw=function(){"image"==i.particles.shape.type?"svg"==i.tmp.img_type?i.tmp.count_svg>=i.particles.number.value?(i.fn.particlesDraw(),i.particles.move.enable?i.fn.drawAnimFrame=requestAnimFrame(i.fn.vendors.draw):cancelRequestAnimFrame(i.fn.drawAnimFrame)):i.tmp.img_error||(i.fn.drawAnimFrame=requestAnimFrame(i.fn.vendors.draw)):void 0!=i.tmp.img_obj?(i.fn.particlesDraw(),i.particles.move.enable?i.fn.drawAnimFrame=requestAnimFrame(i.fn.vendors.draw):cancelRequestAnimFrame(i.fn.drawAnimFrame)):i.tmp.img_error||(i.fn.drawAnimFrame=requestAnimFrame(i.fn.vendors.draw)):(i.fn.particlesDraw(),i.particles.move.enable?i.fn.drawAnimFrame=requestAnimFrame(i.fn.vendors.draw):cancelRequestAnimFrame(i.fn.drawAnimFrame))},i.fn.vendors.checkBeforeDraw=function(){"image"==i.particles.shape.type?"svg"==i.tmp.img_type&&void 0==i.tmp.source_svg?i.tmp.checkAnimFrame=requestAnimFrame(check):(cancelRequestAnimFrame(i.tmp.checkAnimFrame),i.tmp.img_error||(i.fn.vendors.init(),i.fn.vendors.draw())):(i.fn.vendors.init(),i.fn.vendors.draw())},i.fn.vendors.init=function(){i.fn.retinaInit(),i.fn.canvasInit(),i.fn.canvasSize(),i.fn.canvasPaint(),i.fn.particlesCreate(),i.fn.vendors.densityAutoParticles(),i.particles.line_linked.color_rgb_line=function(e){var a=/^#?([a-f\d])([a-f\d])([a-f\d])$/i;e=e.replace(a,function(e,a,t,i){return a+a+t+t+i+i});var t=/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(e);return t?{r:parseInt(t[1],16),g:parseInt(t[2],16),b:parseInt(t[3],16)}:null}(i.particles.line_linked.color)},i.fn.vendors.start=function(){isInArray("image",i.particles.shape.type)?(i.tmp.img_type=i.particles.shape.image.src.substr(i.particles.shape.image.src.length-3),i.fn.vendors.loadImg(i.tmp.img_type)):i.fn.vendors.checkBeforeDraw()},i.fn.vendors.eventsListeners(),i.fn.vendors.start()},Object.deepExtend=function(e,a){for(var t in a)a[t]&&a[t].constructor&&a[t].constructor===Object?(e[t]=e[t]||{},arguments.callee(e[t],a[t])):e[t]=a[t];return e},window.requestAnimFrame=function(){return window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.mozRequestAnimationFrame||window.oRequestAnimationFrame||window.msRequestAnimationFrame||function(e){window.setTimeout(e,1e3/60)}}(),window.cancelRequestAnimFrame=function(){return window.cancelAnimationFrame||window.webkitCancelRequestAnimationFrame||window.mozCancelRequestAnimationFrame||window.oCancelRequestAnimationFrame||window.msCancelRequestAnimationFrame||clearTimeout}(),window.pJSDom=[],window.particlesJS=function(e,a){"string"!=typeof e&&(a=e,e="particles-js"),e||(e="particles-js");var t=document.getElementById(e),s="particles-js-canvas-el",n=t.getElementsByClassName(s);if(n.length)for(;n.length>0;)t.removeChild(n[0]);var r=document.createElement("canvas");r.className=s,r.style.width="100%",r.style.height="100%";var o=document.getElementById(e).appendChild(r);null!=o&&pJSDom.push(new pJS(e,a))},window.particlesJS.load=function(e,a,t){var s=new XMLHttpRequest;s.open("GET",a),s.onreadystatechange=function(a){if(4==s.readyState)if(200==s.status){var n=JSON.parse(a.currentTarget.response);window.particlesJS(e,n),t&&t()}else console.log("Error pJS - XMLHttpRequest status: "+s.status),console.log("Error pJS - File config not found")},s.send()};
+    </script>
+
+    <!-- Main Application Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- DOM Element Selectors ---
+            const hamburgerBtn = document.getElementById('hamburger-btn');
+            const mobileNav = document.getElementById('mobile-nav');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const pageContents = document.querySelectorAll('.page-content');
+            const transitionOverlay = document.getElementById('page-transition-overlay');
+            const openingScreen = document.getElementById('opening-screen');
+            const startButton = document.getElementById('start-button');
+            const openingText = document.getElementById('opening-text');
+            const neonGatewayContainer = document.getElementById('neon-gateway-container');
+            const digitalInfernoLogo = document.getElementById('digital-inferno-logo');
+            const flashOverlay = document.getElementById('flash-overlay');
+            const header = document.querySelector('header');
+            const main = document.querySelector('main');
+            const footer = document.querySelector('footer');
+            const particlesJsDiv = document.getElementById('particles-js');
+
+            // --- Hamburger Menu Logic ---
+            hamburgerBtn.addEventListener('click', function() {
+                this.classList.toggle('is-active');
+                mobileNav.classList.toggle('is-active');
+            });
+            
+            // --- SPA Navigation & Transition Logic ---
+            function navigateToPage(pageId) {
+                const currentPage = document.querySelector('.page-content.is-active');
+                if (currentPage.id === pageId) {
+                     // Close mobile menu if it's open, even if not changing pages
+                    if (hamburgerBtn.classList.contains('is-active')) {
+                        hamburgerBtn.classList.remove('is-active');
+                        mobileNav.classList.remove('is-active');
+                    }
+                    return;
+                }
+
+                transitionOverlay.classList.add('is-active');
+
+                setTimeout(() => {
+                    currentPage.classList.remove('is-active');
+                    const nextPage = document.getElementById(pageId);
+                    nextPage.classList.add('is-active');
+                    
+                    document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
+                    document.querySelectorAll(`.nav-link[data-page="${pageId}"]`).forEach(activeLink => activeLink.classList.add('active'));
+                    
+                    AOS.refresh();
+                    window.scrollTo(0, 0);
+
+                    // Close mobile menu after navigation
+                    if (hamburgerBtn.classList.contains('is-active')) {
+                        hamburgerBtn.classList.remove('is-active');
+                        mobileNav.classList.remove('is-active');
+                    }
+                    
+                    transitionOverlay.classList.remove('is-active');
+                }, 600); // Wait for the transition-in to finish
+            }
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const pageId = link.getAttribute('data-page');
+                    navigateToPage(pageId);
+                });
+            });
+
+            // --- Particles.js Configuration ---
+            const particlesConfig = { "particles": { "number": { "value": 80, "density": { "enable": true, "value_area": 800 } }, "color": { "value": ["#8139f5", "#00cde9", "#39f581", "#ff00ff"] }, "shape": { "type": "circle" }, "opacity": { "value": 0.6, "random": true, "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false } }, "size": { "value": 4, "random": true, "anim": { "enable": true, "speed": 10, "size_min": 0.1, "sync": false } }, "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.4, "width": 1 }, "move": { "enable": true, "speed": 3, "direction": "none", "random": true, "straight": false, "out_mode": "out" } }, "interactivity": { "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } }, "modes": { "grab": { "distance": 200, "line_linked": { "opacity": 1 } }, "push": { "particles_nb": 4 } } }, "retina_detect": true };
+
+            // --- Opening Animation Logic ---
+            function showMainContent() {
+                if (header) header.style.display = 'flex';
+                if (main) main.style.display = 'block';
+                if (footer) footer.style.display = 'flex';
+                if (particlesJsDiv && typeof particlesJS !== 'undefined') {
+                    particlesJS('particles-js', particlesConfig);
+                }
+            }
+
+            const path = window.location.pathname;
+            const isIndexPage = path.endsWith('/') || path.endsWith('/index.html') || !path.split('/').pop().includes('.');
+            
+            if (isIndexPage && !sessionStorage.getItem('openingPlayed')) {
+                let textIndex = 0;
+                const messages = ["SYSTEM INITIALIZING...", "DECRYPTING CORE DATA...", "AWAITING COMMAND...", "ACCESS GRANTED."];
+                function typeWriterSequence() {
+                    if (textIndex < messages.length) {
+                        openingText.textContent = messages[textIndex];
+                        openingText.style.opacity = 1;
+                        setTimeout(() => { openingText.style.opacity = 0; textIndex++; setTimeout(typeWriterSequence, 800); }, 1500);
+                    } else {
+                        startButton.style.display = 'block';
+                        setTimeout(() => startButton.style.opacity = 1, 100);
+                    }
+                }
+                startButton.style.display = 'none';
+                openingText.style.opacity = 0;
+                setTimeout(typeWriterSequence, 500);
+                startButton.addEventListener('click', function() {
+                    sessionStorage.setItem('openingPlayed', 'true');
+                    startButton.style.opacity = 0;
+                    startButton.style.pointerEvents = 'none';
+                    openingText.textContent = "LOADING WORLD DATA...";
+                    openingText.style.opacity = 1;
+                    setTimeout(() => {
+                        openingText.style.opacity = 0;
+                        neonGatewayContainer.style.display = 'flex';
+                        neonGatewayContainer.style.opacity = 1;
+                    }, 1500);
+                    setTimeout(() => {
+                        digitalInfernoLogo.style.display = 'block';
+                        digitalInfernoLogo.style.animation = 'digitalInferno 1s ease-out forwards';
+                        setTimeout(() => {
+                            flashOverlay.style.opacity = 1;
+                            setTimeout(() => {
+                                flashOverlay.style.opacity = 0;
+                                openingScreen.style.opacity = 0;
+                                neonGatewayContainer.style.opacity = 0;
+                                setTimeout(() => { openingScreen.style.display = 'none'; showMainContent(); }, 1000);
+                            }, 100);
+                        }, 1000);
+                    }, 3500);
+                });
+            } else {
+                openingScreen.style.display = 'none';
+                showMainContent();
+            }
+
+            // --- Music Player Logic ---
+            const musicGrid = document.querySelector('.music-grid');
+            const tracks = [
+                { title: "君だけでいい", jacket: "https://i.ibb.co/rG83C8YD/image.png", pageUrl: "https://big-up.style/Lo21h6RwVh" },
+                { title: "君を想うたびに夜がくる", jacket: "https://i.ibb.co/67C1Dgnd/12-EF4-B78-5077-42-DF-AE55-2-A30149-CDB71.png", pageUrl: "https://big-up.style/WwqJhkpQD5" },
+                { title: "遠くても君だけを", jacket: "https://i.ibb.co/wrFyh5J8/p3-IEkv-W4z-Vu36-Xd73o0q-P.png", pageUrl: "https://big-up.style/WwqJhkpQD5" },
+                { title: "まだ見ぬキミへ", jacket: "https://i.ibb.co/4R0Tb7gp/o-FCSH1o-TD-d6s6g-4cyb-X.png", pageUrl: "https://big-up.style/kk3irk3mTs" },
+                { title: "遠くても約束はそばにある", jacket: "https://i.ibb.co/PzDJHxpv/Kqbx9pq-Br1e-X4t-Mogw-Udy.png", pageUrl: "https://big-up.style/BgeH9Sybbs" }
+            ];
+            function createTrackCard(track) {
+                const card = document.createElement('a');
+                card.href = track.pageUrl;
+                card.target = "_blank";
+                card.className = 'track-card';
+                card.style.textDecoration = 'none';
+                card.innerHTML = `<div class="jacket-container"><img src="${track.jacket}" onerror="this.onerror=null;this.src='https://placehold.co/300x300/ff00ff/FFFFFF?text=ART';" alt="${track.title} Jacket" class="jacket-image"><div class="play-overlay"><i class="fas fa-external-link-alt"></i></div></div><div class="track-info"><h3>${track.title}</h3></div>`;
+                return card;
+            }
+            if (musicGrid) {
+                musicGrid.innerHTML = ''; 
+                tracks.forEach(track => {
+                    musicGrid.appendChild(createTrackCard(track));
+                });
+            }
+
+            // --- General UI Logic ---
+            AOS.init({ once: true, offset: 100, duration: 1000 });
+            const modal = document.getElementById("modal");
+            const modalBtn = document.querySelector(".hero .button");
+            const closeSpan = document.querySelector(".modal .close");
+            if (modal && modalBtn) modalBtn.addEventListener('click', () => modal.style.display = "block");
+            if (modal && closeSpan) closeSpan.addEventListener('click', () => modal.style.display = "none");
+            window.addEventListener('click', (event) => { if (modal && event.target == modal) modal.style.display = "none"; });
+        });
+    </script>
+</body>
+</html>
