@@ -312,6 +312,16 @@
         .track-card:hover .play-overlay { opacity: 1; }
         .track-info { padding: 15px; }
         .track-info h3 { margin: 0; font-size: 1.2em; color: var(--text-color); }
+        
+        /* 埋め込みプレーヤーのスタイル */
+        .music-player-frame {
+            width: 100%;
+            height: 352px;
+            border: none;
+            border-radius: 12px;
+            margin-top: 40px; /* グリッドとの間隔 */
+        }
+
 
         /* ----------- page3 (コンタクト) ----------- */
         .contact-info { text-align: center; margin-top: 40px; }
@@ -472,6 +482,8 @@
         <section id="page-shion" class="page-content">
             <div class="profile-card shion-card" data-aos="fade-down"><img src="https://i.ibb.co/4RzdYgbF/bt0n-Pu-Cotf55-R6-ARKv0o-O.jpg" onerror="this.onerror=null;this.src='https://placehold.co/200x200/ff00ff/FFFFFF?text=紫苑';" alt="紫苑 アーティスト写真" class="profile-photo"><div class="profile-info"><h2>紫苑</h2><p class="bio">シンガーソングライターの紫苑です。 バラードを中心に作詞作曲しています。 誰かの心に寄り添えるような歌を届けたいです。</p><div class="social-icons"><a href="https://big-up.style/artists/302804" target="_blank" title="BIG UP!"><i class="fas fa-music"></i></a></div></div></div>
             <div class="music-grid" data-aos="fade-up"></div>
+            <!-- この下に音楽プレーヤーが追加されます -->
+            <iframe id="music-player-frame" class="music-player-frame" src="" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
         </section>
         <section id="page-contact" class="page-content">
             <section class="content" data-aos="fade-up">
@@ -640,27 +652,63 @@
 
             // --- Music Player Logic ---
             const musicGrid = document.querySelector('.music-grid');
+            const playerFrame = document.getElementById('music-player-frame');
+
             const tracks = [
-                { title: "君だけでいい", jacket: "https://i.ibb.co/rG83C8YD/image.png", pageUrl: "https://big-up.style/Lo21h6RwVh" },
-                { title: "君を想うたびに夜がくる", jacket: "https://i.ibb.co/67C1Dgnd/12-EF4-B78-5077-42-DF-AE55-2-A30149-CDB71.png", pageUrl: "https://big-up.style/WwqJhkpQD5" },
-                { title: "遠くても君だけを", jacket: "https://i.ibb.co/wrFyh5J8/p3-IEkv-W4z-Vu36-Xd73o0q-P.png", pageUrl: "https://big-up.style/WwqJhkpQD5" },
-                { title: "まだ見ぬキミへ", jacket: "https://i.ibb.co/4R0Tb7gp/o-FCSH1o-TD-d6s6g-4cyb-X.png", pageUrl: "https://big-up.style/kk3irk3mTs" },
-                { title: "遠くても約束はそばにある", jacket: "https://i.ibb.co/PzDJHxpv/Kqbx9pq-Br1e-X4t-Mogw-Udy.png", pageUrl: "https://big-up.style/BgeH9Sybbs" }
+                { 
+                    title: "君だけでいい", 
+                    jacket: "https://i.ibb.co/rG83C8YD/image.png", 
+                    embedUrl: "https://open.spotify.com/embed/track/1n60Vom8ookbnCHg9gI3q8?utm_source=generator" 
+                },
+                { 
+                    title: "君を想うたびに夜がくる", 
+                    jacket: "https://i.ibb.co/67C1Dgnd/12-EF4-B78-5077-42-DF-AE55-2-A30149-CDB71.png", 
+                    embedUrl: "https://open.spotify.com/embed/track/3qCpWy4XiDkG8XuOwLkSuv?utm_source=generator" 
+                },
+                { 
+                    title: "遠くても君だけを", 
+                    jacket: "https://i.ibb.co/wrFyh5J8/p3-IEkv-W4z-Vu36-Xd73o0q-P.png", 
+                    embedUrl: "https://open.spotify.com/embed/track/5pA8cBctrkkEhHVyWUpGDR?utm_source=generator" 
+                },
+                { 
+                    title: "まだ見ぬキミへ", 
+                    jacket: "https://i.ibb.co/4R0Tb7gp/o-FCSH1o-TD-d6s6g-4cyb-X.png", 
+                    embedUrl: "https://open.spotify.com/embed/track/5TK3zOStE4v7RBsZdasJXc?utm_source=generator" 
+                },
+                { 
+                    title: "遠くても約束はそばにある", 
+                    jacket: "https://i.ibb.co/PzDJHxpv/Kqbx9pq-Br1e-X4t-Mogw-Udy.png", 
+                    embedUrl: "https://open.spotify.com/embed/track/4qbELOGhlW16pRbHP8LEEK?utm_source=generator" 
+                }
             ];
+
             function createTrackCard(track) {
-                const card = document.createElement('a');
-                card.href = track.pageUrl;
-                card.target = "_blank";
+                const card = document.createElement('div');
                 card.className = 'track-card';
-                card.style.textDecoration = 'none';
-                card.innerHTML = `<div class="jacket-container"><img src="${track.jacket}" onerror="this.onerror=null;this.src='https://placehold.co/300x300/ff00ff/FFFFFF?text=ART';" alt="${track.title} Jacket" class="jacket-image"><div class="play-overlay"><i class="fas fa-external-link-alt"></i></div></div><div class="track-info"><h3>${track.title}</h3></div>`;
+                card.addEventListener('click', () => {
+                    if (playerFrame && track.embedUrl) {
+                        playerFrame.src = track.embedUrl;
+                    }
+                });
+
+                card.innerHTML = `
+                    <div class="jacket-container">
+                        <img src="${track.jacket}" onerror="this.onerror=null;this.src='https://placehold.co/300x300/ff00ff/FFFFFF?text=ART';" alt="${track.title} Jacket" class="jacket-image">
+                        <div class="play-overlay"><i class="fas fa-play"></i></div>
+                    </div>
+                    <div class="track-info"><h3>${track.title}</h3></div>`;
                 return card;
             }
-            if (musicGrid) {
+
+            if (musicGrid && playerFrame) {
                 musicGrid.innerHTML = ''; 
                 tracks.forEach(track => {
                     musicGrid.appendChild(createTrackCard(track));
                 });
+                // 最初に1曲目を読み込む
+                if (tracks.length > 0 && tracks[0].embedUrl) {
+                    playerFrame.src = tracks[0].embedUrl;
+                }
             }
             
             // --- Chatbot Logic ---
