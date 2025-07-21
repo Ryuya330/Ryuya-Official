@@ -35,6 +35,7 @@
             overflow-x: hidden;
             background-color: var(--bg-color);
             position: relative;
+            font-size: 16px; /* ベースフォントサイズ */
         }
 
         /* 画像保存防止のためのスタイル */
@@ -84,7 +85,7 @@
         .main-nav a {
             text-decoration: none;
             color: #fff;
-            font-size: 1.2em;
+            font-size: 1.1rem;
             padding: 8px 0;
             position: relative;
             transition: color 0.3s ease, text-shadow 0.3s ease;
@@ -182,7 +183,7 @@
         .mobile-nav a {
             display: block;
             padding: 20px;
-            font-size: 1.5em;
+            font-size: 1.4rem;
             color: var(--text-color);
             text-decoration: none;
             transition: background-color 0.3s, color 0.3s;
@@ -237,15 +238,15 @@
         @keyframes fadeInPage { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         .hero { text-align: center; padding: 120px 20px; background-color: rgba(0, 0, 0, 0.7); margin-bottom: 50px; border-radius: 15px; box-shadow: 0 0 30px rgba(129, 57, 245, 0.5); position: relative; overflow: hidden; }
-        .hero h1 { font-size: 4em; margin-bottom: 25px; color: #fff; text-shadow: 0 0 20px rgba(255, 255, 255, 0.9), 0 0 40px rgba(255, 255, 255, 0.6); letter-spacing: 3px; }
-        .hero p { font-size: 1.4em; line-height: 1.7; max-width: 900px; margin: 0 auto 40px; color: #e0e0e0; }
+        .hero h1 { font-size: clamp(2.5rem, 8vw, 4rem); margin-bottom: 25px; color: #fff; text-shadow: 0 0 20px rgba(255, 255, 255, 0.9), 0 0 40px rgba(255, 255, 255, 0.6); letter-spacing: 3px; }
+        .hero p { font-size: clamp(1rem, 3vw, 1.4rem); line-height: 1.7; max-width: 900px; margin: 0 auto 40px; color: #e0e0e0; }
 
         .content-button {
             display: inline-flex;
             align-items: center;
             gap: 10px;
             padding: 15px 30px;
-            font-size: 1.2em;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
             font-weight: bold;
             color: var(--secondary-color);
             background: transparent;
@@ -268,8 +269,8 @@
         }
 
         .content { background-color: rgba(0, 0, 0, 0.8); padding: 50px; margin-bottom: 40px; border-radius: 12px; box-shadow: 0 0 25px rgba(129, 57, 245, 0.4); border: 1px solid rgba(129, 57, 245, 0.3); }
-        .content h2 { font-size: 3em; color: var(--primary-color); margin-bottom: 25px; border-bottom: 3px solid rgba(129, 57, 245, 0.6); padding-bottom: 15px; text-shadow: 0 0 15px rgba(129, 57, 245, 0.8); letter-spacing: 1.5px; }
-        .content p { font-size: 1.2em; line-height: 1.9; color: #c0c0c0; }
+        .content h2 { font-size: clamp(2rem, 6vw, 3rem); color: var(--primary-color); margin-bottom: 25px; border-bottom: 3px solid rgba(129, 57, 245, 0.6); padding-bottom: 15px; text-shadow: 0 0 15px rgba(129, 57, 245, 0.8); letter-spacing: 1.5px; }
+        .content p { font-size: clamp(0.9rem, 2.5vw, 1.1rem); line-height: 1.9; color: #c0c0c0; }
 
         /* 注意書きセクションのスタイル */
         .notice-section {
@@ -283,13 +284,14 @@
             align-items: center;
             justify-content: center;
             gap: 15px;
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
         }
 
         footer { background-color: var(--bg-glass); padding: 25px; text-align: center; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; border-top: 2px solid rgba(0, 200, 255, 0.5); box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.5); }
-        footer p { margin: 0; color: #aaa; font-size: 0.95em; }
+        footer p { margin: 0; color: #aaa; font-size: 0.9rem; }
         footer nav ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; justify-content: center; }
         footer nav li { margin: 0 12px; }
-        footer nav a { text-decoration: none; color: #aaa; transition: color 0.3s ease; cursor: pointer; }
+        footer nav a { text-decoration: none; color: #aaa; transition: color 0.3s ease; cursor: pointer; font-size: 0.9rem;}
         footer nav a:hover { color: var(--secondary-color); }
 
         #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -2; }
@@ -302,8 +304,8 @@
         .profile-card { display: flex; gap: 40px; align-items: center; padding: 40px; border-radius: 15px; margin-bottom: 50px; }
         .profile-photo { width: 200px; height: 200px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
         .profile-info { flex-grow: 1; }
-        .profile-info h2 { font-family: 'Major Mono Display', monospace; font-size: 3.5em; margin: 0 0 15px 0; }
-        .profile-info .bio { font-size: 1.1em; line-height: 1.8; margin-bottom: 25px; }
+        .profile-info h2 { font-family: 'Major Mono Display', monospace; font-size: clamp(2.5rem, 7vw, 3.5rem); margin: 0 0 15px 0; }
+        .profile-info .bio { font-size: clamp(0.9rem, 2.5vw, 1.1rem); line-height: 1.8; margin-bottom: 25px; }
 
         .ryuya-card { background-color: rgba(25, 25, 50, 0.3); border: 1px solid var(--primary-color); box-shadow: 0 0 30px rgba(129, 57, 245, 0.3); }
         .ryuya-card .profile-photo { border: 4px solid var(--primary-color); box-shadow: 0 0 20px var(--primary-color); }
@@ -543,22 +545,16 @@
             .social-icons { justify-content: center; }
         }
         @media (max-width: 768px) {
+            body { font-size: 14px; }
             .main-nav { display: none; }
             .hamburger-btn { display: block; }
             header { justify-content: flex-end; }
-            .logo { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); }
-            .hero h1 { font-size: 2.8em; }
-            .hero p { font-size: 1.1em; }
-            .content h2 { font-size: 2.2em; }
-            #start-button { font-size: 1.5em; padding: 15px 30px; }
-            #opening-text { font-size: 1.2em; }
-            .profile-info h2 { font-size: 2.8em; }
+            .content { padding: 30px; }
         }
         @media (max-width: 480px) {
-            .logo { font-size: 2em; }
-            .hero h1 { font-size: 2.2em; }
+            body { font-size: 13px; }
+            .content { padding: 20px; }
             .profile-photo { width: 150px; height: 150px; }
-            .profile-info h2 { font-size: 2.5em; }
         }
     </style>
 </head>
