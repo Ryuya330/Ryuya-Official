@@ -296,10 +296,70 @@
         .social-icons a:hover { color: #fff; transform: scale(1.2); text-shadow: 0 0 15px #fff; }
 
         /* ----------- page1 (りゅうやの活動) ----------- */
-        .ryuya-gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; padding: 30px; background-color: rgba(0, 0, 0, 0.7); border-radius: 15px; box-shadow: 0 0 20px rgba(0, 200, 255, 0.3); position: relative; overflow: hidden; }
-        .ryuya-gallery-item { position: relative; overflow: hidden; border-radius: 10px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); border: 1px solid rgba(0, 200, 255, 0.2); transition: transform 0.3s ease, box-shadow 0.3s ease; }
-        .ryuya-gallery-item:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 10px 25px rgba(0, 200, 255, 0.6); }
-        .ryuya-gallery-item img { width: 100%; height: 250px; object-fit: cover; display: block; border-radius: 10px; }
+        .ryuya-gallery-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+            gap: 20px; 
+            padding: 20px; 
+            background-color: rgba(0, 0, 0, 0.7); 
+            border-radius: 15px; 
+        }
+        .ryuya-gallery-item { 
+            position: relative; 
+            overflow: hidden; 
+            border-radius: 10px; 
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); 
+            border: 1px solid rgba(0, 200, 255, 0.2); 
+            transition: transform 0.3s ease, box-shadow 0.3s ease; 
+            cursor: pointer;
+            aspect-ratio: 1 / 1;
+        }
+        .ryuya-gallery-item:hover { 
+            transform: translateY(-8px) scale(1.02); 
+            box-shadow: 0 10px 25px rgba(0, 200, 255, 0.6); 
+        }
+        .ryuya-gallery-item img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            display: block; 
+        }
+
+        /* Lightbox Styles */
+        .lightbox-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10002;
+            display: none; /* Initially hidden */
+            justify-content: center;
+            align-items: center;
+            animation: fadeInLightbox 0.3s ease;
+        }
+        @keyframes fadeInLightbox { from { opacity: 0; } to { opacity: 1; } }
+        .lightbox-content {
+            max-width: 90vw;
+            max-height: 85vh;
+            border-radius: 10px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .lightbox-close:hover {
+            color: #bbb;
+        }
+
 
         /* ----------- page2 (紫苑の活動) ----------- */
         .music-grid { 
@@ -524,7 +584,10 @@
         </section>
         <section id="page-ryuya" class="page-content">
             <div class="profile-card ryuya-card" data-aos="fade-down"><img src="https://i.ibb.co/RK3h7KM/l-IHf-Ng-Nre-Zw-Mxg68efb-Xa.png" alt="りゅうや アイコン" class="profile-photo"><div class="profile-info"><h2>りゅうや</h2><p class="bio">AIが紡ぎ出す無限のアートワークと、その背後にある思考プロセスを探索するAIクリエイター。</p></div></div>
-            <section class="content" data-aos="fade-up"><h2>AIイラストギャラリー</h2><div class="ryuya-gallery-grid"><div class="ryuya-gallery-item"><img src="https://placehold.co/600x400/8139f5/FFFFFF?text=未来都市" alt="AI Illustration 1"></div><div class="ryuya-gallery-item"><img src="https://placehold.co/600x400/00cde9/FFFFFF?text=幻影の森" alt="AI Illustration 2"></div><div class="ryuya-gallery-item"><img src="https://placehold.co/600x400/39f581/FFFFFF?text=アンドロイド" alt="AI Illustration 3"></div><div class="ryuya-gallery-item"><img src="https://placehold.co/600x400/f58139/FFFFFF?text=宇宙回廊" alt="AI Illustration 4"></div></div></section>
+            <section class="content" data-aos="fade-up">
+                <h2>AIイラストギャラリー</h2>
+                <div class="ryuya-gallery-grid"></div>
+            </section>
         </section>
         <section id="page-shion" class="page-content">
             <div class="profile-card shion-card" data-aos="fade-down"><img src="https://i.ibb.co/4RzdYgbF/bt0n-Pu-Cotf55-R6-ARKv0o-O.jpg" onerror="this.onerror=null;this.src='https://placehold.co/200x200/ff00ff/FFFFFF?text=紫苑';" alt="紫苑 アーティスト写真" class="profile-photo"><div class="profile-info"><h2>紫苑</h2><p class="bio">シンガーソングライターの紫苑です。 バラードを中心に作詞作曲しています。 誰かの心に寄り添えるような歌を届けたいです。</p><div class="social-icons"><a href="https://big-up.style/artists/302804" target="_blank" title="BIG UP!"><i class="fas fa-music"></i></a></div></div></div>
@@ -560,6 +623,12 @@
             </div>
         </section>
     </main>
+
+    <!-- Lightbox -->
+    <div id="lightbox-overlay" class="lightbox-overlay">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+    </div>
 
     <!-- フッター -->
     <footer>
@@ -695,6 +764,47 @@
                 showMainContent();
             }
 
+            // --- AI Gallery Logic ---
+            const ryuyaGalleryGrid = document.querySelector('.ryuya-gallery-grid');
+            if (ryuyaGalleryGrid) {
+                const imageUrls = [
+                    "https://i.ibb.co/HD81w0Gd/d1tdicte878c73em4u40-webp-image.png", "https://i.ibb.co/pB7wnRY2/d1tdicte878c73em4u4g-webp-image.png", "https://i.ibb.co/Fk7nBVxg/d0i1krde878c7383olug-webp-image.png", "https://i.ibb.co/fGyB5C9B/d0h4vs5e878c738705j0-webp-image.png", "https://i.ibb.co/Zz0gJs9Y/cs1793te878c73ebn2t0-webp-image.png", "https://i.ibb.co/gZ86Lz1q/cs1m635e878c73emg040-webp-image.png", "https://i.ibb.co/3YFPCPtY/cs26a8te878c73djh7m0-webp-image.png", "https://i.ibb.co/HSYWVsz/crqurtle878c73fs1mf0-webp-image.png", "https://i.ibb.co/WN9DwVWq/crt8drle878c73bfodjg-webp-image.png", "https://i.ibb.co/LdKstCcC/cljiub14msbabvtnm120-webp-image.png", "https://i.ibb.co/hxjQ4zSQ/clf9ks14msb8hjjl00eg-webp-image.png", "https://i.ibb.co/9H88S7HX/clf9l3p4msbbp85p2gjg-webp-image.png", "https://i.ibb.co/MDhb15Vv/clf9rmh4msbbp85p5ov0-webp-image.png", "https://i.ibb.co/KcLJb6wg/clcrln14msb215p4s5dg-webp-image.png", "https://i.ibb.co/XZqtmKTY/clb2hm94msb9br5t6i60-webp-image.png", "https://i.ibb.co/QFt7Hnd0/cl5liq14msbfhr8ogedg-webp-image.png", "https://i.ibb.co/Rp7WZ9ms/cl8k85p4msb3hvj0rla0-webp-image.png", "https://i.ibb.co/8n6t3gQ8/ckvgq9p4msbd5sofbcsg-webp-image.png", "https://i.ibb.co/hFkYcH0C/cptkbqle878c73dgv2eg-webp-image.png", "https://i.ibb.co/xKT0cWzs/cop37gte878c73fdd3u0-webp-image.png", "https://i.ibb.co/YgLS44m/d061pr5e878c73fphvcg-webp-image.png", "https://i.ibb.co/HpNpb6WN/cve16jte878c73cdq51g-webp-image.png", "https://i.ibb.co/JWkkBMRG/cvcacule878c73cfm0vg-webp-image.png", "https://i.ibb.co/BFScCch/cvcacmte878c73ei0iug-webp-image.png", "https://i.ibb.co/DDvdHxVd/cvcaasle878c73cg372g-webp-image.png", "https://i.ibb.co/yBxpm2WL/cvcab9le878c73cfcogg-webp-image.png", "https://i.ibb.co/6JcFCStt/cvca7pde878c73cenrng-webp-image.png", "https://i.ibb.co/XxJDp0TX/cth4o7te878c73e7cf90-webp-image.png", "https://i.ibb.co/Lzx72kmY/cth4o9te878c73esv9c0-webp-image.png", "https://i.ibb.co/NdJwMf5v/ctgptdte878c73aqdku0-webp-image.png", "https://i.ibb.co/rKmmgNVW/ct0u3gte878c73apctfg-webp-image.png", "https://i.ibb.co/S7KtJHrk/csv81qle878c73enft50-webp-image.png", "https://i.ibb.co/dwhy36Rg/cspug1de878c73es3ab0-webp-image.png", "https://i.ibb.co/tpLYytJL/csvt4nde878c73c6pudg-webp-image.png", "https://i.ibb.co/5gsjNhmz/cssvdb5e878c738mqlb0-webp-image.png", "https://i.ibb.co/vxdTMsMZ/csoq6ple878c7389eqng-webp-image.png", "https://i.ibb.co/3Pf4vwq/cs2grbte878c73dnpk00-webp-image.png", "https://i.ibb.co/5WTmBNR3/cs69j2le878c738gm040-webp-image.png", "https://i.ibb.co/XfHWFmJw/csmc4cte878c73a84kf0-webp-image.png", "https://i.ibb.co/Q7Qj0PdL/cskbr9de878c73eiar10-webp-image.png", "https://i.ibb.co/wZPF2P5p/csd42l5e878c73f89crg-webp-image.png", "https://i.ibb.co/0jN30q2d/csc9j2le878c73aaqjqg-webp-image.png", "https://i.ibb.co/7tK2s66R/cs6a5ble878c73adv2s0-webp-image.png", "https://i.ibb.co/wGnsw6n/csd2nrde878c73c62cs0-webp-image.png", "https://i.ibb.co/Xk5djgMY/cr3780de878c73f7bvd0-webp-image.png", "https://i.ibb.co/fVn8ZTZS/cs70jvle878c738i975g-webp-image.png", "https://i.ibb.co/rGsTkhTv/crv7agte878c73f8bve0-webp-image.png", "https://i.ibb.co/Kzyv5rQ0/cs16vqle878c73di57q0-webp-image.png"
+                ];
+                const uniqueImageUrls = [...new Set(imageUrls)];
+
+                ryuyaGalleryGrid.innerHTML = ''; // Clear existing placeholders
+                uniqueImageUrls.forEach(url => {
+                    const item = document.createElement('div');
+                    item.className = 'ryuya-gallery-item';
+                    item.innerHTML = `<img src="${url}" alt="AI Illustration" loading="lazy" onerror="this.parentElement.style.display='none'">`;
+                    ryuyaGalleryGrid.appendChild(item);
+                });
+
+                // Lightbox Logic
+                const lightboxOverlay = document.getElementById('lightbox-overlay');
+                const lightboxImg = document.getElementById('lightbox-img');
+                const lightboxClose = document.querySelector('.lightbox-close');
+
+                ryuyaGalleryGrid.addEventListener('click', e => {
+                    if (e.target.tagName === 'IMG') {
+                        lightboxOverlay.style.display = 'flex';
+                        lightboxImg.src = e.target.src;
+                    }
+                });
+
+                function closeLightbox() {
+                    lightboxOverlay.style.display = 'none';
+                }
+
+                lightboxClose.addEventListener('click', closeLightbox);
+                lightboxOverlay.addEventListener('click', e => {
+                    if (e.target === lightboxOverlay) {
+                        closeLightbox();
+                    }
+                });
+            }
+
+
             // --- Music Player Logic ---
             const musicGrid = document.querySelector('.music-grid');
 
@@ -729,8 +839,7 @@
             function createTrackCard(track) {
                 const card = document.createElement('div');
                 card.className = 'track-card';
-                // Set aspect ratio to maintain square shape for the card
-                card.style.aspectRatio = '1 / 1';
+                card.style.aspectRatio = '1 / 1.3'; // Adjust aspect ratio for title
 
                 card.innerHTML = `
                     <div class="flipper">
@@ -747,27 +856,23 @@
                 `;
 
                 card.addEventListener('click', () => {
-                    // Find any other card that is currently flipped and flip it back
                     const currentlyFlipped = document.querySelector('.track-card.is-flipped');
                     if (currentlyFlipped && currentlyFlipped !== card) {
                         currentlyFlipped.classList.remove('is-flipped');
                         const otherIframe = currentlyFlipped.querySelector('.back iframe');
                         if (otherIframe) {
-                            otherIframe.src = ''; // Stop playback
+                            otherIframe.src = ''; 
                         }
                     }
 
-                    // Toggle the flip state of the clicked card
                     card.classList.toggle('is-flipped');
                     
                     const iframe = card.querySelector('.back iframe');
                     if (card.classList.contains('is-flipped')) {
-                        // Set the src to autoplay only when flipping to the back
                         if (iframe.getAttribute('src') === '') {
                              iframe.src = track.embedUrl + '&autoplay=1';
                         }
                     } else {
-                        // Stop the music by clearing the src when flipping back to the front
                         iframe.src = ''; 
                     }
                 });
