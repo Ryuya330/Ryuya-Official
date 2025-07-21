@@ -3,6 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- ===================================================================== -->
+    <!-- HTTP Security Headers -->
+    <!-- ===================================================================== -->
+    <!-- Content Security Policy (CSP): 信頼できるソースを指定し、XSS攻撃などを防ぎます -->
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self'; 
+        script-src 'self' 'unsafe-inline' https://unpkg.com https://cdn.jsdelivr.net https://generativelanguage.googleapis.com; 
+        style-src 'self' 'unsafe-inline' https://unpkg.com https://fonts.googleapis.com https://cdnjs.cloudflare.com; 
+        font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; 
+        img-src 'self' https://i.ibb.co https://placehold.co; 
+        frame-src 'self' https://open.spotify.com;
+        connect-src 'self' https://generativelanguage.googleapis.com;
+    ">
+    <!-- X-Frame-Options: クリックジャッキング攻撃を防ぐため、iframe内での表示を拒否します -->
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <!-- ===================================================================== -->
+
     <title>りゅうや × 紫苑</title>
     
     <!-- External Libraries & Fonts -->
@@ -571,6 +589,14 @@
         <button id="start-button">START SYSTEM</button>
     </div>
 
+    <!-- DevTools Blocker Overlay -->
+    <div id="devtools-blocker" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #000; z-index: 99999; color: #ff4444; text-align: center; padding-top: 30vh;">
+        <div style="font-size: 3rem; margin-bottom: 20px;"><i class="fas fa-ban"></i></div>
+        <h1 style="font-size: 2rem;">セキュリティ警告</h1>
+        <p style="font-size: 1.2rem;">開発者ツールの使用は許可されていません。<br>このページを閉じてください。</p>
+    </div>
+
+
     <!-- ヘッダー -->
     <header data-aos="fade-down" data-aos-duration="1000">
         <nav class="main-nav">
@@ -910,7 +936,7 @@
                 });
             }
             
-            // --- Content Protection Logic ---
+            // --- Content Protection & Security Logic ---
             // Disable right-click context menu
             document.addEventListener('contextmenu', event => event.preventDefault());
 
@@ -920,6 +946,23 @@
                     event.preventDefault();
                 }
             });
+            
+            // --- DevTools Detection Logic ---
+            const devToolsBlocker = document.getElementById('devtools-blocker');
+            function checkDevTools() {
+                const threshold = 160;
+                const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+                const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+
+                if (widthThreshold || heightThreshold) {
+                    if (devToolsBlocker) devToolsBlocker.style.display = 'block';
+                }
+            }
+            // Check periodically
+            setInterval(checkDevTools, 1000);
+            // Also check on resize
+            window.addEventListener('resize', checkDevTools);
+
 
             // --- Chatbot Logic ---
             const chatbotToggle = document.getElementById('chatbot-toggle');
