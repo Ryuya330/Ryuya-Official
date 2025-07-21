@@ -271,6 +271,20 @@
         .content h2 { font-size: 3em; color: var(--primary-color); margin-bottom: 25px; border-bottom: 3px solid rgba(129, 57, 245, 0.6); padding-bottom: 15px; text-shadow: 0 0 15px rgba(129, 57, 245, 0.8); letter-spacing: 1.5px; }
         .content p { font-size: 1.2em; line-height: 1.9; color: #c0c0c0; }
 
+        /* 注意書きセクションのスタイル */
+        .notice-section {
+            background-color: rgba(50, 0, 0, 0.3);
+            border: 1px solid #ff4444;
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
+        }
+        .notice-section h2 {
+            color: #ff4444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
         footer { background-color: var(--bg-glass); padding: 25px; text-align: center; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; border-top: 2px solid rgba(0, 200, 255, 0.5); box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.5); }
         footer p { margin: 0; color: #aaa; font-size: 0.95em; }
         footer nav ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; justify-content: center; }
@@ -589,6 +603,10 @@
         <div id="particles-js"></div>
         <section id="page-home" class="page-content is-active">
             <div class="hero"><h1 class="glitch" data-text="新しい拠点へようこそ">新しい拠点へようこそ</h1><p>AIクリエイター「りゅうや」とアーティスト「紫苑」の世界へ</p></div>
+            <section class="content notice-section" data-aos="fade-up">
+                <h2 class="glitch" data-text="【重要】コンテンツの取り扱いに関するお願い"><i class="fas fa-exclamation-triangle"></i>【重要】コンテンツの取り扱いに関するお願い</h2>
+                <p>当サイト内のイラスト、楽曲、文章、写真などのすべてのコンテンツの無断保存、スクリーンショット、画面録画、転載、使用、転用を固く禁じます。すべてのコンテンツの著作権は、りゅうや及び紫苑に帰属します。</p>
+            </section>
             <section class="content" data-aos="fade-up"><h2 class="glitch" data-text="りゅうやの創造性">りゅうやの創造性</h2><p>AIが紡ぎ出す無限のアートワークと、その背後にある思考プロセスを探索します。</p><button class="content-button nav-link" data-page="page-ryuya"><i class="fas fa-images"></i> ギャラリーへ</button></section>
             <section class="content" data-aos="fade-up"><h2 class="glitch" data-text="紫苑の音世界">紫苑の音世界</h2><p>感情とテクノロジーが織りなすサウンドスケープ。心揺さぶる楽曲の数々をお楽しみください。</p><button class="content-button nav-link" data-page="page-shion"><i class="fas fa-music"></i> 楽曲を聴く</button></section>
         </section>
