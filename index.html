@@ -1017,24 +1017,32 @@
             });
             
             // --- DevTools Detection Logic ---
-            const devToolsBlocker = document.getElementById('devtools-blocker');
-            const devtoolsDetector = {
-                isOpen: false,
-                toString() {
-                    this.isOpen = true;
-                    return 'dev-tools-check';
-                }
-            };
+            // This logic is designed to run only on non-mobile devices to prevent false positives on phones and tablets.
+            const isMobile = /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-            setInterval(() => {
-                devtoolsDetector.isOpen = false;
-                console.log('%c', devtoolsDetector);
-                if (devtoolsDetector.isOpen) {
-                    if (devToolsBlocker) {
-                        devToolsBlocker.style.display = 'block';
+            if (!isMobile) {
+                const devToolsBlocker = document.getElementById('devtools-blocker');
+                const devtoolsDetector = {
+                    isOpen: false,
+                    toString() {
+                        this.isOpen = true;
+                        // This message is part of the detection mechanism.
+                        return 'Developer tools checker';
                     }
-                }
-            }, 1000);
+                };
+
+                setInterval(() => {
+                    devtoolsDetector.isOpen = false;
+                    // The console.log trick: when dev tools are open, the browser
+                    // will evaluate the object and call its toString() method.
+                    console.log('%c', devtoolsDetector);
+                    if (devtoolsDetector.isOpen) {
+                        if (devToolsBlocker) {
+                            devToolsBlocker.style.display = 'block';
+                        }
+                    }
+                }, 1500); // Check every 1.5 seconds
+            }
 
 
             // --- Chatbot Logic ---
