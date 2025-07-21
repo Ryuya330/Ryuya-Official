@@ -886,6 +886,17 @@
                 });
             }
             
+            // --- Content Protection Logic ---
+            // Disable right-click context menu
+            document.addEventListener('contextmenu', event => event.preventDefault());
+
+            // Disable dragging for all images
+            document.addEventListener('dragstart', event => {
+                if (event.target.tagName === 'IMG') {
+                    event.preventDefault();
+                }
+            });
+
             // --- Chatbot Logic ---
             const chatbotToggle = document.getElementById('chatbot-toggle');
             const chatbotContainer = document.getElementById('chatbot-container');
