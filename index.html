@@ -14,7 +14,6 @@
     <style>
         /* ==============================================
         CSS STYLES
-        - Updated page transition effect with user-provided images.
         ==============================================
         */
 
@@ -303,23 +302,71 @@
         .ryuya-gallery-item img { width: 100%; height: 250px; object-fit: cover; display: block; border-radius: 10px; }
 
         /* ----------- page2 (紫苑の活動) ----------- */
-        .music-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
-        .track-card { background-color: rgba(10, 10, 10, 0.8); border-radius: 10px; overflow: hidden; text-align: center; border: 1px solid rgba(255, 0, 255, 0.3); box-shadow: 0 5px 15px rgba(0,0,0,0.6); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; }
-        .track-card:hover { transform: translateY(-10px); box-shadow: 0 10px 25px rgba(255, 0, 255, 0.5); }
-        .jacket-container { position: relative; }
-        .jacket-image { width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; display: block; }
-        .play-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; font-size: 4em; color: #fff; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
-        .track-card:hover .play-overlay { opacity: 1; }
-        .track-info { padding: 15px; }
-        .track-info h3 { margin: 0; font-size: 1.2em; color: var(--text-color); }
-        
-        /* 埋め込みプレーヤーのスタイル */
-        .music-player-frame {
-            width: 100%;
-            height: 352px;
+        .music-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 30px; 
+        }
+        .track-card {
+            perspective: 1500px;
+            background-color: transparent;
             border: none;
-            border-radius: 12px;
-            margin-top: 40px; /* グリッドとの間隔 */
+            box-shadow: none;
+            padding: 0;
+            cursor: pointer;
+        }
+        .flipper {
+            transition: 0.8s;
+            transform-style: preserve-3d;
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        .track-card.is-flipped .flipper {
+            transform: rotateY(180deg);
+        }
+        .front, .back {
+            backface-visibility: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .front {
+            z-index: 2;
+            transform: rotateY(0deg);
+            border: 1px solid rgba(255, 0, 255, 0.3);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.6);
+            display: flex;
+            flex-direction: column;
+            background-color: rgba(10, 10, 10, 0.8);
+        }
+        .jacket-image {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            display: block;
+        }
+        .track-title-container {
+            padding: 15px;
+            text-align: center;
+        }
+        .track-title-container h3 {
+            margin: 0;
+            font-size: 1.1em;
+            color: var(--text-color);
+        }
+        .back {
+            transform: rotateY(180deg);
+            background-color: #000;
+        }
+        .back iframe {
+            border-radius: 10px;
+            border: none;
         }
 
 
@@ -482,8 +529,6 @@
         <section id="page-shion" class="page-content">
             <div class="profile-card shion-card" data-aos="fade-down"><img src="https://i.ibb.co/4RzdYgbF/bt0n-Pu-Cotf55-R6-ARKv0o-O.jpg" onerror="this.onerror=null;this.src='https://placehold.co/200x200/ff00ff/FFFFFF?text=紫苑';" alt="紫苑 アーティスト写真" class="profile-photo"><div class="profile-info"><h2>紫苑</h2><p class="bio">シンガーソングライターの紫苑です。 バラードを中心に作詞作曲しています。 誰かの心に寄り添えるような歌を届けたいです。</p><div class="social-icons"><a href="https://big-up.style/artists/302804" target="_blank" title="BIG UP!"><i class="fas fa-music"></i></a></div></div></div>
             <div class="music-grid" data-aos="fade-up"></div>
-            <!-- この下に音楽プレーヤーが追加されます -->
-            <iframe id="music-player-frame" class="music-player-frame" src="" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
         </section>
         <section id="page-contact" class="page-content">
             <section class="content" data-aos="fade-up">
@@ -652,7 +697,6 @@
 
             // --- Music Player Logic ---
             const musicGrid = document.querySelector('.music-grid');
-            const playerFrame = document.getElementById('music-player-frame');
 
             const tracks = [
                 { 
@@ -668,12 +712,12 @@
                 { 
                     title: "遠くても君だけを", 
                     jacket: "https://i.ibb.co/wrFyh5J8/p3-IEkv-W4z-Vu36-Xd73o0q-P.png", 
-                    embedUrl: "https://open.spotify.com/embed/track/5pA8cBctrkkEhHVyWUpGDR?utm_source=generator" 
+                    embedUrl: "https://open.spotify.com/embed/track/5TK3zOStE4v7RBsZdasJXc?utm_source=generator" 
                 },
                 { 
-                    title: "まだ見ぬキミへ", 
+                    title: "まだ見ぬキミヘ", 
                     jacket: "https://i.ibb.co/4R0Tb7gp/o-FCSH1o-TD-d6s6g-4cyb-X.png", 
-                    embedUrl: "https://open.spotify.com/embed/track/5TK3zOStE4v7RBsZdasJXc?utm_source=generator" 
+                    embedUrl: "https://open.spotify.com/embed/track/5pA8cBctrkkEhHVyWUpGDR?utm_source=generator" 
                 },
                 { 
                     title: "遠くても約束はそばにある", 
@@ -685,30 +729,56 @@
             function createTrackCard(track) {
                 const card = document.createElement('div');
                 card.className = 'track-card';
-                card.addEventListener('click', () => {
-                    if (playerFrame && track.embedUrl) {
-                        playerFrame.src = track.embedUrl;
-                    }
-                });
+                // Set aspect ratio to maintain square shape for the card
+                card.style.aspectRatio = '1 / 1';
 
                 card.innerHTML = `
-                    <div class="jacket-container">
-                        <img src="${track.jacket}" onerror="this.onerror=null;this.src='https://placehold.co/300x300/ff00ff/FFFFFF?text=ART';" alt="${track.title} Jacket" class="jacket-image">
-                        <div class="play-overlay"><i class="fas fa-play"></i></div>
+                    <div class="flipper">
+                        <div class="front">
+                            <img src="${track.jacket}" onerror="this.onerror=null;this.src='https://placehold.co/300x300/ff00ff/FFFFFF?text=ART';" alt="${track.title} Jacket" class="jacket-image">
+                            <div class="track-title-container">
+                                <h3>${track.title}</h3>
+                            </div>
+                        </div>
+                        <div class="back">
+                            <iframe src="" width="100%" height="100%" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                        </div>
                     </div>
-                    <div class="track-info"><h3>${track.title}</h3></div>`;
+                `;
+
+                card.addEventListener('click', () => {
+                    // Find any other card that is currently flipped and flip it back
+                    const currentlyFlipped = document.querySelector('.track-card.is-flipped');
+                    if (currentlyFlipped && currentlyFlipped !== card) {
+                        currentlyFlipped.classList.remove('is-flipped');
+                        const otherIframe = currentlyFlipped.querySelector('.back iframe');
+                        if (otherIframe) {
+                            otherIframe.src = ''; // Stop playback
+                        }
+                    }
+
+                    // Toggle the flip state of the clicked card
+                    card.classList.toggle('is-flipped');
+                    
+                    const iframe = card.querySelector('.back iframe');
+                    if (card.classList.contains('is-flipped')) {
+                        // Set the src to autoplay only when flipping to the back
+                        if (iframe.getAttribute('src') === '') {
+                             iframe.src = track.embedUrl + '&autoplay=1';
+                        }
+                    } else {
+                        // Stop the music by clearing the src when flipping back to the front
+                        iframe.src = ''; 
+                    }
+                });
                 return card;
             }
 
-            if (musicGrid && playerFrame) {
+            if (musicGrid) {
                 musicGrid.innerHTML = ''; 
                 tracks.forEach(track => {
                     musicGrid.appendChild(createTrackCard(track));
                 });
-                // 最初に1曲目を読み込む
-                if (tracks.length > 0 && tracks[0].embedUrl) {
-                    playerFrame.src = tracks[0].embedUrl;
-                }
             }
             
             // --- Chatbot Logic ---
