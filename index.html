@@ -29,8 +29,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <!-- Three.js for new opening animation -->
+    <!-- JS Libraries for Animation & Sound -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
 
     <style>
         /* ==============================================
@@ -883,37 +884,29 @@
             function navigateToPage(pageId) {
                 const currentPage = document.querySelector('.page-content.is-active');
                 if (currentPage.id === pageId) {
-                     // Close mobile menu if it's open, even if not changing pages
                     if (hamburgerBtn.classList.contains('is-active')) {
                         hamburgerBtn.classList.remove('is-active');
                         mobileNav.classList.remove('is-active');
                     }
                     return;
                 }
-
                 transitionOverlay.classList.add('is-active');
-
                 setTimeout(() => {
                     currentPage.classList.remove('is-active');
                     const nextPage = document.getElementById(pageId);
                     nextPage.classList.add('is-active');
-                    
                     document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
                     document.querySelectorAll(`.nav-link[data-page="${pageId}"]`).forEach(activeLink => activeLink.classList.add('active'));
-                    
                     AOS.refresh();
                     window.scrollTo(0, 0);
-
-                    // Close mobile menu after navigation
                     if (hamburgerBtn.classList.contains('is-active')) {
                         hamburgerBtn.classList.remove('is-active');
                         mobileNav.classList.remove('is-active');
                     }
-                    
                     setTimeout(() => {
                         transitionOverlay.classList.remove('is-active');
                     }, 100);
-                }, 600); // Wait for the transition-in to finish
+                }, 600);
             }
 
             navLinks.forEach(link => {
@@ -937,7 +930,9 @@
                 }
             }
 
-            // --- New Opening Animation Logic ---
+            // ======================================================
+            // --- Opening Animation & Sound Logic (FIXED) ---
+            // ======================================================
             const openingContainer = document.getElementById('opening-container');
             const wireframeContainer = document.getElementById('wireframe-container');
             const faceScanCanvas = document.getElementById('face-scan-canvas');
@@ -946,6 +941,61 @@
             const activationButton = document.getElementById('activation-button');
             const infoText = document.getElementById('info-text');
             let currentAnimation = null;
+            let synth, noise, scanLoop, matrixLoop;
+
+            function setupSounds() {
+                synth = new Tone.MembraneSynth({ pitchDecay: 0.01, octaves: 2, envelope: { attack: 0.001, decay: 0.2, sustain: 0 } }).toDestination();
+                noise = new Tone.Noise("pink").start();
+                const filter = new Tone.AutoFilter("4n").toDestination().start();
+                const reverb = new Tone.Reverb({ decay: 2, wet: 0.3 }).toDestination();
+                noise.connect(filter);
+                filter.connect(reverb);
+                noise.volume.value = -Infinity; // Start muted
+            }
+
+            let voices = [];
+            function populateVoiceList() {
+                if(typeof speechSynthesis === 'undefined') return;
+                voices = speechSynthesis.getVoices();
+            }
+            populateVoiceList();
+            if (typeof speechSynthesis !== 'undefined' && speechSynthesis.onvoiceschanged !== undefined) {
+                speechSynthesis.onvoiceschanged = populateVoiceList;
+            }
+
+            function speak(text) {
+                return new Promise((resolve) => {
+                    if (typeof speechSynthesis === 'undefined' || !text) {
+                        return resolve();
+                    }
+                    
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    let selectedVoice = voices.find(voice => voice.name.includes('Google') && voice.lang.startsWith('ja')) || voices.find(voice => voice.lang.startsWith('ja'));
+                    if (selectedVoice) utterance.voice = selectedVoice;
+                    utterance.pitch = 0.8;
+                    utterance.rate = 1.1;
+                    
+                    utterance.onend = () => resolve();
+                    utterance.onerror = (event) => {
+                        // AbortError is common when canceling speech, so we can often ignore it.
+                        if (event.error !== 'aborted') {
+                           console.error('SpeechSynthesisUtterance.onerror', event);
+                        }
+                        resolve(); // Always resolve to prevent sequence from stopping.
+                    };
+                    
+                    speechSynthesis.cancel();
+                    
+                    setTimeout(() => {
+                        try {
+                            speechSynthesis.speak(utterance);
+                        } catch (e) {
+                            console.error("Error in speechSynthesis.speak:", e);
+                            resolve();
+                        }
+                    }, 50); // A small delay can prevent race conditions.
+                });
+            }
 
             function stopCurrentAnimation() {
                 if (currentAnimation && currentAnimation.stop) {
@@ -954,22 +1004,28 @@
                 }
             }
 
-            function typeWriter(text, element, onComplete) {
-                let i = 0;
-                element.innerHTML = '';
-                const cursor = document.createElement('span');
-                cursor.className = 'cursor';
-                element.appendChild(cursor);
+            function typeWriter(text, element) {
+                const speakPromise = speak(text);
+                const typePromise = new Promise(resolve => {
+                    let i = 0;
+                    element.innerHTML = '';
+                    const cursor = document.createElement('span');
+                    cursor.className = 'cursor';
+                    element.appendChild(cursor);
 
-                const typingInterval = setInterval(() => {
-                    if (i < text.length) {
-                        element.insertBefore(document.createTextNode(text.charAt(i)), cursor);
-                        i++;
-                    } else {
-                        clearInterval(typingInterval);
-                        setTimeout(() => { if (onComplete) onComplete(); }, 1000);
+                    function type() {
+                        if (i < text.length) {
+                            element.insertBefore(document.createTextNode(text.charAt(i)), cursor);
+                            if (synth) synth.triggerAttackRelease("C1", "8n");
+                            i++;
+                            setTimeout(type, 120);
+                        } else {
+                            resolve();
+                        }
                     }
-                }, 120);
+                    type();
+                });
+                return Promise.all([typePromise, speakPromise]);
             }
 
             function fadeOutText(element, onComplete) {
@@ -990,19 +1046,45 @@
             
             const faceScanAnimation = {
                 animationFrame: null, ctx: faceScanCanvas.getContext('2d'),
-                start: function() { faceScanCanvas.width = window.innerWidth; faceScanCanvas.height = window.innerHeight; faceScanCanvas.style.opacity = 1; this.animate(); },
+                start: function() { 
+                    faceScanCanvas.width = window.innerWidth; faceScanCanvas.height = window.innerHeight; faceScanCanvas.style.opacity = 1; 
+                    if (noise) {
+                        const panner = new Tone.Panner(-1).toDestination();
+                        noise.connect(panner);
+                        panner.pan.rampTo(1, 1.5);
+                        scanLoop = new Tone.Loop(time => { panner.pan.setValueAtTime(-1, time); panner.pan.rampTo(1, 1.5, time); }, 1.5).start(0);
+                        noise.volume.rampTo(-20, 0.1);
+                    }
+                    this.animate(); 
+                },
                 animate: function() { this.ctx.clearRect(0, 0, faceScanCanvas.width, faceScanCanvas.height); const centerX = faceScanCanvas.width / 2; const centerY = faceScanCanvas.height / 2; const radius = Math.min(faceScanCanvas.width, faceScanCanvas.height) * 0.2; this.ctx.strokeStyle = '#00cde9'; this.ctx.lineWidth = 2; this.ctx.beginPath(); this.ctx.arc(centerX, centerY, radius, 0, Math.PI * 2); this.ctx.stroke(); const scanY = (Date.now() / 10) % (radius * 2) + (centerY - radius); this.ctx.fillStyle = 'rgba(255, 0, 255, 0.5)'; this.ctx.fillRect(centerX - radius, scanY, radius * 2, 3); this.animationFrame = requestAnimationFrame(this.animate.bind(this)); },
-                stop: function() { if(this.animationFrame) cancelAnimationFrame(this.animationFrame); faceScanCanvas.style.opacity = 0; }
+                stop: function() { 
+                    if(this.animationFrame) cancelAnimationFrame(this.animationFrame); 
+                    if(scanLoop) scanLoop.stop(0).dispose();
+                    if(noise) noise.volume.rampTo(-Infinity, 0.1);
+                    faceScanCanvas.style.opacity = 0; 
+                }
             };
 
             const matrixAnimation = {
                 interval: null, ctx: matrixCanvas.getContext('2d'),
                 start: function() {
-                    matrixCanvas.width = window.innerWidth; matrixCanvas.height = window.innerHeight; matrixCanvas.style.opacity = 1; const characters = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン01'; const fontSize = 16; const columns = matrixCanvas.width / fontSize; const drops = Array.from({ length: columns }).fill(1);
+                    matrixCanvas.width = window.innerWidth; matrixCanvas.height = window.innerHeight; matrixCanvas.style.opacity = 1; 
+                    if (noise) {
+                        noise.volume.rampTo(-30, 0.1);
+                        const matrixSynth = new Tone.PluckSynth({ volume: -10 }).toDestination();
+                        matrixLoop = new Tone.Loop(time => { matrixSynth.triggerAttack(Tone.Midi.toFrequency(Math.random() * 24 + 48), time); }, "16n").start(0);
+                    }
+                    const characters = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン01'; const fontSize = 16; const columns = matrixCanvas.width / fontSize; const drops = Array.from({ length: columns }).fill(1);
                     const draw = () => { this.ctx.fillStyle = 'rgba(0, 0, 0, 0.05)'; this.ctx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height); this.ctx.fillStyle = '#0F0'; this.ctx.font = fontSize + 'px monospace'; for (let i = 0; i < drops.length; i++) { const text = characters.charAt(Math.floor(Math.random() * characters.length)); this.ctx.fillText(text, i * fontSize, drops[i] * fontSize); if (drops[i] * fontSize > matrixCanvas.height && Math.random() > 0.975) drops[i] = 0; drops[i]++; } };
                     this.interval = setInterval(draw, 33);
                 },
-                stop: function() { if(this.interval) clearInterval(this.interval); matrixCanvas.style.opacity = 0; }
+                stop: function() { 
+                    if(this.interval) clearInterval(this.interval); 
+                    if(matrixLoop) matrixLoop.stop(0).dispose();
+                    if(noise) noise.volume.rampTo(-Infinity, 0.1);
+                    matrixCanvas.style.opacity = 0; 
+                }
             };
 
             if (sessionStorage.getItem('openingPlayed')) {
@@ -1013,35 +1095,37 @@
                 currentAnimation.start();
             }
 
-            activationButton.addEventListener('click', () => {
-                activationButton.style.display = 'none';
-                
-                const sequence = [
-                    { text: "顔認証システムが起動します", duration: 1500 },
-                    { text: "顔認証システムが起動しました", duration: 1500 },
-                    { text: "顔認証を開始します", duration: 3000, action: () => { stopCurrentAnimation(); currentAnimation = faceScanAnimation; currentAnimation.start(); } },
-                    { text: "顔認証が一致しました", duration: 1500 },
-                    { text: "サイトを起動します", duration: 1500 }
-                ];
+            activationButton.addEventListener('click', async () => {
+                try {
+                    await Tone.start();
+                    setupSounds();
+                    activationButton.style.display = 'none';
+                    
+                    const sequence = [
+                        { text: "顔認証システムが起動します", duration: 1000 },
+                        { text: "顔認証システムが起動しました", duration: 1000 },
+                        { text: "顔認証を開始します", duration: 3000, action: () => { stopCurrentAnimation(); currentAnimation = faceScanAnimation; currentAnimation.start(); } },
+                        { text: "顔認証が一致しました", duration: 1000 },
+                        { text: "システムを起動します", duration: 1000 }
+                    ];
 
-                let promise = Promise.resolve();
-                sequence.forEach(step => {
-                    promise = promise.then(() => new Promise(resolve => {
+                    for (const step of sequence) {
                         uiOverlay.classList.add('visible');
                         if (step.action) step.action();
-                        typeWriter(step.text, infoText, () => {
-                            setTimeout(() => fadeOutText(infoText, () => {
-                                uiOverlay.classList.remove('visible');
-                                resolve();
-                            }), step.duration);
-                        });
-                    }));
-                });
+                        await typeWriter(step.text, infoText);
+                        await new Promise(res => setTimeout(res, step.duration));
+                        
+                        const isLastStep = sequence.indexOf(step) === sequence.length - 1;
+                        if (!isLastStep) {
+                            await new Promise(res => fadeOutText(infoText, res));
+                            uiOverlay.classList.remove('visible');
+                        }
+                    }
 
-                promise.then(() => {
                     stopCurrentAnimation();
                     currentAnimation = matrixAnimation;
                     currentAnimation.start();
+                    
                     setTimeout(() => {
                         stopCurrentAnimation();
                         openingContainer.style.transition = 'opacity 1s';
@@ -1052,15 +1136,24 @@
                             showMainContent();
                         }, 1000);
                     }, 5000);
-                });
+                } catch (error) {
+                    console.error("An error occurred during the opening sequence:", error);
+                    // Fallback in case of an unhandled error
+                    openingContainer.style.display = 'none';
+                    showMainContent();
+                }
             });
 
             window.addEventListener('resize', () => {
-                // To avoid breaking the three.js canvas, we ask the user to reload.
                 if (!sessionStorage.getItem('openingPlayed')) {
                     location.reload();
                 }
             });
+
+            // ======================================================
+            // --- End of Opening Animation Logic ---
+            // ======================================================
+
 
             // --- AI Gallery Logic ---
             const ryuyaGalleryGrid = document.querySelector('.ryuya-gallery-grid');
@@ -1185,10 +1278,7 @@
             }
             
             // --- Content Protection & Security Logic ---
-            // Disable right-click context menu
             document.addEventListener('contextmenu', event => event.preventDefault());
-
-            // Disable dragging for all images
             document.addEventListener('dragstart', event => {
                 if (event.target.tagName === 'IMG') {
                     event.preventDefault();
