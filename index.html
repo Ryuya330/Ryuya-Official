@@ -10,7 +10,7 @@
     <!-- Content Security Policy (CSP): 信頼できるソースを指定し、XSS攻撃などを防ぎます -->
     <meta http-equiv="Content-Security-Policy" content="
         default-src 'self'; 
-        script-src 'self' 'unsafe-inline' https://unpkg.com https://cdn.jsdelivr.net https://generativelanguage.googleapis.com; 
+        script-src 'self' 'unsafe-inline' https://unpkg.com https://cdn.jsdelivr.net https://generativelanguage.googleapis.com https://cdnjs.cloudflare.com; 
         style-src 'self' 'unsafe-inline' https://unpkg.com https://fonts.googleapis.com https://cdnjs.cloudflare.com; 
         font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; 
         img-src 'self' https://i.ibb.co https://placehold.co; 
@@ -28,6 +28,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Three.js for new opening animation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <style>
         /* ==============================================
@@ -356,10 +359,100 @@
         footer nav a:hover { color: var(--secondary-color); }
 
         #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -2; }
-        #opening-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #000; z-index: 10000; display: flex; justify-content: center; align-items: center; flex-direction: column; overflow: hidden; color: #0f0; transition: opacity 1s ease-out; }
-        #opening-text { font-family: 'Consolas', 'Monaco', monospace; font-size: 1.5em; color: #0f0; text-shadow: 0 0 8px rgba(0, 255, 0, 0.8); margin-bottom: 20px; opacity: 0; transition: opacity 0.5s; text-align: center; }
-        #start-button { padding: 20px 40px; font-size: 1.8em; background-color: var(--primary-color); color: #fff; border: none; border-radius: 8px; cursor: pointer; transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; position: relative; overflow: hidden; text-transform: uppercase; letter-spacing: 2px; box-shadow: 0 0 15px rgba(129, 57, 245, 0.7); z-index: 10001; }
-        #start-button:hover { background-color: #9b5af7; transform: translateY(-5px); box-shadow: 0 10px 30px rgba(129, 57, 245, 0.9); }
+        
+        /* ----------- New Opening Animation Styles ----------- */
+        #opening-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10000;
+            background: #000;
+        }
+        #opening-container canvas {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .overlay-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            pointer-events: none;
+            z-index: 50;
+        }
+        .overlay-container.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        #activation-button {
+            padding: 18px 36px;
+            font-size: 1.5em;
+            font-family: 'Orbitron', sans-serif;
+            background: transparent;
+            color: #00cde9;
+            border: 2px solid #00cde9;
+            border-radius: 8px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            position: relative;
+            overflow: hidden;
+            transition: color 0.3s, background-color 0.3s, box-shadow 0.3s;
+            text-shadow: 0 0 10px #00cde9;
+        }
+        #activation-button:hover {
+            background-color: #00cde9;
+            color: #000;
+            box-shadow: 0 0 25px #00cde9;
+        }
+        #activation-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        #activation-button:hover::before { left: 100%; }
+        #info-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            color: #fff;
+            text-shadow: 0 0 8px #fff;
+            margin-top: 20px;
+            text-align: center;
+            transition: opacity 0.5s ease-out;
+        }
+        #info-text.fade-out {
+            opacity: 0;
+        }
+        #info-text .cursor {
+            display: inline-block;
+            background-color: #fff;
+            width: 10px;
+            height: 1.2em;
+            animation: blink 1s infinite;
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
         
         /* ----------- Artist Profile Cards ----------- */
         .profile-card { display: flex; gap: 40px; align-items: center; padding: 40px; border-radius: 15px; margin-bottom: 50px; }
@@ -626,10 +719,15 @@
         <div class="transition-panel transition-panel-right"></div>
     </div>
 
-    <!-- オープニング画面 -->
-    <div id="opening-screen">
-        <div id="opening-text"></div>
-        <button id="start-button">START SYSTEM</button>
+    <!-- 新しいオープニング演出 -->
+    <div id="opening-container">
+        <div id="wireframe-container"></div>
+        <canvas id="face-scan-canvas" style="opacity: 0; z-index: 10;"></canvas>
+        <canvas id="matrix-canvas" style="opacity: 0; z-index: 20;"></canvas>
+        <div id="ui-overlay" class="overlay-container">
+            <button id="activation-button">Activate System</button>
+            <p id="info-text"></p>
+        </div>
     </div>
 
     <!-- DevTools Blocker Overlay -->
@@ -770,9 +868,6 @@
             const navLinks = document.querySelectorAll('.nav-link');
             const pageContents = document.querySelectorAll('.page-content');
             const transitionOverlay = document.getElementById('page-transition-overlay');
-            const openingScreen = document.getElementById('opening-screen');
-            const startButton = document.getElementById('start-button');
-            const openingText = document.getElementById('opening-text');
             const header = document.querySelector('header');
             const main = document.querySelector('main');
             const footer = document.querySelector('footer');
@@ -832,7 +927,7 @@
             // --- Particles.js Configuration ---
             const particlesConfig = { "particles": { "number": { "value": 80, "density": { "enable": true, "value_area": 800 } }, "color": { "value": ["#8139f5", "#00cde9", "#39f581", "#ff00ff"] }, "shape": { "type": "circle" }, "opacity": { "value": 0.6, "random": true, "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false } }, "size": { "value": 4, "random": true, "anim": { "enable": true, "speed": 10, "size_min": 0.1, "sync": false } }, "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.4, "width": 1 }, "move": { "enable": true, "speed": 3, "direction": "none", "random": true, "straight": false, "out_mode": "out" } }, "interactivity": { "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } }, "modes": { "grab": { "distance": 200, "line_linked": { "opacity": 1 } }, "push": { "particles_nb": 4 } } }, "retina_detect": true };
 
-            // --- Opening Animation Logic ---
+            // --- Main Content Display Function ---
             function showMainContent() {
                 if (header) header.style.display = 'flex';
                 if (main) main.style.display = 'block';
@@ -842,46 +937,130 @@
                 }
             }
 
-            const path = window.location.pathname;
-            const isIndexPage = path.endsWith('/') || path.endsWith('/index.html') || !path.split('/').pop().includes('.');
-            
-            if (isIndexPage && !sessionStorage.getItem('openingPlayed')) {
-                let textIndex = 0;
-                const messages = ["SYSTEM INITIALIZING...", "DECRYPTING CORE DATA...", "AWAITING COMMAND...", "ACCESS GRANTED."];
-                function typeWriterSequence() {
-                    if (textIndex < messages.length) {
-                        openingText.textContent = messages[textIndex];
-                        openingText.style.opacity = 1;
-                        setTimeout(() => { openingText.style.opacity = 0; textIndex++; setTimeout(typeWriterSequence, 800); }, 1500);
-                    } else {
-                        startButton.style.display = 'block';
-                        setTimeout(() => startButton.style.opacity = 1, 100);
-                    }
+            // --- New Opening Animation Logic ---
+            const openingContainer = document.getElementById('opening-container');
+            const wireframeContainer = document.getElementById('wireframe-container');
+            const faceScanCanvas = document.getElementById('face-scan-canvas');
+            const matrixCanvas = document.getElementById('matrix-canvas');
+            const uiOverlay = document.getElementById('ui-overlay');
+            const activationButton = document.getElementById('activation-button');
+            const infoText = document.getElementById('info-text');
+            let currentAnimation = null;
+
+            function stopCurrentAnimation() {
+                if (currentAnimation && currentAnimation.stop) {
+                    currentAnimation.stop();
+                    currentAnimation = null;
                 }
-                startButton.style.display = 'none';
-                openingText.style.opacity = 0;
-                setTimeout(typeWriterSequence, 500);
-                startButton.addEventListener('click', function() {
-                    sessionStorage.setItem('openingPlayed', 'true');
-                    startButton.style.opacity = 0;
-                    startButton.style.pointerEvents = 'none';
-                    openingText.style.opacity = 0;
-                    
-                    setTimeout(() => {
-                        transitionOverlay.classList.add('is-active');
-                        setTimeout(() => {
-                            openingScreen.style.display = 'none';
-                            showMainContent();
-                            setTimeout(() => {
-                                transitionOverlay.classList.remove('is-active');
-                            }, 100);
-                        }, 600);
-                    }, 300);
-                });
-            } else {
-                openingScreen.style.display = 'none';
-                showMainContent();
             }
+
+            function typeWriter(text, element, onComplete) {
+                let i = 0;
+                element.innerHTML = '';
+                const cursor = document.createElement('span');
+                cursor.className = 'cursor';
+                element.appendChild(cursor);
+
+                const typingInterval = setInterval(() => {
+                    if (i < text.length) {
+                        element.insertBefore(document.createTextNode(text.charAt(i)), cursor);
+                        i++;
+                    } else {
+                        clearInterval(typingInterval);
+                        setTimeout(() => { if (onComplete) onComplete(); }, 1000);
+                    }
+                }, 120);
+            }
+
+            function fadeOutText(element, onComplete) {
+                element.classList.add('fade-out');
+                setTimeout(() => {
+                    element.innerHTML = '';
+                    element.classList.remove('fade-out');
+                    if (onComplete) onComplete();
+                }, 500);
+            }
+
+            const wireframeAnimation = {
+                animationFrame: null, scene: new THREE.Scene(), camera: new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000), renderer: new THREE.WebGLRenderer({ antialias: true, alpha: true }), line: null,
+                start: function() { this.renderer.setSize(window.innerWidth, window.innerHeight); this.renderer.setClearColor(0x000000, 0); wireframeContainer.appendChild(this.renderer.domElement); const geometry = new THREE.IcosahedronGeometry(2, 1); const wireframe = new THREE.WireframeGeometry(geometry); this.line = new THREE.LineSegments(wireframe); this.line.material.color = new THREE.Color(0x00cde9); this.line.material.depthTest = false; this.line.material.opacity = 0.75; this.line.material.transparent = true; this.scene.add(this.line); this.camera.position.z = 5; this.animate(); uiOverlay.classList.add('visible'); },
+                animate: function() { this.animationFrame = requestAnimationFrame(this.animate.bind(this)); this.line.rotation.x += 0.005; this.line.rotation.y += 0.005; this.renderer.render(this.scene, this.camera); },
+                stop: function() { if(this.animationFrame) cancelAnimationFrame(this.animationFrame); wireframeContainer.style.transition = 'opacity 1s'; wireframeContainer.style.opacity = 0; }
+            };
+            
+            const faceScanAnimation = {
+                animationFrame: null, ctx: faceScanCanvas.getContext('2d'),
+                start: function() { faceScanCanvas.width = window.innerWidth; faceScanCanvas.height = window.innerHeight; faceScanCanvas.style.opacity = 1; this.animate(); },
+                animate: function() { this.ctx.clearRect(0, 0, faceScanCanvas.width, faceScanCanvas.height); const centerX = faceScanCanvas.width / 2; const centerY = faceScanCanvas.height / 2; const radius = Math.min(faceScanCanvas.width, faceScanCanvas.height) * 0.2; this.ctx.strokeStyle = '#00cde9'; this.ctx.lineWidth = 2; this.ctx.beginPath(); this.ctx.arc(centerX, centerY, radius, 0, Math.PI * 2); this.ctx.stroke(); const scanY = (Date.now() / 10) % (radius * 2) + (centerY - radius); this.ctx.fillStyle = 'rgba(255, 0, 255, 0.5)'; this.ctx.fillRect(centerX - radius, scanY, radius * 2, 3); this.animationFrame = requestAnimationFrame(this.animate.bind(this)); },
+                stop: function() { if(this.animationFrame) cancelAnimationFrame(this.animationFrame); faceScanCanvas.style.opacity = 0; }
+            };
+
+            const matrixAnimation = {
+                interval: null, ctx: matrixCanvas.getContext('2d'),
+                start: function() {
+                    matrixCanvas.width = window.innerWidth; matrixCanvas.height = window.innerHeight; matrixCanvas.style.opacity = 1; const characters = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン01'; const fontSize = 16; const columns = matrixCanvas.width / fontSize; const drops = Array.from({ length: columns }).fill(1);
+                    const draw = () => { this.ctx.fillStyle = 'rgba(0, 0, 0, 0.05)'; this.ctx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height); this.ctx.fillStyle = '#0F0'; this.ctx.font = fontSize + 'px monospace'; for (let i = 0; i < drops.length; i++) { const text = characters.charAt(Math.floor(Math.random() * characters.length)); this.ctx.fillText(text, i * fontSize, drops[i] * fontSize); if (drops[i] * fontSize > matrixCanvas.height && Math.random() > 0.975) drops[i] = 0; drops[i]++; } };
+                    this.interval = setInterval(draw, 33);
+                },
+                stop: function() { if(this.interval) clearInterval(this.interval); matrixCanvas.style.opacity = 0; }
+            };
+
+            if (sessionStorage.getItem('openingPlayed')) {
+                openingContainer.style.display = 'none';
+                showMainContent();
+            } else {
+                currentAnimation = wireframeAnimation;
+                currentAnimation.start();
+            }
+
+            activationButton.addEventListener('click', () => {
+                activationButton.style.display = 'none';
+                
+                const sequence = [
+                    { text: "顔認証システムが起動します", duration: 1500 },
+                    { text: "顔認証システムが起動しました", duration: 1500 },
+                    { text: "顔認証を開始します", duration: 3000, action: () => { stopCurrentAnimation(); currentAnimation = faceScanAnimation; currentAnimation.start(); } },
+                    { text: "顔認証が一致しました", duration: 1500 },
+                    { text: "サイトを起動します", duration: 1500 }
+                ];
+
+                let promise = Promise.resolve();
+                sequence.forEach(step => {
+                    promise = promise.then(() => new Promise(resolve => {
+                        uiOverlay.classList.add('visible');
+                        if (step.action) step.action();
+                        typeWriter(step.text, infoText, () => {
+                            setTimeout(() => fadeOutText(infoText, () => {
+                                uiOverlay.classList.remove('visible');
+                                resolve();
+                            }), step.duration);
+                        });
+                    }));
+                });
+
+                promise.then(() => {
+                    stopCurrentAnimation();
+                    currentAnimation = matrixAnimation;
+                    currentAnimation.start();
+                    setTimeout(() => {
+                        stopCurrentAnimation();
+                        openingContainer.style.transition = 'opacity 1s';
+                        openingContainer.style.opacity = 0;
+                        setTimeout(() => {
+                            openingContainer.style.display = 'none';
+                            sessionStorage.setItem('openingPlayed', 'true');
+                            showMainContent();
+                        }, 1000);
+                    }, 5000);
+                });
+            });
+
+            window.addEventListener('resize', () => {
+                // To avoid breaking the three.js canvas, we ask the user to reload.
+                if (!sessionStorage.getItem('openingPlayed')) {
+                    location.reload();
+                }
+            });
 
             // --- AI Gallery Logic ---
             const ryuyaGalleryGrid = document.querySelector('.ryuya-gallery-grid');
@@ -1017,7 +1196,6 @@
             });
             
             // --- DevTools Detection Logic ---
-            // This logic is designed to run only on non-mobile devices to prevent false positives on phones and tablets.
             const isMobile = /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
             if (!isMobile) {
@@ -1026,22 +1204,19 @@
                     isOpen: false,
                     toString() {
                         this.isOpen = true;
-                        // This message is part of the detection mechanism.
                         return 'Developer tools checker';
                     }
                 };
 
                 setInterval(() => {
                     devtoolsDetector.isOpen = false;
-                    // The console.log trick: when dev tools are open, the browser
-                    // will evaluate the object and call its toString() method.
                     console.log('%c', devtoolsDetector);
                     if (devtoolsDetector.isOpen) {
                         if (devToolsBlocker) {
                             devToolsBlocker.style.display = 'block';
                         }
                     }
-                }, 1500); // Check every 1.5 seconds
+                }, 1500);
             }
 
 
@@ -1073,7 +1248,7 @@
             }
 
             async function getBotResponse(userInput) {
-                addMessage("...", "bot"); // Show loading indicator
+                addMessage("...", "bot");
                 
                 const prompt = `あなたは「りゅうや」と「紫苑」の公式サイトのアシスタントAIです。以下の情報を元に、簡潔で親しみやすい日本語で応答してください。
                 - りゅうや: AIクリエイターです。AIを使ってイラストなどを制作しています。
@@ -1095,7 +1270,7 @@
                     });
                     const result = await response.json();
                     
-                    chatbotMessages.removeChild(chatbotMessages.lastChild); // Remove loading indicator
+                    chatbotMessages.removeChild(chatbotMessages.lastChild);
 
                     if (result.candidates && result.candidates.length > 0) {
                         const text = result.candidates[0].content.parts[0].text;
@@ -1104,7 +1279,7 @@
                         addMessage("申し訳ありません、うまく応答できませんでした。", "bot");
                     }
                 } catch (error) {
-                    chatbotMessages.removeChild(chatbotMessages.lastChild); // Remove loading indicator
+                    chatbotMessages.removeChild(chatbotMessages.lastChild);
                     addMessage("エラーが発生しました。時間をおいて再度お試しください。", "bot");
                     console.error("Chatbot API error:", error);
                 }
