@@ -16,6 +16,7 @@
         img-src 'self' https://i.ibb.co https://placehold.co; 
         frame-src 'self' https://open.spotify.com;
         connect-src 'self' https://generativelanguage.googleapis.com;
+        speech-src 'self' blob:;
     ">
     <!-- X-Frame-Options: クリックジャッキング攻撃を防ぐため、iframe内での表示を拒否します -->
     <meta http-equiv="X-Frame-Options" content="DENY">
@@ -321,6 +322,9 @@
             align-items: center;
             justify-content: center;
             gap: 15px;
+        }
+        .announcement-item {
+            margin-bottom: 30px;
         }
         .announcement-item .announcement-date {
             font-size: 0.9em;
@@ -776,6 +780,20 @@
             <section class="content announcement-section" data-aos="fade-up">
                 <h2><i class="fas fa-bullhorn"></i> お知らせ</h2>
                 <div class="announcement-item">
+                    <p class="announcement-date">2025/07/22</p>
+                    <h3 class="announcement-title">【サイトアップデートのお知らせ】</h3>
+                    <ul class="announcement-list">
+                        <li>サイトのオープニングをリニューアル</li>
+                        <li>サイトのオープニングに音声と効果音を追加</li>
+                        <li>チャットボットの修正</li>
+                        <li>オープニングアニメーションの改善</li>
+                        <li>セキュリティヘッダーの調整</li>
+                        <li>チャットボットの通信処理の安定化</li>
+                        <li>エラーハンドリングの強化</li>
+                        <li>UIの改善</li>
+                    </ul>
+                </div>
+                <div class="announcement-item">
                     <p class="announcement-date">2025/07/21</p>
                     <h3 class="announcement-title">【サイトアップデートのお知らせ】</h3>
                     <ul class="announcement-list">
@@ -965,34 +983,31 @@
 
             function speak(text) {
                 if (typeof speechSynthesis === 'undefined' || !text) {
-                    return Promise.resolve();
+                    return;
                 }
                 
-                return new Promise((resolve) => {
-                    const utterance = new SpeechSynthesisUtterance(text);
-                    let selectedVoice = voices.find(voice => voice.name.includes('Google') && voice.lang.startsWith('ja')) || voices.find(voice => voice.lang.startsWith('ja'));
-                    if (selectedVoice) utterance.voice = selectedVoice;
-                    utterance.pitch = 0.8;
-                    utterance.rate = 1.1;
-                    
-                    utterance.onend = () => resolve();
-                    utterance.onerror = (event) => {
-                        if (event.error !== 'aborted' && event.error !== 'canceled' && event.error !== 'interrupted') {
-                           console.error('SpeechSynthesisUtterance.onerror', event);
-                        }
-                        resolve(); 
-                    };
-                    
-                    speechSynthesis.cancel();
-                    setTimeout(() => {
-                        try {
-                            speechSynthesis.speak(utterance);
-                        } catch (e) {
-                            console.error("Error in speechSynthesis.speak:", e);
-                            resolve();
-                        }
-                    }, 50);
-                });
+                const utterance = new SpeechSynthesisUtterance(text);
+                let selectedVoice = voices.find(voice => voice.name.includes('Google') && voice.lang.startsWith('ja')) || voices.find(voice => voice.lang.startsWith('ja'));
+                if (selectedVoice) utterance.voice = selectedVoice;
+                utterance.pitch = 0.8;
+                utterance.rate = 1.1;
+                
+                utterance.onerror = (event) => {
+                    if (event.error !== 'aborted' && event.error !== 'canceled' && event.error !== 'interrupted') {
+                        console.warn('SpeechSynthesisUtterance.onerror:', event);
+                    }
+                };
+                
+                speechSynthesis.cancel();
+                // Use setTimeout to avoid race conditions with cancel()
+                setTimeout(() => {
+                    try {
+                        speechSynthesis.speak(utterance);
+                    } catch (e) {
+                         // Catch errors if speak fails, preventing the app from crashing
+                        console.warn("Error in speechSynthesis.speak:", e);
+                    }
+                }, 100); 
             }
 
             function stopCurrentAnimation() {
@@ -1003,6 +1018,7 @@
             }
 
             function typeWriter(text, element) {
+                // This function is "fire and forget" for the voice part.
                 speak(text); 
                 return new Promise(resolve => {
                     element.innerHTML = '';
@@ -1018,8 +1034,8 @@
                             element.insertBefore(document.createTextNode(text.charAt(i)), cursor);
                             if (synth && Tone.context.state === 'running') {
                                 try {
-                                    synth.triggerAttackRelease("C1", "8n");
-                                } catch (e) {
+                                    synth.triggerAttackRelease("C1", "8n", Tone.now()); 
+                                } catch(e) {
                                     // Ignore Tone.js timing errors if they occur
                                 }
                             }
@@ -1079,7 +1095,11 @@
                     if (noise) {
                         noise.volume.rampTo(-30, 0.1);
                         const matrixSynth = new Tone.PluckSynth({ volume: -10 }).toDestination();
-                        matrixLoop = new Tone.Loop(time => { matrixSynth.triggerAttack(Tone.Midi.toFrequency(Math.random() * 24 + 48), time); }, "16n").start(0);
+                        matrixLoop = new Tone.Loop(time => {
+                            const midiNote = Math.random() * 24 + 48;
+                            const frequency = Tone.Frequency(midiNote, "midi").toFrequency();
+                            matrixSynth.triggerAttack(frequency, time);
+                        }, "16n").start(0);
                     }
                     const characters = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン01'; const fontSize = 16; const columns = matrixCanvas.width / fontSize; const drops = Array.from({ length: columns }).fill(1);
                     const draw = () => { this.ctx.fillStyle = 'rgba(0, 0, 0, 0.05)'; this.ctx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height); this.ctx.fillStyle = '#0F0'; this.ctx.font = fontSize + 'px monospace'; for (let i = 0; i < drops.length; i++) { const text = characters.charAt(Math.floor(Math.random() * characters.length)); this.ctx.fillText(text, i * fontSize, drops[i] * fontSize); if (drops[i] * fontSize > matrixCanvas.height && Math.random() > 0.975) drops[i] = 0; drops[i]++; } };
@@ -1107,22 +1127,20 @@
                     setupSounds();
                     activationButton.style.display = 'none';
                     
+                    // Improved text sequence for the opening animation
                     const sequence = [
-                        { text: "顔認証システムが起動します", duration: 1000 },
-                        { text: "顔認証システムが起動しました", duration: 1000 },
-                        { text: "顔認証を開始します", duration: 3000, action: () => { stopCurrentAnimation(); currentAnimation = faceScanAnimation; currentAnimation.start(); } },
-                        { text: "顔認証が一致しました", duration: 1000 },
-                        { text: "システムを起動します", duration: 1000 }
+                        { text: "システム認証を開始します...", duration: 1500 },
+                        { text: "生体認証シーケンスを起動", duration: 3000, action: () => { stopCurrentAnimation(); currentAnimation = faceScanAnimation; currentAnimation.start(); } },
+                        { text: "認証成功。本人確認が完了しました。", duration: 1500 },
+                        { text: "メインシステムへ接続します。", duration: 1000 }
                     ];
 
                     for (const step of sequence) {
                         uiOverlay.classList.add('visible');
                         if (step.action) step.action();
                         
-                        const typingPromise = typeWriter(step.text, infoText);
-                        const delayPromise = new Promise(res => setTimeout(res, step.duration));
-                        
-                        await Promise.all([typingPromise, delayPromise]);
+                        await typeWriter(step.text, infoText);
+                        await new Promise(res => setTimeout(res, step.duration));
                         
                         const isLastStep = sequence.indexOf(step) === sequence.length - 1;
                         if (!isLastStep) {
@@ -1318,7 +1336,7 @@
             }
 
 
-            // --- Chatbot Logic ---
+            // --- Chatbot Logic (FIXED) ---
             const chatbotToggle = document.getElementById('chatbot-toggle');
             const chatbotContainer = document.getElementById('chatbot-container');
             const chatbotClose = document.getElementById('chatbot-close');
@@ -1358,7 +1376,7 @@
                 let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
                 const payload = { contents: chatHistory };
                 const apiKey = ""; 
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
                 
                 try {
                     const response = await fetch(apiUrl, {
@@ -1366,30 +1384,64 @@
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
                     });
+
+                    if (!response.ok) {
+                        const errorBody = await response.text();
+                        throw new Error(`API request failed with status ${response.status}: ${errorBody}`);
+                    }
+                    
                     const result = await response.json();
                     
-                    chatbotMessages.removeChild(chatbotMessages.lastChild);
+                    // Robustly remove the "thinking" message
+                    const lastBotMessage = chatbotMessages.querySelector('.bot-message:last-child');
+                    if (lastBotMessage && lastBotMessage.querySelector('p')?.textContent === '...') {
+                        lastBotMessage.remove();
+                    }
 
-                    if (result.candidates && result.candidates.length > 0) {
-                        const text = result.candidates[0].content.parts[0].text;
+                    const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                    if (text) {
                         addMessage(text, "bot");
                     } else {
+                        console.error("Invalid API response structure:", result);
                         addMessage("申し訳ありません、うまく応答できませんでした。", "bot");
                     }
                 } catch (error) {
-                    chatbotMessages.removeChild(chatbotMessages.lastChild);
+                    // Robustly remove the "thinking" message
+                    const lastBotMessage = chatbotMessages.querySelector('.bot-message:last-child');
+                    if (lastBotMessage && lastBotMessage.querySelector('p')?.textContent === '...') {
+                        lastBotMessage.remove();
+                    }
+
+                    // Silently ignore AbortError as it's a user action (e.g. navigation)
+                    if (error.name === 'AbortError') {
+                        console.log('Fetch aborted.');
+                        return;
+                    }
+                    
                     addMessage("エラーが発生しました。時間をおいて再度お試しください。", "bot");
                     console.error("Chatbot API error:", error);
                 }
             }
 
-            function handleSend() {
+            async function handleSend() {
                 const userInput = chatbotInput.value.trim();
-                if (userInput) {
-                    addMessage(userInput, "user");
-                    getBotResponse(userInput);
-                    chatbotInput.value = "";
+                // Prevent sending while a request is in flight
+                if (userInput === '' || chatbotInput.disabled) {
+                    return;
                 }
+
+                addMessage(userInput, "user");
+                chatbotInput.value = "";
+                chatbotInput.disabled = true;
+                chatbotSend.disabled = true;
+                
+                await getBotResponse(userInput); // Await the promise
+
+                // Re-enable input after completion
+                chatbotInput.disabled = false;
+                chatbotSend.disabled = false;
+                chatbotInput.focus();
             }
 
             if(chatbotSend) chatbotSend.addEventListener('click', handleSend);
