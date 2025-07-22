@@ -324,29 +324,70 @@
             gap: 15px;
         }
         .announcement-item {
-            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(0, 205, 233, 0.2);
         }
-        .announcement-item .announcement-date {
+        .announcement-item:last-child {
+            border-bottom: none;
+        }
+
+        /* NEW: Accordion styles for announcements */
+        .announcement-toggle {
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            padding: 20px 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-color);
+            transition: background-color 0.3s ease;
+        }
+        .announcement-toggle:hover {
+            background-color: rgba(0, 205, 233, 0.1);
+        }
+        .announcement-toggle .announcement-date {
             font-size: 0.9em;
             color: #aaa;
-            margin-bottom: 5px;
+            margin-right: 15px;
         }
-        .announcement-item .announcement-title {
-            font-size: 1.3em;
+        .announcement-toggle .announcement-title {
+            font-size: 1.2em;
+            font-weight: bold;
             color: #fff;
-            margin-bottom: 15px;
+            flex-grow: 1;
         }
-        .announcement-item .announcement-list {
+        .announcement-icon {
+            transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            font-size: 1.1em;
+            color: var(--secondary-color);
+        }
+        .announcement-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.23, 1, 0.32, 1), padding 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            padding: 0 15px;
+        }
+        .announcement-item.is-open .announcement-details {
+            padding: 0px 15px 20px;
+        }
+        .announcement-item.is-open .announcement-icon {
+            transform: rotate(180deg);
+        }
+
+        .announcement-list {
             list-style: none;
             padding-left: 0;
             font-size: clamp(0.9rem, 2.5vw, 1rem);
+            margin-top: 0;
         }
-        .announcement-item .announcement-list li {
+        .announcement-list li {
             padding-left: 1.5em;
             position: relative;
             margin-bottom: 8px;
         }
-        .announcement-item .announcement-list li::before {
+        .announcement-list li::before {
             content: '\f0da'; /* Font Awesome right arrow */
             font-family: 'Font Awesome 6 Free';
             font-weight: 900;
@@ -780,38 +821,48 @@
             <section class="content announcement-section" data-aos="fade-up">
                 <h2><i class="fas fa-bullhorn"></i> お知らせ</h2>
                 <div class="announcement-item">
-                    <p class="announcement-date">2025/07/22</p>
-                    <h3 class="announcement-title">【サイトアップデートのお知らせ】</h3>
-                    <ul class="announcement-list">
-                        <li>サイトのオープニングをリニューアル</li>
-                        <li>サイトのオープニングに音声と効果音を追加</li>
-                        <li>チャットボットの修正</li>
-                        <li>オープニングアニメーションの改善</li>
-                        <li>セキュリティヘッダーの調整</li>
-                        <li>チャットボットの通信処理の安定化</li>
-                        <li>エラーハンドリングの強化</li>
-                        <li>UIの改善</li>
-                    </ul>
+                    <button class="announcement-toggle">
+                        <span class="announcement-date">2025/07/22</span>
+                        <span class="announcement-title">【サイトアップデートのお知らせ】</span>
+                        <i class="fas fa-chevron-down announcement-icon"></i>
+                    </button>
+                    <div class="announcement-details">
+                        <ul class="announcement-list">
+                            <li>サイトのオープニングをリニューアル</li>
+                            <li>サイトのオープニングに音声と効果音を追加</li>
+                            <li>チャットボットの修正</li>
+                            <li>オープニングアニメーションの改善</li>
+                            <li>セキュリティヘッダーの調整</li>
+                            <li>チャットボットの通信処理の安定化</li>
+                            <li>エラーハンドリングの強化</li>
+                            <li>UIの改善</li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="announcement-item">
-                    <p class="announcement-date">2025/07/21</p>
-                    <h3 class="announcement-title">【サイトアップデートのお知らせ】</h3>
-                    <ul class="announcement-list">
-                        <li>開発者ツール検知機能の誤検知不具合の修正</li>
-                        <li>お知らせ機能の追加</li>
-                        <li>開発者ツール起動の検知</li>
-                        <li>HTTPセキュリティヘッダーの追加</li>
-                        <li>各デバイスの文字サイズ調整</li>
-                        <li>コンテンツの取り扱いに関する注意</li>
-                        <li>iPhoneやAndroidでの画像保存無効化</li>
-                        <li>PCでの右クリック、ドラッグ操作の無効化</li>
-                        <li>イラストの全点追加</li>
-                        <li>ライトボックス機能の実装</li>
-                        <li>楽曲リストの更新</li>
-                        <li>インタラクションの変更</li>
-                        <li>UIの全面変更</li>
-                        <li>カードフリップの実装</li>
-                    </ul>
+                    <button class="announcement-toggle">
+                        <span class="announcement-date">2025/07/21</span>
+                        <span class="announcement-title">【サイトアップデートのお知らせ】</span>
+                        <i class="fas fa-chevron-down announcement-icon"></i>
+                    </button>
+                    <div class="announcement-details">
+                        <ul class="announcement-list">
+                            <li>開発者ツール検知機能の誤検知不具合の修正</li>
+                            <li>お知らせ機能の追加</li>
+                            <li>開発者ツール起動の検知</li>
+                            <li>HTTPセキュリティヘッダーの追加</li>
+                            <li>各デバイスの文字サイズ調整</li>
+                            <li>コンテンツの取り扱いに関する注意</li>
+                            <li>iPhoneやAndroidでの画像保存無効化</li>
+                            <li>PCでの右クリック、ドラッグ操作の無効化</li>
+                            <li>イラストの全点追加</li>
+                            <li>ライトボックス機能の実装</li>
+                            <li>楽曲リストの更新</li>
+                            <li>インタラクションの変更</li>
+                            <li>UIの全面変更</li>
+                            <li>カードフリップの実装</li>
+                        </ul>
+                    </div>
                 </div>
             </section>
 
@@ -960,6 +1011,7 @@
             const infoText = document.getElementById('info-text');
             let currentAnimation = null;
             let synth, noise, scanLoop, matrixLoop;
+            let typeIntervalHandle = null; // To manage the typewriter interval
 
             function setupSounds() {
                 synth = new Tone.MembraneSynth({ pitchDecay: 0.01, octaves: 2, envelope: { attack: 0.001, decay: 0.2, sustain: 0 } }).toDestination();
@@ -1016,10 +1068,16 @@
                     currentAnimation = null;
                 }
             }
-
+            
+            // FIXED: Made the typeWriter function more robust
             function typeWriter(text, element) {
-                // This function is "fire and forget" for the voice part.
-                speak(text); 
+                speak(text);
+
+                // Always clear the previous interval before starting a new one.
+                if (typeIntervalHandle) {
+                    clearInterval(typeIntervalHandle);
+                }
+
                 return new Promise(resolve => {
                     element.innerHTML = '';
                     const cursor = document.createElement('span');
@@ -1029,22 +1087,36 @@
                     let i = 0;
                     const interval = 120;
 
-                    const typeInterval = setInterval(() => {
+                    const intervalId = setInterval(() => {
                         if (i < text.length) {
+                            // Check if the cursor is still a child before trying to insert.
+                            // This prevents the "NotFoundError".
+                            if (cursor.parentNode !== element) {
+                                clearInterval(intervalId);
+                                if (typeIntervalHandle === intervalId) {
+                                    typeIntervalHandle = null;
+                                }
+                                resolve(); // Resolve to not block the animation sequence.
+                                return;
+                            }
                             element.insertBefore(document.createTextNode(text.charAt(i)), cursor);
                             if (synth && Tone.context.state === 'running') {
                                 try {
-                                    synth.triggerAttackRelease("C1", "8n", Tone.now()); 
-                                } catch(e) {
-                                    // Ignore Tone.js timing errors if they occur
+                                    synth.triggerAttackRelease("C1", "8n", Tone.now());
+                                } catch (e) {
+                                    // ignore
                                 }
                             }
                             i++;
                         } else {
-                            clearInterval(typeInterval);
+                            clearInterval(intervalId);
+                            if (typeIntervalHandle === intervalId) {
+                                typeIntervalHandle = null;
+                            }
                             resolve();
                         }
                     }, interval);
+                    typeIntervalHandle = intervalId;
                 });
             }
 
@@ -1122,6 +1194,7 @@
             }
 
             activationButton.addEventListener('click', async () => {
+                activationButton.disabled = true;
                 try {
                     await Tone.start();
                     setupSounds();
@@ -1456,6 +1529,33 @@
 
             // --- General UI Logic ---
             AOS.init({ once: true, offset: 100, duration: 1000 });
+            
+            // --- Accordion Logic for Announcements ---
+            const announcementToggles = document.querySelectorAll('.announcement-toggle');
+
+            announcementToggles.forEach(toggle => {
+                toggle.addEventListener('click', () => {
+                    const item = toggle.parentElement;
+                    const details = item.querySelector('.announcement-details');
+
+                    if (item.classList.contains('is-open')) {
+                        details.style.maxHeight = null;
+                        item.classList.remove('is-open');
+                    } else {
+                        // Optional: Close other open items for a true accordion behavior
+                        announcementToggles.forEach(otherToggle => {
+                            const otherItem = otherToggle.parentElement;
+                            if (otherItem.classList.contains('is-open')) {
+                                otherItem.querySelector('.announcement-details').style.maxHeight = null;
+                                otherItem.classList.remove('is-open');
+                            }
+                        });
+
+                        item.classList.add('is-open');
+                        details.style.maxHeight = details.scrollHeight + 'px';
+                    }
+                });
+            });
         });
     </script>
 </body>
