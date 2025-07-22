@@ -977,15 +977,14 @@
                     
                     utterance.onend = () => resolve();
                     utterance.onerror = (event) => {
-                        // AbortError is common when canceling speech, so we can often ignore it.
-                        if (event.error !== 'aborted') {
+                        if (event.error !== 'aborted' && event.error !== 'canceled') {
                            console.error('SpeechSynthesisUtterance.onerror', event);
                         }
-                        resolve(); // Always resolve to prevent sequence from stopping.
+                        resolve(); 
                     };
                     
+                    // This robust sequence of cancel -> timeout -> speak helps avoid race conditions.
                     speechSynthesis.cancel();
-                    
                     setTimeout(() => {
                         try {
                             speechSynthesis.speak(utterance);
@@ -993,7 +992,7 @@
                             console.error("Error in speechSynthesis.speak:", e);
                             resolve();
                         }
-                    }, 50); // A small delay can prevent race conditions.
+                    }, 50);
                 });
             }
 
