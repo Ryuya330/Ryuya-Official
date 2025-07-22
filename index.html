@@ -964,11 +964,11 @@
             }
 
             function speak(text) {
+                if (typeof speechSynthesis === 'undefined' || !text) {
+                    return Promise.resolve();
+                }
+                
                 return new Promise((resolve) => {
-                    if (typeof speechSynthesis === 'undefined' || !text) {
-                        return resolve();
-                    }
-                    
                     const utterance = new SpeechSynthesisUtterance(text);
                     let selectedVoice = voices.find(voice => voice.name.includes('Google') && voice.lang.startsWith('ja')) || voices.find(voice => voice.lang.startsWith('ja'));
                     if (selectedVoice) utterance.voice = selectedVoice;
@@ -977,13 +977,12 @@
                     
                     utterance.onend = () => resolve();
                     utterance.onerror = (event) => {
-                        if (event.error !== 'aborted' && event.error !== 'canceled') {
+                        if (event.error !== 'aborted' && event.error !== 'canceled' && event.error !== 'interrupted') {
                            console.error('SpeechSynthesisUtterance.onerror', event);
                         }
                         resolve(); 
                     };
                     
-                    // This robust sequence of cancel -> timeout -> speak helps avoid race conditions.
                     speechSynthesis.cancel();
                     setTimeout(() => {
                         try {
@@ -1004,36 +1003,44 @@
             }
 
             function typeWriter(text, element) {
-                const speakPromise = speak(text);
-                const typePromise = new Promise(resolve => {
-                    let i = 0;
+                speak(text); 
+                return new Promise(resolve => {
                     element.innerHTML = '';
                     const cursor = document.createElement('span');
                     cursor.className = 'cursor';
                     element.appendChild(cursor);
 
-                    function type() {
+                    let i = 0;
+                    const interval = 120;
+
+                    const typeInterval = setInterval(() => {
                         if (i < text.length) {
                             element.insertBefore(document.createTextNode(text.charAt(i)), cursor);
-                            if (synth) synth.triggerAttackRelease("C1", "8n");
+                            if (synth && Tone.context.state === 'running') {
+                                try {
+                                    synth.triggerAttackRelease("C1", "8n");
+                                } catch (e) {
+                                    // Ignore Tone.js timing errors if they occur
+                                }
+                            }
                             i++;
-                            setTimeout(type, 120);
                         } else {
+                            clearInterval(typeInterval);
                             resolve();
                         }
-                    }
-                    type();
+                    }, interval);
                 });
-                return Promise.all([typePromise, speakPromise]);
             }
 
-            function fadeOutText(element, onComplete) {
-                element.classList.add('fade-out');
-                setTimeout(() => {
-                    element.innerHTML = '';
-                    element.classList.remove('fade-out');
-                    if (onComplete) onComplete();
-                }, 500);
+            function fadeOutText(element) {
+                return new Promise(resolve => {
+                    element.classList.add('fade-out');
+                    setTimeout(() => {
+                        element.innerHTML = '';
+                        element.classList.remove('fade-out');
+                        resolve();
+                    }, 500);
+                });
             }
 
             const wireframeAnimation = {
@@ -1111,12 +1118,15 @@
                     for (const step of sequence) {
                         uiOverlay.classList.add('visible');
                         if (step.action) step.action();
-                        await typeWriter(step.text, infoText);
-                        await new Promise(res => setTimeout(res, step.duration));
+                        
+                        const typingPromise = typeWriter(step.text, infoText);
+                        const delayPromise = new Promise(res => setTimeout(res, step.duration));
+                        
+                        await Promise.all([typingPromise, delayPromise]);
                         
                         const isLastStep = sequence.indexOf(step) === sequence.length - 1;
                         if (!isLastStep) {
-                            await new Promise(res => fadeOutText(infoText, res));
+                            await fadeOutText(infoText);
                             uiOverlay.classList.remove('visible');
                         }
                     }
@@ -1137,7 +1147,6 @@
                     }, 5000);
                 } catch (error) {
                     console.error("An error occurred during the opening sequence:", error);
-                    // Fallback in case of an unhandled error
                     openingContainer.style.display = 'none';
                     showMainContent();
                 }
