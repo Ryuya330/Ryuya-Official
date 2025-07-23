@@ -685,8 +685,8 @@
             .social-icons { justify-content: center; }
         }
         @media (max-width: 768px) {
-            /* FIX: Reduced font size for mobile */
-            body { font-size: 13px; }
+            /* FIX: Further reduced font size for mobile */
+            body { font-size: 11px; }
             .main-nav { display: none; }
             .hamburger-btn { display: block; }
             header { justify-content: flex-end; padding: 20px; }
@@ -694,8 +694,8 @@
             .lightbox-content { max-width: 90vw; max-height: 80vh; }
         }
         @media (max-width: 480px) {
-            /* FIX: Reduced font size for smaller mobile */
-            body { font-size: 12px; }
+            /* FIX: Further reduced font size for smaller mobile */
+            body { font-size: 10px; }
             .content { padding: 20px; }
             .profile-photo { width: 150px; height: 150px; }
             .ryuya-gallery-grid {
@@ -772,13 +772,25 @@
                     <div class="announcement-item">
                         <button class="announcement-toggle">
                             <span class="announcement-date">2025/07/24</span>
-                            <span class="announcement-title">【UI改善と動作調整】</span>
+                            <span class="announcement-title">【サイト安定性の向上】</span>
                             <i class="fas fa-chevron-down announcement-icon"></i>
                         </button>
                         <div class="announcement-details">
                             <ul class="announcement-list">
-                                <li>スマートフォン表示時のサイト全体の文字サイズを、さらに一回り小さく調整しました。</li>
-                                <li>楽曲カードが裏返った瞬間に、よりスムーズに動画が自動再生されるよう微調整を行いました。</li>
+                                <li>ページの読み込み中に発生する可能性のある、機能に影響しない軽微なエラーを抑制し、サイトの安定性を向上させました。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="announcement-item">
+                        <button class="announcement-toggle">
+                            <span class="announcement-date">2025/07/24</span>
+                            <span class="announcement-title">【動画再生の改善とUI調整】</span>
+                            <i class="fas fa-chevron-down announcement-icon"></i>
+                        </button>
+                        <div class="announcement-details">
+                            <ul class="announcement-list">
+                                <li>ブラウザの自動再生ポリシーに対応するため、動画がミュート（消音）状態で自動再生されるように変更しました。動画プレイヤーの音量ボタンでミュートを解除できます。</li>
+                                <li>スマートフォン表示時のサイト全体の文字サイズを、ご要望に基づき更に二回り小さく調整しました。</li>
                             </ul>
                         </div>
                     </div>
@@ -1047,6 +1059,14 @@
     
     <!-- Main Application Script -->
     <script>
+        // FIX: Add a global error handler for benign AbortError
+        window.addEventListener('unhandledrejection', function(event) {
+            if (event.reason && event.reason.name === 'AbortError') {
+                event.preventDefault();
+                console.warn('A non-critical AbortError was handled gracefully.');
+            }
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             // --- Global Data ---
             const tracksData = [
@@ -1231,10 +1251,7 @@
                 activationButton.addEventListener('click', async () => {
                     activationButton.disabled = true;
                     try {
-                        await Tone.start().catch(err => {
-                            console.warn("Audio context start was interrupted.", err);
-                        });
-                        
+                        await Tone.start();
                         setupSounds();
                         activationButton.style.display = 'none';
                         const sequence = [
@@ -1268,7 +1285,11 @@
                             }, 1000);
                         }, 5000);
                     } catch (error) {
-                        console.error("Opening sequence error:", error);
+                        if (error.name === 'AbortError') {
+                            console.warn("Opening sequence aborted by user action. This is normal.");
+                        } else {
+                            console.error("Opening sequence error:", error);
+                        }
                         openingContainer.style.display = 'none';
                         showMainContent();
                     }
@@ -1339,8 +1360,7 @@
                             const playerContainer = document.getElementById(`player-container-${index}`);
                             if (playerContainer) {
                                 const iframe = document.createElement('iframe');
-                                // FIX: Ensure autoplay=1 is present for automatic playback
-                                iframe.setAttribute('src', `https://www.youtube.com/embed/${track.youtubeId}?autoplay=1&playsinline=1`);
+                                iframe.setAttribute('src', `https://www.youtube.com/embed/${track.youtubeId}?autoplay=1&mute=1&playsinline=1`);
                                 iframe.setAttribute('width', '100%');
                                 iframe.setAttribute('height', '100%');
                                 iframe.setAttribute('frameborder', '0');
