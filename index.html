@@ -314,11 +314,10 @@
             justify-content: center;
             gap: 15px;
         }
-        /* FIX: Add a scrollable container for announcements */
         .announcements-container {
-            max-height: 400px; /* Adjust height as needed */
+            max-height: 400px; 
             overflow-y: auto;
-            padding-right: 10px; /* For scrollbar spacing */
+            padding-right: 10px; 
         }
         .announcement-item {
             border-bottom: 1px solid rgba(0, 205, 233, 0.2);
@@ -327,7 +326,6 @@
             border-bottom: none;
         }
 
-        /* NEW: Accordion styles for announcements */
         .announcement-toggle {
             background: none;
             border: none;
@@ -687,7 +685,8 @@
             .social-icons { justify-content: center; }
         }
         @media (max-width: 768px) {
-            body { font-size: 14px; }
+            /* FIX: Reduced font size for mobile */
+            body { font-size: 13px; }
             .main-nav { display: none; }
             .hamburger-btn { display: block; }
             header { justify-content: flex-end; padding: 20px; }
@@ -695,7 +694,8 @@
             .lightbox-content { max-width: 90vw; max-height: 80vh; }
         }
         @media (max-width: 480px) {
-            body { font-size: 13px; }
+            /* FIX: Reduced font size for smaller mobile */
+            body { font-size: 12px; }
             .content { padding: 20px; }
             .profile-photo { width: 150px; height: 150px; }
             .ryuya-gallery-grid {
@@ -769,7 +769,19 @@
             <section class="content announcement-section" data-aos="fade-up">
                 <h2><i class="fas fa-bullhorn"></i> お知らせ</h2>
                 <div class="announcements-container">
-                    <!-- FIX: Restored all announcements and added a new one -->
+                    <div class="announcement-item">
+                        <button class="announcement-toggle">
+                            <span class="announcement-date">2025/07/24</span>
+                            <span class="announcement-title">【UI改善と動作調整】</span>
+                            <i class="fas fa-chevron-down announcement-icon"></i>
+                        </button>
+                        <div class="announcement-details">
+                            <ul class="announcement-list">
+                                <li>スマートフォン表示時のサイト全体の文字サイズを、さらに一回り小さく調整しました。</li>
+                                <li>楽曲カードが裏返った瞬間に、よりスムーズに動画が自動再生されるよう微調整を行いました。</li>
+                            </ul>
+                        </div>
+                    </div>
                     <div class="announcement-item">
                         <button class="announcement-toggle">
                             <span class="announcement-date">2025/07/24</span>
@@ -1032,8 +1044,7 @@
     <!-- External JS Libraries -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-    <script src="https://www.youtube.com/iframe_api"></script>
-
+    
     <!-- Main Application Script -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -1313,24 +1324,22 @@
                     card.addEventListener('click', () => {
                         const wasFlipped = card.classList.contains('is-flipped');
                         
-                        // Stop any currently playing video and flip its card back
                         const currentlyFlippedCard = document.querySelector('.track-card.is-flipped');
                         if (currentlyFlippedCard) {
                             currentlyFlippedCard.classList.remove('is-flipped');
                             const oldIndex = currentlyFlippedCard.dataset.index;
                             const oldPlayerContainer = document.getElementById(`player-container-${oldIndex}`);
                             if (oldPlayerContainer) {
-                                oldPlayerContainer.innerHTML = ''; // Remove the iframe to stop video
+                                oldPlayerContainer.innerHTML = ''; 
                             }
                         }
 
-                        // If the clicked card was not the one already flipped, flip it
                         if (!wasFlipped) {
                             card.classList.add('is-flipped');
                             const playerContainer = document.getElementById(`player-container-${index}`);
                             if (playerContainer) {
-                                // Create and inject the iframe
                                 const iframe = document.createElement('iframe');
+                                // FIX: Ensure autoplay=1 is present for automatic playback
                                 iframe.setAttribute('src', `https://www.youtube.com/embed/${track.youtubeId}?autoplay=1&playsinline=1`);
                                 iframe.setAttribute('width', '100%');
                                 iframe.setAttribute('height', '100%');
