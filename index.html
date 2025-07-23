@@ -10,12 +10,12 @@
     <!-- Content Security Policy (CSP): 信頼できるソースを指定し、XSS攻撃などを防ぎます -->
     <meta http-equiv="Content-Security-Policy" content="
         default-src 'self'; 
-        script-src 'self' 'unsafe-inline' https://unpkg.com https://cdn.jsdelivr.net https://generativelanguage.googleapis.com https://cdnjs.cloudflare.com; 
+        script-src 'self' 'unsafe-inline' https://unpkg.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; 
         style-src 'self' 'unsafe-inline' https://unpkg.com https://fonts.googleapis.com https://cdnjs.cloudflare.com; 
         font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; 
         img-src 'self' https://i.ibb.co https://placehold.co data:; 
         frame-src 'self' https://open.spotify.com;
-        connect-src 'self' https://generativelanguage.googleapis.com;
+        connect-src 'self';
         speech-src 'self' blob:;
     ">
     <!-- X-Frame-Options: クリックジャッキング攻撃を防ぐため、iframe内での表示を拒否します -->
@@ -577,12 +577,13 @@
             align-items: center;
             gap: 15px;
             width: 100%;
-            max-width: 600px;
+            max-width: 80vw;
+            max-height: 80vh;
         }
 
         .lightbox-content {
             max-width: 100%;
-            max-height: 50vh;
+            max-height: 100%;
             border-radius: 10px;
             box-shadow: 0 0 50px rgba(0,0,0,0.8);
         }
@@ -607,48 +608,6 @@
             transform: scale(1.1);
         }
 
-        #gemini-chat-container {
-            width: 100%;
-            text-align: center;
-        }
-        #gemini-chat-output {
-            background-color: rgba(0,0,0,0.5);
-            border: 1px solid var(--primary-color);
-            padding: 15px;
-            border-radius: 8px;
-            height: 150px;
-            margin-top: 10px;
-            color: var(--text-color);
-            line-height: 1.7;
-            overflow-y: auto;
-            text-align: left;
-        }
-        #gemini-chat-input-container {
-            width: 100%;
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        #gemini-chat-input {
-            flex-grow: 1;
-            background: rgba(0,0,0,0.5);
-            border: 1px solid var(--secondary-color);
-            border-radius: 8px;
-            color: var(--text-color);
-            padding: 10px;
-            font-size: 1em;
-        }
-        #gemini-chat-send {
-            background-color: var(--secondary-color);
-            border: none;
-            border-radius: 8px;
-            color: white;
-            padding: 0 15px;
-            font-size: 1.2em;
-            cursor: pointer;
-        }
-
-
         /* ----------- page2 (紫苑の活動) ----------- */
         .music-grid { 
             display: grid; 
@@ -662,12 +621,14 @@
             box-shadow: none;
             padding: 0;
             cursor: pointer;
+            aspect-ratio: 1 / 1;
         }
         .flipper {
             transition: 0.8s;
             transform-style: preserve-3d;
             position: relative;
             width: 100%;
+            height: 100%;
         }
         .track-card.is-flipped .flipper {
             transform: rotateY(180deg);
@@ -693,43 +654,23 @@
         }
         .jacket-image {
             width: 100%;
-            height: auto;
-            aspect-ratio: 1 / 1;
+            height: 100%;
             object-fit: cover;
             display: block;
-        }
-        .track-title-container {
-            padding: 15px;
-            text-align: center;
-            margin-top: auto;
-        }
-        .track-title-container h3 {
-            margin: 0;
-            font-size: 1.1em;
-            color: var(--text-color);
         }
         .back {
             transform: rotateY(180deg);
             background-color: #121212;
             padding: 15px;
             box-sizing: border-box;
-            justify-content: space-between;
+            justify-content: center; /* Center the content */
+            align-items: center;
         }
         .back iframe {
             border-radius: 10px;
             border: none;
             height: 80px; /* Spotify compact embed height */
-        }
-        .gemini-lyrics-output {
-            font-size: 0.9em;
-            color: #ccc;
-            line-height: 1.6;
-            margin-top: 10px;
-            padding: 10px;
-            border-radius: 5px;
-            background: rgba(0,0,0,0.3);
-            flex-grow: 1;
-            overflow-y: auto;
+            width: 100%;
         }
 
 
@@ -743,79 +684,6 @@
         .contact-info ul a i { font-size: 1.5em; }
         .contact-info ul a[href*="youtube.com"] { color: #FF0000; }
 
-        /* ----------- Chatbot ----------- */
-        #chatbot-toggle {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
-            border-radius: 50%;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-size: 24px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
-            z-index: 1000;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        #chatbot-toggle:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 25px rgba(129, 57, 245, 0.7);
-        }
-        #chatbot-container {
-            position: fixed;
-            bottom: 100px;
-            right: 30px;
-            width: 350px;
-            max-width: 90vw;
-            height: 500px;
-            max-height: 70vh;
-            background-color: rgba(10, 0, 20, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            border: 1px solid var(--primary-color);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-            z-index: 999;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            transform: scale(0.5) translateY(50px);
-            opacity: 0;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
-            transform-origin: bottom right;
-        }
-        #chatbot-container.is-active {
-            transform: scale(1) translateY(0);
-            opacity: 1;
-        }
-        .chatbot-header {
-            padding: 15px;
-            background-color: rgba(0,0,0,0.3);
-            border-bottom: 1px solid var(--primary-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: var(--secondary-color);
-            text-shadow: 0 0 5px var(--secondary-color);
-        }
-        .chatbot-header h3 { margin: 0; font-family: 'Orbitron', sans-serif; }
-        #chatbot-close { background: none; border: none; color: var(--text-color); font-size: 20px; cursor: pointer; }
-        .chatbot-messages { flex-grow: 1; padding: 15px; overflow-y: auto; }
-        .message { margin-bottom: 15px; display: flex; max-width: 85%; }
-        .message p { margin: 0; padding: 10px 15px; border-radius: 10px; line-height: 1.5; }
-        .user-message { margin-left: auto; flex-direction: row-reverse; }
-        .user-message p { background-color: var(--primary-color); color: white; border-bottom-right-radius: 2px; }
-        .bot-message { margin-right: auto; }
-        .bot-message p { background-color: #222; border-bottom-left-radius: 2px; }
-        .chatbot-input { padding: 15px; border-top: 1px solid var(--primary-color); display: flex; gap: 10px; }
-        #chatbot-input-text { flex-grow: 1; background: rgba(0,0,0,0.5); border: 1px solid var(--secondary-color); border-radius: 8px; color: var(--text-color); padding: 10px; font-size: 1em; }
-        #chatbot-send { background-color: var(--secondary-color); border: none; border-radius: 8px; color: white; padding: 0 15px; font-size: 1.2em; cursor: pointer; }
-
         /* レスポンシブデザイン */
         @media (max-width: 992px) {
             .profile-card { flex-direction: column; text-align: center; }
@@ -827,8 +695,7 @@
             .hamburger-btn { display: block; }
             header { justify-content: flex-end; }
             .content { padding: 30px; }
-            .lightbox-content { max-width: 90vw; max-height: 40vh; }
-            #gemini-chat-output { height: 100px; }
+            .lightbox-content { max-width: 90vw; max-height: 80vh; }
         }
         @media (max-width: 480px) {
             body { font-size: 13px; }
@@ -902,14 +769,91 @@
                 <div class="announcement-item">
                     <button class="announcement-toggle">
                         <span class="announcement-date">2025/07/23</span>
-                        <span class="announcement-title">【サイト安定性向上アップデート】</span>
+                        <span class="announcement-title">【コンテンツ更新】</span>
                         <i class="fas fa-chevron-down announcement-icon"></i>
                     </button>
                     <div class="announcement-details">
                         <ul class="announcement-list">
-                            <li>サイト全体の安定性を向上させるため、包括的なデバッグを実施しました。</li>
-                            <li>非同期処理（AIとの通信）におけるエラーハンドリングを強化し、予期せぬエラーの発生を抑制しました。</li>
-                            <li>UIの状態管理を最適化し、より安定した操作性を実現しました。</li>
+                            <li>「りゅうやの活動」ページの情報を更新しました。</li>
+                            <li>ギャラリーのイラストを最新のものに更新しました。</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="announcement-item">
+                    <button class="announcement-toggle">
+                        <span class="announcement-date">2025/07/23</span>
+                        <span class="announcement-title">【UI改善】</span>
+                        <i class="fas fa-chevron-down announcement-icon"></i>
+                    </button>
+                    <div class="announcement-details">
+                        <ul class="announcement-list">
+                            <li>楽曲紹介から曲のタイトル表示を廃止し、ジャケットデザインを強調するUIに変更しました。</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="announcement-item">
+                    <button class="announcement-toggle">
+                        <span class="announcement-date">2025/07/23</span>
+                        <span class="announcement-title">【不具合の修正】</span>
+                        <i class="fas fa-chevron-down announcement-icon"></i>
+                    </button>
+                    <div class="announcement-details">
+                        <ul class="announcement-list">
+                            <li>楽曲のジャケット写真が表示されない不具合を修正しました。</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="announcement-item">
+                    <button class="announcement-toggle">
+                        <span class="announcement-date">2025/07/23</span>
+                        <span class="announcement-title">【サイト機能調整アップデート】</span>
+                        <i class="fas fa-chevron-down announcement-icon"></i>
+                    </button>
+                    <div class="announcement-details">
+                        <ul class="announcement-list">
+                            <li>チャットボット機能を廃止しました。</li>
+                            <li>楽曲の歌詞解説機能を廃止しました。</li>
+                            <li>サイトの軽量化とパフォーマンス向上を行いました。</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="announcement-item">
+                    <button class="announcement-toggle">
+                        <span class="announcement-date">2025/07/23</span>
+                        <span class="announcement-title">【サイトアップデートのお知らせ】</span>
+                        <i class="fas fa-chevron-down announcement-icon"></i>
+                    </button>
+                    <div class="announcement-details">
+                        <ul class="announcement-list">
+                            <li>お知らせをアコーディオン形式のUIに変更</li>
+                            <li>Webサイトの核にGemini 2.5 Proを導入</li>
+                            <li>AIアシスタント（チャットボット）を追加</li>
+                            <li>AIイラストとのチャット機能を追加</li>
+                            <li>楽曲の歌詞解説機能を追加</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="announcement-item">
+                    <button class="announcement-toggle">
+                        <span class="announcement-date">2025/07/23</span>
+                        <span class="announcement-title">【不具合の修正内容】</span>
+                        <i class="fas fa-chevron-down announcement-icon"></i>
+                    </button>
+                    <div class="announcement-details">
+                        <ul class="announcement-list">
+                            <li>音声の読み上げ機能を廃止</li>
+                            <li>エラー処理の集約</li>
+                            <li>UIの状態管理の改善</li>
+                            <li>API通信の安定化</li>
+                            <li>UIの状態管理の強化</li>
+                            <li>コードの整理と最適化</li>
+                            <li>エラーハンドリングのロジック見直し</li>
+                            <li>堅牢なイベント処理</li>
+                            <li>エラーハンドリングの集約</li>
+                            <li>APIの安定性向上</li>
+                            <li>非同期処理の堅牢化</li>
+                            <li>コードの安全性向上</li>
+                            <li>エラーメッセージの改善</li>
                         </ul>
                     </div>
                 </div>
@@ -923,11 +867,8 @@
                         <ul class="announcement-list">
                             <li>サイトのオープニングをリニューアル</li>
                             <li>サイトのオープニングに音声と効果音を追加</li>
-                            <li>チャットボットの修正</li>
                             <li>オープニングアニメーションの改善</li>
                             <li>セキュリティヘッダーの調整</li>
-                            <li>チャットボットの通信処理の安定化</li>
-                            <li>エラーハンドリングの強化</li>
                             <li>UIの改善</li>
                         </ul>
                     </div>
@@ -938,9 +879,10 @@
             <section class="content" data-aos="fade-up"><h2 class="glitch" data-text="紫苑の音世界">紫苑の音世界</h2><p>感情とテクノロジーが織りなすサウンドスケープ。心揺さぶる楽曲の数々をお楽しみください。</p><button class="content-button nav-link" data-page="page-shion"><i class="fas fa-music"></i> 楽曲を聴く</button></section>
         </section>
         <section id="page-ryuya" class="page-content">
-            <div class="profile-card ryuya-card" data-aos="fade-down"><img src="https://i.ibb.co/RK3h7KM/l-IHf-Ng-Nre-Zw-Mxg68efb-Xa.png" alt="りゅうや アイコン" class="profile-photo"><div class="profile-info"><h2>りゅうや</h2><p class="bio">AIが紡ぎ出す無限のアートワークと、その背後にある思考プロセスを探索するAIクリエイター。</p></div></div>
+            <div class="profile-card ryuya-card" data-aos="fade-down"><img src="https://i.ibb.co/RK3h7KM/l-IHf-Ng-Nre-Zw-Mxg68efb-Xa.png" alt="りゅうや アイコン" class="profile-photo"><div class="profile-info"><h2>りゅうや</h2><p class="bio">2023/08/24にAI artistとして活動開始。AIが紡ぎ出す無限のアートワークと、その背後にある思考プロセスを探索し、現在までに2,000枚近くのイラストを創作。</p></div></div>
             <section class="content" data-aos="fade-up">
-                <h2>AIイラストギャラリー</h2>
+                <h2>AI art gallery</h2>
+                <p>過去作ではなくオフィシャルサイト開設後に創作したイラストのみ貼っています。</p>
                 <div class="ryuya-gallery-grid"></div>
             </section>
         </section>
@@ -961,37 +903,14 @@
                     </ul>
                 </div>
             </section>
-             <!-- Chatbot Elements -->
-            <button id="chatbot-toggle"><i class="fas fa-robot"></i></button>
-            <div id="chatbot-container">
-                <div class="chatbot-header">
-                    <h3>AIアシスタント</h3>
-                    <button id="chatbot-close">&times;</button>
-                </div>
-                <div class="chatbot-messages" id="chatbot-messages">
-                    <!-- Messages will be appended here -->
-                </div>
-                <div class="chatbot-input">
-                    <input type="text" id="chatbot-input-text" placeholder="メッセージを入力...">
-                    <button id="chatbot-send"><i class="fas fa-paper-plane"></i></button>
-                </div>
-            </div>
         </section>
     </main>
-
+    
     <!-- Lightbox -->
     <div id="lightbox-overlay" class="lightbox-overlay">
         <div class="lightbox-container">
             <span class="lightbox-close">&times;</span>
             <img class="lightbox-content" id="lightbox-img">
-            <div id="gemini-chat-container">
-                <button class="content-button" id="start-chat-btn">このキャラと会話をする</button>
-                <div id="gemini-chat-output" style="display: none;"></div>
-                 <div id="gemini-chat-input-container" style="display: none;">
-                    <input type="text" id="gemini-chat-input" placeholder="メッセージを入力...">
-                    <button id="gemini-chat-send"><i class="fas fa-paper-plane"></i></button>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -1030,7 +949,7 @@
             // --- SPA Navigation & Transition Logic ---
             function navigateToPage(pageId) {
                 const currentPage = document.querySelector('.page-content.is-active');
-                if (currentPage.id === pageId) {
+                if (currentPage && currentPage.id === pageId) {
                     if (hamburgerBtn.classList.contains('is-active')) {
                         hamburgerBtn.classList.remove('is-active');
                         mobileNav.classList.remove('is-active');
@@ -1039,9 +958,13 @@
                 }
                 transitionOverlay.classList.add('is-active');
                 setTimeout(() => {
-                    currentPage.classList.remove('is-active');
+                    if (currentPage) {
+                        currentPage.classList.remove('is-active');
+                    }
                     const nextPage = document.getElementById(pageId);
-                    nextPage.classList.add('is-active');
+                    if (nextPage) {
+                        nextPage.classList.add('is-active');
+                    }
                     document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
                     document.querySelectorAll(`.nav-link[data-page="${pageId}"]`).forEach(activeLink => activeLink.classList.add('active'));
                     AOS.refresh();
@@ -1060,7 +983,7 @@
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
                     const pageId = link.getAttribute('data-page');
-                    navigateToPage(pageId);
+                    if(pageId) navigateToPage(pageId);
                 });
             });
 
@@ -1137,7 +1060,7 @@
                                 try {
                                     synth.triggerAttackRelease("C1", "8n", Tone.now());
                                 } catch (e) {
-                                    // ignore
+                                    console.warn("Tone.js synth error:", e);
                                 }
                             }
                             i++;
@@ -1175,7 +1098,7 @@
                 animationFrame: null, ctx: faceScanCanvas.getContext('2d'),
                 start: function() { 
                     faceScanCanvas.width = window.innerWidth; faceScanCanvas.height = window.innerHeight; faceScanCanvas.style.opacity = 1; 
-                    if (noise) {
+                    if (noise && Tone.context.state === 'running') {
                         const panner = new Tone.Panner(-1).toDestination();
                         noise.connect(panner);
                         panner.pan.rampTo(1, 1.5);
@@ -1197,7 +1120,7 @@
                 interval: null, ctx: matrixCanvas.getContext('2d'),
                 start: function() {
                     matrixCanvas.width = window.innerWidth; matrixCanvas.height = window.innerHeight; matrixCanvas.style.opacity = 1; 
-                    if (noise) {
+                    if (noise && Tone.context.state === 'running') {
                         noise.volume.rampTo(-30, 0.1);
                         const matrixSynth = new Tone.PluckSynth({ volume: -10 }).toDestination();
                         matrixLoop = new Tone.Loop(time => {
@@ -1276,7 +1199,7 @@
             });
 
             window.addEventListener('resize', () => {
-                if (!sessionStorage.getItem('openingPlayed')) {
+                if (!sessionStorage.getItem('openingPlayed') && openingContainer.style.display !== 'none') {
                     location.reload();
                 }
             });
@@ -1287,7 +1210,8 @@
             const ryuyaGalleryGrid = document.querySelector('.ryuya-gallery-grid');
             if (ryuyaGalleryGrid) {
                 const imageUrls = [
-                    "https://i.ibb.co/HD81w0Gd/d1tdicte878c73em4u40-webp-image.png", "https://i.ibb.co/pB7wnRY2/d1tdicte878c73em4u4g-webp-image.png", "https://i.ibb.co/Fk7nBVxg/d0i1krde878c7383olug-webp-image.png", "https://i.ibb.co/fGyB5C9B/d0h4vs5e878c738705j0-webp-image.png", "https://i.ibb.co/Zz0gJs9Y/cs1793te878c73ebn2t0-webp-image.png", "https://i.ibb.co/gZ86Lz1q/cs1m635e878c73emg040-webp-image.png", "https://i.ibb.co/3YFPCPtY/cs26a8te878c73djh7m0-webp-image.png", "https://i.ibb.co/HSYWVsz/crqurtle878c73fs1mf0-webp-image.png", "https://i.ibb.co/WN9DwVWq/crt8drle878c73bfodjg-webp-image.png", "https://i.ibb.co/LdKstCcC/cljiub14msbabvtnm120-webp-image.png", "https://i.ibb.co/hxjQ4zSQ/clf9ks14msb8hjjl00eg-webp-image.png", "https://i.ibb.co/9H88S7HX/clf9l3p4msbbp85p2gjg-webp-image.png", "https://i.ibb.co/MDhb15Vv/clf9rmh4msbbp85p5ov0-webp-image.png", "https://i.ibb.co/KcLJb6wg/clcrln14msb215p4s5dg-webp-image.png", "https://i.ibb.co/XZqtmKTY/clb2hm94msb9br5t6i60-webp-image.png", "https://i.ibb.co/QFt7Hnd0/cl5liq14msbfhr8ogedg-webp-image.png", "https://i.ibb.co/Rp7WZ9ms/cl8k85p4msb3hvj0rla0-webp-image.png", "https://i.ibb.co/8n6t3gQ8/ckvgq9p4msbd5sofbcsg-webp-image.png", "https://i.ibb.co/hFkYcH0C/cptkbqle878c73dgv2eg-webp-image.png", "https://i.ibb.co/xKT0cWzs/cop37gte878c73fdd3u0-webp-image.png", "https://i.ibb.co/YgLS44m/d061pr5e878c73fphvcg-webp-image.png", "https://i.ibb.co/HpNpb6WN/cve16jte878c73cdq51g-webp-image.png", "https://i.ibb.co/JWkkBMRG/cvcacule878c73cfm0vg-webp-image.png", "https://i.ibb.co/BFScCch/cvcacmte878c73ei0iug-webp-image.png", "https://i.ibb.co/DDvdHxVd/cvcaasle878c73cg372g-webp-image.png", "https://i.ibb.co/yBxpm2WL/cvcab9le878c73cfcogg-webp-image.png", "https://i.ibb.co/6JcFCStt/cvca7pde878c73cenrng-webp-image.png", "https://i.ibb.co/XxJDp0TX/cth4o7te878c73e7cf90-webp-image.png", "https://i.ibb.co/Lzx72kmY/cth4o9te878c73esv9c0-webp-image.png", "https://i.ibb.co/NdJwMf5v/ctgptdte878c73aqdku0-webp-image.png", "https://i.ibb.co/rKmmgNVW/ct0u3gte878c73apctfg-webp-image.png", "https://i.ibb.co/S7KtJHrk/csv81qle878c73enft50-webp-image.png", "https://i.ibb.co/dwhy36Rg/cspug1de878c73es3ab0-webp-image.png", "https://i.ibb.co/tpLYytJL/csvt4nde878c73c6pudg-webp-image.png", "https://i.ibb.co/5gsjNhmz/cssvdb5e878c738mqlb0-webp-image.png", "https://i.ibb.co/vxdTMsMZ/csoq6ple878c7389eqng-webp-image.png", "https://i.ibb.co/3Pf4vwq/cs2grbte878c73dnpk00-webp-image.png", "https://i.ibb.co/5WTmBNR3/cs69j2le878c738gm040-webp-image.png", "https://i.ibb.co/XfHWFmJw/csmc4cte878c73a84kf0-webp-image.png", "https://i.ibb.co/Q7Qj0PdL/cskbr9de878c73eiar10-webp-image.png", "https://i.ibb.co/wZPF2P5p/csd42l5e878c73f89crg-webp-image.png", "https://i.ibb.co/0jN30q2d/csc9j2le878c73aaqjqg-webp-image.png", "https://i.ibb.co/7tK2s66R/cs6a5ble878c73adv2s0-webp-image.png", "https://i.ibb.co/wGnsw6n/csd2nrde878c73c62cs0-webp-image.png", "https://i.ibb.co/Xk5djgMY/cr3780de878c73f7bvd0-webp-image.png", "https://i.ibb.co/fVn8ZTZS/cs70jvle878c738i975g-webp-image.png", "https://i.ibb.co/rGsTkhTv/crv7agte878c73f8bve0-webp-image.png", "https://i.ibb.co/Kzyv5rQ0/cs16vqle878c73di57q0-webp-image.png"
+                    "https://i.ibb.co/HD81w0Gd/d1tdicte878c73em4u40-webp-image.png", 
+                    "https://i.ibb.co/pB7wnRY2/d1tdicte878c73em4u4g-webp-image.png"
                 ];
                 const uniqueImageUrls = [...new Set(imageUrls)];
 
@@ -1302,31 +1226,15 @@
                 const lightboxOverlay = document.getElementById('lightbox-overlay');
                 const lightboxImg = document.getElementById('lightbox-img');
                 const lightboxClose = document.querySelector('.lightbox-close');
-                const startChatBtn = document.getElementById('start-chat-btn');
-                const chatOutput = document.getElementById('gemini-chat-output');
-                const chatInputContainer = document.getElementById('gemini-chat-input-container');
-                const chatInput = document.getElementById('gemini-chat-input');
-                const chatSendBtn = document.getElementById('gemini-chat-send');
-                let characterChatHistory = [];
-                let characterChatAbortController = null;
 
                 ryuyaGalleryGrid.addEventListener('click', e => {
                     if (e.target.tagName === 'IMG') {
-                        chatOutput.innerHTML = '';
-                        chatOutput.style.display = 'none';
-                        chatInputContainer.style.display = 'none';
-                        startChatBtn.style.display = 'inline-flex';
-                        characterChatHistory = [];
                         lightboxOverlay.style.display = 'flex';
                         lightboxImg.src = e.target.src;
                     }
                 });
 
                 function closeLightbox() {
-                    if (characterChatAbortController) {
-                        characterChatAbortController.abort();
-                        characterChatAbortController = null;
-                    }
                     lightboxOverlay.style.display = 'none';
                 }
 
@@ -1336,97 +1244,6 @@
                         closeLightbox();
                     }
                 });
-                
-                async function startCharacterChat() {
-                    startChatBtn.style.display = 'none';
-                    chatOutput.style.display = 'block';
-                    chatInputContainer.style.display = 'flex';
-                    chatOutput.innerHTML = '<p><em>キャラクターを呼び出しています...</em></p>';
-                    startChatBtn.disabled = true;
-
-                    if (characterChatAbortController) characterChatAbortController.abort();
-                    characterChatAbortController = new AbortController();
-                    
-                    try {
-                        const imageUrl = lightboxImg.src;
-                        const base64Data = await imageUrlToBase64(imageUrl);
-                        
-                        const prompt = "あなたは、このイラストに描かれているキャラクターです。架空の人物としてロールプレイングをしてください。まずは自己紹介と最初の挨拶をお願いします。";
-                        const parts = [{ text: prompt }, { inlineData: { mimeType: 'image/png', data: base64Data } }];
-                        characterChatHistory = [{ role: "user", parts: parts }];
-                        
-                        const initialGreeting = await callGeminiAPI(characterChatHistory, characterChatAbortController.signal);
-                        characterChatHistory.push({ role: "model", parts: [{ text: initialGreeting }] });
-
-                        chatOutput.innerHTML = ''; 
-                        addCharacterChatMessage(initialGreeting, 'bot');
-                    } catch (error) {
-                        if (error.name !== 'AbortError') {
-                            console.error("Error starting character chat:", error);
-                            chatOutput.innerHTML = '<p><em>キャラクターの呼び出しに失敗しました。</em></p>';
-                        }
-                    } finally {
-                        startChatBtn.disabled = false;
-                    }
-                }
-
-                async function sendCharacterChatMessage() {
-                    const userInput = chatInput.value.trim();
-                    if (userInput === '' || chatInput.disabled) return;
-
-                    addCharacterChatMessage(userInput, 'user');
-                    chatInput.value = '';
-                    chatInput.disabled = true;
-                    chatSendBtn.disabled = true;
-
-                    if (characterChatAbortController) characterChatAbortController.abort();
-                    characterChatAbortController = new AbortController();
-                    
-                    try {
-                        const parts = [{ text: userInput }];
-                        characterChatHistory.push({ role: "user", parts: parts });
-
-                        const response = await callGeminiAPI(characterChatHistory, characterChatAbortController.signal);
-                        characterChatHistory.push({ role: "model", parts: [{ text: response }] });
-                        addCharacterChatMessage(response, 'bot');
-                    } catch (error) {
-                        characterChatHistory.pop();
-                        if (error.name !== 'AbortError') {
-                            addCharacterChatMessage("応答エラーが発生しました。", 'bot');
-                            console.error("Character chat error:", error);
-                        }
-                    } finally {
-                        chatInput.disabled = false;
-                        chatSendBtn.disabled = false;
-                        chatInput.focus();
-                    }
-                }
-                
-                startChatBtn.addEventListener('click', () => {
-                    startCharacterChat().catch(err => {
-                        if (err.name !== 'AbortError') console.error("Unhandled error in startCharacterChat:", err);
-                    });
-                });
-                chatSendBtn.addEventListener('click', () => {
-                     sendCharacterChatMessage().catch(err => {
-                        if (err.name !== 'AbortError') console.error("Unhandled error in sendCharacterChatMessage:", err);
-                    });
-                });
-                chatInput.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') {
-                        sendCharacterChatMessage().catch(err => {
-                            if (err.name !== 'AbortError') console.error("Unhandled error in sendCharacterChatMessage keypress:", err);
-                        });
-                    }
-                });
-
-                function addCharacterChatMessage(message, sender) {
-                    const messageElement = document.createElement('p');
-                    messageElement.style.textAlign = sender === 'user' ? 'right' : 'left';
-                    messageElement.innerHTML = `<strong>${sender === 'user' ? 'You' : 'Character'}:</strong> ${message}`;
-                    chatOutput.appendChild(messageElement);
-                    chatOutput.scrollTop = chatOutput.scrollHeight;
-                }
             }
 
 
@@ -1446,33 +1263,21 @@
                 function createTrackCard(track) {
                     const card = document.createElement('div');
                     card.className = 'track-card';
-                    card.style.aspectRatio = '1 / 1.5'; 
-                    card.abortController = null;
-
+                    
                     card.innerHTML = `
                         <div class="flipper">
                             <div class="front">
-                                <img src="${track.jacket}" onerror="this.onerror=null;this.src='https://placehold.co/300x300/ff00ff/FFFFFF?text=ART';" alt="${track.title} Jacket" class="jacket-image">
-                                <div class="track-title-container">
-                                    <h3>${track.title}</h3>
-                                </div>
+                                <img src="${track.jacket}" onerror="this.onerror=null;this.src='https://placehold.co/300x300/ff00ff/FFFFFF?text=ART';" alt="楽曲ジャケット" class="jacket-image">
                             </div>
                             <div class="back">
                                 <iframe src="" width="100%" height="80" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                                <div class="gemini-lyrics-output"></div>
-                                <button class="content-button gemini-lyrics-btn" style="width:100%; margin-top:10px; padding: 10px;">✨ 歌詞の世界観を解説</button>
                             </div>
                         </div>
                     `;
 
                     card.addEventListener('click', (e) => {
-                        if (e.target.classList.contains('gemini-lyrics-btn')) return;
-
                         const currentlyFlipped = document.querySelector('.track-card.is-flipped');
                         if (currentlyFlipped && currentlyFlipped !== card) {
-                            if (currentlyFlipped.abortController) {
-                                currentlyFlipped.abortController.abort();
-                            }
                             currentlyFlipped.classList.remove('is-flipped');
                             const otherIframe = currentlyFlipped.querySelector('.back iframe');
                             if (otherIframe) otherIframe.src = ''; 
@@ -1486,45 +1291,8 @@
                                 iframe.src = track.embedUrl;
                             }
                         } else {
-                            if (card.abortController) {
-                                card.abortController.abort();
-                            }
                             iframe.src = ''; 
                         }
-                    });
-
-                    async function fetchLyricsExplanation() {
-                        const outputDiv = card.querySelector('.gemini-lyrics-output');
-                        const lyricsBtn = card.querySelector('.gemini-lyrics-btn');
-                        outputDiv.textContent = '解説を生成中...';
-                        lyricsBtn.disabled = true;
-                        
-                        if (card.abortController) {
-                            card.abortController.abort();
-                        }
-                        card.abortController = new AbortController();
-
-                        try {
-                            const prompt = `シンガーソングライター紫苑の「${track.title}」という曲について、その歌詞の世界観や物語を、本人が語るような優しく詩的なトーンで解説してください。`;
-                            const explanation = await callGeminiAPI([{ role: "user", parts: [{ text: prompt }] }], card.abortController.signal);
-                            outputDiv.textContent = explanation;
-                        } catch (error) {
-                            if (error.name !== 'AbortError') {
-                                console.error("Error generating lyrics explanation:", error);
-                                outputDiv.textContent = "解説の生成中にエラーが発生しました。";
-                            } else {
-                                outputDiv.textContent = ""; // Clear "loading" message on abort
-                            }
-                        } finally {
-                            lyricsBtn.disabled = false;
-                        }
-                    }
-
-                    const lyricsBtn = card.querySelector('.gemini-lyrics-btn');
-                    lyricsBtn.addEventListener('click', () => {
-                        fetchLyricsExplanation().catch(err => {
-                            if (err.name !== 'AbortError') console.error("Unhandled error in fetchLyricsExplanation:", err);
-                        });
                     });
 
                     return card;
@@ -1559,165 +1327,11 @@
                 setInterval(() => {
                     devtoolsDetector.isOpen = false;
                     console.log('%c', devtoolsDetector);
-                    if (devtoolsDetector.isOpen) {
-                        if (devToolsBlocker) devToolsBlocker.style.display = 'block';
+                    if (devtoolsDetector.isOpen && devToolsBlocker) {
+                        devToolsBlocker.style.display = 'block';
                     }
                 }, 1500);
             }
-
-            // ======================================================
-            // --- Core API & Helper Functions ---
-            // ======================================================
-            async function callGeminiAPI(contents, signal) {
-                const apiKey = "";
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent?key=${apiKey}`;
-                
-                const payload = { contents };
-
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload),
-                    signal: signal
-                });
-
-                if (!response.ok) {
-                    const errorBody = await response.text();
-                    throw new Error(`API request failed with status ${response.status}: ${errorBody}`);
-                }
-
-                const result = await response.json();
-                const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
-
-                if (text) {
-                    return text;
-                } else {
-                    console.error("Invalid API response structure:", result);
-                    throw new Error("APIから有効な応答がありませんでした。");
-                }
-            }
-            
-            function imageUrlToBase64(url) {
-                return new Promise((resolve, reject) => {
-                    const img = new Image();
-                    img.crossOrigin = 'Anonymous';
-                    img.onload = () => {
-                        const canvas = document.createElement('canvas');
-                        canvas.width = img.width;
-                        canvas.height = img.height;
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, 0, 0);
-                        const dataURL = canvas.toDataURL('image/png');
-                        resolve(dataURL.replace(/^data:image\/(png|jpeg);base64,/, ''));
-                    };
-                    img.onerror = (error) => {
-                        reject(new Error('画像の読み込みに失敗しました。CORSポリシーが原因の可能性があります。' + error));
-                    };
-                    img.src = url + (url.includes('?') ? '&' : '?') + new Date().getTime();
-                });
-            }
-
-
-            // ======================================================
-            // --- AI Assistant Chatbot Logic ---
-            // ======================================================
-            const chatbotToggle = document.getElementById('chatbot-toggle');
-            const chatbotContainer = document.getElementById('chatbot-container');
-            const chatbotClose = document.getElementById('chatbot-close');
-            const chatbotMessages = document.getElementById('chatbot-messages');
-            const chatbotInput = document.getElementById('chatbot-input-text');
-            const chatbotSend = document.getElementById('chatbot-send');
-            let chatbotAbortController = null;
-
-            if(chatbotToggle) {
-                chatbotToggle.addEventListener('click', () => {
-                    chatbotContainer.classList.toggle('is-active');
-                });
-            }
-            if(chatbotClose) {
-                chatbotClose.addEventListener('click', () => {
-                    if (chatbotAbortController) {
-                        chatbotAbortController.abort();
-                    }
-                    chatbotContainer.classList.remove('is-active');
-                });
-            }
-
-            function addChatMessage(message, sender) {
-                const messageElement = document.createElement('div');
-                messageElement.className = `message ${sender}-message`;
-                messageElement.innerHTML = `<p>${message}</p>`;
-                chatbotMessages.appendChild(messageElement);
-                chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-            }
-
-            async function handleChatSend() {
-                const userInput = chatbotInput.value.trim();
-                if (userInput === '' || chatbotInput.disabled) {
-                    return;
-                }
-
-                addChatMessage(userInput, "user");
-                addChatMessage("...", "bot");
-                chatbotInput.value = "";
-                chatbotInput.disabled = true;
-                chatbotSend.disabled = true;
-                
-                if (chatbotAbortController) {
-                    chatbotAbortController.abort();
-                }
-                chatbotAbortController = new AbortController();
-                
-                try {
-                    const prompt = `あなたは「りゅうや」と「紫苑」の公式サイトのアシスタントAIです。以下の情報を元に、簡潔で親しみやすい日本語で応答してください。
-                    - りゅうや: AIクリエイターです。AIを使ってイラストなどを制作しています。
-                    - 紫苑: シンガーソングライターです。バラードを中心に作詞作曲しています。
-                    - 連絡先: メールアドレスは official-ryuya-shion@outlook.jp です。SNSはLit.Link (https://lit.link/Ryuya330) にまとまっています。
-                    
-                    ユーザーの質問: "${userInput}"`;
-
-                    const responseText = await callGeminiAPI([{ role: "user", parts: [{ text: prompt }] }], chatbotAbortController.signal);
-                    
-                    const lastBotMessage = chatbotMessages.querySelector('.bot-message:last-child');
-                    if (lastBotMessage && lastBotMessage.querySelector('p')?.textContent === '...') {
-                        lastBotMessage.remove();
-                    }
-                    addChatMessage(responseText, "bot");
-
-                } catch (error) {
-                    const lastBotMessage = chatbotMessages.querySelector('.bot-message:last-child');
-                    if (lastBotMessage && lastBotMessage.querySelector('p')?.textContent === '...') {
-                        lastBotMessage.remove();
-                    }
-                    
-                    if (error.name !== 'AbortError') {
-                        addChatMessage("エラーが発生しました。時間をおいて再度お試しください。", "bot");
-                        console.error("Chatbot API error:", error);
-                    }
-                } finally {
-                    chatbotInput.disabled = false;
-                    chatbotSend.disabled = false;
-                    chatbotInput.focus();
-                }
-            }
-            
-            const safeHandleChatSend = () => {
-                handleChatSend().catch(err => {
-                    if (err.name !== 'AbortError') {
-                        console.error("Unhandled error in handleChatSend:", err);
-                    }
-                });
-            };
-
-            if(chatbotSend) chatbotSend.addEventListener('click', safeHandleChatSend);
-            if(chatbotInput) chatbotInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    safeHandleChatSend();
-                }
-            });
-
-            addChatMessage("こんにちは！りゅうやと紫苑のAIアシスタントです。何かご質問はありますか？", "bot");
-
 
             // ======================================================
             // --- General UI & Initialization ---
@@ -1734,9 +1348,12 @@
                         details.style.maxHeight = null;
                         item.classList.remove('is-open');
                     } else {
+                        // Close other open items before opening a new one
                         document.querySelectorAll('.announcement-item.is-open').forEach(openItem => {
-                            openItem.querySelector('.announcement-details').style.maxHeight = null;
-                            openItem.classList.remove('is-open');
+                            if (openItem !== item) {
+                                openItem.querySelector('.announcement-details').style.maxHeight = null;
+                                openItem.classList.remove('is-open');
+                            }
                         });
 
                         item.classList.add('is-open');
