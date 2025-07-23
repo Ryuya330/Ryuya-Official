@@ -221,29 +221,20 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 10001; /* Must be on top of everything */
+            width: 100vw;
+            height: 100vh;
+            z-index: 10001;
             pointer-events: none;
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(20, 1fr);
+            grid-template-rows: repeat(20, 1fr);
         }
-        .transition-panel {
-            width: 50%;
-            height: 100%;
-            background-image: url('https://i.ibb.co/QjJDY3SP/image.png'); /* Use the full image */
-            background-size: 200% 100%;
-            transition: transform 0.6s cubic-bezier(0.86, 0, 0.07, 1);
-        }
-        .transition-panel-left {
-            transform: translateX(-100%);
-            background-position: left center;
-        }
-        .transition-panel-right {
-            transform: translateX(100%);
-            background-position: right center;
-        }
-        #page-transition-overlay.is-active .transition-panel {
-            transform: translateX(0);
+
+        .transition-cell {
+            background-color: var(--bg-color);
+            opacity: 0;
+            transform: scale(0);
+            transition: transform 0.3s ease, opacity 0.3s ease;
         }
 
         /* メインコンテンツ */
@@ -706,10 +697,7 @@
 </head>
 <body>
     <!-- Page Transition -->
-    <div id="page-transition-overlay">
-        <div class="transition-panel transition-panel-left"></div>
-        <div class="transition-panel transition-panel-right"></div>
-    </div>
+    <div id="page-transition-overlay"></div>
 
     <!-- 新しいオープニング演出 -->
     <div id="opening-container">
@@ -766,6 +754,32 @@
 
             <section class="content announcement-section" data-aos="fade-up">
                 <h2><i class="fas fa-bullhorn"></i> お知らせ</h2>
+                <div class="announcement-item">
+                    <button class="announcement-toggle">
+                        <span class="announcement-date">2025/07/23</span>
+                        <span class="announcement-title">【演出の変更】</span>
+                        <i class="fas fa-chevron-down announcement-icon"></i>
+                    </button>
+                    <div class="announcement-details">
+                        <ul class="announcement-list">
+                            <li>ページ切り替え時の演出を、よりAIプログラムらしいデジタルなエフェクトに変更しました。</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="announcement-item">
+                    <button class="announcement-toggle">
+                        <span class="announcement-date">2025/07/23</span>
+                        <span class="announcement-title">【総合デバッグと改善】</span>
+                        <i class="fas fa-chevron-down announcement-icon"></i>
+                    </button>
+                    <div class="announcement-details">
+                        <ul class="announcement-list">
+                            <li>サイト全体のコードを精査し、パフォーマンスと安定性を向上させるためのデバッグを行いました。</li>
+                            <li>アクセシビリティ向上のため、画像に適切な代替テキストを設定しました。</li>
+                            <li>外部リンクのセキュリティを強化しました。</li>
+                        </ul>
+                    </div>
+                </div>
                 <div class="announcement-item">
                     <button class="announcement-toggle">
                         <span class="announcement-date">2025/07/23</span>
@@ -887,7 +901,7 @@
             </section>
         </section>
         <section id="page-shion" class="page-content">
-            <div class="profile-card shion-card" data-aos="fade-down"><img src="https://i.ibb.co/4RzdYgbF/bt0n-Pu-Cotf55-R6-ARKv0o-O.jpg" onerror="this.onerror=null;this.src='https://placehold.co/200x200/ff00ff/FFFFFF?text=紫苑';" alt="紫苑 アーティスト写真" class="profile-photo"><div class="profile-info"><h2>紫苑</h2><p class="bio">シンガーソングライターの紫苑です。 バラードを中心に作詞作曲しています。 誰かの心に寄り添えるような歌を届けたいです。</p><div class="social-icons"><a href="https://big-up.style/artists/302804" target="_blank" title="BIG UP!"><i class="fas fa-music"></i></a></div></div></div>
+            <div class="profile-card shion-card" data-aos="fade-down"><img src="https://i.ibb.co/4RzdYgbF/bt0n-Pu-Cotf55-R6-ARKv0o-O.jpg" onerror="this.onerror=null;this.src='https://placehold.co/200x200/ff00ff/FFFFFF?text=紫苑';" alt="紫苑 アーティスト写真" class="profile-photo"><div class="profile-info"><h2>紫苑</h2><p class="bio">シンガーソングライターの紫苑です。 バラードを中心に作詞作曲しています。 誰かの心に寄り添えるような歌を届けたいです。</p><div class="social-icons"><a href="https://big-up.style/artists/302804" target="_blank" rel="noopener noreferrer" title="BIG UP!"><i class="fas fa-music"></i></a></div></div></div>
             <div class="music-grid" data-aos="fade-up"></div>
         </section>
         <section id="page-contact" class="page-content">
@@ -899,7 +913,7 @@
                     <p><strong>メール:</strong> <a href="mailto:official-ryuya-shion@outlook.jp" class="gradient-hover">official-ryuya-shion@outlook.jp</a></p>
                     <p><strong>SNSまとめ:</strong></p>
                     <ul>
-                        <li><a href="https://lit.link/Ryuya330" target="_blank" class="gradient-hover"><i class="fas fa-link"></i> Lit.Link (Ryuya330)</a></li>
+                        <li><a href="https://lit.link/Ryuya330" target="_blank" rel="noopener noreferrer" class="gradient-hover"><i class="fas fa-link"></i> Lit.Link (Ryuya330)</a></li>
                     </ul>
                 </div>
             </section>
@@ -910,7 +924,7 @@
     <div id="lightbox-overlay" class="lightbox-overlay">
         <div class="lightbox-container">
             <span class="lightbox-close">&times;</span>
-            <img class="lightbox-content" id="lightbox-img">
+            <img class="lightbox-content" id="lightbox-img" alt="拡大表示されたAIイラスト">
         </div>
     </div>
 
@@ -947,17 +961,59 @@
             });
             
             // --- SPA Navigation & Transition Logic ---
+            let isTransitioning = false;
+
+            function runGlitchTransition(callback) {
+                if (isTransitioning) return;
+                isTransitioning = true;
+
+                transitionOverlay.innerHTML = ''; // Clear previous cells
+                transitionOverlay.style.pointerEvents = 'auto';
+
+                const cells = [];
+                for (let i = 0; i < 400; i++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('transition-cell');
+                    transitionOverlay.appendChild(cell);
+                    cells.push(cell);
+                }
+
+                cells.forEach((cell, i) => {
+                    setTimeout(() => {
+                        cell.style.opacity = '1';
+                        cell.style.transform = 'scale(1)';
+                    }, Math.random() * 500);
+                });
+
+                setTimeout(() => {
+                    callback();
+                    cells.forEach((cell, i) => {
+                        setTimeout(() => {
+                            cell.style.opacity = '0';
+                            cell.style.transform = 'scale(0)';
+                        }, Math.random() * 500);
+                    });
+
+                    setTimeout(() => {
+                        transitionOverlay.innerHTML = '';
+                        transitionOverlay.style.pointerEvents = 'none';
+                        isTransitioning = false;
+                    }, 1000);
+
+                }, 700);
+            }
+
             function navigateToPage(pageId) {
                 const currentPage = document.querySelector('.page-content.is-active');
-                if (currentPage && currentPage.id === pageId) {
+                if ((currentPage && currentPage.id === pageId) || isTransitioning) {
                     if (hamburgerBtn.classList.contains('is-active')) {
                         hamburgerBtn.classList.remove('is-active');
                         mobileNav.classList.remove('is-active');
                     }
                     return;
                 }
-                transitionOverlay.classList.add('is-active');
-                setTimeout(() => {
+                
+                runGlitchTransition(() => {
                     if (currentPage) {
                         currentPage.classList.remove('is-active');
                     }
@@ -973,10 +1029,7 @@
                         hamburgerBtn.classList.remove('is-active');
                         mobileNav.classList.remove('is-active');
                     }
-                    setTimeout(() => {
-                        transitionOverlay.classList.remove('is-active');
-                    }, 100);
-                }, 600);
+                });
             }
 
             navLinks.forEach(link => {
@@ -1267,10 +1320,10 @@
                     card.innerHTML = `
                         <div class="flipper">
                             <div class="front">
-                                <img src="${track.jacket}" onerror="this.onerror=null;this.src='https://placehold.co/300x300/ff00ff/FFFFFF?text=ART';" alt="楽曲ジャケット" class="jacket-image">
+                                <img src="${track.jacket}" onerror="this.onerror=null;this.src='https://placehold.co/300x300/ff00ff/FFFFFF?text=ART';" alt="${track.title}のジャケット写真" class="jacket-image">
                             </div>
                             <div class="back">
-                                <iframe src="" width="100%" height="80" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                                <iframe src="" title="${track.title}のSpotify埋め込みプレーヤー" width="100%" height="80" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                             </div>
                         </div>
                     `;
