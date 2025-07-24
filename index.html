@@ -45,13 +45,14 @@
             --primary-color: #8139f5;
             --secondary-color: #00cde9;
             --accent-color: #ff00ff;
+            --paypay-color: #d82c1e;
             --text-color: #e0e0e0;
             --bg-color: #000;
             --bg-glass: rgba(18, 18, 18, 0.8);
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
             margin: 0;
             padding: 0;
             color: var(--text-color);
@@ -59,6 +60,7 @@
             background-color: var(--bg-color);
             position: relative;
             font-size: 16px; /* ベースフォントサイズ */
+            line-height: 1.6;
         }
 
         /* 画像保存防止のためのスタイル */
@@ -252,12 +254,13 @@
         @keyframes fadeInPage { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         .hero { text-align: center; padding: 120px 20px; background-color: rgba(0, 0, 0, 0.7); margin-bottom: 50px; border-radius: 15px; box-shadow: 0 0 30px rgba(129, 57, 245, 0.5); position: relative; overflow: hidden; }
-        .hero h1 { font-size: clamp(1.8rem, 9vw, 4rem); margin-bottom: 25px; color: #fff; text-shadow: 0 0 20px rgba(255, 255, 255, 0.9), 0 0 40px rgba(255, 255, 255, 0.6); letter-spacing: 3px; }
-        .hero p { font-size: clamp(0.9rem, 4vw, 1.4rem); line-height: 1.7; max-width: 900px; margin: 0 auto 40px; color: #e0e0e0; }
+        .hero h1 { font-size: clamp(2.5rem, 9vw, 4rem); margin-bottom: 25px; color: #fff; text-shadow: 0 0 20px rgba(255, 255, 255, 0.9), 0 0 40px rgba(255, 255, 255, 0.6); letter-spacing: 3px; }
+        .hero p { font-size: clamp(1rem, 4vw, 1.4rem); line-height: 1.7; max-width: 900px; margin: 0 auto 40px; color: #e0e0e0; }
 
         .content-button {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 10px;
             padding: 15px 30px;
             font-size: clamp(1rem, 2.5vw, 1.2rem);
@@ -284,7 +287,7 @@
 
         .content { background-color: rgba(0, 0, 0, 0.8); padding: 50px; margin-bottom: 40px; border-radius: 12px; box-shadow: 0 0 25px rgba(129, 57, 245, 0.4); border: 1px solid rgba(129, 57, 245, 0.3); }
         .content h2 { font-size: clamp(2rem, 6vw, 3rem); color: var(--primary-color); margin-bottom: 25px; border-bottom: 3px solid rgba(129, 57, 245, 0.6); padding-bottom: 15px; text-shadow: 0 0 15px rgba(129, 57, 245, 0.8); letter-spacing: 1.5px; }
-        .content p { font-size: clamp(0.9rem, 2.5vw, 1.1rem); line-height: 1.9; color: #c0c0c0; }
+        .content p { font-size: clamp(1rem, 2.5vw, 1.1rem); line-height: 1.9; color: #c0c0c0; }
 
         /* 注意書きセクションのスタイル */
         .notice-section {
@@ -346,6 +349,7 @@
             font-size: 0.9em;
             color: #aaa;
             margin-right: 15px;
+            flex-shrink: 0;
         }
         .announcement-toggle .announcement-title {
             font-size: 1.2em;
@@ -393,8 +397,8 @@
 
 
         footer { background-color: var(--bg-glass); padding: 25px; text-align: center; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; border-top: 2px solid rgba(0, 200, 255, 0.5); box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.5); }
-        footer p { margin: 0; color: #aaa; font-size: 0.9rem; }
-        footer nav ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; justify-content: center; }
+        footer p { margin: 10px; color: #aaa; font-size: 0.9rem; }
+        footer nav ul { list-style: none; padding: 0; margin: 10px 0; display: flex; flex-wrap: wrap; justify-content: center; }
         footer nav li { margin: 0 12px; }
         footer nav a { text-decoration: none; color: #aaa; transition: color 0.3s ease; cursor: pointer; font-size: 0.9rem;}
         footer nav a:hover { color: var(--secondary-color); }
@@ -432,6 +436,8 @@
             transition: opacity 1s ease-in-out;
             pointer-events: none;
             z-index: 50;
+            padding: 20px;
+            box-sizing: border-box;
         }
         .overlay-container.visible {
             opacity: 1;
@@ -500,7 +506,7 @@
         .profile-photo { width: 200px; height: 200px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
         .profile-info { flex-grow: 1; }
         .profile-info h2 { font-family: 'Major Mono Display', monospace; font-size: clamp(2.5rem, 7vw, 3.5rem); margin: 0 0 15px 0; }
-        .profile-info .bio { font-size: clamp(0.9rem, 2.5vw, 1.1rem); line-height: 1.8; margin-bottom: 25px; }
+        .profile-info .bio { font-size: clamp(1rem, 2.5vw, 1.1rem); line-height: 1.8; margin-bottom: 25px; }
 
         .ryuya-card { background-color: rgba(25, 25, 50, 0.3); border: 1px solid var(--primary-color); box-shadow: 0 0 30px rgba(129, 57, 245, 0.3); }
         .ryuya-card .profile-photo { border: 4px solid var(--primary-color); box-shadow: 0 0 20px var(--primary-color); }
@@ -673,11 +679,145 @@
         .contact-info { text-align: center; margin-top: 40px; }
         .contact-info h3 { font-size: 2em; color: var(--secondary-color); margin-bottom: 20px; }
         .contact-info p { font-size: 1.2em; }
-        .contact-info a { text-decoration: none; color: var(--secondary-color); }
+        .contact-info a { text-decoration: none; color: var(--secondary-color); word-break: break-all; }
         .contact-info ul { list-style: none; padding: 0; display: flex; flex-direction: column; align-items: center; gap: 15px; font-size: 1.2em; }
         .contact-info ul a { color: var(--secondary-color); text-decoration: none; display: inline-flex; align-items: center; gap: 10px;}
         .contact-info ul a i { font-size: 1.5em; }
         .contact-info ul a[href*="youtube.com"] { color: #FF0000; }
+
+        /* ----------- Commission Page Styles ----------- */
+        .commission-details { 
+            margin-top: 40px; 
+            text-align: left; 
+            max-width: 800px; 
+            margin-left: auto; 
+            margin-right: auto; 
+        }
+        .commission-details h3 { 
+            font-size: 1.8em; 
+            color: var(--secondary-color); 
+            margin-bottom: 20px; 
+            text-align: center;
+        }
+        .commission-details ol { 
+            list-style: none; 
+            padding-left: 0; 
+            counter-reset: step-counter; 
+        }
+        .commission-details ol li {
+            counter-increment: step-counter;
+            margin-bottom: 20px;
+            padding-left: 45px;
+            position: relative;
+            font-size: 1.1em;
+        }
+        .commission-details ol li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 30px;
+            height: 30px;
+            background-color: var(--secondary-color);
+            color: var(--bg-color);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+        }
+
+        /* ----------- Support Modal Styles ----------- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 10002;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            animation: fadeInLightbox 0.3s ease;
+        }
+        .modal-content {
+            background: var(--bg-glass);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid var(--primary-color);
+            box-shadow: 0 0 30px rgba(129, 57, 245, 0.5);
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            text-align: center;
+        }
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.3s, transform 0.3s;
+        }
+        .modal-close:hover {
+            color: var(--secondary-color);
+            transform: rotate(90deg);
+        }
+        .support-amounts {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .support-amount-btn {
+            background: transparent;
+            border: 2px solid var(--secondary-color);
+            color: var(--secondary-color);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            font-size: 1rem;
+        }
+        .support-amount-btn.selected,
+        .support-amount-btn:hover {
+            background-color: var(--secondary-color);
+            color: var(--bg-color);
+        }
+        .custom-amount-input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0 20px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--primary-color);
+            border-radius: 8px;
+            color: var(--text-color);
+            text-align: center;
+            font-size: 1.2em;
+            box-sizing: border-box;
+        }
+        .paypay-btn {
+            background-color: var(--paypay-color);
+            border-color: var(--paypay-color);
+            color: #fff;
+            text-shadow: none;
+            width: 100%;
+        }
+        .paypay-btn:hover {
+            background-color: #fff;
+            color: var(--paypay-color);
+            box-shadow: 0 0 15px var(--paypay-color);
+        }
+        .paypay-icon {
+            width: 1em;
+            height: 1em;
+            vertical-align: -0.125em;
+        }
 
         /* レスポンシブデザイン */
         @media (max-width: 992px) {
@@ -685,26 +825,28 @@
             .social-icons { justify-content: center; }
         }
         @media (max-width: 768px) {
-            /* FIX: Further reduced font size for mobile */
-            body { font-size: 11px; }
+            /* スマホ表示の改善: 文字サイズを極端に小さくせず、余白を調整 */
             .main-nav { display: none; }
             .hamburger-btn { display: block; }
-            header { justify-content: flex-end; padding: 20px; }
-            .content { padding: 30px; }
+            header { justify-content: flex-end; padding: 15px 20px; }
+            .content { padding: 30px 20px; }
             .lightbox-content { max-width: 90vw; max-height: 80vh; }
+            .hero { padding: 80px 15px; }
+            .announcement-toggle { flex-direction: column; align-items: flex-start; gap: 8px; }
+            .announcement-title { font-size: 1.1em; }
+            footer { justify-content: center; }
         }
         @media (max-width: 480px) {
-            /* FIX: Further reduced font size for smaller mobile */
-            body { font-size: 10px; }
-            .content { padding: 20px; }
+            /* 小さいスマホ用の調整 */
+            .content { padding: 25px 15px; }
             .profile-photo { width: 150px; height: 150px; }
             .ryuya-gallery-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 15px;
             }
             .music-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
+                grid-template-columns: 1fr; /* スマホでは1列表示 */
+                gap: 20px;
             }
         }
     </style>
@@ -739,6 +881,7 @@
                 <li><a data-page="page-home" class="nav-link active">ホーム</a></li>
                 <li><a data-page="page-ryuya" class="nav-link">りゅうやの活動</a></li>
                 <li><a data-page="page-shion" class="nav-link">紫苑の活動</a></li>
+                <li><a data-page="page-commission" class="nav-link">依頼</a></li>
                 <li><a data-page="page-contact" class="nav-link">問い合わせ</a></li>
             </ul>
         </nav>
@@ -751,6 +894,7 @@
             <li><a data-page="page-home" class="nav-link active">ホーム</a></li>
             <li><a data-page="page-ryuya" class="nav-link">りゅうやの活動</a></li>
             <li><a data-page="page-shion" class="nav-link">紫苑の活動</a></li>
+            <li><a data-page="page-commission" class="nav-link">依頼</a></li>
             <li><a data-page="page-contact" class="nav-link">問い合わせ</a></li>
         </ul>
     </nav>
@@ -769,239 +913,31 @@
             <section class="content announcement-section" data-aos="fade-up">
                 <h2><i class="fas fa-bullhorn"></i> お知らせ</h2>
                 <div class="announcements-container">
+                    <!-- お知らせアイテムは動的に生成されるか、または静的にここに配置されます -->
                     <div class="announcement-item">
                         <button class="announcement-toggle">
                             <span class="announcement-date">2025/07/24</span>
-                            <span class="announcement-title">【サイト安定性の向上】</span>
+                            <span class="announcement-title">【新機能】PayPayサポート機能を追加</span>
                             <i class="fas fa-chevron-down announcement-icon"></i>
                         </button>
                         <div class="announcement-details">
                             <ul class="announcement-list">
-                                <li>ページの読み込み中に発生する可能性のある、機能に影響しない軽微なエラーを抑制し、サイトの安定性を向上させました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/24</span>
-                            <span class="announcement-title">【動画再生の改善とUI調整】</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>ブラウザの自動再生ポリシーに対応するため、動画がミュート（消音）状態で自動再生されるように変更しました。動画プレイヤーの音量ボタンでミュートを解除できます。</li>
-                                <li>スマートフォン表示時のサイト全体の文字サイズを、ご要望に基づき更に二回り小さく調整しました。</li>
+                                <li>PayPayによる活動支援（投げ銭）機能を追加しました。</li>
+                                <li>スマートフォンでの表示を改善し、より見やすいレイアウトに調整しました。</li>
+                                <li>サイト全体の安定性を向上させるためのデバッグを行いました。</li>
                             </ul>
                         </div>
                     </div>
                     <div class="announcement-item">
                         <button class="announcement-toggle">
                             <span class="announcement-date">2025/07/24</span>
-                            <span class="announcement-title">【動画再生方式の変更と履歴復元】</span>
+                            <span class="announcement-title">【制作依頼・サポート機能を追加】</span>
                             <i class="fas fa-chevron-down announcement-icon"></i>
                         </button>
                         <div class="announcement-details">
                             <ul class="announcement-list">
-                                <li>動画が再生されない問題の対策として、再生方式をより安定性の高いものに根本的に変更しました。</li>
-                                <li>過去のお知らせがすべて閲覧できるよう、履歴を復元しスクロールで確認できるようにしました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/24</span>
-                            <span class="announcement-title">【安定性の向上と不具合修正】</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>報告されたエラーログに基づき、サイトの安定性を向上させるための修正を行いました。</li>
-                                <li>ギャラリー画像の読み込みに関する不具合を修正しました。</li>
-                                <li>オープニングアニメーション中の特定操作で発生する可能性のあったエラーを抑制しました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/23</span>
-                            <span class="announcement-title">【機能変更】</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>楽曲の再生方法を、音声のみの再生からカードが裏返ってミュージックビデオが再生される形式に戻しました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/23</span>
-                            <span class="announcement-title">【安定性の向上】</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>非同期処理におけるエラーハンドリングを強化し、特定の操作で発生していたエラーを修正しました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/23</span>
-                            <span class="announcement-title">【機能変更】</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>楽曲の再生方法をSpotifyからYouTubeに変更しました。</li>
-                                <li>ジャケット写真をタップするとミュージックビデオが自動再生されます。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/23</span>
-                            <span class="announcement-title">【レスポンシブデザインの改善】</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>スマートフォン表示時のレイアウトを最適化しました。</li>
-                                <li>ヘッダーの操作性を向上させました。</li>
-                                <li>各ギャラリーを2列表示に調整しました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/23</span>
-                            <span class="announcement-title">【演出の変更】</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>ページ切り替え時の演出を、よりAIプログラムらしいデジタルなエフェクトに変更しました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/23</span>
-                            <span class="announcement-title">【総合デバッグと改善】</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>サイト全体のコードを精査し、パフォーマンスと安定性を向上させるためのデバッグを行いました。</li>
-                                <li>アクセシビリティ向上のため、画像に適切な代替テキストを設定しました。</li>
-                                <li>外部リンクのセキュリティを強化しました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/23</span>
-                            <span class="announcement-title">【コンテンツ更新】</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>「りゅうやの活動」ページの情報を更新しました。</li>
-                                <li>ギャラリーのイラストを最新のものに更新しました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/23</span>
-                            <span class="announcement-title">【UI改善】</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>楽曲紹介から曲のタイトル表示を廃止し、ジャケットデザインを強調するUIに変更しました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/23</span>
-                            <span class="announcement-title">【不具合の修正】</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>楽曲のジャケット写真が表示されない不具合を修正しました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/23</span>
-                            <span class="announcement-title">【サイト機能調整アップデート】</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>チャットボット機能を廃止しました。</li>
-                                <li>楽曲の歌詞解説機能を廃止しました。</li>
-                                <li>サイトの軽量化とパフォーマンス向上を行いました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/23</span>
-                            <span class="announcement-title">【サイトアップデートのお知らせ】</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>お知らせをアコーディオン形式のUIに変更</li>
-                                <li>Webサイトの核にGemini 2.5 Proを導入</li>
-                                <li>AIアシスタント（チャットボット）を追加</li>
-                                <li>AIイラストとのチャット機能を追加</li>
-                                <li>楽曲の歌詞解説機能を追加</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/23</span>
-                            <span class="announcement-title">【不具合の修正内容】</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>音声の読み上げ機能を廃止</li>
-                                <li>エラー処理の集約</li>
-                                <li>UIの状態管理の改善</li>
-                                <li>API通信の安定化</li>
-                                <li>UIの状態管理の強化</li>
-                                <li>コードの整理と最適化</li>
-                                <li>エラーハンドリングのロジック見直し</li>
-                                <li>堅牢なイベント処理</li>
-                                <li>エラーハンドリングの集約</li>
-                                <li>APIの安定性向上</li>
-                                <li>非同期処理の堅牢化</li>
-                                <li>コードの安全性向上</li>
-                                <li>エラーメッセージの改善</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/22</span>
-                            <span class="announcement-title">【サイトアップデートのお知らせ】</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>サイトのオープニングをリニューアル</li>
-                                <li>サイトのオープニングに音声と効果音を追加</li>
-                                <li>オープニングアニメーションの改善</li>
-                                <li>セキュリティヘッダーの調整</li>
-                                <li>UIの改善</li>
+                                <li>サイトを通じて収益化を行えるよう、「依頼」ページを新設しました。</li>
+                                <li>ホームに「活動をサポート」セクションを追加し、ファンの方々が直接支援できる窓口を設けました。</li>
                             </ul>
                         </div>
                     </div>
@@ -1010,6 +946,11 @@
 
             <section class="content" data-aos="fade-up"><h2 class="glitch" data-text="りゅうやの創造性">りゅうやの創造性</h2><p>AIが紡ぎ出す無限のアートワークと、その背後にある思考プロセスを探索します。</p><button class="content-button nav-link" data-page="page-ryuya"><i class="fas fa-images"></i> ギャラリーへ</button></section>
             <section class="content" data-aos="fade-up"><h2 class="glitch" data-text="紫苑の音世界">紫苑の音世界</h2><p>感情とテクノロジーが織りなすサウンドスケープ。心揺さぶる楽曲の数々をお楽しみください。</p><button class="content-button nav-link" data-page="page-shion"><i class="fas fa-music"></i> 楽曲を聴く</button></section>
+            <section class="content" data-aos="fade-up">
+                <h2 class="glitch" data-text="活動をサポート">活動をサポート</h2>
+                <p>私たちの創作活動をサポートしていただける方を募集しています。いただいた支援は、今後の作品制作や活動の維持に使用させていただきます。</p>
+                <button class="content-button" id="support-btn" style="margin-top: 20px;"><i class="fas fa-heart"></i> サポートする</button>
+            </section>
         </section>
         <section id="page-ryuya" class="page-content">
             <div class="profile-card ryuya-card" data-aos="fade-down"><img src="https://i.ibb.co/RK3h7KM/l-IHf-Ng-Nre-Zw-Mxg68efb-Xa.png" alt="りゅうや アイコン" class="profile-photo"><div class="profile-info"><h2>りゅうや</h2><p class="bio">2023/08/24にAI artistとして活動開始。AIが紡ぎ出す無限のアートワークと、その背後にある思考プロセスを探索し、現在までに2,000枚近くのイラストを創作。</p></div></div>
@@ -1022,6 +963,23 @@
         <section id="page-shion" class="page-content">
             <div class="profile-card shion-card" data-aos="fade-down"><img src="https://i.ibb.co/4RzdYgbF/bt0n-Pu-Cotf55-R6-ARKv0o-O.jpg" onerror="this.onerror=null;this.src='https://placehold.co/200x200/ff00ff/FFFFFF?text=紫苑';" alt="紫苑 アーティスト写真" class="profile-photo"><div class="profile-info"><h2>紫苑</h2><p class="bio">シンガーソングライターの紫苑です。 バラードを中心に作詞作曲しています。 誰かの心に寄り添えるような歌を届けたいです。</p><div class="social-icons"><a href="https://big-up.style/artists/302804" target="_blank" rel="noopener noreferrer" title="BIG UP!"><i class="fas fa-music"></i></a></div></div></div>
             <div class="music-grid" data-aos="fade-up"></div>
+        </section>
+        <section id="page-commission" class="page-content">
+            <section class="content" data-aos="fade-up">
+                <h2>制作依頼 (Commission)</h2>
+                <p>AIイラスト制作や楽曲制作（作詞・作曲）のご依頼を有償にて承っております。詳細については、以下の連絡先までお気軽にお問い合わせください。</p>
+                <div class="commission-details">
+                    <h3>ご依頼のながれ</h3>
+                    <ol>
+                        <li>下記メールアドレスよりご依頼内容をご連絡ください。</li>
+                        <li>内容を確認後、お見積もりと納期をご返信します。</li>
+                        <li>制作開始</li>
+                        <li>納品</li>
+                    </ol>
+                    <h3>連絡先</h3>
+                    <p><strong>メール:</strong> <a href="mailto:official-ryuya-shion@outlook.jp" class="gradient-hover">official-ryuya-shion@outlook.jp</a></p>
+                </div>
+            </section>
         </section>
         <section id="page-contact" class="page-content">
             <section class="content" data-aos="fade-up">
@@ -1047,10 +1005,32 @@
         </div>
     </div>
 
+    <!-- Support Modal -->
+    <div id="support-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button id="modal-close-btn" class="modal-close">&times;</button>
+            <h2>活動をサポート</h2>
+            <p>ご支援ありがとうございます。金額を選択または入力してください。</p>
+            <div class="support-amounts">
+                <button class="support-amount-btn" data-amount="500">500円</button>
+                <button class="support-amount-btn" data-amount="1000">1000円</button>
+                <button class="support-amount-btn" data-amount="3000">3000円</button>
+            </div>
+            <input type="number" class="custom-amount-input" placeholder="または、任意の金額を入力 (円)" min="1">
+            <button class="content-button paypay-btn" id="paypay-support-btn">
+                <svg class="paypay-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 48C37.2548 48 48 37.2548 48 24C48 10.7452 37.2548 0 24 0C10.7452 0 0 10.7452 0 24C0 37.2548 10.7452 48 24 48Z" fill="#D82C1E"></path><path d="M14.498 12.426H22.491L26.157 24.326L29.823 12.426H37.499L28.823 35.574H23.491L14.498 12.426Z" fill="white"></path></svg>
+                <span>PayPayで支援する</span>
+            </button>
+            <p id="support-error-msg" style="display: none; margin-top: 15px; color: var(--paypay-color);"></p>
+            <p id="support-thanks-msg" style="display: none; margin-top: 15px; color: var(--secondary-color);">ご支援ありがとうございます！</p>
+        </div>
+    </div>
+
+
     <!-- フッター -->
     <footer>
         <p>&copy; 2025 りゅうや × 紫苑</p>
-        <nav><ul><li><a class="nav-link" data-page="page-home">ホーム</a></li><li><a class="nav-link" data-page="page-ryuya">りゅうやの活動</a></li><li><a class="nav-link" data-page="page-shion">紫苑の活動</a></li><li><a class="nav-link" data-page="page-contact">問い合わせ</a></li></ul></nav>
+        <nav><ul><li><a class="nav-link" data-page="page-home">ホーム</a></li><li><a class="nav-link" data-page="page-ryuya">りゅうやの活動</a></li><li><a class="nav-link" data-page="page-shion">紫苑の活動</a></li><li><a class="nav-link" data-page="page-commission">依頼</a></li><li><a class="nav-link" data-page="page-contact">問い合わせ</a></li></ul></nav>
     </footer>
 
     <!-- External JS Libraries -->
@@ -1059,7 +1039,7 @@
     
     <!-- Main Application Script -->
     <script>
-        // FIX: Add a global error handler for benign AbortError
+        // グローバルなエラーハンドラー: 非致命的な AbortError を捕捉
         window.addEventListener('unhandledrejection', function(event) {
             if (event.reason && event.reason.name === 'AbortError') {
                 event.preventDefault();
@@ -1068,7 +1048,14 @@
         });
 
         document.addEventListener('DOMContentLoaded', function() {
-            // --- Global Data ---
+            // --- 設定項目 ---
+            // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+            // ここにあなたのPayPay IDを入力してください。
+            // 例: const paypayId = 'your_id_here';
+            const paypayId = 'YOUR_PAYPAY_ID'; 
+            // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+
+            // --- グローバルデータ ---
             const tracksData = [
                 { title: "君だけでいい", jacket: "https://i.ibb.co/rG83C8YD/image.png", youtubeId: "qXTby8En0mY" },
                 { title: "君を想うたびに夜がくる", jacket: "https://i.ibb.co/67C1Dgnd/12-EF4-B78-5077-42-DF-AE55-2-A30149-CDB71.png", youtubeId: "CqUcwlWF5Iw" },
@@ -1076,8 +1063,9 @@
                 { title: "まだ見ぬキミヘ", jacket: "https://i.ibb.co/4R0Tb7gp/o-FCSH1o-TD-d6s6g-4cyb-X.png", youtubeId: "EBvsMdDwFNY" },
                 { title: "遠くても約束はそばにある", jacket: "https://i.ibb.co/PzDJHxpv/Kqbx9pq-Br1e-X4t-Mogw-Udy.png", youtubeId: "Nh7HkVHYUL0" }
             ];
+            const galleryImageUrls = ["https://i.ibb.co/HD81w0Gd/d1tdicte878c73em4u40-webp-image.png", "https://i.ibb.co/pB7wnRY2/d1tdicte878c73em4u4g-webp-image.png"];
 
-            // --- DOM Element Selectors ---
+            // --- DOM要素セレクター ---
             const hamburgerBtn = document.getElementById('hamburger-btn');
             const mobileNav = document.getElementById('mobile-nav');
             const navLinks = document.querySelectorAll('.nav-link');
@@ -1087,13 +1075,13 @@
             const footer = document.querySelector('footer');
             const particlesJsDiv = document.getElementById('particles-js');
 
-            // --- Hamburger Menu Logic ---
+            // --- ハンバーガーメニューロジック ---
             hamburgerBtn.addEventListener('click', function() {
                 this.classList.toggle('is-active');
                 mobileNav.classList.toggle('is-active');
             });
             
-            // --- SPA Navigation & Transition Logic ---
+            // --- SPAナビゲーション & 遷移ロジック ---
             let isTransitioning = false;
 
             function runGlitchTransition(callback) {
@@ -1156,10 +1144,10 @@
                 });
             });
 
-            // --- Particles.js Configuration ---
+            // --- Particles.js設定 ---
             const particlesConfig = { "particles": { "number": { "value": 80, "density": { "enable": true, "value_area": 800 } }, "color": { "value": ["#8139f5", "#00cde9", "#39f581", "#ff00ff"] }, "shape": { "type": "circle" }, "opacity": { "value": 0.6, "random": true, "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false } }, "size": { "value": 4, "random": true, "anim": { "enable": true, "speed": 10, "size_min": 0.1, "sync": false } }, "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.4, "width": 1 }, "move": { "enable": true, "speed": 3, "direction": "none", "random": true, "straight": false, "out_mode": "out" } }, "interactivity": { "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } }, "modes": { "grab": { "distance": 200, "line_linked": { "opacity": 1 } }, "push": { "particles_nb": 4 } } }, "retina_detect": true };
 
-            // --- Main Content Display Function ---
+            // --- メインコンテンツ表示関数 ---
             function showMainContent() {
                 if (header) header.style.display = 'flex';
                 if (main) main.style.display = 'block';
@@ -1170,7 +1158,7 @@
             }
 
             // ======================================================
-            // --- Opening Animation & Sound Logic ---
+            // --- オープニングアニメーション & サウンドロジック ---
             // ======================================================
             const openingContainer = document.getElementById('opening-container');
             if (sessionStorage.getItem('openingPlayed')) {
@@ -1298,12 +1286,11 @@
             }
 
             // ======================================================
-            // --- AI Gallery Logic ---
+            // --- AIギャラリーロジック ---
             // ======================================================
             const ryuyaGalleryGrid = document.querySelector('.ryuya-gallery-grid');
             if (ryuyaGalleryGrid) {
-                const imageUrls = ["https://i.ibb.co/HD81w0Gd/d1tdicte878c73em4u40-webp-image.png", "https://i.ibb.co/pB7wnRY2/d1tdicte878c73em4u4g-webp-image.png"];
-                const uniqueImageUrls = [...new Set(imageUrls)];
+                const uniqueImageUrls = [...new Set(galleryImageUrls)];
                 ryuyaGalleryGrid.innerHTML = uniqueImageUrls.map(url => `<div class="ryuya-gallery-item"><img src="${url}" alt="AI Illustration" loading="lazy" onerror="this.parentElement.style.display='none'"></div>`).join('');
                 
                 const lightboxOverlay = document.getElementById('lightbox-overlay');
@@ -1322,7 +1309,7 @@
             }
 
             // ======================================================
-            // --- Music Player Logic (Manual Iframe Injection) ---
+            // --- 音楽プレイヤーロジック (手動Iframe注入) ---
             // ======================================================
             const musicGrid = document.querySelector('.music-grid');
             if (musicGrid) {
@@ -1374,7 +1361,7 @@
             }
             
             // ======================================================
-            // --- Security & Content Protection ---
+            // --- セキュリティ & コンテンツ保護 ---
             // ======================================================
             document.addEventListener('contextmenu', event => event.preventDefault());
             document.addEventListener('dragstart', event => {
@@ -1395,7 +1382,83 @@
             }
 
             // ======================================================
-            // --- General UI & Initialization ---
+            // --- サポートモーダル & PayPayロジック ---
+            // ======================================================
+            const supportBtn = document.getElementById('support-btn');
+            const supportModal = document.getElementById('support-modal');
+            const modalCloseBtn = document.getElementById('modal-close-btn');
+            const amountBtns = document.querySelectorAll('.support-amount-btn');
+            const customAmountInput = document.querySelector('.custom-amount-input');
+            const paypaySupportBtn = document.getElementById('paypay-support-btn');
+            const thanksMsg = document.getElementById('support-thanks-msg');
+            const errorMsg = document.getElementById('support-error-msg');
+
+            const openSupportModal = () => {
+                supportModal.style.display = 'flex';
+                thanksMsg.style.display = 'none';
+                errorMsg.style.display = 'none';
+                customAmountInput.value = '';
+                amountBtns.forEach(b => b.classList.remove('selected'));
+            };
+
+            const closeSupportModal = () => {
+                supportModal.style.display = 'none';
+            };
+
+            supportBtn.addEventListener('click', openSupportModal);
+            modalCloseBtn.addEventListener('click', closeSupportModal);
+            supportModal.addEventListener('click', (e) => {
+                if (e.target === supportModal) {
+                    closeSupportModal();
+                }
+            });
+            
+            amountBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    amountBtns.forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    customAmountInput.value = '';
+                    errorMsg.style.display = 'none';
+                });
+            });
+
+            customAmountInput.addEventListener('input', () => {
+                amountBtns.forEach(b => b.classList.remove('selected'));
+                errorMsg.style.display = 'none';
+            });
+
+            paypaySupportBtn.addEventListener('click', () => {
+                if (paypayId === 'YOUR_PAYPAY_ID') {
+                    errorMsg.textContent = 'PayPay IDが設定されていません。';
+                    errorMsg.style.display = 'block';
+                    return;
+                }
+
+                let amount = document.querySelector('.support-amount-btn.selected')?.dataset.amount;
+                if (!amount) {
+                    amount = customAmountInput.value;
+                }
+
+                const parsedAmount = parseInt(amount, 10);
+                if (!parsedAmount || parsedAmount <= 0) {
+                    errorMsg.textContent = '有効な金額を選択または入力してください。';
+                    errorMsg.style.display = 'block';
+                    return;
+                }
+                
+                errorMsg.style.display = 'none';
+                const url = `https://paypay.me/${paypayId}/${parsedAmount}`;
+                window.open(url, '_blank');
+
+                thanksMsg.style.display = 'block';
+                setTimeout(() => {
+                    closeSupportModal();
+                }, 2500);
+            });
+
+
+            // ======================================================
+            // --- 一般的なUI & 初期化 ---
             // ======================================================
             AOS.init({ once: true, offset: 100, duration: 1000 });
             
