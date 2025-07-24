@@ -22,7 +22,7 @@
     <meta http-equiv="X-Frame-Options" content="DENY">
     <!-- ===================================================================== -->
 
-    <title>りゅうや × 紫苑</title>
+    <title>りゅうや × 紫苑 Official</title>
     
     <!-- External Libraries & Fonts -->
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
@@ -59,7 +59,7 @@
             overflow-x: hidden;
             background-color: var(--bg-color);
             position: relative;
-            font-size: 16px; /* ベースフォントサイズ */
+            font-size: 15px; /* ベースフォントサイズを調整 */
             line-height: 1.6;
         }
 
@@ -254,7 +254,7 @@
         @keyframes fadeInPage { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         .hero { text-align: center; padding: 120px 20px; background-color: rgba(0, 0, 0, 0.7); margin-bottom: 50px; border-radius: 15px; box-shadow: 0 0 30px rgba(129, 57, 245, 0.5); position: relative; overflow: hidden; }
-        .hero h1 { font-size: clamp(2.5rem, 9vw, 4rem); margin-bottom: 25px; color: #fff; text-shadow: 0 0 20px rgba(255, 255, 255, 0.9), 0 0 40px rgba(255, 255, 255, 0.6); letter-spacing: 3px; }
+        .hero h2 { font-size: clamp(2.0rem, 7vw, 3.2rem); margin-bottom: 25px; color: #fff; text-shadow: 0 0 20px rgba(255, 255, 255, 0.9), 0 0 40px rgba(255, 255, 255, 0.6); letter-spacing: 3px; }
         .hero p { font-size: clamp(1rem, 4vw, 1.4rem); line-height: 1.7; max-width: 900px; margin: 0 auto 40px; color: #e0e0e0; }
 
         .content-button {
@@ -726,99 +726,6 @@
             font-weight: bold;
         }
 
-        /* ----------- Support Modal Styles ----------- */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px);
-            z-index: 10002;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            animation: fadeInLightbox 0.3s ease;
-        }
-        .modal-content {
-            background: var(--bg-glass);
-            padding: 30px;
-            border-radius: 15px;
-            border: 1px solid var(--primary-color);
-            box-shadow: 0 0 30px rgba(129, 57, 245, 0.5);
-            width: 90%;
-            max-width: 500px;
-            position: relative;
-            text-align: center;
-        }
-        .modal-close {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: none;
-            border: none;
-            color: var(--text-color);
-            font-size: 24px;
-            cursor: pointer;
-            transition: color 0.3s, transform 0.3s;
-        }
-        .modal-close:hover {
-            color: var(--secondary-color);
-            transform: rotate(90deg);
-        }
-        .support-amounts {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin: 20px 0;
-        }
-        .support-amount-btn {
-            background: transparent;
-            border: 2px solid var(--secondary-color);
-            color: var(--secondary-color);
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s;
-            font-size: 1rem;
-        }
-        .support-amount-btn.selected,
-        .support-amount-btn:hover {
-            background-color: var(--secondary-color);
-            color: var(--bg-color);
-        }
-        .custom-amount-input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0 20px;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid var(--primary-color);
-            border-radius: 8px;
-            color: var(--text-color);
-            text-align: center;
-            font-size: 1.2em;
-            box-sizing: border-box;
-        }
-        .paypay-btn {
-            background-color: var(--paypay-color);
-            border-color: var(--paypay-color);
-            color: #fff;
-            text-shadow: none;
-            width: 100%;
-        }
-        .paypay-btn:hover {
-            background-color: #fff;
-            color: var(--paypay-color);
-            box-shadow: 0 0 15px var(--paypay-color);
-        }
-        .paypay-icon {
-            width: 1em;
-            height: 1em;
-            vertical-align: -0.125em;
-        }
-
         /* レスポンシブデザイン */
         @media (max-width: 992px) {
             .profile-card { flex-direction: column; text-align: center; }
@@ -826,6 +733,7 @@
         }
         @media (max-width: 768px) {
             /* スマホ表示の改善: 文字サイズを極端に小さくせず、余白を調整 */
+            body { font-size: 14px; }
             .main-nav { display: none; }
             .hamburger-btn { display: block; }
             header { justify-content: flex-end; padding: 15px 20px; }
@@ -903,7 +811,7 @@
     <main>
         <div id="particles-js"></div>
         <section id="page-home" class="page-content is-active">
-            <div class="hero"><h1 class="glitch" data-text="新しい拠点へようこそ">新しい拠点へようこそ</h1><p>AIクリエイター「りゅうや」とアーティスト「紫苑」の世界へ</p></div>
+            <div class="hero"><h2 class="glitch" data-text="ようこそ、思想の境界線へ">ようこそ、思想の境界線へ</h2><p>AIクリエイター「りゅうや」とアーティスト「紫苑」の世界へ</p></div>
             
             <section class="content notice-section" data-aos="fade-up">
                 <h2 class="glitch" data-text="【重要】コンテンツの取り扱いに関するお願い"><i class="fas fa-exclamation-triangle"></i>【重要】コンテンツの取り扱いに関するお願い</h2>
@@ -913,25 +821,23 @@
             <section class="content announcement-section" data-aos="fade-up">
                 <h2><i class="fas fa-bullhorn"></i> お知らせ</h2>
                 <div class="announcements-container">
-                    <!-- お知らせアイテムは動的に生成されるか、または静的にここに配置されます -->
                     <div class="announcement-item">
                         <button class="announcement-toggle">
                             <span class="announcement-date">2025/07/24</span>
-                            <span class="announcement-title">【新機能】PayPayサポート機能を追加</span>
+                            <span class="announcement-title">【UI調整】サイト全体の文字サイズを調整</span>
                             <i class="fas fa-chevron-down announcement-icon"></i>
                         </button>
                         <div class="announcement-details">
                             <ul class="announcement-list">
-                                <li>PayPayによる活動支援（投げ銭）機能を追加しました。</li>
-                                <li>スマートフォンでの表示を改善し、より見やすいレイアウトに調整しました。</li>
-                                <li>サイト全体の安定性を向上させるためのデバッグを行いました。</li>
+                                <li>サイト全体の基本となる文字サイズを一回り小さく調整しました。</li>
+                                <li>上記変更に伴い、スマートフォンでの表示も最適化しました。</li>
                             </ul>
                         </div>
                     </div>
                     <div class="announcement-item">
                         <button class="announcement-toggle">
                             <span class="announcement-date">2025/07/24</span>
-                            <span class="announcement-title">【制作依頼・サポート機能を追加】</span>
+                            <span class="announcement-title">【新機能】制作依頼・サポート機能を追加</span>
                             <i class="fas fa-chevron-down announcement-icon"></i>
                         </button>
                         <div class="announcement-details">
@@ -941,16 +847,247 @@
                             </ul>
                         </div>
                     </div>
+                    <div class="announcement-item">
+                        <button class="announcement-toggle">
+                            <span class="announcement-date">2025/07/24</span>
+                            <span class="announcement-title">【サイト安定性の向上】</span>
+                            <i class="fas fa-chevron-down announcement-icon"></i>
+                        </button>
+                        <div class="announcement-details">
+                            <ul class="announcement-list">
+                                <li>ページの読み込み中に発生する可能性のある、機能に影響しない軽微なエラーを抑制し、サイトの安定性を向上させました。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="announcement-item">
+                        <button class="announcement-toggle">
+                            <span class="announcement-date">2025/07/24</span>
+                            <span class="announcement-title">【動画再生の改善とUI調整】</span>
+                            <i class="fas fa-chevron-down announcement-icon"></i>
+                        </button>
+                        <div class="announcement-details">
+                            <ul class="announcement-list">
+                                <li>ブラウザの自動再生ポリシーに対応するため、動画がミュート（消音）状態で自動再生されるように変更しました。動画プレイヤーの音量ボタンでミュートを解除できます。</li>
+                                <li>スマートフォン表示時のサイト全体の文字サイズを、ご要望に基づき更に二回り小さく調整しました。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="announcement-item">
+                        <button class="announcement-toggle">
+                            <span class="announcement-date">2025/07/24</span>
+                            <span class="announcement-title">【動画再生方式の変更と履歴復元】</span>
+                            <i class="fas fa-chevron-down announcement-icon"></i>
+                        </button>
+                        <div class="announcement-details">
+                            <ul class="announcement-list">
+                                <li>動画が再生されない問題の対策として、再生方式をより安定性の高いものに根本的に変更しました。</li>
+                                <li>過去のお知らせがすべて閲覧できるよう、履歴を復元しスクロールで確認できるようにしました。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="announcement-item">
+                        <button class="announcement-toggle">
+                            <span class="announcement-date">2025/07/24</span>
+                            <span class="announcement-title">【安定性の向上と不具合修正】</span>
+                            <i class="fas fa-chevron-down announcement-icon"></i>
+                        </button>
+                        <div class="announcement-details">
+                            <ul class="announcement-list">
+                                <li>報告されたエラーログに基づき、サイトの安定性を向上させるための修正を行いました。</li>
+                                <li>ギャラリー画像の読み込みに関する不具合を修正しました。</li>
+                                <li>オープニングアニメーション中の特定操作で発生する可能性のあったエラーを抑制しました。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="announcement-item">
+                        <button class="announcement-toggle">
+                            <span class="announcement-date">2025/07/23</span>
+                            <span class="announcement-title">【機能変更】</span>
+                            <i class="fas fa-chevron-down announcement-icon"></i>
+                        </button>
+                        <div class="announcement-details">
+                            <ul class="announcement-list">
+                                <li>楽曲の再生方法を、音声のみの再生からカードが裏返ってミュージックビデオが再生される形式に戻しました。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="announcement-item">
+                        <button class="announcement-toggle">
+                            <span class="announcement-date">2025/07/23</span>
+                            <span class="announcement-title">【安定性の向上】</span>
+                            <i class="fas fa-chevron-down announcement-icon"></i>
+                        </button>
+                        <div class="announcement-details">
+                            <ul class="announcement-list">
+                                <li>非同期処理におけるエラーハンドリングを強化し、特定の操作で発生していたエラーを修正しました。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="announcement-item">
+                        <button class="announcement-toggle">
+                            <span class="announcement-date">2025/07/23</span>
+                            <span class="announcement-title">【機能変更】</span>
+                            <i class="fas fa-chevron-down announcement-icon"></i>
+                        </button>
+                        <div class="announcement-details">
+                            <ul class="announcement-list">
+                                <li>楽曲の再生方法をSpotifyからYouTubeに変更しました。</li>
+                                <li>ジャケット写真をタップするとミュージックビデオが自動再生されます。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="announcement-item">
+                        <button class="announcement-toggle">
+                            <span class="announcement-date">2025/07/23</span>
+                            <span class="announcement-title">【レスポンシブデザインの改善】</span>
+                            <i class="fas fa-chevron-down announcement-icon"></i>
+                        </button>
+                        <div class="announcement-details">
+                            <ul class="announcement-list">
+                                <li>スマートフォン表示時のレイアウトを最適化しました。</li>
+                                <li>ヘッダーの操作性を向上させました。</li>
+                                <li>各ギャラリーを2列表示に調整しました。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="announcement-item">
+                        <button class="announcement-toggle">
+                            <span class="announcement-date">2025/07/23</span>
+                            <span class="announcement-title">【演出の変更】</span>
+                            <i class="fas fa-chevron-down announcement-icon"></i>
+                        </button>
+                        <div class="announcement-details">
+                            <ul class="announcement-list">
+                                <li>ページ切り替え時の演出を、よりAIプログラムらしいデジタルなエフェクトに変更しました。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="announcement-item">
+                        <button class="announcement-toggle">
+                            <span class="announcement-date">2025/07/23</span>
+                            <span class="announcement-title">【総合デバッグと改善】</span>
+                            <i class="fas fa-chevron-down announcement-icon"></i>
+                        </button>
+                        <div class="announcement-details">
+                            <ul class="announcement-list">
+                                <li>サイト全体のコードを精査し、パフォーマンスと安定性を向上させるためのデバッグを行いました。</li>
+                                <li>アクセシビリティ向上のため、画像に適切な代替テキストを設定しました。</li>
+                                <li>外部リンクのセキュリティを強化しました。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="announcement-item">
+                        <button class="announcement-toggle">
+                            <span class="announcement-date">2025/07/23</span>
+                            <span class="announcement-title">【コンテンツ更新】</span>
+                            <i class="fas fa-chevron-down announcement-icon"></i>
+                        </button>
+                        <div class="announcement-details">
+                            <ul class="announcement-list">
+                                <li>「りゅうやの活動」ページの情報を更新しました。</li>
+                                <li>ギャラリーのイラストを最新のものに更新しました。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="announcement-item">
+                        <button class="announcement-toggle">
+                            <span class="announcement-date">2025/07/23</span>
+                            <span class="announcement-title">【UI改善】</span>
+                            <i class="fas fa-chevron-down announcement-icon"></i>
+                        </button>
+                        <div class="announcement-details">
+                            <ul class="announcement-list">
+                                <li>楽曲紹介から曲のタイトル表示を廃止し、ジャケットデザインを強調するUIに変更しました。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="announcement-item">
+                        <button class="announcement-toggle">
+                            <span class="announcement-date">2025/07/23</span>
+                            <span class="announcement-title">【不具合の修正】</span>
+                            <i class="fas fa-chevron-down announcement-icon"></i>
+                        </button>
+                        <div class="announcement-details">
+                            <ul class="announcement-list">
+                                <li>楽曲のジャケット写真が表示されない不具合を修正しました。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="announcement-item">
+                        <button class="announcement-toggle">
+                            <span class="announcement-date">2025/07/23</span>
+                            <span class="announcement-title">【サイト機能調整アップデート】</span>
+                            <i class="fas fa-chevron-down announcement-icon"></i>
+                        </button>
+                        <div class="announcement-details">
+                            <ul class="announcement-list">
+                                <li>チャットボット機能を廃止しました。</li>
+                                <li>楽曲の歌詞解説機能を廃止しました。</li>
+                                <li>サイトの軽量化とパフォーマンス向上を行いました。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="announcement-item">
+                        <button class="announcement-toggle">
+                            <span class="announcement-date">2025/07/23</span>
+                            <span class="announcement-title">【サイトアップデートのお知らせ】</span>
+                            <i class="fas fa-chevron-down announcement-icon"></i>
+                        </button>
+                        <div class="announcement-details">
+                            <ul class="announcement-list">
+                                <li>お知らせをアコーディオン形式のUIに変更</li>
+                                <li>Webサイトの核にGemini 2.5 Proを導入</li>
+                                <li>AIアシスタント（チャットボット）を追加</li>
+                                <li>AIイラストとのチャット機能を追加</li>
+                                <li>楽曲の歌詞解説機能を追加</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="announcement-item">
+                        <button class="announcement-toggle">
+                            <span class="announcement-date">2025/07/23</span>
+                            <span class="announcement-title">【不具合の修正内容】</span>
+                            <i class="fas fa-chevron-down announcement-icon"></i>
+                        </button>
+                        <div class="announcement-details">
+                            <ul class="announcement-list">
+                                <li>音声の読み上げ機能を廃止</li>
+                                <li>エラー処理の集約</li>
+                                <li>UIの状態管理の改善</li>
+                                <li>API通信の安定化</li>
+                                <li>UIの状態管理の強化</li>
+                                <li>コードの整理と最適化</li>
+                                <li>エラーハンドリングのロジック見直し</li>
+                                <li>堅牢なイベント処理</li>
+                                <li>エラーハンドリングの集約</li>
+                                <li>APIの安定性向上</li>
+                                <li>非同期処理の堅牢化</li>
+                                <li>コードの安全性向上</li>
+                                <li>エラーメッセージの改善</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="announcement-item">
+                        <button class="announcement-toggle">
+                            <span class="announcement-date">2025/07/22</span>
+                            <span class="announcement-title">【サイトアップデートのお知らせ】</span>
+                            <i class="fas fa-chevron-down announcement-icon"></i>
+                        </button>
+                        <div class="announcement-details">
+                            <ul class="announcement-list">
+                                <li>サイトのオープニングをリニューアル</li>
+                                <li>サイトのオープニングに音声と効果音を追加</li>
+                                <li>オープニングアニメーションの改善</li>
+                                <li>セキュリティヘッダーの調整</li>
+                                <li>UIの改善</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </section>
 
             <section class="content" data-aos="fade-up"><h2 class="glitch" data-text="りゅうやの創造性">りゅうやの創造性</h2><p>AIが紡ぎ出す無限のアートワークと、その背後にある思考プロセスを探索します。</p><button class="content-button nav-link" data-page="page-ryuya"><i class="fas fa-images"></i> ギャラリーへ</button></section>
             <section class="content" data-aos="fade-up"><h2 class="glitch" data-text="紫苑の音世界">紫苑の音世界</h2><p>感情とテクノロジーが織りなすサウンドスケープ。心揺さぶる楽曲の数々をお楽しみください。</p><button class="content-button nav-link" data-page="page-shion"><i class="fas fa-music"></i> 楽曲を聴く</button></section>
-            <section class="content" data-aos="fade-up">
-                <h2 class="glitch" data-text="活動をサポート">活動をサポート</h2>
-                <p>私たちの創作活動をサポートしていただける方を募集しています。いただいた支援は、今後の作品制作や活動の維持に使用させていただきます。</p>
-                <button class="content-button" id="support-btn" style="margin-top: 20px;"><i class="fas fa-heart"></i> サポートする</button>
-            </section>
         </section>
         <section id="page-ryuya" class="page-content">
             <div class="profile-card ryuya-card" data-aos="fade-down"><img src="https://i.ibb.co/RK3h7KM/l-IHf-Ng-Nre-Zw-Mxg68efb-Xa.png" alt="りゅうや アイコン" class="profile-photo"><div class="profile-info"><h2>りゅうや</h2><p class="bio">2023/08/24にAI artistとして活動開始。AIが紡ぎ出す無限のアートワークと、その背後にある思考プロセスを探索し、現在までに2,000枚近くのイラストを創作。</p></div></div>
@@ -1005,28 +1142,6 @@
         </div>
     </div>
 
-    <!-- Support Modal -->
-    <div id="support-modal" class="modal-overlay">
-        <div class="modal-content">
-            <button id="modal-close-btn" class="modal-close">&times;</button>
-            <h2>活動をサポート</h2>
-            <p>ご支援ありがとうございます。金額を選択または入力してください。</p>
-            <div class="support-amounts">
-                <button class="support-amount-btn" data-amount="500">500円</button>
-                <button class="support-amount-btn" data-amount="1000">1000円</button>
-                <button class="support-amount-btn" data-amount="3000">3000円</button>
-            </div>
-            <input type="number" class="custom-amount-input" placeholder="または、任意の金額を入力 (円)" min="1">
-            <button class="content-button paypay-btn" id="paypay-support-btn">
-                <svg class="paypay-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 48C37.2548 48 48 37.2548 48 24C48 10.7452 37.2548 0 24 0C10.7452 0 0 10.7452 0 24C0 37.2548 10.7452 48 24 48Z" fill="#D82C1E"></path><path d="M14.498 12.426H22.491L26.157 24.326L29.823 12.426H37.499L28.823 35.574H23.491L14.498 12.426Z" fill="white"></path></svg>
-                <span>PayPayで支援する</span>
-            </button>
-            <p id="support-error-msg" style="display: none; margin-top: 15px; color: var(--paypay-color);"></p>
-            <p id="support-thanks-msg" style="display: none; margin-top: 15px; color: var(--secondary-color);">ご支援ありがとうございます！</p>
-        </div>
-    </div>
-
-
     <!-- フッター -->
     <footer>
         <p>&copy; 2025 りゅうや × 紫苑</p>
@@ -1048,12 +1163,6 @@
         });
 
         document.addEventListener('DOMContentLoaded', function() {
-            // --- 設定項目 ---
-            // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
-            // ここにあなたのPayPay IDを入力してください。
-            // 例: const paypayId = 'your_id_here';
-            const paypayId = 'YOUR_PAYPAY_ID'; 
-            // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 
             // --- グローバルデータ ---
             const tracksData = [
@@ -1227,9 +1336,48 @@
                         stop: function() { if(this.animationFrame) cancelAnimationFrame(this.animationFrame); if(scanLoop) scanLoop.stop(0).dispose(); if(noise) noise.volume.rampTo(-Infinity, 0.1); faceScanCanvas.style.opacity = 0; }
                     },
                     matrix: {
-                        interval: null, ctx: matrixCanvas.getContext('2d'),
-                        start: function() { matrixCanvas.width = window.innerWidth; matrixCanvas.height = window.innerHeight; matrixCanvas.style.opacity = 1; if (noise && Tone.context.state === 'running') { noise.volume.rampTo(-30, 0.1); const pluck = new Tone.PluckSynth({ volume: -10 }).toDestination(); matrixLoop = new Tone.Loop(t => pluck.triggerAttack(Tone.Frequency(Math.random() * 24 + 48, "midi"), t), "16n").start(0); } const chars = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン01'; const fontSize = 16; const drops = Array(Math.floor(matrixCanvas.width / fontSize)).fill(1); const draw = () => { this.ctx.fillStyle = 'rgba(0, 0, 0, 0.05)'; this.ctx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height); this.ctx.fillStyle = '#0F0'; this.ctx.font = fontSize + 'px monospace'; drops.forEach((y, i) => { const text = chars.charAt(Math.floor(Math.random() * chars.length)); this.ctx.fillText(text, i * fontSize, y * fontSize); drops[i] = (y * fontSize > matrixCanvas.height && Math.random() > 0.975) ? 0 : y + 1; }); }; this.interval = setInterval(draw, 33); },
-                        stop: function() { if(this.interval) clearInterval(this.interval); if(matrixLoop) matrixLoop.stop(0).dispose(); if(noise) noise.volume.rampTo(-Infinity, 0.1); matrixCanvas.style.opacity = 0; }
+                        interval: null,
+                        ctx: matrixCanvas.getContext('2d'),
+                        start: function() {
+                            matrixCanvas.width = window.innerWidth;
+                            matrixCanvas.height = window.innerHeight;
+                            matrixCanvas.style.opacity = 1;
+                            if (noise && Tone.context.state === 'running') {
+                                noise.volume.rampTo(-30, 0.1);
+                                const pluck = new Tone.PluckSynth({ volume: -10 }).toDestination();
+                                matrixLoop = new Tone.Loop(t => pluck.triggerAttack(Tone.Frequency(Math.random() * 24 + 48, "midi"), t), "16n").start(0);
+                            }
+                            
+                            const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@#$%^&*()*&^%+-/~{[|`]}アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+                            const fontSize = 16;
+                            const columns = Math.floor(matrixCanvas.width / fontSize);
+                            const drops = Array(columns).fill(1);
+
+                            const draw = () => {
+                                this.ctx.fillStyle = 'rgba(0, 0, 0, 0.04)';
+                                this.ctx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+                                
+                                this.ctx.fillStyle = '#0F0';
+                                this.ctx.font = fontSize + 'px monospace';
+
+                                for (let i = 0; i < drops.length; i++) {
+                                    const text = chars.charAt(Math.floor(Math.random() * chars.length));
+                                    this.ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                                    if (drops[i] * fontSize > matrixCanvas.height && Math.random() > 0.975) {
+                                        drops[i] = 0;
+                                    }
+                                    drops[i]++;
+                                }
+                            };
+                            this.interval = setInterval(draw, 30);
+                        },
+                        stop: function() {
+                            if(this.interval) clearInterval(this.interval);
+                            if(matrixLoop) matrixLoop.stop(0).dispose();
+                            if(noise) noise.volume.rampTo(-Infinity, 0.1);
+                            matrixCanvas.style.opacity = 0;
+                        }
                     }
                 };
 
@@ -1246,6 +1394,7 @@
                             { text: "システム認証を開始します...", duration: 1500, action: null },
                             { text: "生体認証シーケンスを起動", duration: 3000, action: () => { stopCurrentAnimation(); currentAnimation = animations.faceScan; currentAnimation.start(); } },
                             { text: "認証成功。本人確認が完了しました。", duration: 1500, action: null },
+                            { text: "創造領域へのアクセスを許可します", duration: 2000, action: null },
                             { text: "メインシステムへ接続します。", duration: 1000, action: null }
                         ];
                         for (const step of sequence) {
@@ -1380,82 +1529,6 @@
                     }
                 }, 1500);
             }
-
-            // ======================================================
-            // --- サポートモーダル & PayPayロジック ---
-            // ======================================================
-            const supportBtn = document.getElementById('support-btn');
-            const supportModal = document.getElementById('support-modal');
-            const modalCloseBtn = document.getElementById('modal-close-btn');
-            const amountBtns = document.querySelectorAll('.support-amount-btn');
-            const customAmountInput = document.querySelector('.custom-amount-input');
-            const paypaySupportBtn = document.getElementById('paypay-support-btn');
-            const thanksMsg = document.getElementById('support-thanks-msg');
-            const errorMsg = document.getElementById('support-error-msg');
-
-            const openSupportModal = () => {
-                supportModal.style.display = 'flex';
-                thanksMsg.style.display = 'none';
-                errorMsg.style.display = 'none';
-                customAmountInput.value = '';
-                amountBtns.forEach(b => b.classList.remove('selected'));
-            };
-
-            const closeSupportModal = () => {
-                supportModal.style.display = 'none';
-            };
-
-            supportBtn.addEventListener('click', openSupportModal);
-            modalCloseBtn.addEventListener('click', closeSupportModal);
-            supportModal.addEventListener('click', (e) => {
-                if (e.target === supportModal) {
-                    closeSupportModal();
-                }
-            });
-            
-            amountBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    amountBtns.forEach(b => b.classList.remove('selected'));
-                    btn.classList.add('selected');
-                    customAmountInput.value = '';
-                    errorMsg.style.display = 'none';
-                });
-            });
-
-            customAmountInput.addEventListener('input', () => {
-                amountBtns.forEach(b => b.classList.remove('selected'));
-                errorMsg.style.display = 'none';
-            });
-
-            paypaySupportBtn.addEventListener('click', () => {
-                if (paypayId === 'YOUR_PAYPAY_ID') {
-                    errorMsg.textContent = 'PayPay IDが設定されていません。';
-                    errorMsg.style.display = 'block';
-                    return;
-                }
-
-                let amount = document.querySelector('.support-amount-btn.selected')?.dataset.amount;
-                if (!amount) {
-                    amount = customAmountInput.value;
-                }
-
-                const parsedAmount = parseInt(amount, 10);
-                if (!parsedAmount || parsedAmount <= 0) {
-                    errorMsg.textContent = '有効な金額を選択または入力してください。';
-                    errorMsg.style.display = 'block';
-                    return;
-                }
-                
-                errorMsg.style.display = 'none';
-                const url = `https://paypay.me/${paypayId}/${parsedAmount}`;
-                window.open(url, '_blank');
-
-                thanksMsg.style.display = 'block';
-                setTimeout(() => {
-                    closeSupportModal();
-                }, 2500);
-            });
-
 
             // ======================================================
             // --- 一般的なUI & 初期化 ---
