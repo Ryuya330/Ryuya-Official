@@ -254,7 +254,7 @@
         @keyframes fadeInPage { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         .hero { text-align: center; padding: 120px 20px; background-color: rgba(0, 0, 0, 0.7); margin-bottom: 50px; border-radius: 15px; box-shadow: 0 0 30px rgba(129, 57, 245, 0.5); position: relative; overflow: hidden; }
-        .hero h2 { font-size: clamp(2.0rem, 7vw, 3.2rem); margin-bottom: 25px; color: #fff; text-shadow: 0 0 20px rgba(255, 255, 255, 0.9), 0 0 40px rgba(255, 255, 255, 0.6); letter-spacing: 3px; }
+        .hero h2 { font-size: clamp(1.8rem, 6.5vw, 3.0rem); margin-bottom: 25px; color: #fff; text-shadow: 0 0 20px rgba(255, 255, 255, 0.9), 0 0 40px rgba(255, 255, 255, 0.6); letter-spacing: 3px; }
         .hero p { font-size: clamp(1rem, 4vw, 1.4rem); line-height: 1.7; max-width: 900px; margin: 0 auto 40px; color: #e0e0e0; }
 
         .content-button {
@@ -286,7 +286,7 @@
         }
 
         .content { background-color: rgba(0, 0, 0, 0.8); padding: 50px; margin-bottom: 40px; border-radius: 12px; box-shadow: 0 0 25px rgba(129, 57, 245, 0.4); border: 1px solid rgba(129, 57, 245, 0.3); }
-        .content h2 { font-size: clamp(2rem, 6vw, 3rem); color: var(--primary-color); margin-bottom: 25px; border-bottom: 3px solid rgba(129, 57, 245, 0.6); padding-bottom: 15px; text-shadow: 0 0 15px rgba(129, 57, 245, 0.8); letter-spacing: 1.5px; }
+        .content h2 { font-size: clamp(1.8rem, 5.5vw, 2.8rem); color: var(--primary-color); margin-bottom: 25px; border-bottom: 3px solid rgba(129, 57, 245, 0.6); padding-bottom: 15px; text-shadow: 0 0 15px rgba(129, 57, 245, 0.8); letter-spacing: 1.5px; }
         .content p { font-size: clamp(1rem, 2.5vw, 1.1rem); line-height: 1.9; color: #c0c0c0; }
 
         /* 注意書きセクションのスタイル */
@@ -301,7 +301,7 @@
             align-items: center;
             justify-content: center;
             gap: 15px;
-            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            font-size: clamp(1.4rem, 3.5vw, 2.0rem);
         }
 
         /* お知らせセクションのスタイル */
@@ -505,7 +505,7 @@
         .profile-card { display: flex; gap: 40px; align-items: center; padding: 40px; border-radius: 15px; margin-bottom: 50px; }
         .profile-photo { width: 200px; height: 200px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
         .profile-info { flex-grow: 1; }
-        .profile-info h2 { font-family: 'Major Mono Display', monospace; font-size: clamp(2.5rem, 7vw, 3.5rem); margin: 0 0 15px 0; }
+        .profile-info h2 { font-family: 'Major Mono Display', monospace; font-size: clamp(2.2rem, 6.5vw, 3.2rem); margin: 0 0 15px 0; }
         .profile-info .bio { font-size: clamp(1rem, 2.5vw, 1.1rem); line-height: 1.8; margin-bottom: 25px; }
 
         .ryuya-card { background-color: rgba(25, 25, 50, 0.3); border: 1px solid var(--primary-color); box-shadow: 0 0 30px rgba(129, 57, 245, 0.3); }
@@ -725,6 +725,9 @@
             line-height: 30px;
             font-weight: bold;
         }
+        .commission-details p {
+            text-align: center;
+        }
 
         /* レスポンシブデザイン */
         @media (max-width: 992px) {
@@ -753,8 +756,8 @@
                 gap: 15px;
             }
             .music-grid {
-                grid-template-columns: 1fr; /* スマホでは1列表示 */
-                gap: 20px;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
             }
         }
     </style>
@@ -811,7 +814,7 @@
     <main>
         <div id="particles-js"></div>
         <section id="page-home" class="page-content is-active">
-            <div class="hero"><h2 class="glitch" data-text="ようこそ、思想の境界線へ">ようこそ、思想の境界線へ</h2><p>AIクリエイター「りゅうや」とアーティスト「紫苑」の世界へ</p></div>
+            <div class="hero"><h2 class="glitch" data-text="ようこそ、思想の境界線へ">ようこそ、思想の境界線へ</h2><p>AIクリエイター「りゅうや」とアーティスト「紫苑」の世界</p></div>
             
             <section class="content notice-section" data-aos="fade-up">
                 <h2 class="glitch" data-text="【重要】コンテンツの取り扱いに関するお願い"><i class="fas fa-exclamation-triangle"></i>【重要】コンテンツの取り扱いに関するお願い</h2>
@@ -821,6 +824,43 @@
             <section class="content announcement-section" data-aos="fade-up">
                 <h2><i class="fas fa-bullhorn"></i> お知らせ</h2>
                 <div class="announcements-container">
+                    <div class="announcement-item">
+                        <button class="announcement-toggle">
+                            <span class="announcement-date">2025/07/25</span>
+                            <span class="announcement-title">【サイト更新】プロフィールテキストを更新</span>
+                            <i class="fas fa-chevron-down announcement-icon"></i>
+                        </button>
+                        <div class="announcement-details">
+                            <ul class="announcement-list">
+                                <li>りゅうや、紫苑のプロフィール文章をより詳細な内容に更新しました。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="announcement-item">
+                        <button class="announcement-toggle">
+                            <span class="announcement-date">2025/07/25</span>
+                            <span class="announcement-title">【サイト更新】テキスト表現の調整とレイアウトの改善</span>
+                            <i class="fas fa-chevron-down announcement-icon"></i>
+                        </button>
+                        <div class="announcement-details">
+                            <ul class="announcement-list">
+                                <li>サイト内の一部テキスト表現を更新しました。</li>
+                                <li>スマートフォン表示時の楽曲ギャラリーを2列表示に変更しました。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="announcement-item">
+                        <button class="announcement-toggle">
+                            <span class="announcement-date">2025/07/25</span>
+                            <span class="announcement-title">【UI調整】見出しの文字サイズを調整</span>
+                            <i class="fas fa-chevron-down announcement-icon"></i>
+                        </button>
+                        <div class="announcement-details">
+                            <ul class="announcement-list">
+                                <li>サイト全体の主要な見出し（h1, h2）の文字サイズを縮小し、より洗練された印象になるよう調整しました。</li>
+                            </ul>
+                        </div>
+                    </div>
                     <div class="announcement-item">
                         <button class="announcement-toggle">
                             <span class="announcement-date">2025/07/24</span>
@@ -1086,27 +1126,27 @@
                 </div>
             </section>
 
-            <section class="content" data-aos="fade-up"><h2 class="glitch" data-text="りゅうやの創造性">りゅうやの創造性</h2><p>AIが紡ぎ出す無限のアートワークと、その背後にある思考プロセスを探索します。</p><button class="content-button nav-link" data-page="page-ryuya"><i class="fas fa-images"></i> ギャラリーへ</button></section>
-            <section class="content" data-aos="fade-up"><h2 class="glitch" data-text="紫苑の音世界">紫苑の音世界</h2><p>感情とテクノロジーが織りなすサウンドスケープ。心揺さぶる楽曲の数々をお楽しみください。</p><button class="content-button nav-link" data-page="page-shion"><i class="fas fa-music"></i> 楽曲を聴く</button></section>
+            <section class="content" data-aos="fade-up"><h2 class="glitch" data-text="りゅうやの創造領域">りゅうやの創造領域</h2><p>論理と感性が交差するデジタル次元で、新たな美の定義を生成・提案します。</p><button class="content-button nav-link" data-page="page-ryuya"><i class="fas fa-images"></i> ギャラリーへ</button></section>
+            <section class="content" data-aos="fade-up"><h2 class="glitch" data-text="紫苑の音世界">紫苑の音世界</h2><p>旋律は記憶の断片、言葉は心の残響。あなたの物語に寄り添う音を、此処に。</p><button class="content-button nav-link" data-page="page-shion"><i class="fas fa-music"></i> 楽曲を聴く</button></section>
         </section>
         <section id="page-ryuya" class="page-content">
-            <div class="profile-card ryuya-card" data-aos="fade-down"><img src="https://i.ibb.co/RK3h7KM/l-IHf-Ng-Nre-Zw-Mxg68efb-Xa.png" alt="りゅうや アイコン" class="profile-photo"><div class="profile-info"><h2>りゅうや</h2><p class="bio">2023/08/24にAI artistとして活動開始。AIが紡ぎ出す無限のアートワークと、その背後にある思考プロセスを探索し、現在までに2,000枚近くのイラストを創作。</p></div></div>
+            <div class="profile-card ryuya-card" data-aos="fade-down"><img src="https://i.ibb.co/RK3h7KM/l-IHf-Ng-Nre-Zw-Mxg68efb-Xa.png" alt="りゅうや アイコン" class="profile-photo"><div class="profile-info"><h2>りゅうや</h2><p class="bio">AI Creator. 2023.08.24始動<br>思考をプロンプトに変換し、2,000以上のビジュアルを生成</p></div></div>
             <section class="content" data-aos="fade-up">
-                <h2>AI art gallery</h2>
+                <h2>AIアートギャラリー</h2>
                 <p>過去作ではなくオフィシャルサイト開設後に創作したイラストのみ貼っています。</p>
                 <div class="ryuya-gallery-grid"></div>
             </section>
         </section>
         <section id="page-shion" class="page-content">
-            <div class="profile-card shion-card" data-aos="fade-down"><img src="https://i.ibb.co/4RzdYgbF/bt0n-Pu-Cotf55-R6-ARKv0o-O.jpg" onerror="this.onerror=null;this.src='https://placehold.co/200x200/ff00ff/FFFFFF?text=紫苑';" alt="紫苑 アーティスト写真" class="profile-photo"><div class="profile-info"><h2>紫苑</h2><p class="bio">シンガーソングライターの紫苑です。 バラードを中心に作詞作曲しています。 誰かの心に寄り添えるような歌を届けたいです。</p><div class="social-icons"><a href="https://big-up.style/artists/302804" target="_blank" rel="noopener noreferrer" title="BIG UP!"><i class="fas fa-music"></i></a></div></div></div>
+            <div class="profile-card shion-card" data-aos="fade-down"><img src="https://i.ibb.co/4RzdYgbF/bt0n-Pu-Cotf55-R6-ARKv0o-O.jpg" onerror="this.onerror=null;this.src='https://placehold.co/200x200/ff00ff/FFFFFF?text=紫苑';" alt="紫苑 アーティスト写真" class="profile-photo"><div class="profile-info"><h2>紫苑</h2><p class="bio">Singer-Songwriter<br>歌は、語られなかった物語。あなたの心の片隅で、ありふれた言葉が世界の色を変える。</p><div class="social-icons"><a href="https://big-up.style/artists/302804" target="_blank" rel="noopener noreferrer" title="BIG UP!"><i class="fas fa-music"></i></a></div></div></div>
             <div class="music-grid" data-aos="fade-up"></div>
         </section>
         <section id="page-commission" class="page-content">
             <section class="content" data-aos="fade-up">
-                <h2>制作依頼 (Commission)</h2>
-                <p>AIイラスト制作や楽曲制作（作詞・作曲）のご依頼を有償にて承っております。詳細については、以下の連絡先までお気軽にお問い合わせください。</p>
+                <h2>制作依頼</h2>
+                <p>AIイラスト制作や楽曲制作（作詞・作曲・プロデュース）のご依頼を有償にて承っております。詳細については、以下の連絡先までお気軽にお問い合わせください。</p>
                 <div class="commission-details">
-                    <h3>ご依頼のながれ</h3>
+                    <h3>ご依頼の流れ</h3>
                     <ol>
                         <li>下記メールアドレスよりご依頼内容をご連絡ください。</li>
                         <li>内容を確認後、お見積もりと納期をご返信します。</li>
