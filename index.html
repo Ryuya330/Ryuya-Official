@@ -259,7 +259,7 @@
         
         /* --- 全デバイス対応テキストサイズ調整 --- */
         .hero h2 {
-            font-size: clamp(1.5rem, 6vw, 3rem); /* 最小1.5rem, 推奨6vw, 最大3rem */
+            font-size: clamp(1.5rem, 5vw, 3rem); /* 最小1.5rem, 推奨5vw, 最大3rem */
             margin-bottom: 25px;
             color: #fff;
             text-shadow: 0 0 20px rgba(255, 255, 255, 0.9), 0 0 40px rgba(255, 255, 255, 0.6);
@@ -267,7 +267,7 @@
             white-space: nowrap; /* 改行を防ぐ */
         }
         .hero p {
-            font-size: clamp(0.8rem, 3.5vw, 1.4rem); /* 最小0.8rem, 推奨3.5vw, 最大1.4rem */
+            font-size: clamp(0.8rem, 2.5vw, 1.4rem); /* 最小0.8rem, 推奨2.5vw, 最大1.4rem */
             line-height: 1.7;
             max-width: 900px;
             margin: 0 auto 40px;
@@ -858,6 +858,19 @@
             <section class="content announcement-section" data-aos="fade-up">
                 <h2><i class="fas fa-bullhorn"></i> お知らせ</h2>
                 <div class="announcements-container">
+                    <div class="announcement-item">
+                        <button class="announcement-toggle">
+                            <span class="announcement-date">2025/07/26</span>
+                            <span class="announcement-title">【UI調整】全デバイスへの表示最適化</span>
+                            <i class="fas fa-chevron-down announcement-icon"></i>
+                        </button>
+                        <div class="announcement-details">
+                            <ul class="announcement-list">
+                                <li>サイト内の一部のテキストが、特定の画面サイズで不自然に改行される問題を修正しました。</li>
+                                <li>スマートフォンからPCまで、あらゆるデバイスでテキストが一行で美しく表示されるよう、レスポンシブ対応を強化しました。</li>
+                            </ul>
+                        </div>
+                    </div>
                     <div class="announcement-item">
                         <button class="announcement-toggle">
                             <span class="announcement-date">2025/07/25</span>
