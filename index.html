@@ -266,7 +266,7 @@
             letter-spacing: 2px;
         }
         .hero p {
-            font-size: clamp(0.8rem, 2.5vw, 1.4rem); /* 最小0.8rem, 推奨2.5vw, 最大1.4rem */
+            font-size: clamp(0.9rem, 3vw, 1.6rem); /* 最小0.9rem, 推奨3vw, 最大1.6rem */
             line-height: 1.7;
             max-width: 900px;
             margin: 0 auto 40px;
@@ -824,7 +824,6 @@
                 <li><a data-page="page-home" class="nav-link active">ホーム</a></li>
                 <li><a data-page="page-ryuya" class="nav-link">りゅうやの活動</a></li>
                 <li><a data-page="page-shion" class="nav-link">紫苑の活動</a></li>
-                <li><a data-page="page-commission" class="nav-link">依頼</a></li>
                 <li><a data-page="page-contact" class="nav-link">問い合わせ</a></li>
             </ul>
         </nav>
@@ -837,7 +836,6 @@
             <li><a data-page="page-home" class="nav-link active">ホーム</a></li>
             <li><a data-page="page-ryuya" class="nav-link">りゅうやの活動</a></li>
             <li><a data-page="page-shion" class="nav-link">紫苑の活動</a></li>
-            <li><a data-page="page-commission" class="nav-link">依頼</a></li>
             <li><a data-page="page-contact" class="nav-link">問い合わせ</a></li>
         </ul>
     </nav>
@@ -846,7 +844,7 @@
     <main>
         <div id="particles-js"></div>
         <section id="page-home" class="page-content is-active">
-            <div class="hero"><h2 class="glitch" data-text="ようこそ、思想の境界線へ">ようこそ、思想の境界線へ</h2><p>AI Creator りゅうや と<br class="sm:hidden"> Singer-Songwriter 紫苑 の世界</p></div>
+            <div class="hero"><h2 class="glitch" data-text="ようこそ、思想の境界線へ">ようこそ、思想の境界線へ</h2><p>AICreator × Singer-Songwriter</p></div>
             
             <section class="content notice-section" data-aos="fade-up">
                 <h2 class="glitch" data-text="【重要】コンテンツの取り扱いに関するお願い"><i class="fas fa-exclamation-triangle"></i>【重要】コンテンツの取り扱いに関するお願い</h2>
@@ -856,6 +854,19 @@
             <section class="content announcement-section" data-aos="fade-up">
                 <h2><i class="fas fa-bullhorn"></i> お知らせ</h2>
                 <div class="announcements-container">
+                    <div class="announcement-item">
+                        <button class="announcement-toggle">
+                            <span class="announcement-date">2025/07/27</span>
+                            <span class="announcement-title">【サイト更新】コンテンツ調整</span>
+                            <i class="fas fa-chevron-down announcement-icon"></i>
+                        </button>
+                        <div class="announcement-details">
+                            <ul class="announcement-list">
+                                <li>「依頼」ページを廃止しました。</li>
+                                <li>紫苑のプロフィール情報を更新しました。</li>
+                            </ul>
+                        </div>
+                    </div>
                     <div class="announcement-item">
                         <button class="announcement-toggle">
                             <span class="announcement-date">2025/07/26</span>
@@ -1211,25 +1222,8 @@
             </section>
         </section>
         <section id="page-shion" class="page-content">
-            <div class="profile-card shion-card" data-aos="fade-down"><img src="https://i.ibb.co/4RzdYgbF/bt0n-Pu-Cotf55-R6-ARKv0o-O.jpg" onerror="this.onerror=null;this.src='https://placehold.co/200x200/ff00ff/FFFFFF?text=紫苑';" alt="紫苑 アーティスト写真" class="profile-photo"><div class="profile-info"><h2>紫苑</h2><p class="bio">Singer-Songwriter<br>歌は、語られなかった物語。あなたの心の片隅で、ありふれた言葉が世界の色を変える。</p><div class="social-icons"><a href="https://big-up.style/artists/302804" target="_blank" rel="noopener noreferrer" title="BIG UP!"><i class="fas fa-music"></i></a></div></div></div>
+            <div class="profile-card shion-card" data-aos="fade-down"><img src="https://i.ibb.co/4RzdYgbF/bt0n-Pu-Cotf55-R6-ARKv0o-O.jpg" onerror="this.onerror=null;this.src='https://placehold.co/200x200/ff00ff/FFFFFF?text=紫苑';" alt="紫苑 アーティスト写真" class="profile-photo"><div class="profile-info"><h2>紫苑</h2><p class="bio">Singer-Songwriter<br>avexサポートの下で楽曲を配信しています<br>歌は、語られなかった物語。あなたの心の片隅で、ありふれた言葉が世界の色を変える。</p><div class="social-icons"><a href="https://big-up.style/artists/302804" target="_blank" rel="noopener noreferrer" title="BIG UP!"><i class="fas fa-music"></i></a></div></div></div>
             <div class="music-grid" data-aos="fade-up"></div>
-        </section>
-        <section id="page-commission" class="page-content">
-            <section class="content" data-aos="fade-up">
-                <h2>制作依頼</h2>
-                <p>AIイラスト制作や楽曲制作（作詞・作曲・プロデュース）のご依頼を有償にて承っております。詳細については、以下の連絡先までお気軽にお問い合わせください。</p>
-                <div class="commission-details">
-                    <h3>ご依頼の流れ</h3>
-                    <ol>
-                        <li>下記メールアドレスよりご依頼内容をご連絡ください。</li>
-                        <li>内容を確認後、お見積もりと納期をご返信します。</li>
-                        <li>制作開始</li>
-                        <li>納品</li>
-                    </ol>
-                    <h3>連絡先</h3>
-                    <p><strong>メール:</strong> <a href="mailto:official-ryuya-shion@outlook.jp" class="gradient-hover">official-ryuya-shion@outlook.jp</a></p>
-                </div>
-            </section>
         </section>
         <section id="page-contact" class="page-content">
             <section class="content" data-aos="fade-up">
@@ -1258,7 +1252,7 @@
     <!-- フッター -->
     <footer>
         <p>&copy; 2025 りゅうや × 紫苑</p>
-        <nav><ul><li><a class="nav-link" data-page="page-home">ホーム</a></li><li><a class="nav-link" data-page="page-ryuya">りゅうやの活動</a></li><li><a class="nav-link" data-page="page-shion">紫苑の活動</a></li><li><a class="nav-link" data-page="page-commission">依頼</a></li><li><a class="nav-link" data-page="page-contact">問い合わせ</a></li></ul></nav>
+        <nav><ul><li><a class="nav-link" data-page="page-home">ホーム</a></li><li><a class="nav-link" data-page="page-ryuya">りゅうやの活動</a></li><li><a class="nav-link" data-page="page-shion">紫苑の活動</a></li><li><a class="nav-link" data-page="page-contact">問い合わせ</a></li></ul></nav>
     </footer>
 
     <!-- External JS Libraries -->
