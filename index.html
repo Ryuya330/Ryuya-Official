@@ -4,12 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- SEO対策: 検索エンジン向けのタイトルと説明文 -->
+    <!-- SEO & OGP Meta Tags -->
     <title>りゅうや × 紫苑 Official | AI Creator & Singer-Songwriter</title>
     <meta name="description" content="AIクリエイター「りゅうや」とシンガーソングライター「紫苑」の公式ポートフォリオサイト。最新のAIアートや楽曲、お知らせを掲載しています。">
-    
-    <!-- Google Search Console 所有権確認タグ -->
     <meta name="google-site-verification" content="5U1vhJGLCyd7wfsLuyHzSneCRP_J9kp5XyquhojbiYo" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ryuya-shion-official.netlify.app/">
+    <meta property="og:title" content="りゅうや × 紫苑 Official | AI Creator & Singer-Songwriter">
+    <meta property="og:description" content="AIクリエイター「りゅうや」とシンガーソングライター「紫苑」の公式ポートフォリオサイト。最新のAIアートや楽曲、お知らせを掲載しています。">
+    <meta property="og:image" content="https://i.ibb.co/RK3h7KM/l-IHf-Ng-Nre-Zw-Mxg68efb-Xa.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://ryuya-shion-official.netlify.app/">
+    <meta property="twitter:title" content="りゅうや × 紫苑 Official | AI Creator & Singer-Songwriter">
+    <meta property="twitter:description" content="AIクリエイター「りゅうや」とシンガーソングライター「紫苑」の公式ポートフォリオサイト。最新のAIアートや楽曲、お知らせを掲載しています。">
+    <meta property="twitter:image" content="https://i.ibb.co/RK3h7KM/l-IHf-Ng-Nre-Zw-Mxg68efb-Xa.png">
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-28VQT4SFJ8"></script>
@@ -26,11 +38,11 @@
     <!-- ===================================================================== -->
     <meta http-equiv="Content-Security-Policy" content="
         default-src 'self'; 
-        script-src 'self' 'unsafe-inline' https://unpkg.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://www.youtube.com https://s.ytimg.com https://www.googletagmanager.com; 
-        style-src 'self' 'unsafe-inline' https://unpkg.com https://fonts.googleapis.com https://cdnjs.cloudflare.com; 
+        script-src 'self' 'unsafe-inline' https://unpkg.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://www.youtube.com https://s.ytimg.com https://www.googletagmanager.com https://platform.twitter.com https://note.com; 
+        style-src 'self' 'unsafe-inline' https://unpkg.com https://fonts.googleapis.com https://cdnjs.cloudflare.com https://platform.twitter.com https://note.com; 
         font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; 
-        img-src 'self' https://i.ibb.co https://placehold.co data: https://www.googletagmanager.com; 
-        frame-src 'self' https://www.youtube.com;
+        img-src 'self' https://i.ibb.co https://placehold.co https://pbs.twimg.com data: https://www.googletagmanager.com https://assets.note.com; 
+        frame-src 'self' https://www.youtube.com https://syndication.twitter.com https://platform.twitter.com https://note.com;
         connect-src 'self' https://www.google-analytics.com;
         speech-src 'self' blob:;
     ">
@@ -122,13 +134,13 @@
         }
 
         .main-nav li {
-            margin: 0 20px;
+            margin: 0 15px;
         }
 
         .main-nav a {
             text-decoration: none;
             color: #fff;
-            font-size: 1.1rem;
+            font-size: 1rem;
             padding: 8px 0;
             position: relative;
             transition: color 0.3s ease, text-shadow 0.3s ease;
@@ -776,6 +788,32 @@
             text-align: center;
         }
 
+        /* --- Social Feed Styles --- */
+        .social-feeds {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+        @media (min-width: 1024px) {
+            .social-feeds {
+                grid-template-columns: 1fr;
+            }
+        }
+        .feed-column h3 {
+            font-size: 1.8em;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .note-feed-container {
+            max-height: 800px;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+
         /* レスポンシブデザイン */
         @media (max-width: 992px) {
             .profile-card { flex-direction: column; text-align: center; }
@@ -838,9 +876,10 @@
         <nav class="main-nav">
             <ul>
                 <li><a data-page="page-home" class="nav-link active">ホーム</a></li>
-                <li><a data-page="page-ryuya" class="nav-link">りゅうやの活動</a></li>
+                <li><a data-page="page-ryuya-1" class="nav-link">りゅうやの活動：壱</a></li>
+                <li><a data-page="page-ryuya-2" class="nav-link">りゅうやの活動：弐</a></li>
                 <li><a data-page="page-shion" class="nav-link">紫苑の活動</a></li>
-                <li><a data-page="page-contact" class="nav-link">問い合わせ</a></li>
+                <li><a data-page="page-contact" class="nav-link">お問い合わせ</a></li>
             </ul>
         </nav>
         <button class="hamburger-btn" id="hamburger-btn"><span></span><span></span><span></span></button>
@@ -850,9 +889,10 @@
     <nav class="mobile-nav" id="mobile-nav">
         <ul>
             <li><a data-page="page-home" class="nav-link active">ホーム</a></li>
-            <li><a data-page="page-ryuya" class="nav-link">りゅうやの活動</a></li>
+            <li><a data-page="page-ryuya-1" class="nav-link">りゅうやの活動：壱</a></li>
+            <li><a data-page="page-ryuya-2" class="nav-link">りゅうやの活動：弐</a></li>
             <li><a data-page="page-shion" class="nav-link">紫苑の活動</a></li>
-            <li><a data-page="page-contact" class="nav-link">問い合わせ</a></li>
+            <li><a data-page="page-contact" class="nav-link">お問い合わせ</a></li>
         </ul>
     </nav>
 
@@ -860,7 +900,7 @@
     <main>
         <div id="particles-js"></div>
         <section id="page-home" class="page-content is-active">
-            <div class="hero"><h2 class="glitch" data-text="ようこそ、思想の境界線へ">ようこそ、思想の境界線へ</h2><p>AICreator × Singer-Songwriter</p></div>
+            <div class="hero"><h2 class="glitch" data-text="ようこそ、思想の境界線へ">ようこそ、思想の境界線へ</h2><p>AICreator × Singer-Songwriter<br>Google AI Student Lead Ambassador</p></div>
             
             <section class="content notice-section" data-aos="fade-up">
                 <h2 class="glitch" data-text="【重要】コンテンツの取り扱いに関するお願い"><i class="fas fa-exclamation-triangle"></i>【重要】コンテンツの取り扱いに関するお願い</h2>
@@ -870,6 +910,20 @@
             <section class="content announcement-section" data-aos="fade-up">
                 <h2><i class="fas fa-bullhorn"></i> お知らせ</h2>
                 <div class="announcements-container">
+                    <div class="announcement-item">
+                        <button class="announcement-toggle">
+                            <span class="announcement-date">2025/08/11</span>
+                            <span class="announcement-title">【サイト更新】Google AI Student Lead Ambassador就任に伴うアップデート</span>
+                            <i class="fas fa-chevron-down announcement-icon"></i>
+                        </button>
+                        <div class="announcement-details">
+                            <ul class="announcement-list">
+                                <li>Google AI Student Lead Ambassador就任に伴い、サイトの構成を更新しました。</li>
+                                <li>ナビゲーションに「りゅうやの活動：弐」を追加しました。</li>
+                                <li>ホームに新しいセクション「りゅうや × Google AI」を追加しました。</li>
+                            </ul>
+                        </div>
+                    </div>
                     <div class="announcement-item">
                         <button class="announcement-toggle">
                             <span class="announcement-date">2025/07/27</span>
@@ -1226,15 +1280,34 @@
                 </div>
             </section>
 
-            <section class="content" data-aos="fade-up"><h2 class="glitch" data-text="りゅうやの創造領域">りゅうやの創造領域</h2><p>論理と感性が交差するデジタル次元で、新たな美の定義を生成・提案します。</p><button class="content-button nav-link" data-page="page-ryuya"><i class="fas fa-images"></i> ギャラリーへ</button></section>
+            <section class="content" data-aos="fade-up"><h2 class="glitch" data-text="りゅうやの創造領域">りゅうやの創造領域</h2><p>論理と感性が交差するデジタル次元で、新たな美の定義を生成・提案します。</p><button class="content-button nav-link" data-page="page-ryuya-1"><i class="fas fa-images"></i> ギャラリーへ</button></section>
+            <section class="content" data-aos="fade-up"><h2 class="glitch" data-text="りゅうや × Google AI"><i class="fas fa-robot"></i> りゅうや × Google AI</h2><p>Google AI Student Lead Ambassadorとして、AIの未来を探求する活動の記録。</p><button class="content-button nav-link" data-page="page-ryuya-2"><i class="fas fa-robot"></i> 活動を見る</button></section>
             <section class="content" data-aos="fade-up"><h2 class="glitch" data-text="紫苑の音世界">紫苑の音世界</h2><p>旋律は記憶の断片、言葉は心の残響。あなたの物語に寄り添う音を、此処に。</p><button class="content-button nav-link" data-page="page-shion"><i class="fas fa-music"></i> 楽曲を聴く</button></section>
         </section>
-        <section id="page-ryuya" class="page-content">
+        <section id="page-ryuya-1" class="page-content">
             <div class="profile-card ryuya-card" data-aos="fade-down"><img src="https://i.ibb.co/RK3h7KM/l-IHf-Ng-Nre-Zw-Mxg68efb-Xa.png" alt="りゅうや アイコン" class="profile-photo"><div class="profile-info"><h2>りゅうや</h2><p class="bio">AI Creator. 2023.08.24始動<br>思考をプロンプトに変換し、2,000以上のビジュアルを生成</p></div></div>
             <section class="content" data-aos="fade-up">
                 <h2>AIアートギャラリー</h2>
                 <p>過去作ではなくオフィシャルサイト開設後に創作したイラストのみ貼っています。</p>
                 <div class="ryuya-gallery-grid"></div>
+            </section>
+        </section>
+        <section id="page-ryuya-2" class="page-content">
+            <section class="content" data-aos="fade-up">
+                <h2 class="glitch" data-text="Google AI Student Lead Ambassador"><i class="fas fa-robot"></i> Google AI Student Lead Ambassador</h2>
+                <p>Google AI Student Lead Ambassadorとしての活動記録です。noteやXで最新情報を発信しています。</p>
+                <div class="social-feeds">
+                    <div class="feed-column">
+                        <h3>Note</h3>
+                        <div class="note-feed-container">
+                            <iframe class="note-embed" src="https://note.com/embed/notes/nd16862960050" style="border: 0; display: block; max-width: 500px; width: 100%; padding: 0px; margin: 10px auto; position: static; visibility: visible;" height="400"></iframe>
+                            <iframe class="note-embed" src="https://note.com/embed/notes/n6e74d50ef517" style="border: 0; display: block; max-width: 500px; width: 100%; padding: 0px; margin: 10px auto; position: static; visibility: visible;" height="400"></iframe>
+                            <iframe class="note-embed" src="https://note.com/embed/notes/n749139fcd974" style="border: 0; display: block; max-width: 500px; width: 100%; padding: 0px; margin: 10px auto; position: static; visibility: visible;" height="400"></iframe>
+                            <iframe class="note-embed" src="https://note.com/embed/notes/n28b2c3e0ba3e" style="border: 0; display: block; max-width: 500px; width: 100%; padding: 0px; margin: 10px auto; position: static; visibility: visible;" height="400"></iframe>
+                            <iframe class="note-embed" src="https://note.com/embed/notes/na67b2d4e7220" style="border: 0; display: block; max-width: 500px; width: 100%; padding: 0px; margin: 10px auto; position: static; visibility: visible;" height="400"></iframe>
+                        </div>
+                    </div>
+                </div>
             </section>
         </section>
         <section id="page-shion" class="page-content">
@@ -1268,12 +1341,14 @@
     <!-- フッター -->
     <footer>
         <p>&copy; 2025 りゅうや × 紫苑</p>
-        <nav><ul><li><a class="nav-link" data-page="page-home">ホーム</a></li><li><a class="nav-link" data-page="page-ryuya">りゅうやの活動</a></li><li><a class="nav-link" data-page="page-shion">紫苑の活動</a></li><li><a class="nav-link" data-page="page-contact">問い合わせ</a></li></ul></nav>
+        <nav><ul><li><a class="nav-link" data-page="page-home">ホーム</a></li><li><a class="nav-link" data-page="page-ryuya-1">りゅうやの活動：壱</a></li><li><a class="nav-link" data-page="page-ryuya-2">りゅうやの活動：弐</a></li><li><a class="nav-link" data-page="page-shion">紫苑の活動</a></li><li><a class="nav-link" data-page="page-contact">お問い合わせ</a></li></ul></nav>
     </footer>
 
     <!-- External JS Libraries -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <script async src="https://note.com/scripts/embed.js" charset="utf-8"></script>
     
     <!-- Main Application Script -->
     <script>
