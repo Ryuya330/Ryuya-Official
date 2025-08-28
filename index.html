@@ -42,7 +42,7 @@
         style-src 'self' 'unsafe-inline' https://unpkg.com https://fonts.googleapis.com https://cdnjs.cloudflare.com https://platform.twitter.com https://note.com; 
         font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; 
         img-src 'self' https://i.ibb.co https://placehold.co https://pbs.twimg.com data: https://www.googletagmanager.com https://assets.note.com https://*.rss2json.com; 
-        frame-src 'self' https://www.youtube.com https://syndication.twitter.com https://platform.twitter.com https://note.com https://stand.fm;
+        frame-src 'self' https://www.youtube.com https://syndication.twitter.com https://platform.twitter.com https://note.com https://stand.fm https://open.spotify.com;
         connect-src 'self' https://www.google-analytics.com https://api.rss2json.com;
         speech-src 'self' blob:;
     ">
@@ -671,68 +671,9 @@
         /* ----------- page2 (紫苑の活動) ----------- */
         .music-grid { 
             display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
             gap: 30px; 
         }
-        .track-card {
-            perspective: 1500px;
-            background-color: transparent;
-            border: none;
-            box-shadow: none;
-            padding: 0;
-            cursor: pointer;
-            aspect-ratio: 1 / 1;
-        }
-        .flipper {
-            transition: 0.8s;
-            transform-style: preserve-3d;
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-        .track-card.is-flipped .flipper {
-            transform: rotateY(180deg);
-        }
-        .front, .back {
-            backface-visibility: hidden;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 10px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-        .front {
-            z-index: 2;
-            transform: rotateY(0deg);
-            border: 1px solid rgba(255, 0, 255, 0.3);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.6);
-            background-color: rgba(10, 10, 10, 0.8);
-        }
-        .jacket-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-        .back {
-            transform: rotateY(180deg);
-            background-color: #000;
-            padding: 0;
-            box-sizing: border-box;
-            justify-content: center;
-            align-items: center;
-        }
-        .back iframe {
-            border-radius: 10px;
-            border: none;
-            width: 100%;
-            height: 100%;
-        }
-
 
         /* ----------- page3 (コンタクト) ----------- */
         .contact-info { text-align: center; margin-top: 40px; }
@@ -891,7 +832,7 @@
                 gap: 15px;
             }
             .music-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: 1fr;
                 gap: 15px;
             }
             .note-card {
@@ -937,6 +878,7 @@
                 <li><a data-page="page-ryuya-1" class="nav-link">りゅうやの活動：壱</a></li>
                 <li><a data-page="page-ryuya-2" class="nav-link">りゅうやの活動：弐</a></li>
                 <li><a data-page="page-shion" class="nav-link">紫苑の活動</a></li>
+                <li><a data-page="page-new-artist" class="nav-link">新アーティスト準備中</a></li>
                 <li><a data-page="page-contact" class="nav-link">お問い合わせ</a></li>
             </ul>
         </nav>
@@ -950,6 +892,7 @@
             <li><a data-page="page-ryuya-1" class="nav-link">りゅうやの活動：壱</a></li>
             <li><a data-page="page-ryuya-2" class="nav-link">りゅうやの活動：弐</a></li>
             <li><a data-page="page-shion" class="nav-link">紫苑の活動</a></li>
+            <li><a data-page="page-new-artist" class="nav-link">新アーティスト準備中</a></li>
             <li><a data-page="page-contact" class="nav-link">お問い合わせ</a></li>
         </ul>
     </nav>
@@ -968,6 +911,19 @@
             <section class="content announcement-section" data-aos="fade-up">
                 <h2><i class="fas fa-bullhorn"></i> お知らせ</h2>
                 <div class="announcements-container">
+                    <div class="announcement-item">
+                        <button class="announcement-toggle">
+                            <span class="announcement-date">2025/08/28</span>
+                            <span class="announcement-title">【サイト更新】紫苑の活動ページ更新と新セクション追加</span>
+                            <i class="fas fa-chevron-down announcement-icon"></i>
+                        </button>
+                        <div class="announcement-details">
+                            <ul class="announcement-list">
+                                <li>「紫苑の活動」ページをSpotify埋め込み形式に更新しました。</li>
+                                <li>「新アーティスト準備中」ページを新たに追加しました。</li>
+                            </ul>
+                        </div>
+                    </div>
                     <div class="announcement-item">
                         <button class="announcement-toggle">
                             <span class="announcement-date">2025/08/28</span>
@@ -1399,7 +1355,19 @@
         </section>
         <section id="page-shion" class="page-content">
             <div class="profile-card shion-card" data-aos="fade-down"><img src="https://i.ibb.co/4RzdYgbF/bt0n-Pu-Cotf55-R6-ARKv0o-O.jpg" onerror="this.onerror=null;this.src='https://placehold.co/200x200/ff00ff/FFFFFF?text=紫苑';" alt="紫苑 アーティスト写真" class="profile-photo"><div class="profile-info"><h2>紫苑</h2><p class="bio">Singer-Songwriter<br>avexサポートの下で楽曲を配信しています<br>歌は、語られなかった物語。あなたの心の片隅で、ありふれた言葉が世界の色を変える。</p><div class="social-icons"><a href="https://big-up.style/artists/302804" target="_blank" rel="noopener noreferrer" title="BIG UP!"><i class="fas fa-music"></i></a></div></div></div>
-            <div class="music-grid" data-aos="fade-up"></div>
+            <div class="music-grid" data-aos="fade-up">
+                <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/1n60Vom8ookbnCHg9gI3q8?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/3qCpWy4XiDkG8XuOwLkSuv?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/5pA8cBctrkkEhHVyWUpGDR?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/5TK3zOStE4v7RBsZdasJXc?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/4qbELOGhlW16pRbHP8LEEK?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </section>
+        <section id="page-new-artist" class="page-content">
+            <section class="content" data-aos="fade-up">
+                <h2><i class="fas fa-user-astronaut"></i> 新アーティスト準備中</h2>
+                <p>現在、新しいアーティストのデビューに向けて準備中です。ご期待ください。</p>
+            </section>
         </section>
         <section id="page-contact" class="page-content">
             <section class="content" data-aos="fade-up">
@@ -1428,7 +1396,7 @@
     <!-- フッター -->
     <footer>
         <p>&copy; 2025 りゅうや × 紫苑</p>
-        <nav><ul><li><a class="nav-link" data-page="page-home">ホーム</a></li><li><a class="nav-link" data-page="page-ryuya-1">りゅうやの活動：壱</a></li><li><a class="nav-link" data-page="page-ryuya-2">りゅうやの活動：弐</a></li><li><a class="nav-link" data-page="page-shion">紫苑の活動</a></li><li><a class="nav-link" data-page="page-contact">お問い合わせ</a></li></ul></nav>
+        <nav><ul><li><a class="nav-link" data-page="page-home">ホーム</a></li><li><a class="nav-link" data-page="page-ryuya-1">りゅうやの活動：壱</a></li><li><a class="nav-link" data-page="page-ryuya-2">りゅうやの活動：弐</a></li><li><a class="nav-link" data-page="page-shion">紫苑の活動</a></li><li><a class="nav-link" data-page="page-new-artist">新アーティスト準備中</a></li><li><a class="nav-link" data-page="page-contact">お問い合わせ</a></li></ul></nav>
     </footer>
 
     <!-- External JS Libraries -->
@@ -1450,13 +1418,6 @@
         document.addEventListener('DOMContentLoaded', function() {
 
             // --- グローバルデータ ---
-            const tracksData = [
-                { title: "君だけでいい", jacket: "https://i.ibb.co/rG83C8YD/image.png", youtubeId: "qXTby8En0mY" },
-                { title: "君を想うたびに夜がくる", jacket: "https://i.ibb.co/67C1Dgnd/12-EF4-B78-5077-42-DF-AE55-2-A30149-CDB71.png", youtubeId: "CqUcwlWF5Iw" },
-                { title: "遠くても君だけを", jacket: "https://i.ibb.co/wrFyh5J8/p3-IEkv-W4z-Vu36-Xd73o0q-P.png", youtubeId: "pGsNV-hxOhU" },
-                { title: "まだ見ぬキミヘ", jacket: "https://i.ibb.co/4R0Tb7gp/o-FCSH1o-TD-d6s6g-4cyb-X.png", youtubeId: "EBvsMdDwFNY" },
-                { title: "遠くても約束はそばにある", jacket: "https://i.ibb.co/PzDJHxpv/Kqbx9pq-Br1e-X4t-Mogw-Udy.png", youtubeId: "Nh7HkVHYUL0" }
-            ];
             const galleryImageUrls = ["https://i.ibb.co/HD81w0Gd/d1tdicte878c73em4u40-webp-image.png", "https://i.ibb.co/pB7wnRY2/d1tdicte878c73em4u4g-webp-image.png"];
 
             // --- DOM要素セレクター ---
@@ -2055,58 +2016,6 @@
                 lightboxOverlay.addEventListener('click', e => { if (e.target === lightboxOverlay) closeLightbox(); });
             }
 
-            // ======================================================
-            // --- 音楽プレイヤーロジック (手動Iframe注入) ---
-            // ======================================================
-            const musicGrid = document.querySelector('.music-grid');
-            if (musicGrid) {
-                tracksData.forEach((track, index) => {
-                    const card = document.createElement('div');
-                    card.className = 'track-card';
-                    card.dataset.index = index;
-                    card.innerHTML = `
-                        <div class="flipper">
-                            <div class="front">
-                                <img src="${track.jacket}" onerror="this.onerror=null;this.src='https://placehold.co/300x300/ff00ff/FFFFFF?text=ART';" alt="${track.title}のジャケット写真" class="jacket-image">
-                            </div>
-                            <div class="back" id="player-container-${index}">
-                                <!-- Iframe will be injected here -->
-                            </div>
-                        </div>
-                    `;
-                    musicGrid.appendChild(card);
-
-                    card.addEventListener('click', () => {
-                        const wasFlipped = card.classList.contains('is-flipped');
-                        
-                        const currentlyFlippedCard = document.querySelector('.track-card.is-flipped');
-                        if (currentlyFlippedCard) {
-                            currentlyFlippedCard.classList.remove('is-flipped');
-                            const oldIndex = currentlyFlippedCard.dataset.index;
-                            const oldPlayerContainer = document.getElementById(`player-container-${oldIndex}`);
-                            if (oldPlayerContainer) {
-                                oldPlayerContainer.innerHTML = ''; 
-                            }
-                        }
-
-                        if (!wasFlipped) {
-                            card.classList.add('is-flipped');
-                            const playerContainer = document.getElementById(`player-container-${index}`);
-                            if (playerContainer) {
-                                const iframe = document.createElement('iframe');
-                                iframe.setAttribute('src', `https://www.youtube.com/embed/${track.youtubeId}?autoplay=1&mute=1&playsinline=1`);
-                                iframe.setAttribute('width', '100%');
-                                iframe.setAttribute('height', '100%');
-                                iframe.setAttribute('frameborder', '0');
-                                iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
-                                iframe.setAttribute('allowfullscreen', '');
-                                playerContainer.appendChild(iframe);
-                            }
-                        }
-                    });
-                });
-            }
-            
             // ======================================================
             // --- note RSSフィード読み込み ---
             // ======================================================
