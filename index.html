@@ -38,12 +38,12 @@
     <!-- ===================================================================== -->
     <meta http-equiv="Content-Security-Policy" content="
         default-src 'self'; 
-        script-src 'self' 'unsafe-inline' https://unpkg.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://www.youtube.com https://s.ytimg.com https://www.googletagmanager.com https://platform.twitter.com https://note.com; 
+        script-src 'self' 'unsafe-inline' https://unpkg.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://www.youtube.com https://s.ytimg.com https://www.googletagmanager.com https://platform.twitter.com https://note.com https://api.rss2json.com; 
         style-src 'self' 'unsafe-inline' https://unpkg.com https://fonts.googleapis.com https://cdnjs.cloudflare.com https://platform.twitter.com https://note.com; 
         font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; 
-        img-src 'self' https://i.ibb.co https://placehold.co https://pbs.twimg.com data: https://www.googletagmanager.com https://assets.note.com; 
+        img-src 'self' https://i.ibb.co https://placehold.co https://pbs.twimg.com data: https://www.googletagmanager.com https://assets.note.com https://*.rss2json.com; 
         frame-src 'self' https://www.youtube.com https://syndication.twitter.com https://platform.twitter.com https://note.com https://stand.fm;
-        connect-src 'self' https://www.google-analytics.com;
+        connect-src 'self' https://www.google-analytics.com https://api.rss2json.com;
         speech-src 'self' blob:;
     ">
     <meta http-equiv="X-Frame-Options" content="DENY">
@@ -813,6 +813,56 @@
             padding: 20px;
         }
 
+        /* --- New Note Feed Card Styles --- */
+        .note-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(129, 57, 245, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            transition: background-color 0.3s, transform 0.3s;
+            text-decoration: none;
+            color: var(--text-color);
+        }
+        .note-card:hover {
+            background-color: rgba(129, 57, 245, 0.2);
+            transform: translateY(-5px);
+        }
+        .note-card-thumbnail {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+        .note-card-content {
+            display: flex;
+            flex-direction: column;
+        }
+        .note-card-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #fff;
+            margin: 0 0 5px 0;
+        }
+        .note-card-date {
+            font-size: 0.8em;
+            color: #aaa;
+            margin-bottom: 10px;
+        }
+        .note-card-snippet {
+            font-size: 0.9em;
+            line-height: 1.5;
+            color: #ccc;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
 
         /* レスポンシブデザイン */
         @media (max-width: 992px) {
@@ -843,6 +893,14 @@
             .music-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 15px;
+            }
+            .note-card {
+                flex-direction: column;
+            }
+            .note-card-thumbnail {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 16 / 9;
             }
         }
     </style>
@@ -910,6 +968,19 @@
             <section class="content announcement-section" data-aos="fade-up">
                 <h2><i class="fas fa-bullhorn"></i> お知らせ</h2>
                 <div class="announcements-container">
+                    <div class="announcement-item">
+                        <button class="announcement-toggle">
+                            <span class="announcement-date">2025/08/28</span>
+                            <span class="announcement-title">【サイト更新】note記事の自動取得機能を追加</span>
+                            <i class="fas fa-chevron-down announcement-icon"></i>
+                        </button>
+                        <div class="announcement-details">
+                            <ul class="announcement-list">
+                                <li>「りゅうやの活動：弐」ページに、noteの最新記事が自動で表示される機能を追加しました。</li>
+                                <li>サイト更新に伴い、お知らせを記録しました。</li>
+                            </ul>
+                        </div>
+                    </div>
                     <div class="announcement-item">
                         <button class="announcement-toggle">
                             <span class="announcement-date">2025/08/14</span>
@@ -1313,14 +1384,7 @@
                     <div class="feed-column">
                         <h3>Note</h3>
                         <div class="note-feed-container">
-                            <iframe class="note-embed" src="https://note.com/embed/notes/n24afee81f659" style="border: 0; display: block; max-width: 500px; width: 100%; padding: 0px; margin: 10px auto; position: static; visibility: visible;" height="400"></iframe>
-                            <iframe class="note-embed" src="https://note.com/embed/notes/nf14e8b3844b7" style="border: 0; display: block; max-width: 500px; width: 100%; padding: 0px; margin: 10px auto; position: static; visibility: visible;" height="400"></iframe>
-                            <iframe class="note-embed" src="https://note.com/embed/notes/n17dc509f3ce6" style="border: 0; display: block; max-width: 500px; width: 100%; padding: 0px; margin: 10px auto; position: static; visibility: visible;" height="400"></iframe>
-                            <iframe class="note-embed" src="https://note.com/embed/notes/nd16862960050" style="border: 0; display: block; max-width: 500px; width: 100%; padding: 0px; margin: 10px auto; position: static; visibility: visible;" height="400"></iframe>
-                            <iframe class="note-embed" src="https://note.com/embed/notes/n6e74d50ef517" style="border: 0; display: block; max-width: 500px; width: 100%; padding: 0px; margin: 10px auto; position: static; visibility: visible;" height="400"></iframe>
-                            <iframe class="note-embed" src="https://note.com/embed/notes/n749139fcd974" style="border: 0; display: block; max-width: 500px; width: 100%; padding: 0px; margin: 10px auto; position: static; visibility: visible;" height="400"></iframe>
-                            <iframe class="note-embed" src="https://note.com/embed/notes/n28b2c3e0ba3e" style="border: 0; display: block; max-width: 500px; width: 100%; padding: 0px; margin: 10px auto; position: static; visibility: visible;" height="400"></iframe>
-                            <iframe class="note-embed" src="https://note.com/embed/notes/na67b2d4e7220" style="border: 0; display: block; max-width: 500px; width: 100%; padding: 0px; margin: 10px auto; position: static; visibility: visible;" height="400"></iframe>
+                            <!-- noteのRSSフィードがここに自動的に表示されます -->
                         </div>
                     </div>
                      <div class="feed-column">
@@ -2043,6 +2107,56 @@
                 });
             }
             
+            // ======================================================
+            // --- note RSSフィード読み込み ---
+            // ======================================================
+            function loadNoteFeed() {
+                const feedContainer = document.querySelector('#page-ryuya-2 .note-feed-container');
+                if (!feedContainer) return;
+
+                feedContainer.innerHTML = '<p style="text-align: center;">最新の記事を読み込んでいます...</p>';
+
+                const rssUrl = 'https://note.com/ryuya_330/rss';
+                const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
+
+                fetch(apiUrl)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.status === 'ok') {
+                            feedContainer.innerHTML = ''; // ローディングメッセージをクリア
+                            data.items.forEach(item => {
+                                const snippet = item.description.replace(/<[^>]*>/g, "").substring(0, 150) + '...';
+                                const pubDate = new Date(item.pubDate).toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' });
+
+                                const cardHtml = `
+                                    <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="note-card">
+                                        <img src="${item.thumbnail}" alt="" class="note-card-thumbnail" onerror="this.style.display='none'">
+                                        <div class="note-card-content">
+                                            <h4 class="note-card-title">${item.title}</h4>
+                                            <p class="note-card-date">${pubDate}</p>
+                                            <p class="note-card-snippet">${snippet}</p>
+                                        </div>
+                                    </a>
+                                `;
+                                feedContainer.insertAdjacentHTML('beforeend', cardHtml);
+                            });
+                        } else {
+                            throw new Error('RSS feed could not be loaded.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching note feed:', error);
+                        feedContainer.innerHTML = '<p style="text-align: center;">記事の読み込みに失敗しました。後でもう一度お試しください。</p>';
+                    });
+            }
+            loadNoteFeed();
+
+
             // ======================================================
             // --- セキュリティ & コンテンツ保護 ---
             // ======================================================
