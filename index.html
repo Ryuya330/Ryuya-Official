@@ -52,13 +52,11 @@
     
     <!-- External Libraries & Fonts -->
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <!-- JS Libraries for Animation & Sound -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    
+    
 
     <style>
         /* ==============================================
@@ -75,6 +73,15 @@
             --text-color: #e0e0e0;
             --bg-color: #000;
             --bg-glass: rgba(18, 18, 18, 0.8);
+            --falcon-red: #ff3333;
+            --system-green: #00ff41;
+            --system-blue: #00cde9;
+            --warning-color: #f4b400;
+            --threat-red: #ff3333;
+            --quantum-purple: #9d00ff;
+            --singularity-black: #ffffff;
+            --background-color: #02040a;
+            --scanline-color: rgba(0, 255, 100, 0.07);
         }
 
         body {
@@ -85,7 +92,7 @@
             overflow-x: hidden;
             background-color: var(--bg-color);
             position: relative;
-            font-size: 15px; /* ベースフォントサイズを調整 */
+            font-size: 15px;
             line-height: 1.6;
         }
 
@@ -100,9 +107,7 @@
         }
 
         /* ヘッダー */
-        header, main, footer {
-            display: none; /* Initially hidden for opening animation */
-        }
+
         
         header {
             background-color: var(--bg-glass);
@@ -450,115 +455,7 @@
 
         #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -2; }
         
-        /* ----------- New Opening Animation Styles ----------- */
-        #opening-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 10000;
-            background: #000;
-            cursor: none; /* Hide cursor during opening */
-        }
-        .opening-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100% !important;
-            height: 100% !important;
-            opacity: 0;
-            transition: opacity 1.5s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-        .opening-canvas.visible {
-            opacity: 1;
-        }
-        .ui-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-            pointer-events: none;
-            z-index: 50;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        .ui-overlay.visible {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        #activation-button {
-            padding: 18px 36px;
-            font-size: 1.5em;
-            font-family: 'Orbitron', sans-serif;
-            background: transparent;
-            color: #00cde9;
-            border: 2px solid #00cde9;
-            border-radius: 8px;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            position: relative;
-            overflow: hidden;
-            transition: color 0.3s, background-color 0.3s, box-shadow 0.3s, transform 0.3s;
-            text-shadow: 0 0 10px #00cde9;
-        }
-        #activation-button:hover {
-            background-color: #00cde9;
-            color: #000;
-            box-shadow: 0 0 25px #00cde9, 0 0 50px #00cde9;
-            transform: scale(1.05);
-        }
-        #activation-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-        #activation-button:hover::before { left: 100%; }
-        #info-text {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(1rem, 3.5vw, 2.2rem); /* スマホ向けにサイズ調整 */
-            color: #fff;
-            text-shadow: 0 0 8px #fff, 0 0 15px var(--accent-color);
-            margin-top: 20px;
-            text-align: center;
-            transition: opacity 0.5s ease-out;
-            letter-spacing: 2px;
-        }
-        #info-text.fade-out {
-            opacity: 0;
-        }
-        #info-text .cursor {
-            display: inline-block;
-            background-color: #fff;
-            box-shadow: 0 0 8px #fff;
-            width: 12px;
-            height: 1.2em;
-            animation: blink 1s infinite;
-            margin-left: 8px;
-            vertical-align: middle;
-        }
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
 
-        /* NEW: Site Entrance Animation */
-        #opening-container.exiting {
-            animation: portal-exit 1.5s forwards cubic-bezier(0.250, 0.460, 0.450, 0.940);
-        }
         
         /* ----------- Artist Profile Cards ----------- */
         .profile-card { display: flex; gap: 40px; align-items: center; padding: 40px; border-radius: 15px; margin-bottom: 50px; }
@@ -811,6 +708,123 @@
         }
 
 
+        /* New Hero Section */
+        .new-hero-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            width: 100%;
+            background: linear-gradient(-45deg, #02040a, #1a0a24, #0f183c, #02040a);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            padding: 0 5%;
+            box-sizing: border-box;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero-image-col, .hero-text-col {
+            flex: 1;
+            padding: 40px;
+            animation: fadeIn 1.5s ease-out forwards;
+            opacity: 0;
+        }
+
+        .hero-image-col { animation-delay: 0.5s; }
+        .hero-text-col { animation-delay: 0.2s; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-image-col {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image-col img {
+            max-width: 100%;
+            width: clamp(300px, 100%, 500px);
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-text-col {
+            color: #fff;
+            text-align: left;
+        }
+
+        .artist-name {
+            font-family: 'Exo 2', sans-serif;
+            font-size: clamp(3rem, 10vw, 6rem);
+            font-weight: 700;
+            margin: 0;
+            line-height: 1.1;
+            color: #fff;
+            text-shadow: 0 0 15px rgba(255,255,255,0.3), 0 0 40px var(--primary-color);
+            transition: text-shadow 0.3s ease;
+        }
+        .artist-name:hover {
+             text-shadow: 0 0 20px rgba(255,255,255,0.5), 0 0 50px var(--secondary-color);
+        }
+
+        .artist-tagline {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            margin: 20px 0;
+            color: #e0e0e0;
+        }
+
+        .hero-social-icons {
+            margin-top: 30px;
+        }
+
+        .hero-social-icons a {
+            color: #fff;
+            font-size: 1.8rem;
+            margin-right: 25px;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .hero-social-icons a:hover {
+            color: var(--secondary-color);
+            transform: scale(1.2) translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .new-hero-section {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 120px; 
+                padding-bottom: 50px;
+            }
+            .hero-text-col {
+                text-align: center;
+                order: 1;
+            }
+            .hero-image-col {
+                order: 2;
+                margin-top: 40px;
+            }
+            .artist-name {
+                font-size: clamp(2.5rem, 15vw, 4rem);
+            }
+            .hero-social-icons {
+                display: flex;
+                justify-content: center;
+            }
+            .hero-social-icons a { margin: 0 15px; }
+        }
+
         /* レスポンシブデザイン */
         @media (max-width: 992px) {
             .profile-card { flex-direction: column; text-align: center; }
@@ -856,17 +870,7 @@
     <!-- Page Transition -->
     <div id="page-transition-overlay"></div>
 
-    <!-- 新しいオープニング演出 -->
-    <div id="opening-container">
-        <canvas id="opening-canvas-1" class="opening-canvas" style="z-index: 1;"></canvas>
-        <canvas id="opening-canvas-2" class="opening-canvas" style="z-index: 2;"></canvas>
-        <canvas id="opening-canvas-3" class="opening-canvas" style="z-index: 3;"></canvas>
-        <canvas id="opening-canvas-4" class="opening-canvas" style="z-index: 4;"></canvas>
-        <div id="ui-overlay" class="ui-overlay">
-            <button id="activation-button">ACTIVATE SYSTEM</button>
-            <p id="info-text"></p>
-        </div>
-    </div>
+    
 
     <!-- DevTools Blocker Overlay -->
     <div id="devtools-blocker" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #000; z-index: 99999; color: #ff4444; text-align: center; padding-top: 30vh;">
@@ -905,476 +909,20 @@
     <main>
         <div id="particles-js"></div>
         <section id="page-home" class="page-content is-active">
-            <div class="hero"><h2 class="glitch" data-text="ようこそ、思想の境界線へ">ようこそ、思想の境界線へ</h2><p>AICreator × Singer-Songwriter<br>Google AI Student Lead Ambassador</p></div>
-            
-            <section class="content notice-section" data-aos="fade-up">
-                <h2 class="glitch" data-text="【重要】コンテンツの取り扱いに関するお願い"><i class="fas fa-exclamation-triangle"></i>【重要】コンテンツの取り扱いに関するお願い</h2>
-                <p>当サイト内のイラスト、楽曲、文章、写真などのすべてのコンテンツの無断保存、スクリーンショット、画面録画、転載、使用、転用を固く禁じます。すべてのコンテンツの著作権は、りゅうや及び紫苑に帰属します。</p>
-            </section>
-
-            <section class="content announcement-section" data-aos="fade-up">
-                <h2><i class="fas fa-bullhorn"></i> お知らせ</h2>
-                <div class="announcements-container">
-                     <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/09/04</span>
-                            <span class="announcement-title">【サイト更新】お問い合わせページを削除</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>サイト構成の見直しに伴い、「お問い合わせ」ページを削除しました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                     <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/09/03</span>
-                            <span class="announcement-title">【サイトリニューアル】サイト名称の変更と情報更新</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>サイトの名称を「Ryuya × 紫苑 × 伊織暁斗 Official」に変更しました。</li>
-                                <li>関連するメタデータ（OGPなど）を更新しました。</li>
-                                <li>お問い合わせ先のメールアドレスを更新しました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/09/03</span>
-                            <span class="announcement-title">【サイト更新】UI調整とナビゲーション変更</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>ホームから各アーティストページへの導線を削除しました。</li>
-                                <li>ナビゲーションの表記を一部英語に変更しました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/09/03</span>
-                            <span class="announcement-title">【サイト更新】新アーティスト「伊織 暁斗」ページ公開</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>新アーティスト「伊織 暁斗」のページを公開しました。</li>
-                                <li>ナビゲーションの「新アーティスト準備中」を「伊織 暁斗」に変更しました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/08/28</span>
-                            <span class="announcement-title">【サイト更新】紫苑の活動ページ更新と新セクション追加</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>「紫苑の活動」ページをSpotify埋め込み形式に更新しました。</li>
-                                <li>「新アーティスト準備中」ページを新たに追加しました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/08/28</span>
-                            <span class="announcement-title">【サイト更新】note記事の自動取得機能を追加</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>「りゅうやの活動：弐」ページに、noteの最新記事が自動で表示される機能を追加しました。</li>
-                                <li>サイト更新に伴い、お知らせを記録しました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/08/14</span>
-                            <span class="announcement-title">【サイト更新】Google AI Student Lead Ambassador就任に伴うアップデート</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>noteの記事を追加しました。</li>
-                                <li>stand.fmの枠を追加しました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/08/11</span>
-                            <span class="announcement-title">【サイト更新】Google AI Student Lead Ambassador就任に伴うアップデート</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>Google AI Student Lead Ambassador就任に伴い、サイトの構成を更新しました。</li>
-                                <li>ナビゲーションに「りゅうやの活動：弐」を追加しました。</li>
-                                <li>ホームに新しいセクション「りゅうや × Google AI」を追加しました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/27</span>
-                            <span class="announcement-title">【サイト更新】コンテンツ調整</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>「依頼」ページを廃止しました。</li>
-                                <li>紫苑のプロフィール情報を更新しました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/26</span>
-                            <span class="announcement-title">【UI調整】全デバイスへの表示最適化</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>サイト内の一部のテキストが、特定の画面サイズで不自然に改行される問題を修正しました。</li>
-                                <li>スマートフォンからPCまで、あらゆるデバイスでテキストが一行で美しく表示されるよう、レスポンシブ対応を強化しました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/25</span>
-                            <span class="announcement-title">【最終更新】オープニング演出のサウンドを最終調整</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>オープニング演出の最終仕上げとして、すべての効果音とBGMをより高品質で没入感のあるものにアップグレードしました。</li>
-                                <li>各シーンに専用のアンビエントBGMを追加し、映画のような音響体験を実現しています。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/25</span>
-                            <span class="announcement-title">【サイト更新】オープニング演出を全面的にリニューアル</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>サイトのオープニング演出を、より没入感のある体験を目指して全面的に刷新しました。</li>
-                                <li>AIの起動からシステムへの接続までを、3Dやサウンドを駆使した映画的なシーケンスで表現。</li>
-                                <li>特に「生体認証」シーンは、リアリティを追求した高度なビジュアルに進化しました。</li>
-                                <li>サイトへの入場演出も、よりダイナミックなものに変更しています。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/25</span>
-                            <span class="announcement-title">【サイト更新】プロフィールテキストを更新</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>りゅうや、紫苑のプロフィール文章をより詳細な内容に更新しました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/25</span>
-                            <span class="announcement-title">【サイト更新】テキスト表現の調整とレイアウトの改善</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>サイト内の一部テキスト表現を更新しました。</li>
-                                <li>スマートフォン表示時の楽曲ギャラリーを2列表示に変更しました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/25</span>
-                            <span class="announcement-title">【UI調整】見出しの文字サイズを調整</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>サイト全体の主要な見出し（h1, h2）の文字サイズを縮小し、より洗練された印象になるよう調整しました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/24</span>
-                            <span class="announcement-title">【UI調整】サイト全体の文字サイズを調整</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>サイト全体の基本となる文字サイズを一回り小さく調整しました。</li>
-                                <li>上記変更に伴い、スマートフォンでの表示も最適化しました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/24</span>
-                            <span class="announcement-title">【新機能】制作依頼・サポート機能を追加</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>サイトを通じて収益化を行えるよう、「依頼」ページを新設しました。</li>
-                                <li>ホームに「活動をサポート」セクションを追加し、ファンの方々が直接支援できる窓口を設けました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/24</span>
-                            <span class="announcement-title">【サイト安定性の向上】</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>ページの読み込み中に発生する可能性のある、機能に影響しない軽微なエラーを抑制し、サイトの安定性を向上させました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/24</span>
-                            <span class="announcement-title">【動画再生の改善とUI調整】</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>ブラウザの自動再生ポリシーに対応するため、動画がミュート（消音）状態で自動再生されるように変更しました。動画プレイヤーの音量ボタンでミュートを解除できます。</li>
-                                <li>スマートフォン表示時のサイト全体の文字サイズを、ご要望に基づき更に二回り小さく調整しました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/24</span>
-                            <span class="announcement-title">【動画再生方式の変更と履歴復元】</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>動画が再生されない問題の対策として、再生方式をより安定性の高いものに根本的に変更しました。</li>
-                                <li>過去のお知らせがすべて閲覧できるよう、履歴を復元しスクロールで確認できるようにしました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/24</span>
-                            <span class="announcement-title">【安定性の向上と不具合修正】</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>報告されたエラーログに基づき、サイトの安定性を向上させるための修正を行いました。</li>
-                                <li>ギャラリー画像の読み込みに関する不具合を修正しました。</li>
-                                <li>オープニングアニメーション中の特定操作で発生する可能性のあったエラーを抑制しました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/23</span>
-                            <span class="announcement-title">【機能変更】</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>楽曲の再生方法を、音声のみの再生からカードが裏返ってミュージックビデオが再生される形式に戻しました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/23</span>
-                            <span class="announcement-title">【安定性の向上】</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>非同期処理におけるエラーハンドリングを強化し、特定の操作で発生していたエラーを修正しました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/23</span>
-                            <span class="announcement-title">【機能変更】</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>楽曲の再生方法をSpotifyからYouTubeに変更しました。</li>
-                                <li>ジャケット写真をタップするとミュージックビデオが自動再生されます。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/23</span>
-                            <span class="announcement-title">【レスポンシブデザインの改善】</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>スマートフォン表示時のレイアウトを最適化しました。</li>
-                                <li>ヘッダーの操作性を向上させました。</li>
-                                <li>各ギャラリーを2列表示に調整しました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/23</span>
-                            <span class="announcement-title">【演出の変更】</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>ページ切り替え時の演出を、よりAIプログラムらしいデジタルなエフェクトに変更しました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/23</span>
-                            <span class="announcement-title">【総合デバッグと改善】</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>サイト全体のコードを精査し、パフォーマンスと安定性を向上させるためのデバッグを行いました。</li>
-                                <li>アクセシビリティ向上のため、画像に適切な代替テキストを設定しました。</li>
-                                <li>外部リンクのセキュリティを強化しました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/23</span>
-                            <span class="announcement-title">【コンテンツ更新】</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>「りゅうやの活動」ページの情報を更新しました。</li>
-                                <li>ギャラリーのイラストを最新のものに更新しました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/23</span>
-                            <span class="announcement-title">【UI改善】</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>楽曲紹介から曲のタイトル表示を廃止し、ジャケットデザインを強調するUIに変更しました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/23</span>
-                            <span class="announcement-title">【不具合の修正】</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>楽曲のジャケット写真が表示されない不具合を修正しました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/23</span>
-                            <span class="announcement-title">【サイト機能調整アップデート】</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>チャットボット機能を廃止しました。</li>
-                                <li>楽曲の歌詞解説機能を廃止しました。</li>
-                                <li>サイトの軽量化とパフォーマンス向上を行いました。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/23</span>
-                            <span class="announcement-title">【サイトアップデートのお知らせ】</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>お知らせをアコーディオン形式のUIに変更</li>
-                                <li>Webサイトの核にGemini 2.5 Proを導入</li>
-                                <li>AIアシスタント（チャットボット）を追加</li>
-                                <li>AIイラストとのチャット機能を追加</li>
-                                <li>楽曲の歌詞解説機能を追加</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/23</span>
-                            <span class="announcement-title">【不具合の修正内容】</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>音声の読み上げ機能を廃止</li>
-                                <li>エラー処理の集約</li>
-                                <li>UIの状態管理の改善</li>
-                                <li>API通信の安定化</li>
-                                <li>UIの状態管理の強化</li>
-                                <li>コードの整理と最適化</li>
-                                <li>エラーハンドリングのロジック見直し</li>
-                                <li>堅牢なイベント処理</li>
-                                <li>エラーハンドリングの集約</li>
-                                <li>APIの安定性向上</li>
-                                <li>非同期処理の堅牢化</li>
-                                <li>コードの安全性向上</li>
-                                <li>エラーメッセージの改善</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="announcement-item">
-                        <button class="announcement-toggle">
-                            <span class="announcement-date">2025/07/22</span>
-                            <span class="announcement-title">【サイトアップデートのお知らせ】</span>
-                            <i class="fas fa-chevron-down announcement-icon"></i>
-                        </button>
-                        <div class="announcement-details">
-                            <ul class="announcement-list">
-                                <li>サイトのオープニングをリニューアル</li>
-                                <li>サイトのオープニングに音声と効果音を追加</li>
-                                <li>オープニングアニメーションの改善</li>
-                                <li>セキュリティヘッダーの調整</li>
-                                <li>UIの改善</li>
-                            </ul>
-                        </div>
+            <div class="new-hero-section">
+                <div class="hero-text-col">
+                    <h1 class="artist-name">Ryuya</h1>
+                    <p class="artist-tagline">AICreator × Singer-Songwriter</p>
+                    <div class="hero-social-icons">
+                        <a href="https://youtube.com/@ryuya_330?si=ieBK43YiJPvZMtxC" target="_blank" rel="noopener noreferrer" title="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://x.com/Ryuya_330" target="_blank" rel="noopener noreferrer" title="X"><i class="fab fa-x-twitter"></i></a>
+                        <a href="https://note.com/ryuya_330" target="_blank" rel="noopener noreferrer" title="note"><i class="fab fa-n"></i></a>
                     </div>
                 </div>
-            </section>
+                <div class="hero-image-col">
+                    <img src="https://i.ibb.co/RK3h7KM/l-IHf-Ng-Nre-Zw-Mxg68efb-Xa.png" alt="Artist Photo">
+                </div>
+            </div>
         </section>
         <section id="page-ryuya-1" class="page-content">
             <div class="profile-card ryuya-card" data-aos="fade-down">
@@ -1474,6 +1022,8 @@
             }
         });
 
+        
+
         document.addEventListener('DOMContentLoaded', function() {
 
             // --- グローバルデータ ---
@@ -1527,6 +1077,7 @@
             }
 
             function navigateToPage(pageId) {
+                console.log(`Navigating to page: ${pageId}`);
                 const currentPage = document.querySelector('.page-content.is-active');
                 if ((currentPage && currentPage.id === pageId) || isTransitioning) {
                     if (mobileNav.classList.contains('is-active')) {
@@ -1536,9 +1087,17 @@
                     return;
                 }
                 runGlitchTransition(() => {
-                    if (currentPage) currentPage.classList.remove('is-active');
+                    if (currentPage) {
+                        console.log(`Hiding page: ${currentPage.id}`);
+                        currentPage.classList.remove('is-active');
+                    }
                     const nextPage = document.getElementById(pageId);
-                    if (nextPage) nextPage.classList.add('is-active');
+                    if (nextPage) {
+                        console.log(`Showing page: ${pageId}`);
+                        nextPage.classList.add('is-active');
+                    } else {
+                        console.error(`Page not found: ${pageId}`);
+                    }
                     document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
                     document.querySelectorAll(`.nav-link[data-page="${pageId}"]`).forEach(activeLink => activeLink.classList.add('active'));
                     AOS.refresh();
@@ -1573,486 +1132,6 @@
             }
 
             // ======================================================
-            // --- NEW OPENING ANIMATION & SOUND LOGIC ---
-            // ======================================================
-            const openingContainer = document.getElementById('opening-container');
-            if (sessionStorage.getItem('openingPlayed')) {
-                openingContainer.style.display = 'none';
-                showMainContent();
-            } else {
-                const canvases = [
-                    document.getElementById('opening-canvas-1'),
-                    document.getElementById('opening-canvas-2'),
-                    document.getElementById('opening-canvas-3'),
-                    document.getElementById('opening-canvas-4')
-                ];
-                const uiOverlay = document.getElementById('ui-overlay');
-                const activationButton = document.getElementById('activation-button');
-                const infoText = document.getElementById('info-text');
-
-                let activeAnimation = null;
-                let sounds = {};
-                let typeIntervalHandle = null;
-
-                // --- Sound Setup ---
-                const setupSounds = () => {
-                    try {
-                        const reverb = new Tone.Reverb(1.5).toDestination();
-                        const delay = new Tone.FeedbackDelay("8n", 0.25).connect(reverb);
-                        
-                        sounds.bleep = new Tone.MembraneSynth({ pitchDecay: 0.008, octaves: 4, envelope: { attack: 0.001, decay: 0.1, sustain: 0 } }).toDestination();
-                        sounds.bleep.volume.value = -12;
-                        
-                        sounds.boot = new Tone.MetalSynth({
-                            frequency: 50, envelope: { attack: 0.001, decay: 1.4, release: 0.2 },
-                            harmonicity: 5.1, modulationIndex: 32, resonance: 4000, octaves: 1.5
-                        }).connect(delay);
-                        sounds.boot.volume.value = -15;
-
-                        sounds.access = new Tone.PluckSynth({ attackNoise: 0.5, dampening: 4000, resonance: 0.9 }).toDestination();
-                        sounds.access.volume.value = -8;
-
-                        sounds.music = new Tone.AMSynth({
-                            harmonicity: 1.5, envelope: { attack: 0.01, decay: 0.2, sustain: 0.1, release: 0.5 },
-                            modulation: { type: "sine" }, modulationEnvelope: { attack: 0.1, decay: 0.1, sustain: 0.3, release: 0.5 }
-                        }).connect(reverb);
-                        
-                        sounds.matrix = new Tone.PluckSynth({ volume: -20, attackNoise: 0.8, dampening: 6000, resonance: 0.7 }).toDestination();
-                        
-                        sounds.lockon = new Tone.Synth({ oscillator: { type: 'sawtooth' }, envelope: { attack: 0.01, decay: 0.2, sustain: 0.1, release: 0.3 } }).toDestination();
-                        sounds.lockon.volume.value = -10;
-
-                        sounds.success = new Tone.Synth({ oscillator: { type: 'triangle8' }, envelope: { attack: 0.01, decay: 0.4, sustain: 0.2, release: 0.4 } }).toDestination();
-                        sounds.success.volume.value = -8;
-
-                        sounds.portal = new Tone.NoiseSynth({ noise: { type: 'pink' }, envelope: { attack: 0.5, decay: 1.0, sustain: 0.2, release: 1.0 } }).connect(reverb);
-                        sounds.portal.volume.value = -10;
-
-                        // BGM Loops
-                        const filter = new Tone.Filter(800, "lowpass").connect(reverb);
-                        sounds.bgmCircuit = new Tone.NoiseSynth({ noise: { type: 'brown' }, envelope: { attack: 1, decay: 0.5, sustain: 1 } }).connect(filter);
-                        sounds.bgmCircuit.volume.value = -22;
-
-                        const chorus = new Tone.Chorus(4, 2.5, 0.5).toDestination();
-                        sounds.bgmScan = new Tone.AMSynth({
-                            harmonicity: 1.2, envelope: { attack: 2, decay: 1, sustain: 1, release: 2 },
-                            modulation: { type: "sine" }, modulationEnvelope: { attack: 2, decay: 0.5, sustain: 1, release: 2 }
-                        }).connect(chorus);
-                        sounds.bgmScan.volume.value = -18;
-                        
-                        sounds.bgmCreator = new Tone.FatOscillator("Ab3", "sawtooth", 40).connect(reverb);
-                        sounds.bgmCreator.volume.value = -22;
-
-                        sounds.bgmMatrix = new Tone.Loop(time => {
-                            sounds.boot.triggerAttackRelease("C1", "2n", time);
-                        }, "4m");
-
-                    } catch (e) { console.error("Error setting up Tone.js sounds:", e); }
-                };
-
-                // --- Utility Functions ---
-                const typeWriter = (text, element) => {
-                    if (typeIntervalHandle) clearInterval(typeIntervalHandle);
-                    return new Promise(resolve => {
-                        element.innerHTML = '<span class="cursor"></span>';
-                        const cursor = element.querySelector('.cursor');
-                        let i = 0;
-                        typeIntervalHandle = setInterval(() => {
-                            if (i < text.length) {
-                                element.insertBefore(document.createTextNode(text.charAt(i)), cursor);
-                                if (sounds.bleep && Tone.context.state === 'running') sounds.bleep.triggerAttackRelease("C2", "32n", Tone.now() + i * 0.01);
-                                i++;
-                            } else {
-                                clearInterval(typeIntervalHandle);
-                                typeIntervalHandle = null;
-                                resolve();
-                            }
-                        }, 80);
-                    });
-                };
-
-                const switchAnimation = (newAnimation) => {
-                    return new Promise(resolve => {
-                        if (activeAnimation && activeAnimation.stop) {
-                            activeAnimation.stop();
-                        }
-                        activeAnimation = newAnimation;
-                        if (activeAnimation && activeAnimation.start) {
-                            activeAnimation.start().then(resolve);
-                        } else {
-                            resolve();
-                        }
-                    });
-                };
-
-                // --- Animation Modules ---
-                const animations = {
-                    // 1. AI Activation (Circuit board) - Enhanced
-                    circuit: {
-                        ctx: canvases[0].getContext('2d'),
-                        nodes: [], edges: [], pulses: [], cancelId: 0,
-                        start() {
-                            canvases[0].classList.add('visible');
-                            this.resize();
-                            this.nodes = []; this.edges = []; this.pulses = [];
-                            const gridSize = 10;
-                            const spacingX = this.ctx.canvas.width / gridSize;
-                            const spacingY = this.ctx.canvas.height / gridSize;
-                            for (let i = 0; i <= gridSize; i++) {
-                                for (let j = 0; j <= gridSize; j++) {
-                                    this.nodes.push({ x: i * spacingX, y: j * spacingY });
-                                }
-                            }
-                            for (let i = 0; i < this.nodes.length; i++) {
-                                for (let j = i + 1; j < this.nodes.length; j++) {
-                                    if (Math.random() > 0.95) this.edges.push({ from: i, to: j });
-                                }
-                            }
-                            setInterval(() => {
-                                if (this.pulses.length < 20) {
-                                    const edge = this.edges[Math.floor(Math.random() * this.edges.length)];
-                                    this.pulses.push({ edge: edge, progress: 0 });
-                                }
-                            }, 100);
-                            if(sounds.boot) sounds.boot.triggerAttackRelease("C1", "2n");
-                            if(sounds.bgmCircuit) sounds.bgmCircuit.triggerAttack();
-                            this.animate();
-                            return Promise.resolve();
-                        },
-                        stop() {
-                            cancelAnimationFrame(this.cancelId);
-                            if(sounds.bgmCircuit) sounds.bgmCircuit.triggerRelease();
-                            canvases[0].classList.remove('visible');
-                        },
-                        resize() {
-                            canvases[0].width = window.innerWidth;
-                            canvases[0].height = window.innerHeight;
-                        },
-                        animate() {
-                            this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
-                            this.ctx.fillStyle = "rgba(0, 205, 233, 0.3)";
-                            this.nodes.forEach(node => { this.ctx.beginPath(); this.ctx.arc(node.x, node.y, 2, 0, Math.PI * 2); this.ctx.fill(); });
-                            this.ctx.strokeStyle = "rgba(0, 205, 233, 0.1)";
-                            this.edges.forEach(edge => {
-                                const from = this.nodes[edge.from]; const to = this.nodes[edge.to];
-                                this.ctx.beginPath(); this.ctx.moveTo(from.x, from.y); this.ctx.lineTo(to.x, to.y); this.ctx.stroke();
-                            });
-                            this.ctx.fillStyle = "#ff00ff";
-                            this.pulses.forEach((pulse, index) => {
-                                const from = this.nodes[pulse.edge.from]; const to = this.nodes[pulse.edge.to];
-                                const x = from.x + (to.x - from.x) * pulse.progress;
-                                const y = from.y + (to.y - from.y) * pulse.progress;
-                                this.ctx.beginPath(); this.ctx.arc(x, y, 3, 0, Math.PI * 2); this.ctx.fill();
-                                pulse.progress += 0.02;
-                                if (pulse.progress >= 1) { this.pulses.splice(index, 1); }
-                            });
-                            this.cancelId = requestAnimationFrame(this.animate.bind(this));
-                        }
-                    },
-                    // 2. Biometric Scan (3D Version)
-                    biometricScan: {
-                        scene: new THREE.Scene(),
-                        camera: new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000),
-                        renderer: new THREE.WebGLRenderer({ canvas: canvases[1], alpha: true }),
-                        head: null, scanPlane: null, dna: null, cancelId: 0, startTime: 0, isSuccess: false,
-                        start() {
-                            this.renderer.setSize(window.innerWidth, window.innerHeight);
-                            this.renderer.setPixelRatio(window.devicePixelRatio);
-                            canvases[1].classList.add('visible');
-                            const geometry = new THREE.SphereGeometry(1.5, 32, 16);
-                            const position = geometry.attributes.position;
-                            for (let i = 0; i < position.count; i++) {
-                                let v = new THREE.Vector3().fromBufferAttribute(position, i);
-                                v.y *= 1.2; v.z *= 0.8;
-                                position.setXYZ(i, v.x, v.y, v.z);
-                            }
-                            const material = new THREE.MeshPhongMaterial({ color: 0x00cde9, wireframe: true, shininess: 80 });
-                            this.head = new THREE.Mesh(geometry, material);
-                            this.scene.add(this.head);
-                            const planeGeo = new THREE.PlaneGeometry(5, 0.1);
-                            const planeMat = new THREE.MeshBasicMaterial({ color: 0xff00ff, side: THREE.DoubleSide, transparent: true, opacity: 0.7, blending: THREE.AdditiveBlending });
-                            this.scanPlane = new THREE.Mesh(planeGeo, planeMat);
-                            this.scanPlane.position.y = 2.5;
-                            this.scene.add(this.scanPlane);
-                            const curve = new THREE.CatmullRomCurve3(
-                                Array.from({length: 100}, (_, i) => new THREE.Vector3(Math.sin(i * 0.2) * 0.5, i * 0.1 - 5, Math.cos(i * 0.2) * 0.5))
-                            );
-                            const tubeGeo = new THREE.TubeGeometry(curve, 100, 0.05, 8, false);
-                            const tubeMat = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
-                            this.dna = new THREE.Mesh(tubeGeo, tubeMat);
-                            this.dna.position.x = -2.5;
-                            this.scene.add(this.dna);
-                            this.scene.add(new THREE.AmbientLight(0xffffff, 0.2));
-                            const pointLight = new THREE.PointLight(0x00cde9, 1);
-                            pointLight.position.set(5, 5, 5);
-                            this.scene.add(pointLight);
-                            this.camera.position.z = 5;
-                            this.startTime = Date.now();
-                            this.isSuccess = false;
-                            if(sounds.lockon) sounds.lockon.triggerAttackRelease("A4", "8n");
-                            if(sounds.bgmScan) sounds.bgmScan.triggerAttack("C2");
-                            this.animate();
-                            return Promise.resolve();
-                        },
-                        stop() {
-                            cancelAnimationFrame(this.cancelId);
-                            if(sounds.bgmScan) sounds.bgmScan.triggerRelease();
-                            canvases[1].classList.remove('visible');
-                            while(this.scene.children.length > 0){ this.scene.remove(this.scene.children[0]); }
-                        },
-                        setSuccess() {
-                            this.isSuccess = true;
-                            if (this.head) { 
-                                this.head.material.wireframe = false;
-                                this.head.material.color.set(0x00ff00); 
-                                this.head.material.emissive = new THREE.Color(0x00ff00);
-                                this.head.material.emissiveIntensity = 0.5;
-                            }
-                            if(sounds.success) {
-                                sounds.success.triggerAttackRelease("C5", "8n", Tone.now());
-                                sounds.success.triggerAttackRelease("G5", "8n", Tone.now() + 0.1);
-                            }
-                        },
-                        animate() {
-                            this.cancelId = requestAnimationFrame(this.animate.bind(this));
-                            this.head.rotation.y += 0.005;
-                            this.dna.rotation.y += 0.02;
-                            if (!this.isSuccess) {
-                                const scanDuration = 4000;
-                                const progress = ((Date.now() - this.startTime) % scanDuration) / scanDuration;
-                                this.scanPlane.position.y = 2.5 - (progress * 5);
-                            }
-                            if (this.isSuccess) {
-                                const intensity = 0.5 + Math.sin(Date.now() * 0.01) * 0.5;
-                                this.head.material.emissiveIntensity = intensity;
-                            }
-                            this.renderer.render(this.scene, this.camera);
-                        }
-                    },
-                    // 3. AI Creator World - Enhanced
-                    creatorWorld: {
-                        scene: new THREE.Scene(),
-                        camera: new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000),
-                        renderer: new THREE.WebGLRenderer({ canvas: canvases[2], alpha: true }),
-                        particles: null, cancelId: 0, clock: new THREE.Clock(),
-                        start() {
-                            this.renderer.setSize(window.innerWidth, window.innerHeight);
-                            this.renderer.setPixelRatio(window.devicePixelRatio);
-                            this.camera.position.set(0, 0, 100);
-                            const geometry = new THREE.BufferGeometry();
-                            const numParticles = 50000;
-                            const positions = new Float32Array(numParticles * 3);
-                            const colors = new Float32Array(numParticles * 3);
-                            const color = new THREE.Color();
-                            for (let i = 0; i < numParticles; i++) {
-                                const radius = Math.random() * 200 + 50;
-                                const theta = Math.random() * Math.PI * 2;
-                                const phi = Math.acos((Math.random() * 2) - 1);
-                                positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
-                                positions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
-                                positions[i * 3 + 2] = radius * Math.cos(phi);
-                                color.setHSL(Math.random(), 0.8, 0.6);
-                                colors[i * 3] = color.r; colors[i * 3 + 1] = color.g; colors[i * 3 + 2] = color.b;
-                            }
-                            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-                            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-                            const material = new THREE.PointsMaterial({ size: 0.8, vertexColors: true, blending: THREE.AdditiveBlending, transparent: true });
-                            this.particles = new THREE.Points(geometry, material);
-                            this.scene.add(this.particles);
-                            if(sounds.bgmCreator) sounds.bgmCreator.start();
-                            canvases[2].classList.add('visible');
-                            this.animate();
-                            return new Promise(res => setTimeout(res, 500));
-                        },
-                        stop() {
-                            cancelAnimationFrame(this.cancelId);
-                            if(sounds.bgmCreator) sounds.bgmCreator.stop();
-                            canvases[2].classList.remove('visible');
-                        },
-                        animate() {
-                            const delta = this.clock.getDelta();
-                            this.particles.rotation.x += delta * 0.05;
-                            this.particles.rotation.y += delta * 0.1;
-                            this.renderer.render(this.scene, this.camera);
-                            this.cancelId = requestAnimationFrame(this.animate.bind(this));
-                        }
-                    },
-                    // 4. Music Artist World - Enhanced
-                    musicWorld: {
-                        scene: new THREE.Scene(),
-                        camera: new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000),
-                        renderer: new THREE.WebGLRenderer({ canvas: canvases[3], alpha: true }),
-                        analyser: null, plane: null, cancelId: 0, clock: new THREE.Clock(),
-                        start() {
-                            this.renderer.setSize(window.innerWidth, window.innerHeight);
-                            this.renderer.setPixelRatio(window.devicePixelRatio);
-                            this.camera.position.set(0, 10, 0);
-                            this.camera.lookAt(0,0,-50);
-                            this.analyser = new Tone.Analyser('waveform', 1024);
-                            sounds.music.connect(this.analyser);
-                            const geometry = new THREE.PlaneGeometry(100, 100, 50, 50);
-                            const material = new THREE.MeshPhongMaterial({
-                                color: 0x8139f5, specular: 0xff00ff, shininess: 50,
-                                wireframe: true, transparent: true, opacity: 0.8
-                            });
-                            this.plane = new THREE.Mesh(geometry, material);
-                            this.plane.rotation.x = -Math.PI / 2;
-                            this.scene.add(this.plane);
-                            const light = new THREE.PointLight(0xff00ff, 2, 100);
-                            light.position.set(0, 20, 0);
-                            this.scene.add(light);
-                            const notes = ["C4", "E4", "G4", "B4", "D5"];
-                            new Tone.Sequence((time, note) => {
-                                sounds.music.triggerAttackRelease(note, "8n", time);
-                            }, notes, "8n").start(0);
-                            canvases[3].classList.add('visible');
-                            this.animate();
-                            return new Promise(res => setTimeout(res, 500));
-                        },
-                        stop() {
-                            cancelAnimationFrame(this.cancelId);
-                            canvases[3].classList.remove('visible');
-                        },
-                        animate() {
-                            const delta = this.clock.getDelta();
-                            const values = this.analyser.getValue();
-                            const vertices = this.plane.geometry.attributes.position.array;
-                            for (let i = 0; i < vertices.length; i += 3) {
-                                const index = Math.floor(i / 3);
-                                const value = values[index % values.length] * 10;
-                                vertices[i + 2] = value;
-                            }
-                            this.plane.geometry.attributes.position.needsUpdate = true;
-                            this.plane.position.z -= delta * 10;
-                            if(this.plane.position.z < -50) this.plane.position.z = 0;
-                            this.renderer.render(this.scene, this.camera);
-                            this.cancelId = requestAnimationFrame(this.animate.bind(this));
-                        }
-                    },
-                    // 5. Matrix & Portal
-                    matrix: {
-                        ctx: canvases[0].getContext('2d'), // Reuse canvas 1
-                        interval: null,
-                        start() {
-                            canvases[0].classList.add('visible');
-                            this.resize();
-                            const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@#$%^&*()*&^%+-/~{[|`]}アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
-                            const fontSize = 16;
-                            const columns = Math.floor(canvases[0].width / fontSize);
-                            const drops = Array(columns).fill(1);
-                            if(sounds.matrix) new Tone.Loop(t => sounds.matrix.triggerAttack(Tone.Frequency(Math.random() * 24 + 48, "midi"), t), "16n").start(0);
-                            if(sounds.bgmMatrix) sounds.bgmMatrix.start(0);
-                            const draw = () => {
-                                this.ctx.fillStyle = 'rgba(0, 0, 0, 0.04)';
-                                this.ctx.fillRect(0, 0, canvases[0].width, canvases[0].height);
-                                this.ctx.fillStyle = '#0F0'; this.ctx.font = fontSize + 'px monospace';
-                                for (let i = 0; i < drops.length; i++) {
-                                    const text = chars.charAt(Math.floor(Math.random() * chars.length));
-                                    this.ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                                    if (drops[i] * fontSize > canvases[0].height && Math.random() > 0.975) drops[i] = 0;
-                                    drops[i]++;
-                                }
-                            };
-                            this.interval = setInterval(draw, 33);
-                            return Promise.resolve();
-                        },
-                        stop() {
-                            clearInterval(this.interval);
-                            if(sounds.bgmMatrix) sounds.bgmMatrix.stop(0);
-                        },
-                        resize() {
-                            canvases[0].width = window.innerWidth;
-                            canvases[0].height = window.innerHeight;
-                        }
-                    }
-                };
-
-                // --- Main Sequence ---
-                activationButton.addEventListener('click', async () => {
-                    activationButton.disabled = true;
-                    uiOverlay.classList.remove('visible');
-                    await new Promise(res => setTimeout(res, 500));
-                    uiOverlay.style.pointerEvents = 'none';
-                    activationButton.style.display = 'none';
-                    uiOverlay.classList.add('visible');
-
-                    try {
-                        await Tone.start();
-                        setupSounds();
-                        Tone.Transport.start();
-                        
-                        const sequence = [
-                            { text: "システム認証を開始します...", duration: 2000, anim: animations.circuit, action: null },
-                            { text: "AIを起動します", duration: 2000, anim: null, action: null },
-                            { text: "生体認証シーケンスを起動...", duration: 4000, anim: animations.biometricScan, action: null },
-                            { text: "認証成功。本人確認が完了しました。", duration: 2000, anim: null, action: () => activeAnimation.setSuccess() },
-                            { text: "創造領域へのアクセスを許可します", duration: 4000, anim: animations.creatorWorld, action: null },
-                            { text: "音世界へのアクセスを許可します", duration: 4000, anim: animations.musicWorld, action: null },
-                            { text: "メインシステムに接続します", duration: 2000, anim: null, action: null },
-                            { text: "", duration: 4000, anim: animations.matrix, action: null },
-                        ];
-
-                        for (const step of sequence) {
-                            if (step.anim) await switchAnimation(step.anim);
-                            if (step.action) step.action();
-                            
-                            if (sounds.access && Tone.context.state === 'running' && step.text) {
-                                sounds.access.triggerAttackRelease("C5", "8n");
-                            }
-                            await typeWriter(step.text, infoText);
-                            await new Promise(res => setTimeout(res, step.duration));
-                            
-                            if (sequence.indexOf(step) < sequence.length - 1) {
-                                infoText.classList.add('fade-out');
-                                await new Promise(res => setTimeout(res, 500));
-                                infoText.innerHTML = '';
-                                infoText.classList.remove('fade-out');
-                            }
-                        }
-
-                        // --- Final Transition (Site Entrance) ---
-                        if (activeAnimation && activeAnimation.stop) {
-                            activeAnimation.stop();
-                        }
-                        
-                        await typeWriter("接続完了", infoText);
-                        await new Promise(res => setTimeout(res, 1000));
-                        if(sounds.portal) sounds.portal.triggerAttackRelease("2n");
-
-                        uiOverlay.style.transition = 'opacity 0.5s';
-                        uiOverlay.style.opacity = 0;
-                        openingContainer.style.transition = 'transform 1.5s cubic-bezier(0.6, 0.04, 0.98, 0.335), opacity 1.5s';
-                        openingContainer.style.transform = 'scale(10)';
-                        openingContainer.style.opacity = 0;
-
-                        setTimeout(() => {
-                            if(Tone.Transport.state === 'started') {
-                                Tone.Transport.stop();
-                                Tone.Transport.cancel();
-                            }
-                            openingContainer.style.display = 'none';
-                            sessionStorage.setItem('openingPlayed', 'true');
-                            showMainContent();
-                        }, 1500);
-
-                    } catch (error) {
-                        console.error("Opening sequence error:", error);
-                        if (activeAnimation && activeAnimation.stop) activeAnimation.stop();
-                        if(Tone.Transport.state === 'started') {
-                            Tone.Transport.stop();
-                            Tone.Transport.cancel();
-                        }
-                        openingContainer.style.display = 'none';
-                        showMainContent();
-                    }
-                });
-                
-                // Show the initial button
-                uiOverlay.classList.add('visible');
-                window.addEventListener('resize', () => { if (openingContainer.style.display !== 'none') location.reload(); });
-            }
-
-            // ======================================================
             // --- AIギャラリーロジック ---
             // ======================================================
             const ryuyaGalleryGrid = document.querySelector('.ryuya-gallery-grid');
@@ -2079,8 +1158,12 @@
             // --- note RSSフィード読み込み ---
             // ======================================================
             function loadNoteFeed() {
+                console.log('Attempting to load Note feed...');
                 const feedContainer = document.querySelector('#page-ryuya-2 .note-feed-container');
-                if (!feedContainer) return;
+                if (!feedContainer) {
+                    console.warn('Note feed container not found.');
+                    return;
+                }
 
                 feedContainer.innerHTML = '<p style="text-align: center;">最新の記事を読み込んでいます...</p>';
 
@@ -2089,12 +1172,14 @@
 
                 fetch(apiUrl)
                     .then(response => {
+                        console.log('Note feed fetch response received:', response);
                         if (!response.ok) {
                             throw new Error(`HTTP error! status: ${response.status}`);
                         }
                         return response.json();
                     })
                     .then(data => {
+                        console.log('Note feed data:', data);
                         if (data.status === 'ok') {
                             feedContainer.innerHTML = ''; // ローディングメッセージをクリア
                             data.items.forEach(item => {
@@ -2150,6 +1235,7 @@
             // --- 一般的なUI & 初期化 ---
             // ======================================================
             AOS.init({ once: true, offset: 100, duration: 1000 });
+            showMainContent();
             
             document.querySelectorAll('.announcement-toggle').forEach(toggle => {
                 toggle.addEventListener('click', () => {
