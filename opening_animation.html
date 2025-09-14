@@ -1,0 +1,3026 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacker Battle 4.4: Final Mix</title>
+    
+    <!-- 外部ライブラリ & フォント -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- 基本ライブラリ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js"></script>
+    
+    <!-- Three.js 拡張機能（Three.jsの後に読み込む必要がある） -->
+    <script src="https://cdn.jsdelivr.net/npm/three/examples/js/shaders/CopyShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three/examples/js/shaders/DigitalGlitch.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three/examples/js/postprocessing/GlitchPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three/examples/js/objects/Lensflare.js"></script>
+    
+    <!-- オーディオライブラリ（最後に読み込む） -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
+
+
+    <!-- ショートカットアイコン -->
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    
+    <style>
+        /* ==============================================
+        CSS STYLES
+        ==============================================
+        */
+        
+        /* キャンバスレイヤー */
+        .canvas-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .canvas-layer.visible {
+            opacity: 1;
+        }
+
+        /* 基本スタイル */
+        :root {
+            --falcon-red: #ff3333;
+            --system-green: #00ff41;
+            --system-blue: #00cde9;
+            --warning-color: #f4b400;
+            --threat-red: #ff3333;
+            --quantum-purple: #9d00ff;
+            --singularity-black: #ffffff;
+            --background-color: #02040a;
+            --scanline-color: rgba(0, 255, 100, 0.07);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: var(--background-color);
+            color: white;
+        }
+
+        /* --- CRTエフェクト --- */
+        .crt-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10002;
+        }
+        .crt-overlay::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                var(--scanline-color),
+                var(--scanline-color) 1px,
+                transparent 1px,
+                transparent 3px
+            );
+            animation: scanlines 20s linear infinite;
+        }
+        .crt-overlay::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0) 50%, rgba(0,0,0,0.5) 100%);
+            box-shadow: inset 0 0 150px rgba(0,0,0,0.8);
+        }
+
+        /* ----------- ナレーションとUIのスタイル ----------- */
+        .narrative-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 40px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            pointer-events: none;
+            z-index: 10001;
+            font-family: 'Orbitron', monospace;
+        }
+
+        #chapter-title {
+            font-size: 2.5em;
+            text-transform: uppercase;
+            color: var(--system-blue);
+            text-shadow: 0 0 10px var(--system-blue);
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        #chapter-title.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #narration-text {
+            font-size: 1.2em;
+            line-height: 1.6;
+            color: var(--system-green);
+            text-shadow: 0 0 5px var(--system-green);
+            max-width: 800px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        #narration-text.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #system-status {
+            display: flex;
+            justify-content: flex-end;
+            gap: 30px;
+            font-size: 1em;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-item .label {
+            color: var(--system-blue);
+            opacity: 0.8;
+        }
+
+        #threat-level {
+            color: var(--warning-color);
+            text-shadow: 0 0 5px var(--warning-color);
+        }
+
+        #system-status-value {
+            color: var(--system-green);
+            text-shadow: 0 0 5px var(--system-green);
+        }
+
+        #code-density {
+            color: var(--quantum-purple);
+            text-shadow: 0 0 5px var(--quantum-purple);
+        }
+
+        /* 警告オーバーレイ */
+        .warning-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(244, 67, 54, 0.1);
+            display: flex;
+            justify-content: center;
+        }
+
+        /* キャンバスコンテナ */
+        #opening-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 10003;
+        }
+
+        .warning-overlay.visible {
+            opacity: 1;
+        }
+
+        .warning-content {
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid var(--warning-color);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 600px;
+            box-shadow: 0 0 20px var(--warning-color);
+        }
+
+        .warning-icon {
+            font-size: 3em;
+            color: var(--warning-color);
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        #warning-message {
+            color: var(--warning-color);
+            font-size: 1.2em;
+            line-height: 1.6;
+            text-shadow: 0 0 5px var(--warning-color);
+        }
+
+        /* ----------- ログビューアーのスタイル ----------- */
+        .log-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30vh;
+            background: rgba(0, 0, 0, 0.9);
+            border-top: 2px solid var(--system-green);
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.4;
+            overflow: hidden;
+            z-index: 10001;
+        }
+
+        #log-content {
+            padding: 20px;
+            height: 100%;
+            overflow-y: scroll;
+            mask-image: linear-gradient(to bottom, transparent, black 20px);
+            -webkit-mask-image: linear-gradient(to bottom, transparent, black 20px);
+        }
+
+        .log-entry {
+            margin: 4px 0;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.3s ease forwards;
+        }
+
+        .system-text { color: var(--system-green); }
+        .threat-text { color: var(--threat-red); }
+        .falcon-command-text { color: var(--system-blue); }
+        .warning-text { color: var(--warning-color); }
+        .quantum-text { color: var(--quantum-purple); }
+        .singularity-text { color: var(--singularity-black); }
+
+        .flicker {
+            animation: textFlicker 0.3s infinite;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes textFlicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* カスタムスクロールバー */
+        ::-webkit-scrollbar {
+            width: 8px;
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--system-green);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 255, 65, 0.1);
+        }
+        
+        /* ----------- ハッカーバトルアニメーションスタイル ----------- */
+        #battle-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10000;
+            background: var(--background-color);
+            cursor: none;
+            perspective: 1000px;
+            overflow: hidden;
+        }
+
+        .battle-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100% !important;
+            height: 100% !important;
+            opacity: 0;
+            transition: all 2s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .battle-canvas.active {
+            opacity: 1;
+            transform: translateZ(0);
+        }
+
+        /* コードヴォルテックスのスタイル */
+        .code-vortex {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+        }
+
+        .code-line {
+            position: absolute;
+            color: var(--system-green);
+            font-family: 'Courier New', monospace;
+            font-size: 10px;
+            white-space: nowrap;
+            text-shadow: 0 0 5px var(--system-green);
+            opacity: 0;
+            transform: translateZ(0);
+        }
+
+        /* 量子効果のスタイル */
+        .quantum-effect {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, var(--quantum-purple) 0%, transparent 70%);
+            mix-blend-mode: screen;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .quantum-effect.active {
+            opacity: 0.5;
+            transform: scale(1);
+        }
+
+        /* AIゴースト衝突エフェクト */
+        .ai-collision {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .ghost-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--system-green);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--system-green);
+        }
+
+        /* キャンバスレイヤー */
+        .canvas-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .canvas-layer.visible {
+            opacity: 1;
+        }
+
+        .enemy-particle {
+            background: var(--threat-red);
+            box-shadow: 0 0 10px var(--threat-red);
+        }
+
+        /* シンギュラリティエフェクト */
+        .singularity {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 10vmin;
+            height: 10vmin;
+            background: black;
+            border-radius: 50%;
+            box-shadow: 
+                0 0 50px rgba(0,0,0,0.8),
+                0 0 100px rgba(0,0,0,0.6),
+                0 0 150px rgba(0,0,0,0.4);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.2); }
+        }
+        .canvas-layer.visible {
+            opacity: 1;
+        }
+        .ui-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            pointer-events: none;
+            z-index: 50;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .ui-overlay.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        #activation-button {
+            padding: 18px 36px;
+            font-size: 1.5em;
+            font-family: 'Orbitron', sans-serif;
+            background: transparent;
+            color: var(--system-blue);
+            border: 2px solid var(--system-blue);
+            border-radius: 8px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            position: relative;
+            overflow: hidden;
+            transition: color 0.3s, background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+            text-shadow: 0 0 10px var(--system-blue);
+        }
+        #activation-button:hover {
+            background-color: var(--system-blue);
+            color: #000;
+            box-shadow: 0 0 25px var(--system-blue), 0 0 50px var(--system-blue);
+            transform: scale(1.05);
+        }
+
+        /* --- 導入メッセージ画面 --- */
+        #intro-message-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(2, 4, 10, 0.5);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease-in-out;
+        }
+        #intro-message-screen.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        #intro-message-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.2rem, 3.5vw, 2.2rem);
+            color: var(--system-blue);
+            text-shadow: 0 0 10px var(--system-blue), 0 0 20px var(--system-blue);
+            text-align: center;
+            max-width: 90%;
+            line-height: 1.5;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        #intro-message-text.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+
+        #terminal-screen {
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: clamp(0.7rem, 2vw, 1rem);
+            color: #fff;
+            text-align: left;
+            letter-spacing: 1px;
+            line-height: 1.6;
+            width: 95%;
+            height: 90vh;
+            border: 1px solid rgba(0, 255, 65, 0.2);
+            background: rgba(0,0,0,0.7);
+            padding: 15px;
+            box-sizing: border-box;
+            border-radius: 8px;
+            display: none;
+            opacity: 0;
+            transition: opacity 1.5s;
+            backdrop-filter: blur(5px);
+        }
+        #terminal-screen.visible { 
+            display: block;
+            opacity: 1; 
+        }
+
+        #terminal-output {
+            height: calc(100% - 30px);
+            overflow-y: auto;
+            word-break: break-all;
+        }
+        /* スクロールバーのスタイル */
+        #terminal-output::-webkit-scrollbar {
+            width: 8px;
+        }
+        #terminal-output::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        #terminal-output::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 255, 65, 0.3);
+            border-radius: 4px;
+        }
+
+        .log-entry {
+             white-space: pre-wrap;
+        }
+        
+        .prompt-line {
+            display: flex;
+        }
+        .prompt {
+            color: var(--system-green);
+        }
+        .cursor {
+            width: 10px;
+            height: 1.2em;
+            background: var(--system-green);
+            display: inline-block;
+            animation: blink 1s infinite;
+            margin-left: 5px;
+        }
+
+        .threat-text { color: var(--threat-red); text-shadow: 0 0 8px var(--threat-red); animation: text-flicker 3s linear infinite; }
+        .falcon-command-text { color: var(--system-green); text-shadow: 0 0 8px var(--system-green); }
+    .falcon { color: var(--system-green); text-shadow: 0 0 8px var(--system-green); }
+    .spider { color: var(--threat-red); text-shadow: 0 0 8px var(--threat-red); }
+        .system-text { color: var(--system-blue); }
+        .warning-text { color: var(--warning-color); }
+        .quantum-text { color: var(--quantum-purple); text-shadow: 0 0 10px var(--quantum-purple); }
+        .singularity-text { color: var(--singularity-black); background-color: var(--threat-red); padding: 0 2px; }
+        .flicker { animation: text-flicker 3s linear infinite; }
+
+        /* --- Falcon 起動画面 --- */
+        #falcon-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://i.ibb.co/TxmFsfPv/background.png');
+            background-size: contain;
+            background-position: center; /* 中央固定 */
+            background-repeat: no-repeat;
+            background-color: #000;
+            z-index: 10001;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1.5s ease-out;
+        }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeInGrow { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+        
+        @keyframes intense-flash {
+            0%, 100% { background: var(--background-color); }
+            50% { background: white; }
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        @keyframes scanlines { 0% { background-position: 0 0; } 100% { background-position: 0 100vh; } }
+        @keyframes text-flicker {
+          0% { opacity:0.1; text-shadow: 0 0 5px var(--threat-red); }
+          2% { opacity:1; text-shadow: 0 0 15px var(--threat-red); }
+          8% { opacity:0.1; }
+          9% { opacity:1; }
+          12% { opacity:0.1; }
+          20% { opacity:1; }
+          25% { opacity:0.3; }
+          30% { opacity:1; }
+          70% { opacity:1; }
+          72% { opacity:0.2; }
+          77% { opacity:1; text-shadow: 0 0 5px var(--threat-red); }
+          100% { opacity:1; }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        .shake-effect {
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+        }
+        /* impact flash overlay used for dramatic hits */
+        .impact-flash {
+            position: fixed;
+            left: 0; top: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 10020;
+            background: rgba(255,255,255,0); transition: background 220ms ease-out, opacity 220ms ease-out;
+        }
+        .impact-flash.visible { background: rgba(255,255,255,0.85); }
+    </style>
+</head>
+<body>
+    <div class="crt-overlay"></div>
+    <!-- オープニングアニメーション -->
+    <div id="opening-container">
+        <canvas id="canvas-1" class="canvas-layer"></canvas>
+        <canvas id="canvas-2" class="canvas-layer"></canvas>
+        <canvas id="canvas-3" class="canvas-layer"></canvas>
+        <canvas id="canvas-4" class="canvas-layer"></canvas>
+        <div id="ui-overlay" class="ui-overlay">
+            <button id="activation-button">CONNECTION START</button>
+            <div id="terminal-screen">
+                <div id="terminal-output"></div>
+                <div class="prompt-line">
+                    <span class="prompt"></span>
+                    <span class="cursor"></span>
+                </div>
+            </div>
+        </div>
+        <div id="intro-message-screen">
+            <p id="intro-message-text"></p>
+        </div>
+    </div>
+    
+    <!-- Falcon 起動画面 -->
+    <div id="falcon-screen">
+        <!-- Text and progress bar elements removed as per user request -->
+    </div>
+
+    <!-- メインアプリケーションスクリプト -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // ======================================================
+            // --- オープニングアニメーション & サウンドロジック ---
+            // ======================================================
+            const openingContainer = document.getElementById('opening-container');
+            if (sessionStorage.getItem('openingPlayed')) {
+                openingContainer.style.display = 'none';
+                document.body.style.cursor = 'auto';
+                document.querySelector('.crt-overlay').style.display = 'none';
+            } else {
+                const canvases = [
+                    document.getElementById('canvas-1'),
+                    document.getElementById('canvas-2'),
+                ];
+                const uiOverlay = document.getElementById('ui-overlay');
+                const activationButton = document.getElementById('activation-button');
+                const terminalScreen = document.getElementById('terminal-screen');
+                const terminalOutput = document.getElementById('terminal-output');
+                const promptElement = document.querySelector('.prompt-line .prompt');
+
+                const MAX_LOG_LINES = 2000; 
+                // If the page is opened via file://, many AudioWorklet modules cannot be loaded.
+                // Avoid constructing worklet-dependent instruments in that case.
+                const AUDIO_WORKLET_SAFE = (location && location.protocol && location.protocol !== 'file:');
+                let sounds = {};
+                let soundLoops = {};
+                let lastKeyboardSoundTime = 0;
+                let activeAnimationLoops = [];
+
+                const setupSounds = () => {
+                    try {
+                        const limiter = new Tone.Limiter(-6).toDestination();
+                        const reverb = new Tone.Reverb(3.5).connect(limiter);
+                        reverb.wet.value = 0.6;
+                        const delay = new Tone.FeedbackDelay("8n", 0.4).connect(reverb);
+                        const useWorklets = AUDIO_WORKLET_SAFE && Tone && Tone.context && Tone.context.audioWorklet;
+
+                        // SFX
+                        sounds.alarm = new Tone.Synth({ oscillator: { type: "square" }, envelope: { attack: 0.01, decay: 0.1, sustain: 0, release: 0.1 } }).connect(delay);
+                        sounds.alarm.volume.value = -18;
+                        sounds.keyboard = new Tone.MembraneSynth({ pitchDecay: 0.008, octaves: 10, envelope: { attack: 0.001, decay: 0.1, sustain: 0 } }).connect(limiter);
+                        sounds.keyboard.volume.value = -22;
+                        sounds.falcon_boot = new Tone.Synth({ oscillator: { type: "fatsawtooth", count: 6, spread: 70 }, envelope: { attack: 1.5, decay: 2.2, sustain: 0.9, release: 3.0 } }).connect(reverb);
+                        sounds.falcon_boot.volume.value = -10;
+                        sounds.glitch = new Tone.NoiseSynth({ noise: { type: 'white', playbackRate: 5 }, envelope: { attack: 0.01, decay: 0.05, sustain: 0 } }).connect(limiter);
+                        sounds.glitch.volume.value = -25;
+                        if (useWorklets) {
+                            try {
+                                sounds.system_damage = new Tone.MetalSynth({ frequency: 20, envelope: { attack: 0.001, decay: 0.8, release: 0.1 }, harmonicity: 8.1, modulationIndex: 50, resonance: 1500, octaves: 2.5 }).connect(reverb);
+                                sounds.system_damage.volume.value = -15;
+                            } catch (e) {
+                                console.warn('MetalSynth failed, falling back to NoiseSynth:', e && e.message);
+                                sounds.system_damage = new Tone.NoiseSynth().connect(reverb);
+                                sounds.system_damage.volume.value = -15;
+                            }
+                        } else {
+                            sounds.system_damage = new Tone.NoiseSynth().connect(reverb);
+                            sounds.system_damage.volume.value = -15;
+                        }
+                        if (useWorklets) {
+                            try {
+                                sounds.counter_success = new Tone.PluckSynth({ attackNoise: 1, dampening: 2000, resonance: 0.9 }).connect(reverb);
+                                sounds.counter_success.volume.value = -12;
+                            } catch (e) {
+                                console.warn('PluckSynth failed, falling back to Synth:', e && e.message);
+                                sounds.counter_success = new Tone.Synth().connect(reverb);
+                                sounds.counter_success.volume.value = -12;
+                            }
+                        } else {
+                            sounds.counter_success = new Tone.Synth().connect(reverb);
+                            sounds.counter_success.volume.value = -12;
+                        }
+                        sounds.firewall_up = new Tone.MonoSynth({ oscillator: { type: "sine" }, filter: { type: "lowpass", Q: 2 }, filterEnvelope: { attack: 0.5, baseFrequency: 200, octaves: 3 } }).connect(reverb);
+                        sounds.firewall_up.volume.value = -10;
+                        sounds.honeynet_trap = new Tone.Synth({ oscillator: { type: "fmsquare", modulationType: "sawtooth", harmonicity: 0.5 }, envelope: { attack: 2, decay: 0.1, sustain: 1, release: 2 } }).connect(reverb);
+                        sounds.honeynet_trap.volume.value = -9;
+                        if (useWorklets) {
+                            try {
+                                sounds.neural_network_hum = new Tone.FatOscillator("A1", "sawtooth", 40).connect(limiter);
+                                sounds.neural_network_hum.volume.value = -30;
+                            } catch (e) {
+                                console.warn('FatOscillator failed, falling back to Oscillator:', e && e.message);
+                                const _nn_osc = new Tone.Oscillator("A1", "sawtooth").connect(limiter);
+                                sounds.neural_network_hum = { start: () => _nn_osc.start(), stop: () => _nn_osc.stop(), triggerAttackRelease: (n,d,t) => { _nn_osc.start(); setTimeout(()=>_nn_osc.stop(), (d?parseFloat(d):100)); }, volume: { value: -30 } };
+                            }
+                        } else {
+                            const _nn_osc = new Tone.Oscillator("A1", "sawtooth").connect(limiter);
+                            sounds.neural_network_hum = { start: () => _nn_osc.start(), stop: () => _nn_osc.stop(), triggerAttackRelease: (n,d,t) => { _nn_osc.start(); setTimeout(()=>_nn_osc.stop(), (d?parseFloat(d):100)); }, volume: { value: -30 } };
+                        }
+                        sounds.neural_pulse = new Tone.Synth({oscillator:{type: "triangle"}, envelope: {attack:0.01, decay:0.1, sustain:0.05, release:0.1}}).connect(delay);
+                        sounds.neural_pulse.volume.value = -20;
+                        if (useWorklets) {
+                            try {
+                                sounds.music_pulse = new Tone.FMSynth({ harmonicity: 1.5, modulationIndex: 12, envelope: { attack: 0.01, decay: 0.6, sustain: 0.1, release: 1.2 }, modulationEnvelope: { attack: 0.01, decay: 0.25, sustain: 0.1, release: 1.2 } }).connect(reverb);
+                                sounds.music_pulse.volume.value = -12;
+                            } catch (e) {
+                                console.warn('FMSynth failed, falling back to basic Synth:', e && e.message);
+                                sounds.music_pulse = new Tone.Synth().connect(reverb);
+                                sounds.music_pulse.volume.value = -12;
+                            }
+                        } else {
+                            sounds.music_pulse = new Tone.Synth().connect(reverb);
+                            sounds.music_pulse.volume.value = -12;
+                        }
+                        sounds.global_data_stream = new Tone.NoiseSynth({ noise: { type: "pink", playbackRate: 0.2 }, envelope: { attack: 1.2, decay: 1.8, sustain: 1 } }).connect(limiter);
+                        sounds.global_data_stream.volume.value = -38;
+                        sounds.data_packet = new Tone.Synth({oscillator:{type: "square"}, envelope: {attack:0.001, decay:0.05, sustain:0, release:0.1}}).connect(delay);
+                        sounds.data_packet.volume.value = -28;
+                        if (useWorklets) {
+                            try {
+                                sounds.boot = new Tone.MetalSynth({ frequency: 40, envelope: { attack: 0.001, decay: 1.5, release: 0.2 }, harmonicity: 6.1, modulationIndex: 40, resonance: 3000, octaves: 1.5 }).connect(reverb);
+                                sounds.boot.volume.value = -18;
+                            } catch (e) {
+                                console.warn('Boot MetalSynth failed, falling back to Synth:', e && e.message);
+                                sounds.boot = new Tone.Synth().connect(reverb);
+                                sounds.boot.volume.value = -18;
+                            }
+                        } else {
+                            sounds.boot = new Tone.Synth().connect(reverb);
+                            sounds.boot.volume.value = -18;
+                        }
+                        if (useWorklets) {
+                            try {
+                                sounds.matrix = new Tone.PluckSynth({ volume: -22, attackNoise: 0.9, dampening: 5000, resonance: 0.8 }).toDestination();
+                            } catch (e) {
+                                console.warn('PluckSynth failed, falling back to simple Synth:', e && e.message);
+                                sounds.matrix = new Tone.Synth().toDestination();
+                            }
+                        } else {
+                            sounds.matrix = new Tone.Synth().toDestination();
+                        }
+                        sounds.bgmMatrix = new Tone.Loop(time => { if(sounds.boot) sounds.boot.triggerAttackRelease("C1", "1n", time); }, "2m");
+                        sounds.final_portal = new Tone.NoiseSynth({ noise: { type: 'brown' }, envelope: { attack: 2.0, decay: 2.5, sustain: 0.2, release: 3.0 } }).connect(reverb);
+                        sounds.final_portal.volume.value = -8;
+                        try {
+                            sounds.quantum_flux = new Tone.AMSynth({ harmonicity: 1.5, oscillator: {type: 'sine'}, envelope: {attack: 0.01, decay: 0.5, sustain: 0.1, release: 1}, modulation: {type: 'square'}, modulationEnvelope: {attack: 0.5, decay:0.01}}).connect(reverb);
+                            sounds.quantum_flux.volume.value = -15;
+                        } catch (e) {
+                            console.warn('AMSynth unavailable, falling back to basic Synth:', e && e.message);
+                            sounds.quantum_flux = new Tone.Synth().connect(reverb);
+                            sounds.quantum_flux.volume.value = -15;
+                        }
+                        sounds.ai_laser = new Tone.Synth({ oscillator: { type: "sawtooth" }, filter: { Q: 2, type: 'lowpass', rolloff: -24 }, envelope: { attack: 0.01, decay: 0.05, sustain: 0.01, release: 0.1 }, filterEnvelope: { attack: 0.01, decay: 0.05, sustain: 0.1, baseFrequency: 200, octaves: 4, exponent: 2 } }).connect(delay);
+                        sounds.ai_laser.volume.value = -20;
+                        sounds.power_surge = new Tone.NoiseSynth({ noise: { type: 'brown', playbackRate: 0.5 }, envelope: { attack: 0.2, decay: 1.5, sustain: 0.1, release: 1.0 } }).connect(reverb);
+                        sounds.power_surge.volume.value = -12;
+                        try {
+                            sounds.singularity_rumble = new Tone.FatOscillator("C1", "sawtooth", 80).connect(limiter);
+                            sounds.singularity_rumble.volume.value = -18;
+                        } catch (e) {
+                            console.warn('FatOscillator unavailable for singularity_rumble, falling back to Oscillator:', e && e.message);
+                            const _sr_osc = new Tone.Oscillator("C1", "sawtooth").connect(limiter);
+                            sounds.singularity_rumble = { start: () => _sr_osc.start(), stop: () => _sr_osc.stop(), volume: { value: -18 } };
+                        }
+                        sounds.battleAmbience = new Tone.NoiseSynth({ noise: { type: 'pink' }, envelope: { attack: 2, decay: 1, sustain: 1 } }).connect(limiter);
+                        sounds.battleAmbience.volume.value = -45;
+
+                        // --- NEW SOUNDS FOR AMBIENCE ---
+                        if (useWorklets) {
+                            try {
+                                sounds.creator_build = new Tone.PluckSynth({ attackNoise: 0.5, dampening: 8000, resonance: 0.98 }).connect(delay);
+                                sounds.creator_build.volume.value = -25;
+                            } catch (e) {
+                                console.warn('creator_build PluckSynth failed, falling back to Synth:', e && e.message);
+                                sounds.creator_build = new Tone.Synth().connect(delay);
+                                sounds.creator_build.volume.value = -25;
+                            }
+                        } else {
+                            sounds.creator_build = new Tone.Synth().connect(delay);
+                            sounds.creator_build.volume.value = -25;
+                        }
+                        if (useWorklets) {
+                            try {
+                                sounds.singer_pad = new Tone.PolySynth(Tone.Synth, { oscillator: { type: "fatsawtooth", count: 3, spread: 30 }, envelope: { attack: 2, decay: 1, sustain: 0.8, release: 2 } }).connect(reverb);
+                                sounds.singer_pad.volume.value = -18;
+                            } catch (e) {
+                                console.warn('PolySynth failed, falling back to simple Synth for singer_pad:', e && e.message);
+                                sounds.singer_pad = new Tone.Synth().connect(reverb);
+                                sounds.singer_pad.volume.value = -18;
+                            }
+                        } else {
+                            sounds.singer_pad = new Tone.Synth().connect(reverb);
+                            sounds.singer_pad.volume.value = -18;
+                        }
+                        if (useWorklets) {
+                            try {
+                                sounds.ambassador_drone = new Tone.FatOscillator("C2", "sine", 20).connect(limiter);
+                                sounds.ambassador_drone.volume.value = -28;
+                            } catch (e) {
+                                console.warn('ambassador_drone FatOscillator failed, falling back to Oscillator:', e && e.message);
+                                const _ad_osc = new Tone.Oscillator("C2", "sine").connect(limiter);
+                                sounds.ambassador_drone = { start: () => _ad_osc.start(), stop: () => _ad_osc.stop(), volume: { value: -28 } };
+                            }
+                        } else {
+                            const _ad_osc = new Tone.Oscillator("C2", "sine").connect(limiter);
+                            sounds.ambassador_drone = { start: () => _ad_osc.start(), stop: () => _ad_osc.stop(), volume: { value: -28 } };
+                        }
+                        if (useWorklets) {
+                            try {
+                                sounds.quantum_drone = new Tone.AMSynth({ harmonicity: 1.5, oscillator: { type: 'sine' }, envelope: { attack: 3, decay: 0.1, sustain: 1, release: 3 }, modulation: { type: 'sawtooth' }, modulationEnvelope: { attack: 3, decay: 0, sustain: 1, release: 3 } }).connect(reverb);
+                                sounds.quantum_drone.volume.value = -22;
+                            } catch (e) {
+                                console.warn('quantum_drone AMSynth failed, falling back to Synth:', e && e.message);
+                                sounds.quantum_drone = new Tone.Synth().connect(reverb);
+                                sounds.quantum_drone.volume.value = -22;
+                            }
+                        } else {
+                            sounds.quantum_drone = new Tone.Synth().connect(reverb);
+                            sounds.quantum_drone.volume.value = -22;
+                        }
+                        try {
+                            sounds.ai_impact = new Tone.MetalSynth({ frequency: 150, envelope: { attack: 0.001, decay: 0.1, release: 0.05 }, harmonicity: 5.1, modulationIndex: 32, resonance: 4000, octaves: 1.5 }).connect(limiter);
+                            sounds.ai_impact.volume.value = -28;
+                        } catch (e) {
+                            console.warn('ai_impact MetalSynth unavailable, falling back to NoiseSynth:', e && e.message);
+                            sounds.ai_impact = new Tone.NoiseSynth().connect(limiter);
+                            sounds.ai_impact.volume.value = -28;
+                        }
+                        sounds.singularity_implosion = new Tone.NoiseSynth({ noise: { type: 'brown' }, envelope: { attack: 0.1, decay: 0.5, sustain: 0 } }).connect(reverb);
+                        sounds.singularity_implosion.volume.value = -15;
+                        // --- END NEW SOUNDS ---
+
+                        // BGM
+                        const battleBgm = {
+                            kick: new Tone.MembraneSynth({ pitchDecay: 0.05, octaves: 10, oscillator: { type: "sine" }, envelope: { attack: 0.001, decay: 0.4, sustain: 0.01, release: 1.4, attackCurve: "exponential" } }).connect(limiter),
+                            hat: new Tone.NoiseSynth({ noise: { type: "white" }, envelope: { attack: 0.001, decay: 0.05, sustain: 0 } }).connect(limiter),
+                            arp: new Tone.FMSynth({ harmonicity: 3, modulationIndex: 10, detune: 0, oscillator: { type: "sine" }, envelope: { attack: 0.01, decay: 0.01, sustain: 1, release: 0.5 }, modulationEnvelope: { attack: 0.5, decay: 0, sustain: 1, release: 0.5 } }).connect(delay)
+                        };
+                        battleBgm.kick.volume.value = -6;
+                        battleBgm.hat.volume.value = -25;
+                        battleBgm.arp.volume.value = -20;
+                        
+                        soundLoops.battleBgm = new Tone.Sequence((time, note) => {
+                            battleBgm.arp.triggerAttackRelease(note, "16n", time);
+                        }, ["C3", "Eb3", "G3", "C4", "Eb4", "G3", "Eb4", "C4"], "16n");
+                        
+                        soundLoops.battleBgmKick = new Tone.Loop(time => {
+                            battleBgm.kick.triggerAttackRelease("C2", "8n", time);
+                        }, "4n");
+                        
+                        soundLoops.battleBgmHat = new Tone.Loop(time => {
+                            battleBgm.hat.triggerAttackRelease("16n", time);
+                        }, "8n");
+                        
+                        soundLoops.battleAmbience = new Tone.Loop(time => {
+                            sounds.battleAmbience.triggerAttack(time);
+                        }, "4m");
+
+                        // Sound Loops
+                        soundLoops.dataStream = new Tone.Loop(time => {
+                           if(sounds.data_packet) sounds.data_packet.triggerAttackRelease(Tone.Frequency(Math.random() * 500 + 800).toNote(), '32n', time);
+                        }, '16n');
+
+                        // --- MODIFIED & NEW LOOPS ---
+                        soundLoops.aiWar = new Tone.Loop(time => {
+                           if(sounds.ai_laser) sounds.ai_laser.triggerAttackRelease(Tone.Frequency(Math.random() * 800 + 500).toNote(), '16n', time);
+                           if(sounds.ai_impact && Math.random() > 0.7) sounds.ai_impact.triggerAttackRelease('16n', time + 0.05);
+                        }, '16n');
+
+                        soundLoops.creator = new Tone.Loop(time => {
+                            if (sounds.creator_build) sounds.creator_build.triggerAttackRelease(Tone.Frequency(Math.random() * 200 + 400).toNote(), '8n', time);
+                        }, '8n');
+                        
+                        soundLoops.singer = new Tone.Pattern(time => {
+                            if (sounds.singer_pad) sounds.singer_pad.triggerAttackRelease(["C4", "G4", "Eb5"], "2m", time);
+                        }, ["major"], "up");
+                        soundLoops.singer.interval = "1m";
+
+                        soundLoops.ambassador = new Tone.Loop(time => {
+                            if (sounds.ambassador_drone) sounds.ambassador_drone.start(time).stop(time + 4);
+                        }, '4m');
+
+                        soundLoops.quantum = new Tone.Loop(time => {
+                            if(sounds.quantum_drone) sounds.quantum_drone.triggerAttackRelease("A#2", "4m", time);
+                        }, '4m');
+
+                        soundLoops.singularity = new Tone.Loop(time => {
+                            if(sounds.singularity_implosion) sounds.singularity_implosion.triggerAttackRelease("0.2n", time);
+                        }, '16n');
+                        // --- END MODIFIED & NEW LOOPS ---
+
+                    } catch (e) { console.error("Error setting up Tone.js sounds:", e); }
+                };
+
+                const startBgm = () => {
+                    Tone.Transport.cancel(0);
+                    Tone.Transport.bpm.value = 160;
+                    startSoundLoop('battleBgm');
+                    startSoundLoop('battleBgmKick');
+                    startSoundLoop('battleBgmHat');
+                    startSoundLoop('battleAmbience');
+                    if (Tone.Transport.state !== 'started') Tone.Transport.start();
+                };
+
+                const stopBgm = () => {
+                    if (Tone.Transport.state === 'started') {
+                        Tone.Transport.stop();
+                        Tone.Transport.cancel(0);
+                        Tone.Transport.position = 0;
+                    }
+                    if (sounds.battleAmbience) sounds.battleAmbience.triggerRelease();
+                };
+
+                const startSoundLoop = (loopName) => {
+                    try {
+                        const now = Tone.now();
+                        const loop = soundLoops[loopName];
+                        if (loop && typeof loop.start === 'function') {
+                            if (loop.state !== 'started') loop.start(now);
+                            if (Tone.Transport.state !== 'started') Tone.Transport.start();
+                        }
+                    } catch (e) { console.warn('Failed to start sound loop', loopName, e && e.message); }
+                };
+
+                // Animation start/stop helpers with logging for debugging visibility issues
+                const runAnimStart = (name, fn) => {
+                    try {
+                        console.debug('[ANIM START]', name);
+                        if (typeof fn === 'function') return fn();
+                        if (typeof name === 'string' && animations[name] && typeof animations[name].start === 'function') return animations[name].start();
+                    } catch (e) { console.warn('[ANIM START FAIL]', name, e && e.message); }
+                };
+
+                const runAnimStop = (name, fn) => {
+                    try {
+                        console.debug('[ANIM STOP]', name);
+                        if (typeof fn === 'function') return fn();
+                        if (typeof name === 'string' && animations[name] && typeof animations[name].stop === 'function') return animations[name].stop();
+                    } catch (e) { console.warn('[ANIM STOP FAIL]', name, e && e.message); }
+                };
+                
+                const stopSoundLoop = (loopName) => {
+                    try {
+                        const now = Tone.now();
+                        const loop = soundLoops[loopName];
+                        if (!loop) return;
+
+                        // Prefer calling stop with a scheduled time when supported.
+                        if (typeof loop.stop === 'function') {
+                            try {
+                                loop.stop(now);
+                            } catch (err) {
+                                // Some objects don't accept a time argument — try without args.
+                                try { loop.stop(); } catch (err2) { /* ignore */ }
+                            }
+                            return;
+                        }
+
+                        // Fallbacks for objects that expose dispose/cancel methods
+                        if (typeof loop.dispose === 'function') {
+                            try { loop.dispose(); } catch (e) { /* ignore */ }
+                            return;
+                        }
+                        if (typeof loop.cancel === 'function') {
+                            try { loop.cancel(); } catch (e) { /* ignore */ }
+                            return;
+                        }
+                    } catch (e) { console.warn('Failed to stop sound loop', loopName, e && e.message); }
+                };
+                
+                const setPrompt = (text) => {
+                    promptElement.innerHTML = text;
+                }
+                
+                const typeLog = async (line) => {
+                    setPrompt(line.prompt || '');
+                    const entry = document.createElement('div');
+                    entry.className = `log-entry ${line.className || ''}`;
+                    const promptSpan = document.createElement('span');
+                    promptSpan.innerHTML = line.prompt || '';
+                    entry.appendChild(promptSpan);
+                    
+                    const textNode = document.createElement('span');
+                    entry.appendChild(textNode);
+
+                    terminalOutput.appendChild(entry);
+                    
+                    while (terminalOutput.children.length > MAX_LOG_LINES) {
+                        terminalOutput.removeChild(terminalOutput.firstChild);
+                    }
+
+                    for (let i = 0; i < line.text.length; i++) {
+                        textNode.innerHTML += line.text[i];
+                        const now = Tone.now ? Tone.now() : 0;
+                        if (sounds.keyboard && now > lastKeyboardSoundTime + 0.04 && !line.noSound) {
+                           try {
+                               // gentle randomness to avoid harsh repeats
+                               sounds.keyboard.triggerAttack(Tone.Frequency(Math.random()*200 + 300, 'midi').toFrequency(), "+0");
+                           } catch (e) { /* ignore sound trigger errors */ }
+                           lastKeyboardSoundTime = now;
+                        }
+                        terminalOutput.scrollTop = terminalOutput.scrollHeight;
+                        await new Promise(res => setTimeout(res, line.logSpeed || 25));
+                    }
+                     if (line.sound) playSound(line.sound);
+                     await new Promise(res => setTimeout(res, line.delayAfter || 100));
+                };
+
+                const playSound = (sound, note = "C4", duration = "8n") => {
+                    try {
+                        if (!Tone || !Tone.context || Tone.context.state !== 'running') return;
+                        const synth = sounds && sounds[sound];
+                        if (!synth) return;
+
+                        // Use numeric time to avoid passing null/invalid values into internal Tone helpers.
+                        const time = Tone.now() + 0.01;
+
+                        // Try common triggerAttackRelease signatures in a safe order and fall back gracefully.
+                        if (typeof synth.triggerAttackRelease === 'function') {
+                            try {
+                                // Preferred: note, duration, time
+                                synth.triggerAttackRelease(note, duration, time);
+                                return;
+                            } catch (errA) {
+                                try {
+                                    // Some synths (e.g. NoiseSynth) use (duration, time)
+                                    synth.triggerAttackRelease(duration, time);
+                                    return;
+                                } catch (errB) {
+                                    try {
+                                        // Try single-arg duration
+                                        synth.triggerAttackRelease(duration);
+                                        return;
+                                    } catch (errC) {
+                                        // Fall through to other methods
+                                    }
+                                }
+                            }
+                        }
+
+                        // Fallbacks: triggerAttack or start
+                        if (typeof synth.triggerAttack === 'function') {
+                            try { synth.triggerAttack(time); return; } catch (e) { /* ignore */ }
+                        }
+                        if (typeof synth.start === 'function') {
+                            try { synth.start(time); return; } catch (e) { /* ignore */ }
+                        }
+                    } catch (e) {
+                        console.warn(`Could not play sound "${sound}":`, (e && e.message) || e);
+                    }
+                }
+
+                const addEffect = (effect) => {
+                    terminalScreen.classList.add(effect);
+                    setTimeout(() => terminalScreen.classList.remove(effect), 500);
+                }
+                
+                // --- PERFORMANCE OPTIMIZATION ---
+                // This function creates a placeholder object instead of a massive array
+                // to avoid high memory consumption and browser freezing.
+                const generateMassiveLogsPlaceholder = (count, generatorFn) => {
+                    return { isPlaceholder: true, count, generator: generatorFn };
+                };
+
+                // VirtualLogViewer: 仮想化されたログビューア
+                // 目的: count が非常に大きくても（例: 兆単位）ブラウザのメモリを使い切らず
+                // スクロールやジャンプで任意の行を表示できるようにする。
+                class VirtualLogViewer {
+                    constructor(container, count, generator, options = {}) {
+                        this.container = container; // terminalOutput
+                        this.count = count;
+                        this.generator = generator;
+                        this.lineHeight = options.lineHeight || 20; // px
+                        this.buffer = options.buffer || 80;
+                        this.maxSpacerHeight = options.maxSpacerHeight || 1e7; // used for thumb sizing
+                        this.controlsHidden = options.controlsHidden === true;
+
+                        // logical positions
+                        this.logicalIndex = 0; // current rendered top index (float allowed for smooth)
+                        this.targetIndex = 0; // desired index
+
+                        // build DOM
+                        this._build();
+
+                        // pool and initial layout
+                        this._onResize = this._onResize.bind(this);
+                        window.addEventListener('resize', this._onResize);
+                        this._wheelHandler = this._onWheel.bind(this);
+                        this.container.addEventListener('wheel', this._wheelHandler, { passive: false });
+
+                        // drag for thumb
+                        this.thumbDrag = this._thumbDrag.bind(this);
+                        this._startAnimationLoop();
+                        this._onResize();
+                    }
+
+                    _build() {
+                        this.container.innerHTML = '';
+                        this.container.style.position = 'relative';
+                        this.container.style.overflow = 'hidden';
+
+                        // content area where pooled rows live
+                        this.content = document.createElement('div');
+                        this.content.style.position = 'absolute';
+                        this.content.style.left = '0';
+                        this.content.style.top = '0';
+                        this.content.style.width = '100%';
+                        this.content.style.willChange = 'transform';
+
+                        // custom scrollbar track
+                        this.scrollbar = document.createElement('div');
+                        this.scrollbar.className = 'virtual-scrollbar';
+                        this.scrollbar.style.position = 'absolute';
+                        this.scrollbar.style.top = '4px';
+                        this.scrollbar.style.right = '6px';
+                        this.scrollbar.style.bottom = '4px';
+                        this.scrollbar.style.width = '12px';
+                        this.scrollbar.style.background = 'rgba(255,255,255,0.02)';
+                        this.scrollbar.style.borderRadius = '6px';
+                        this.scrollbar.style.boxSizing = 'border-box';
+
+                        this.thumb = document.createElement('div');
+                        this.thumb.className = 'virtual-thumb';
+                        this.thumb.style.position = 'absolute';
+                        this.thumb.style.left = '2px';
+                        this.thumb.style.width = '8px';
+                        this.thumb.style.background = 'linear-gradient(180deg, #00ff41, #00cde9)';
+                        this.thumb.style.borderRadius = '6px';
+                        this.thumb.style.cursor = 'pointer';
+                        this.thumb.style.transition = 'background 0.2s';
+
+                        this.scrollbar.appendChild(this.thumb);
+
+                        // controls: jump input, quick nav, export
+                        this.controls = document.createElement('div');
+                        this.controls.style.position = 'absolute';
+                        this.controls.style.right = '26px';
+                        this.controls.style.top = '8px';
+                        this.controls.style.zIndex = '9999';
+                        this.controls.style.display = 'flex';
+                        this.controls.style.gap = '6px';
+                        this.controls.style.alignItems = 'center';
+
+                        // jump input
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.placeholder = '行番号へジャンプ (例: 9007199254740991)';
+                        input.style.padding = '6px 8px'; input.style.borderRadius = '6px'; input.style.minWidth = '240px';
+                        input.style.fontFamily = 'monospace'; input.style.fontSize = '12px';
+
+                        const jumpBtn = document.createElement('button'); jumpBtn.textContent = 'Jump';
+                        const startBtn = document.createElement('button'); startBtn.textContent = 'Head';
+                        const endBtn = document.createElement('button'); endBtn.textContent = 'Tail';
+                        const exportBtn = document.createElement('button'); exportBtn.textContent = 'Export Range';
+                        [jumpBtn, startBtn, endBtn, exportBtn].forEach(b => { b.style.padding='6px 8px'; b.style.borderRadius='6px'; b.style.cursor='pointer'; b.style.background='rgba(0,0,0,0.6)'; b.style.color='#0f0'; b.style.border='1px solid rgba(255,255,255,0.06)'; b.style.fontFamily='Orbitron, monospace'; b.style.fontSize='12px'; });
+
+                        this.controls.appendChild(input);
+                        this.controls.appendChild(jumpBtn);
+                        this.controls.appendChild(startBtn);
+                        this.controls.appendChild(endBtn);
+                        this.controls.appendChild(exportBtn);
+                        // effect mode selector: 'extreme' (派手), 'balanced' (バランス), 'color' (色別)
+                        const modeSelect = document.createElement('select');
+                        modeSelect.style.padding = '6px 8px'; modeSelect.style.borderRadius = '6px'; modeSelect.style.cursor = 'pointer'; modeSelect.style.background='rgba(0,0,0,0.6)'; modeSelect.style.color='#0f0'; modeSelect.style.border='1px solid rgba(255,255,255,0.06)'; modeSelect.style.fontFamily='Orbitron, monospace'; modeSelect.style.fontSize='12px';
+                        const optExtreme = document.createElement('option'); optExtreme.value = 'extreme'; optExtreme.text = '派手 (Extreme)';
+                        const optBalanced = document.createElement('option'); optBalanced.value = 'balanced'; optBalanced.text = 'バランス';
+                        const optColor = document.createElement('option'); optColor.value = 'color'; optColor.text = '色分け (攻撃青/防御赤)';
+                        modeSelect.appendChild(optExtreme); modeSelect.appendChild(optBalanced); modeSelect.appendChild(optColor);
+                        modeSelect.value = 'extreme';
+                        this.controls.appendChild(modeSelect);
+
+                        this.container.appendChild(this.content);
+                        this.container.appendChild(this.scrollbar);
+                        if (!this.controlsHidden) {
+                            this.container.appendChild(this.controls);
+                        }
+
+                        // control handlers
+                        jumpBtn.addEventListener('click', () => {
+                            const val = input.value.trim();
+                            if (!val) return;
+                            try {
+                                // accept commas and unit suffixes like '兆'
+                                let cleaned = val.replace(/,/g, '').replace(/\s+/g, '');
+                                let idx = null;
+                                // support inputs like "9000兆" meaning 9000 * 10^12
+                                const choMatch = cleaned.match(/^(\d+)兆$/);
+                                if (choMatch) {
+                                    idx = BigInt(choMatch[1]) * (10n ** 12n);
+                                } else if (cleaned.endsWith('n')) {
+                                    idx = BigInt(cleaned.slice(0, -1));
+                                } else if (/^\d+$/.test(cleaned)) {
+                                    idx = BigInt(cleaned);
+                                }
+                                if (idx === null) { alert('正しい行番号を入力してください（例: 9000兆 または 9007199254740991）'); return; }
+
+                                // clamp to viewer.count if possible
+                                const maxBig = (typeof this.count === 'bigint') ? this.count - 1n : BigInt(Math.max(0, this.count - 1));
+                                if (idx > maxBig) idx = maxBig;
+
+                                // If the index is within Number.MAX_SAFE_INTEGER, scroll directly
+                                const SAFE = 9007199254740991n;
+                                if (idx <= SAFE) {
+                                    this.scrollToIndex(Number(idx));
+                                } else {
+                                    // For enormous indices, map position to percentage and scroll by percent
+                                    const pct = Number(idx) / Number(maxBig || idx);
+                                    this.scrollToPercent(Number.isFinite(pct) ? pct : 0);
+                                    alert('巨大な行番号のため近似位置にジャンプしました。端末のスクロールで微調整してください。');
+                                }
+                            } catch (e) { console.warn('jump parse failed', e); alert('行番号の解析に失敗しました'); }
+                        });
+                        startBtn.addEventListener('click', () => { this.scrollToIndex(0); });
+                        endBtn.addEventListener('click', () => { this.scrollToIndex((typeof this.count === 'bigint') ? Number(Math.min(this.count - 1n, 9007199254740991n)) : Math.max(0, this.count - 1)); });
+
+                        exportBtn.addEventListener('click', async () => {
+                            const from = prompt('Export from index (inclusive). 既定: 0', '0');
+                            const to = prompt('Export to index (inclusive). 最大は Number.MAX_SAFE_INTEGER。注意: 非常に大きい範囲は実用的にダウンロードできません。', String(Math.min(this.count - 1, 1000000)));
+                            if (from === null || to === null) return;
+                            let s = BigInt(from.trim()); let e = BigInt(to.trim());
+                            if (s < 0n) s = 0n; if (e < s) e = s;
+                            // safety cap to avoid OOM in browser
+                            const SAFE_EXPORT_CAP = 5_000_000n;
+                            if (e - s + 1n > SAFE_EXPORT_CAP) {
+                                if (!confirm(`選択範囲が大きすぎます（${e - s + 1n} 行）。最大 ${SAFE_EXPORT_CAP} 行までのエクスポートに制限します。続行しますか？`)) return;
+                                e = s + SAFE_EXPORT_CAP - 1n;
+                            }
+                            // attach a post-step hook to Ultimate siege to run final reveal
+                            if (step.name && step.name.indexOf('Ultimate Siege') !== -1) {
+                                (async () => {
+                                    try {
+                                        await new Promise(res => setTimeout(res, step.duration + 500));
+                                        const overlay = document.createElement('div');
+                                        overlay.style.position = 'fixed'; overlay.style.left = '0'; overlay.style.top = '0'; overlay.style.width = '100%'; overlay.style.height = '100%'; overlay.style.display = 'flex'; overlay.style.alignItems = 'center'; overlay.style.justifyContent = 'center'; overlay.style.zIndex = 10040; overlay.style.pointerEvents = 'none';
+                                        overlay.style.background = 'radial-gradient(circle, rgba(0,0,0,0.0), rgba(0,0,0,0.6) 60%)';
+                                        const center = document.createElement('div'); center.style.fontFamily = "'Orbitron', monospace"; center.style.color = '#fff'; center.style.fontSize = '44px'; center.style.textShadow = '0 0 30px rgba(255,255,255,0.6)'; center.style.padding = '20px';
+                                        overlay.appendChild(center); document.body.appendChild(overlay);
+                                        // count-up to Number.MAX_SAFE_INTEGER quickly but with dramatic commas
+                                        const target = BigInt(Number.MAX_SAFE_INTEGER);
+                                        const steps = 80;
+                                        for (let i = 0; i <= steps; i++) {
+                                            const progress = i/steps;
+                                            const val = BigInt(Math.floor(Number(target) * progress));
+                                            center.textContent = humanReadableBigInt(val) + ' — TOTAL CODE LINES';
+                                            await new Promise(r => setTimeout(r, 24 + (i>60? 6: 2)));
+                                        }
+                                        await new Promise(r => setTimeout(r, 1200));
+                                        overlay.style.transition = 'opacity 800ms ease-out'; overlay.style.opacity = '0'; setTimeout(() => { if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay); }, 900);
+                                    } catch (e) { /* ignore reveal errors */ }
+                                })();
+                            }
+                            const filename = `logs_${s.toString()}_${e.toString()}.txt`;
+                            await this.exportRange(s, e, filename);
+                        });
+
+                        // pool will be created on resize
+                        this.pool = [];
+                        this._bindControlEvents();
+                    }
+
+                    _bindControlEvents() {
+                        // no control button events in immersive mode
+
+                        // thumb drag
+                        this.thumb.addEventListener('mousedown', (e) => {
+                            e.preventDefault();
+                            this.dragging = true;
+                            this.startY = e.clientY;
+                            this.startThumbTop = parseFloat(this.thumb.style.top) || 0;
+                            document.addEventListener('mousemove', this.thumbDrag);
+                            document.addEventListener('mouseup', () => { this.dragging = false; document.removeEventListener('mousemove', this.thumbDrag); });
+                        });
+                    }
+
+                    _thumbDrag(e) {
+                        const rect = this.scrollbar.getBoundingClientRect();
+                        const y = Math.max(0, Math.min(rect.height, e.clientY - rect.top));
+                        const ratio = y / Math.max(1, rect.height - this.thumb.clientHeight);
+                        this.scrollToPercent(ratio);
+                    }
+
+                    _onResize() {
+                        this.clientH = this.container.clientHeight;
+                        this.visibleCount = Math.max(1, Math.floor(this.clientH / this.lineHeight));
+                        // compute virtual height to avoid huge pixel arithmetic
+                        const logicalHeight = this.count * this.lineHeight;
+                        this.virtualHeight = Math.min(logicalHeight, this.maxSpacerHeight);
+                        this.scale = logicalHeight > this.virtualHeight ? (this.virtualHeight / logicalHeight) : 1;
+                        // refresh pool
+                        const poolSize = this.visibleCount + this.buffer;
+                        // reuse existing nodes
+                        while (this.pool.length > poolSize) {
+                            const n = this.pool.pop(); if (n.parentNode) n.parentNode.removeChild(n);
+                        }
+                        for (let i = this.pool.length; i < poolSize; i++) {
+                            const div = document.createElement('div');
+                            div.className = 'log-entry';
+                            div.style.height = this.lineHeight + 'px';
+                            div.style.boxSizing = 'border-box';
+                            this.content.appendChild(div);
+                            this.pool.push(div);
+                        }
+                        // update thumb size
+                        this._updateThumb();
+                        this._render();
+                    }
+
+                    _onWheel(e) {
+                        // intercept wheel for smooth logical scrolling
+                        e.preventDefault();
+                        const delta = e.deltaY || e.wheelDeltaY || e.wheelDelta || 0;
+                        const sensitivity = Math.max(1, Math.floor(Math.abs(delta) / 3));
+                        this.targetIndex += Math.sign(delta) * sensitivity * 5; // step multiplier
+                        this.targetIndex = Math.max(0, Math.min(this.count - this.visibleCount, this.targetIndex));
+                    }
+
+                    _startAnimationLoop() {
+                        const tick = () => {
+                            // ease towards targetIndex
+                            const diff = this.targetIndex - this.logicalIndex;
+                            if (Math.abs(diff) > 0.001) {
+                                this.logicalIndex += diff * 0.2; // smoothing factor
+                                this._render();
+                            }
+                            requestAnimationFrame(tick);
+                        };
+                        requestAnimationFrame(tick);
+                    }
+
+                    _render() {
+                        const estStart = Math.max(0, Math.floor(this.logicalIndex));
+                        const start = Math.max(0, estStart - Math.floor(this.buffer/2));
+                        // update pool elements
+                        for (let i = 0; i < this.pool.length; i++) {
+                            const idx = start + i;
+                            const el = this.pool[i];
+                            if (idx < this.count) {
+                                const line = this.generator(idx);
+                                el.className = `log-entry ${line.className || ''}`;
+                                el.innerHTML = `${line.prompt || ''}${line.text}`;
+                                el.style.display = '';
+                            } else {
+                                el.style.display = 'none';
+                            }
+                        }
+                        // position content via transform for smooth GPU-accelerated movement
+                        // map large logical index to limited virtual pixel range via ratio
+                        const maxStartIndex = Math.max(0, this.count - this.visibleCount);
+                        const ratio = maxStartIndex > 0 ? (estStart / maxStartIndex) : 0;
+                        const maxTop = Math.max(0, this.virtualHeight - this.clientH);
+                        const topOffset = Math.floor(ratio * maxTop);
+                        this.content.style.transform = `translateY(${ -topOffset }px)`;
+
+                        // update thumb position proportionally
+                        this._updateThumb();
+                    }
+
+                    _updateThumb() {
+                        // thumb height proportional to visibleCount / count, but clamp
+                        const trackHeight = this.scrollbar.clientHeight;
+                        const ratioVisible = Math.min(1, this.visibleCount / Math.max(1, this.count));
+                        const thumbH = Math.max(20, Math.floor(trackHeight * ratioVisible));
+                        this.thumb.style.height = thumbH + 'px';
+
+                        const maxStart = Math.max(0, this.count - this.visibleCount);
+                        const logicalRatio = maxStart > 0 ? (this.logicalIndex / maxStart) : 0;
+                        const maxTop = Math.max(1, trackHeight - thumbH);
+                        const top = Math.max(0, Math.min(maxTop, Math.floor(logicalRatio * maxTop)));
+                        this.thumb.style.top = top + 'px';
+                    }
+
+                    scrollToIndex(index) {
+                        const SAFE_MAX_INDEX = 1e12; // avoid manipulating >1e12 directly
+                        let idx = index;
+                        if (typeof idx === 'bigint') idx = Number(idx);
+                        if (!Number.isFinite(idx)) idx = 0;
+                        const maxStart = Math.max(0, (this.count - this.visibleCount));
+                        const usableMax = Math.min(maxStart, SAFE_MAX_INDEX);
+                        const clamped = Math.max(0, Math.min(usableMax, Math.floor(idx)));
+                        this.targetIndex = clamped;
+                        // immediate jump a bit for responsiveness
+                        this.logicalIndex = clamped;
+                        this._render();
+                    }
+
+                    scrollToPercent(p) {
+                        const pct = Math.max(0, Math.min(1, p));
+                        const maxStart = Math.max(0, this.count - this.visibleCount);
+                        const SAFE_MAX_INDEX = 1e12;
+                        const usableMax = Math.min(maxStart, SAFE_MAX_INDEX);
+                        const idx = Math.floor(pct * usableMax);
+                        this.scrollToIndex(idx);
+                    }
+
+                    async exportRange(fromBig, toBig, filename = 'export.txt') {
+                        // stream-generate lines and build a blob in chunks to avoid huge memory
+                        const from = typeof fromBig === 'bigint' ? fromBig : BigInt(fromBig);
+                        const to = typeof toBig === 'bigint' ? toBig : BigInt(toBig);
+                        if (to < from) throw new Error('Invalid range');
+                        const CHUNK = 20000n; // generate in manageable chunks
+                        const parts = [];
+                        let cur = from;
+                        while (cur <= to) {
+                            const end = (cur + CHUNK - 1n) <= to ? (cur + CHUNK - 1n) : to;
+                            const arr = [];
+                            for (let i = cur; i <= end; i++) {
+                                const idx = i;
+                                const line = this.generator(Number(idx));
+                                arr.push((line.prompt || '') + (line.text || '') + '\n');
+                            }
+                            parts.push(arr.join(''));
+                            cur = end + 1n;
+                            // yield to event loop
+                            await new Promise(res => setTimeout(res, 2));
+                        }
+                        const blob = new Blob(parts, { type: 'text/plain;charset=utf-8' });
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a'); a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+                    }
+
+                    destroy() {
+                        window.removeEventListener('resize', this._onResize);
+                        this.container.removeEventListener('wheel', this._wheelHandler);
+                        if (this.content && this.content.parentNode) this.content.parentNode.removeChild(this.content);
+                        if (this.scrollbar && this.scrollbar.parentNode) this.scrollbar.parentNode.removeChild(this.scrollbar);
+                        if (this.controls && this.controls.parentNode) this.controls.parentNode.removeChild(this.controls);
+                    }
+                }
+
+                // --- Max Integer Spectacle ---
+                const formatBigNumber = (n) => {
+                    return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                };
+
+                const formatBigInt = (b) => {
+                    // Accept BigInt or Number
+                    try {
+                        let s = (typeof b === 'bigint') ? b.toString() : String(b);
+                        const neg = s[0] === '-'; if (neg) s = s.slice(1);
+                        let out = '';
+                        while (s.length > 3) { out = ',' + s.slice(-3) + out; s = s.slice(0, -3); }
+                        out = s + out;
+                        return neg ? '-' + out : out;
+                    } catch (e) { return String(b); }
+                };
+
+                // Compact, human-friendly BigInt formatter for dramatic display
+                const humanReadableBigInt = (b) => {
+                    try {
+                        const s = (typeof b === 'bigint') ? b.toString() : String(b);
+                        // If short enough, show full comma-formatted number
+                        if (s.length <= 15) return formatBigInt(b);
+                        // Use Japanese large-number unit '兆' (10^12) for compactness
+                        const CHO = 10n ** 12n;
+                        const big = (typeof b === 'bigint') ? b : BigInt(b);
+                        const main = big / CHO; // integer part in 兆
+                        // produce one decimal place for dramatic effect
+                        const tenth = 10n;
+                        const rem = (big % CHO) / (CHO / tenth); // 0..9
+                        if (rem > 0n) {
+                            return `${formatBigInt(main)}.${String(rem)}兆`;
+                        }
+                        return `${formatBigInt(main)}兆`;
+                    } catch (e) { return String(b); }
+                };
+
+                // Show full with unit-aware tooltip
+                const formatBigIntWithTooltip = (el, b) => {
+                    try { el.title = formatBigInt(b); } catch (e) { /* ignore */ }
+                };
+
+                const createMaxIntegerSpectacle = (count, viewer, duration = 6000, opts = {}) => {
+                    // overlay を作成して大きなカウンタとパーティクルを表示
+                    const overlay = document.createElement('div');
+                    overlay.style.position = 'absolute';
+                    overlay.style.left = '0';
+                    overlay.style.top = '0';
+                    overlay.style.width = '100%';
+                    overlay.style.height = '100%';
+                    overlay.style.display = 'flex';
+                    overlay.style.flexDirection = 'column';
+                    overlay.style.justifyContent = 'center';
+                    overlay.style.alignItems = 'center';
+                    overlay.style.pointerEvents = 'none';
+                    overlay.style.zIndex = '10010';
+                    overlay.style.overflow = 'hidden';
+
+                    // animated background
+                    overlay.style.background = 'radial-gradient(circle at 50% 40%, rgba(0,205,233,0.06), transparent 30%), linear-gradient(135deg, rgba(0,255,65,0.03), rgba(157,0,255,0.03))';
+
+                    const title = document.createElement('div');
+                    title.textContent = 'MAX INTEGER SIEGE';
+                    title.style.fontFamily = "'Orbitron', sans-serif";
+                    title.style.fontSize = '28px';
+                    title.style.color = '#ff6666';
+                    title.style.textShadow = '0 0 20px #ff6666';
+                    title.style.marginBottom = '12px';
+
+                    // Logo canvas (big stylized number logo)
+                    const logoCanvas = document.createElement('canvas');
+                    logoCanvas.style.position = 'relative';
+                    logoCanvas.style.width = '80%';
+                    logoCanvas.style.maxWidth = '1600px';
+                    logoCanvas.style.height = '40%';
+                    logoCanvas.style.pointerEvents = 'none';
+                    const logoCtx = logoCanvas.getContext('2d');
+
+                    // particle canvas
+                    const pCanvas = document.createElement('canvas');
+                    pCanvas.style.position = 'absolute';
+                    pCanvas.style.left = '0';
+                    pCanvas.style.top = '0';
+                    pCanvas.width = terminalOutput.clientWidth || 800;
+                    pCanvas.height = terminalOutput.clientHeight || 400;
+                    pCanvas.style.width = '100%';
+                    pCanvas.style.height = '100%';
+                    pCanvas.style.pointerEvents = 'none';
+                    overlay.appendChild(pCanvas);
+                    overlay.appendChild(title);
+                    overlay.appendChild(logoCanvas);
+                    terminalOutput.appendChild(overlay);
+
+                    const ctx = pCanvas.getContext('2d');
+                    const particles = [];
+                    const spawnParticle = (progress) => {
+                        const angle = Math.random() * Math.PI * 2;
+                        const speed = 0.2 + Math.random() * 1.6 + progress * 3.0;
+                        const size = 1 + Math.random() * 3 + progress * 6;
+                        particles.push({ x: pCanvas.width/2 + Math.cos(angle) * 20, y: pCanvas.height/2 + Math.sin(angle) * 20, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed, life: 60, size, hue: Math.floor(180 + progress * 120) });
+                    };
+
+                    const startTime = performance.now();
+                    const endTime = startTime + duration;
+                    // impact flash overlay
+                    let impactFlash = document.getElementById('__impact_flash_overlay');
+                    if (!impactFlash) {
+                        impactFlash = document.createElement('div');
+                        impactFlash.id = '__impact_flash_overlay';
+                        impactFlash.className = 'impact-flash';
+                        document.body.appendChild(impactFlash);
+                    }
+                    const DISPLAY_CAP = BigInt(9007199254740991); // Number.MAX_SAFE_INTEGER as BigInt
+                    const totalBig = (typeof count === 'bigint') ? (count > DISPLAY_CAP ? DISPLAY_CAP : count) : BigInt(Math.min(Number(count), Number(DISPLAY_CAP)));
+                    const VISUAL_SCROLL_CAP = Math.min(Number(1e12), Number((typeof count === 'bigint') ? DISPLAY_CAP : count));
+
+                    // prepare logo text (use BigInt-safe totalBig)
+                    const logoText = formatBigInt(totalBig);
+
+                    // If a viewer is present and this is the MAX_SAFE_INTEGER spectacle,
+                    // temporarily override its generator and count so we can present
+                    // a cinematic, deterministic Falcon vs SPIDER hacker-battle that
+                    // maps the limited visual index range to the full BigInt namespace
+                    // without allocating all lines.
+                    let _viewerBackup = null;
+                    if (viewer && typeof VISUAL_SCROLL_CAP === 'number' && totalBig === DISPLAY_CAP) {
+                        try {
+                            const battleMessagesFalcon = [
+                                'breach firewall layer', 'inject payload', 'uplink established', 'spoofed cert accepted', 'probe ports', 'overwrite buffer', 'spawn backdoor',
+                                'escalate privileges', 'pivot lateral movement', 'exfiltrate vault keys', 'bypass IDS signatures', 'zero-day exploit executed'
+                            ];
+                            const battleMessagesSpider = [
+                                'detected intrusion', 'trace route initiated', 'counter-intrusion', 'quarantine socket', 'patch applied', 'honeypot baited', 'reset handshake',
+                                'deploy countermeasure matrix', 'rollback malicious patch', 'revoke session tokens', 'adaptive firewall rules applied'
+                            ];
+
+                            const battleGenerator = (dispIdx) => {
+                                // dispIdx in [0 .. VISUAL_SCROLL_CAP)
+                                const ratio = Math.max(0, Math.min(1, (dispIdx || 0) / Math.max(1, VISUAL_SCROLL_CAP - 1)));
+                                // map to BigInt index across the full totalBig
+                                const bigIdx = BigInt(Math.floor(ratio * Number(totalBig)));
+                                const team = (bigIdx % 2n) === 0n ? 'FALCON' : 'SPIDER';
+                                const seq = Number(bigIdx % 1000000n);
+                                const msgPool = (team === 'FALCON') ? battleMessagesFalcon : battleMessagesSpider;
+                                const rawMsg = msgPool[seq % msgPool.length];
+                                const verbs = (team === 'FALCON') ? ['>> EXECUTE', '>> LAUNCH', '>> STREAM'] : ['<< INTERCEPT', '<< COUNTER', '<< TRACE'];
+                                const verb = verbs[seq % verbs.length];
+                                const timeLabel = new Date(Date.now() + (seq % 1000000)).toISOString().replace('T', ' ').replace('Z', '');
+                                const lineText = `${verb} [${humanReadableBigInt(bigIdx)}] <${team}> ${rawMsg}  — ${timeLabel}`;
+                                return { text: lineText, prompt: '', className: team.toLowerCase() };
+                            };
+
+                            _viewerBackup = { count: viewer.count, generator: viewer.generator };
+                            // Make the viewer present VISUAL_SCROLL_CAP logical rows; the generator maps those to the BigInt space.
+                            viewer.count = VISUAL_SCROLL_CAP;
+                            viewer.generator = battleGenerator;
+                            // ensure immediate layout refresh
+                            try { viewer._onResize(); viewer._render(); } catch (e) { /* best-effort */ }
+                        } catch (e) { console.warn('Failed to attach battle generator to viewer', e && e.message); }
+                    }
+
+                    // cinematic intro lines to boost immersion
+                    const pushCinematicLines = async () => {
+                        try {
+                            const cinematic = [
+                                { text: '=== HACKER BATTLE INITIATED ===', className: 'system-text', delayAfter: 300 },
+                                { text: 'TARGET: SPIDER NETWORK FOUNDATION', className: 'threat-text', delayAfter: 250 },
+                                { text: 'AGENT: FALCON — DEPLOYING COUNTERMEASURES', className: 'falcon-command-text', delayAfter: 250 },
+                                { text: 'STREAM: HACK-STREAM / SECURE TUNNEL ESTABLISHED', className: 'system-text', delayAfter: 300 }
+                            ];
+                            for (const ln of cinematic) {
+                                await typeLog({ text: ln.text + '\n', className: ln.className, prompt: '', logSpeed: 6, delayAfter: ln.delayAfter });
+                            }
+                        } catch (e) { /* ignore */ }
+                    };
+
+                    // Play sound with volume scaling according to effect mode and intensity
+                    const playSoundWithVolume = (name, intensity = 1) => {
+                        try {
+                            const modeEl = document.querySelector('.virtual-scrollbar') ? document.querySelector('.virtual-scrollbar').parentNode.querySelector('select') : null;
+                            const mode = (modeEl && modeEl.value) ? modeEl.value : (window.effectMode || 'extreme');
+                            let volScale = 1.0;
+                            if (mode === 'balanced') volScale = 0.55;
+                            else if (mode === 'color') volScale = 0.85;
+                            else volScale = 1.25; // extreme
+                            const synth = sounds && sounds[name];
+                            if (!synth) return;
+                            // attempt to set volume if supported
+                            try { if (typeof synth.volume === 'object' || typeof synth.volume === 'number') { synth.volume.value = -10 - (1 - Math.min(2, intensity)) * 12 * (1/volScale); } } catch (e) { /* ignore */ }
+                            playSound(name);
+                        } catch (e) { /* ignore */ }
+                    };
+                    const drawLogo = (progress) => {
+                        // resize logical canvas to displayed size
+                        const rect = logoCanvas.getBoundingClientRect();
+                        logoCanvas.width = Math.max(300, Math.floor(rect.width * (window.devicePixelRatio || 1)));
+                        logoCanvas.height = Math.max(120, Math.floor(rect.height * (window.devicePixelRatio || 1)));
+                        const g = logoCtx;
+                        g.clearRect(0,0,logoCanvas.width, logoCanvas.height);
+                        // compute font size to fill canvas
+                        const fontSize = Math.floor(Math.min(logoCanvas.width / (logoText.length * 0.6), logoCanvas.height * 0.9));
+                        g.font = `bold ${fontSize}px Orbitron, monospace`;
+                        g.textAlign = 'center';
+                        g.textBaseline = 'middle';
+                        // background glow
+                        const cx = logoCanvas.width/2, cy = logoCanvas.height/2;
+                        const grad = g.createLinearGradient(0,0,logoCanvas.width,0);
+                        grad.addColorStop(0, `rgba(0,255,65,${0.6 * progress})`);
+                        grad.addColorStop(0.5, `rgba(157,0,255,${0.85 * progress})`);
+                        grad.addColorStop(1, `rgba(0,205,233,${0.6 * progress})`);
+                        // shadow / glow
+                        g.shadowColor = 'rgba(0,255,65,0.45)';
+                        g.shadowBlur = 40 * progress;
+                        // main fill
+                        g.fillStyle = grad;
+                        g.fillText(logoText, cx, cy);
+                        // if near climax, draw Falcon emblem and pulse
+                        if (progress > 0.85) {
+                            try {
+                                g.save();
+                                const emSize = Math.min(logoCanvas.width, logoCanvas.height) * 0.35;
+                                g.globalCompositeOperation = 'lighter';
+                                g.strokeStyle = 'rgba(0,255,65,0.95)'; g.lineWidth = 6 * (progress - 0.84);
+                                g.beginPath();
+                                // stylized falcon beak-like curve
+                                g.moveTo(cx - emSize*0.2, cy + emSize*0.15);
+                                g.quadraticCurveTo(cx + emSize*0.2, cy - emSize*0.6, cx + emSize*0.6, cy - emSize*0.2);
+                                g.stroke();
+                                g.restore();
+                            } catch (e) { /* ignore emblem draw */ }
+                        }
+                        // glitch: draw sliced offsets
+                        const slices = Math.floor(1 + progress * 6);
+                        for (let s = 0; s < slices; s++) {
+                            const h = Math.floor( (s / slices) * logoCanvas.height );
+                            const w = logoCanvas.width;
+                            const data = g.getImageData(0, h, w, Math.max(2, Math.floor(logoCanvas.height / slices)));
+                            // draw slice with small horizontal offset
+                            const off = Math.floor((Math.random()-0.5) * 12 * progress);
+                            g.putImageData(data, off, h);
+                        }
+                        // scanline overlay
+                        g.globalCompositeOperation = 'lighter';
+                        for (let y = 0; y < logoCanvas.height; y += 4) {
+                            g.fillStyle = `rgba(255,255,255,${0.003 * progress})`;
+                            g.fillRect(0, y, logoCanvas.width, 1);
+                        }
+                        g.globalCompositeOperation = 'source-over';
+                    };
+
+                    // screen shake helper (applies temporary class to opening container)
+                    const screenShake = (power = 1, ms = 420) => {
+                        try {
+                            const el = document.getElementById('opening-container') || openingContainer;
+                            el.classList.add('shake-effect');
+                            setTimeout(() => el.classList.remove('shake-effect'), ms);
+                        } catch (e) { /* ignore */ }
+                    };
+
+                    // impact burst: flash, particle burst, and sound
+                    const impactBurst = (intensity = 1, team = null) => {
+                        try {
+                            // flash
+                            // decide flash color by selected mode and random team if color mode
+                            const mode = (modeSelect && modeSelect.value) ? modeSelect.value : 'extreme';
+                            let flashColor = null;
+                            if (mode === 'color') {
+                                // if team is known, use it; otherwise pick randomly
+                                if (team === 'falcon') flashColor = 'rgba(0,205,233,0.95)';
+                                else if (team === 'spider') flashColor = 'rgba(255,80,80,0.95)';
+                                else flashColor = (Math.random() < 0.5) ? 'rgba(0,205,233,0.95)' : 'rgba(255,80,80,0.95)';
+                            } else if (mode === 'balanced') {
+                                flashColor = 'rgba(255,255,255,0.75)';
+                            } else {
+                                flashColor = 'rgba(255,255,255,0.98)';
+                            }
+                            impactFlash.style.background = flashColor;
+                            impactFlash.classList.add('visible');
+                            setTimeout(() => { impactFlash.classList.remove('visible'); impactFlash.style.background = 'rgba(255,255,255,0)'; }, 140 + Math.floor(160 * intensity));
+                            // short screen shake
+                            screenShake(intensity, 300 + Math.floor(200 * intensity));
+                            // play a dramatic sound if available
+                            if (sounds && sounds.system_damage) {
+                                try {
+                                    // scale intensity by team / mode: Falcon hits slightly brighter/punchier
+                                    let scale = intensity;
+                                    if (team === 'falcon') scale *= 1.15;
+                                    if (team === 'spider') scale *= 0.9;
+                                    playSoundWithVolume('system_damage', scale);
+                                } catch (e) { /* ignore */ }
+                            }
+                            // spawn a few large particles in the logo canvas
+                            for (let i = 0; i < Math.ceil(6 * intensity); i++) {
+                                const angle = Math.random() * Math.PI * 2;
+                                const speed = 2 + Math.random() * 6 * intensity;
+                                const size = 6 + Math.random() * 18 * intensity;
+                                particles.push({ x: pCanvas.width/2, y: pCanvas.height/2, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed, life: 40 + Math.floor(30 * intensity), size, hue: Math.floor(50 + Math.random()*300) });
+                            }
+                        } catch (e) { /* ignore */ }
+                    };
+
+                    const animate = (now) => {
+                        const t = Math.min(1, (now - startTime) / duration);
+                        const eased = 1 - Math.pow(1 - t, 4);
+
+                        // spawn rate grows with eased progress
+                        const spawns = Math.floor(1 + eased * 18);
+                        for (let s=0; s<spawns; s++) spawnParticle(eased);
+
+                        // update particles
+                        ctx.clearRect(0,0,pCanvas.width,pCanvas.height);
+                        for (let i = particles.length -1; i >=0; i--) {
+                            const p = particles[i];
+                            p.x += p.vx; p.y += p.vy; p.life -= 1;
+                            ctx.beginPath();
+                            ctx.fillStyle = `hsla(${p.hue},90%,60%,${Math.max(0, p.life/60)})`;
+                            ctx.arc(p.x, p.y, Math.max(0.5, p.size * (p.life/60)), 0, Math.PI*2);
+                            ctx.fill();
+                            if (p.life <= 0) particles.splice(i,1);
+                        }
+
+                        // draw logo (with progress based effects)
+                        try { drawLogo(eased); } catch (e) { console.warn('Logo draw failed', e && e.message); }
+
+                        // synchronize viewer to give cinematic feel (use a safe visual cap for scrolling)
+                        if (viewer) {
+                            const idx = Math.floor(eased * (Math.max(1, VISUAL_SCROLL_CAP - 1)));
+                            // set target for smooth eased scrolling in the viewer loop
+                            try { viewer.targetIndex = idx; } catch (e) { viewer.scrollToIndex(idx); }
+                        }
+
+                        // update big counter display to reflect enormous total using BigInt math (approximate but dramatic)
+                        try {
+                            const scaleParts = 1000000n; // resolution of interpolation
+                            const part = BigInt(Math.floor(Math.min(1, eased) * Number(scaleParts)));
+                            const chunk = totalBig / scaleParts;
+                            const displayed = chunk * part + (BigInt(Math.floor(Math.random() * 999999)));
+                            title.textContent = humanReadableBigInt(displayed) + ' — HACK STREAM';
+                            formatBigIntWithTooltip(title, displayed);
+                        } catch (e) { /* ignore display errors */ }
+
+                        // background color pulse
+                        const hue = Math.floor(200 + eased * 120);
+                        overlay.style.background = `radial-gradient(circle at 50% 40%, rgba(0,205,233,${0.03 + eased*0.12}), transparent 30%), linear-gradient(135deg, hsla(${hue},80%,50%,${0.02+eased*0.08}), hsla(${(hue+120)%360},80%,50%,${0.02+eased*0.05}))`;
+
+                        // occasional impact bursts for dramatic beats
+                        try {
+                            // stronger chance near the climax
+                            const impactChance = 0.02 + Math.pow(eased, 3) * 0.18; // up to ~0.2 near end
+                            if (Math.random() < impactChance) {
+                                const intensity = 0.8 + Math.random() * 1.6;
+                                try {
+                                    // try to infer team from viewer.generator at idx
+                                    let inferredTeam = null;
+                                    if (viewer && typeof viewer.generator === 'function') {
+                                        try {
+                                            const sample = viewer.generator(idx);
+                                            if (sample && sample.className) inferredTeam = sample.className; // 'falcon' or 'spider'
+                                        } catch (e) { /* ignore sampling errors */ }
+                                    }
+                                    impactBurst(intensity, inferredTeam);
+                                } catch (e) { impactBurst(intensity); }
+                            }
+                        } catch (e) { /* ignore */ }
+
+                        if (now < endTime) requestAnimationFrame(animate);
+                        else {
+                            // keep final logo visible briefly then remove
+                            overlay.style.transition = 'opacity 1s ease-out, transform 1s ease-out';
+                            overlay.style.opacity = '0';
+                            overlay.style.transform = 'scale(1.05)';
+                            setTimeout(() => {
+                                try {
+                                    if (_viewerBackup && viewer) {
+                                        viewer.count = _viewerBackup.count;
+                                        viewer.generator = _viewerBackup.generator;
+                                        try { viewer._onResize(); viewer._render(); } catch (e) { /* best-effort */ }
+                                    }
+                                } catch (e) { /* ignore */ }
+                                if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
+                            }, 1000);
+                        }
+                    };
+                    // push a short cinematic intro to the terminal once
+                    try { pushCinematicLines(); } catch (e) { /* best-effort */ }
+                    requestAnimationFrame(animate);
+                    // resize handler
+                    const onResize = () => { pCanvas.width = terminalOutput.clientWidth || 800; pCanvas.height = terminalOutput.clientHeight || 400; };
+                    window.addEventListener('resize', onResize);
+                    return overlay;
+                };
+
+
+                const fastScrollToBottom = (element, duration) => {
+                    const start = element.scrollTop;
+                    const end = element.scrollHeight - element.clientHeight;
+                    if (end <= start) return;
+                    const distance = end - start;
+                    let startTime = null;
+
+                    const animation = (currentTime) => {
+                        if (startTime === null) startTime = currentTime;
+                        const timeElapsed = currentTime - startTime;
+                        const progress = Math.min(timeElapsed / duration, 1);
+                        element.scrollTop = start + distance * progress;
+                        if (progress < 1) {
+                            requestAnimationFrame(animation);
+                        }
+                    };
+                    requestAnimationFrame(animation);
+                };
+
+                const animations = {
+                    identity: {
+                        scene: null, camera: null, renderer: null, activeObject: null, cancelId: null, analyser: null, lastPulseTime: 0, clock: new THREE.Clock(),
+                        init() {
+                            this.scene = new THREE.Scene();
+                            this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                            this.renderer = new THREE.WebGLRenderer({ canvas: canvases[1], alpha: true });
+                            this.renderer.setSize(window.innerWidth, window.innerHeight);
+                            this.renderer.setPixelRatio(window.devicePixelRatio);
+                        },
+                        start(type) {
+                            try {
+                                if (!this.scene) this.init();
+                                if (canvases[1]) { canvases[1].width = window.innerWidth; canvases[1].height = window.innerHeight; canvases[1].classList.add('visible'); }
+                            } catch (e) { console.warn('Failed to ensure canvas visible for identity.start', e && e.message); }
+                            if (this.activeObject) this.stopCurrentAnimation();
+                            this.camera.position.set(0,0,15); this.camera.lookAt(0,0,0);
+                             activeAnimationLoops = [];
+
+                            // ===========================================
+                            // --- AIクリエイター演出 (ド派手バージョン) ---
+                            // ===========================================
+                            // These identity variants have been disabled per user's request. If called, log and return.
+                            if (type === 'creator' || type === 'singer' || type === 'ambassador') {
+                                console.debug('Identity scene', type, 'is disabled by runtime configuration.');
+                                return Promise.resolve();
+                            }
+                            if (type === 'creator') {
+                                this.camera.position.z = 25;
+                                const group = new THREE.Group();
+                                
+                                // 中心にAIコアを生成
+                                const coreGeo = new THREE.IcosahedronGeometry(4, 5);
+                                let coreMat;
+                                try {
+                                    coreMat = new THREE.ShaderMaterial({
+                                        uniforms: { time: { value: 0 }, color: { value: new THREE.Color(0x8139f5)} },
+                                        vertexShader: `
+                                            uniform float time; varying float noise;
+                                            void main() {
+                                                noise = 10.0 * -0.1 * turbulence(0.5 * normal + time);
+                                                float b = 5.0 * pnoise(0.05 * position + vec3(2.0 * time));
+                                                float displacement = -10.0 * noise + b;
+                                                vec3 newPosition = position + normal * displacement;
+                                                gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
+                                            }`,
+                                        fragmentShader: `
+                                            uniform vec3 color; varying float noise;
+                                            void main() {
+                                                float intensity = 1.0 - abs(noise);
+                                                gl_FragColor = vec4(color * intensity, 1.0);
+                                            }`,
+                                        defines: {
+                                        "pnoise": `
+                                            // Perlin noise implementation
+                                            vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+                                            vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+                                            vec4 permute(vec4 x) { return mod289(((x*34.0)+1.0)*x); }
+                                            vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }
+                                            float pnoise(vec3 P) {
+                                                vec3 Pi0 = floor(P); vec3 Pi1 = Pi0 + vec3(1.0); Pi0 = mod289(Pi0); Pi1 = mod289(Pi1);
+                                                vec3 Pf0 = fract(P); vec3 Pf1 = Pf0 - vec3(1.0);
+                                                vec4 ix = vec4(Pi0.x, Pi1.x, Pi0.x, Pi1.x); vec4 iy = vec4(Pi0.yy, Pi1.yy); vec4 iz0 = Pi0.zzzz; vec4 iz1 = Pi1.zzzz;
+                                                vec4 ixy = permute(permute(ix) + iy); vec4 ixy0 = permute(ixy + iz0); vec4 ixy1 = permute(ixy + iz1);
+                                                vec4 gx0 = ixy0 * (1.0 / 7.0); vec4 gy0 = fract(floor(gx0) * (1.0 / 7.0)) - 0.5; gx0 = fract(gx0);
+                                                vec4 gz0 = vec4(0.5) - abs(gx0) - abs(gy0); vec4 sz0 = step(gz0, vec4(0.0)); gx0 -= sz0 * (step(0.0, gx0) - 0.5); gy0 -= sz0 * (step(0.0, gy0) - 0.5);
+                                                vec4 gx1 = ixy1 * (1.0 / 7.0); vec4 gy1 = fract(floor(gx1) * (1.0 / 7.0)) - 0.5; gx1 = fract(gx1);
+                                                vec4 gz1 = vec4(0.5) - abs(gx1) - abs(gy1); vec4 sz1 = step(gz1, vec4(0.0)); gx1 -= sz1 * (step(0.0, gx1) - 0.5); gy1 -= sz1 * (step(0.0, gy1) - 0.5);
+                                                vec3 g000 = vec3(gx0.x,gy0.x,gz0.x); vec3 g100 = vec3(gx0.y,gy0.y,gz0.y); vec3 g010 = vec3(gx0.z,gy0.z,gz0.z); vec3 g110 = vec3(gx0.w,gy0.w,gz0.w);
+                                                vec3 g001 = vec3(gx1.x,gy1.x,gz1.x); vec3 g101 = vec3(gx1.y,gy1.y,gz1.y); vec3 g011 = vec3(gx1.z,gy1.z,gz1.z); vec3 g111 = vec3(gx1.w,gy1.w,gz1.w);
+                                                vec4 norm0 = taylorInvSqrt(vec4(dot(g000, g000), dot(g010, g010), dot(g100, g100), dot(g110, g110)));
+                                                g000 *= norm0.x; g010 *= norm0.y; g100 *= norm0.z; g110 *= norm0.w;
+                                                vec4 norm1 = taylorInvSqrt(vec4(dot(g001, g001), dot(g011, g011), dot(g101, g101), dot(g111, g111)));
+                                                g001 *= norm1.x; g011 *= norm1.y; g101 *= norm1.z; g111 *= norm1.w;
+                                                float n000 = dot(g000, Pf0); float n100 = dot(g100, vec3(Pf1.x, Pf0.yz)); float n010 = dot(g010, vec3(Pf0.x, Pf1.y, Pf0.z)); float n110 = dot(g110, vec3(Pf1.xy, Pf0.z));
+                                                float n001 = dot(g001, vec3(Pf0.xy, Pf1.z)); float n101 = dot(g101, vec3(Pf1.x, Pf0.y, Pf1.z)); float n011 = dot(g011, vec3(Pf0.x, Pf1.yz)); float n111 = dot(g111, Pf1);
+                                                vec3 fade_xyz = Pf0*Pf0*Pf0*(Pf0*(Pf0*6.0-15.0)+10.0);
+                                                vec4 n_z = mix(vec4(n000, n100, n010, n110), vec4(n001, n101, n011, n111), fade_xyz.z);
+                                                vec2 n_yz = mix(n_z.xy, n_z.zw, fade_xyz.y);
+                                                float n_xyz = mix(n_yz.x, n_yz.y, fade_xyz.x);
+                                                return 2.2 * n_xyz;
+                                            }`,
+                                        "turbulence": `
+                                            float turbulence( vec3 p ) {
+                                                float w = 100.0; float t = -0.5;
+                                                for (int i = 0; i < 10; i++){ float f = w; t += abs( pnoise( f * p ) / f ); f *= 2.0; }
+                                                return t;
+                                            }`
+                                    }
+                                    });
+                                } catch (e) {
+                                    console.warn('ShaderMaterial for core failed, falling back to MeshStandardMaterial:', e && e.message);
+                                    coreMat = new THREE.MeshStandardMaterial({ color: 0x8139f5, metalness: 0.6, roughness: 0.2 });
+                                }
+                                const core = new THREE.Mesh(coreGeo, coreMat);
+                                group.add(core);
+
+                                // 周囲を飛び交うデータパーティクル
+                                const particlesGeo = new THREE.BufferGeometry();
+                                const particlesCnt = 20000;
+                                const posArray = new Float32Array(particlesCnt * 3);
+                                for(let i = 0; i < particlesCnt * 3; i++) {
+                                    posArray[i] = (Math.random() - 0.5) * 40;
+                                }
+                                particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+                                const particlesMat = new THREE.PointsMaterial({ size: 0.05, color: 0x00cde9, blending: THREE.AdditiveBlending });
+                                const particles = new THREE.Points(particlesGeo, particlesMat);
+                                group.add(particles);
+                                
+                                group.userData.core = core; group.userData.particles = particles;
+                                this.activeObject = group;
+                                sounds.neural_network_hum.start();
+                                startSoundLoop('creator');
+                                activeAnimationLoops.push(soundLoops.creator);
+                                this.scene.add(new THREE.PointLight(0x8139f5, 2.5, 80));
+                            } 
+                            // ===================================================
+                            // --- シンガーソングライター演出 (ド派手バージョン) ---
+                            // ===================================================
+                            else if (type === 'singer') {
+                                this.camera.position.set(0, 0, 30);
+                                this.camera.lookAt(0,0,0);
+                                this.analyser = new Tone.Analyser('fft', 1024);
+                                if(sounds.music_pulse) sounds.music_pulse.connect(this.analyser);
+                                const group = new THREE.Group();
+
+                                // 音楽に反応する銀河のようなパーティクル
+                                const particlesGeo = new THREE.BufferGeometry();
+                                const particlesCnt = 15000;
+                                const posArray = new Float32Array(particlesCnt * 3);
+                                const velocityArray = new Float32Array(particlesCnt * 3);
+                                for(let i = 0; i < particlesCnt; i++) {
+                                    posArray[i*3+0] = (Math.random() - 0.5) * 25;
+                                    posArray[i*3+1] = (Math.random() - 0.5) * 25;
+                                    posArray[i*3+2] = (Math.random() - 0.5) * 25;
+                                    velocityArray[i*3+0] = (Math.random() - 0.5) * 0.1;
+                                    velocityArray[i*3+1] = (Math.random() - 0.5) * 0.1;
+                                    velocityArray[i*3+2] = (Math.random() - 0.5) * 0.1;
+                                }
+                                particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+                                particlesGeo.setAttribute('velocity', new THREE.BufferAttribute(velocityArray, 3));
+                                const particlesMat = new THREE.PointsMaterial({ size: 0.08, color: 0xff00ff, blending: THREE.AdditiveBlending, transparent: true, opacity: 0.8 });
+                                const galaxy = new THREE.Points(particlesGeo, particlesMat);
+                                group.add(galaxy);
+
+                                // 照明効果（レンズフレア）
+                                const pointLight = new THREE.PointLight(0xffffff, 1.5, 2000);
+                                pointLight.position.set(0,0,0);
+                                this.scene.add(pointLight);
+                                const textureLoader = new THREE.TextureLoader();
+                                const textureFlare0 = textureLoader.load( "https://threejs.org/examples/textures/lensflare/lensflare0.png" );
+                                const lensflare = new THREE.Lensflare();
+                                lensflare.addElement( new THREE.LensflareElement( textureFlare0, 512, 0, pointLight.color ) );
+                                pointLight.add( lensflare );
+
+                                group.userData.galaxy = galaxy;
+                                this.activeObject = group;
+                                
+                                startSoundLoop('singer');
+                                activeAnimationLoops.push(soundLoops.singer);
+                                const loop = new Tone.Loop(time => { if(sounds.music_pulse) sounds.music_pulse.triggerAttackRelease(`C${Math.floor(Math.random()*3)+2}`, "4n", time); }, "8n").start();
+                                activeAnimationLoops.push(loop);
+                            }
+                            // ========================================================
+                            // --- Google AI アンバサダー演出 (ド派手バージョン) ---
+                            // ========================================================
+                            else if (type === 'ambassador') {
+                                this.camera.position.z = 20;
+                                const group = new THREE.Group();
+
+                                // デジタルな地球を生成
+                                const earthGeo = new THREE.SphereGeometry(6, 64, 64);
+                                let earthMat;
+                                try {
+                                    earthMat = new THREE.ShaderMaterial({
+                                        uniforms: { time: { value: 0 } },
+                                        vertexShader: `varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+                                        fragmentShader: `
+                                            uniform float time; varying vec2 vUv;
+                                            void main() {
+                                                float grid = step(0.95, fract(vUv.x * 20.0)) + step(0.95, fract(vUv.y * 20.0));
+                                                float glow = 1.0 - distance(vUv, vec2(0.5));
+                                                vec3 color = vec3(0.2, 0.5, 1.0) * glow;
+                                                color += vec3(grid * 0.1);
+                                                gl_FragColor = vec4(color, 1.0);
+                                            }`,
+                                        transparent: true, blending: THREE.AdditiveBlending
+                                    });
+                                } catch (e) {
+                                    console.warn('earth ShaderMaterial failed, falling back to MeshBasicMaterial:', e && e.message);
+                                    earthMat = new THREE.MeshBasicMaterial({ color: 0x2e7df6 });
+                                }
+                                const earth = new THREE.Mesh(earthGeo, earthMat);
+                                group.add(earth);
+
+                                // 大気圏の表現 (フレネル効果)
+                                const atmosphereGeo = new THREE.SphereGeometry(6.5, 64, 64);
+                                let atmosphereMat;
+                                try {
+                                    atmosphereMat = new THREE.ShaderMaterial({
+                                        uniforms: { 'c': { value: 0.5 }, 'p': { value: 4.0 } },
+                                        vertexShader: `varying vec3 vNormal; void main() { vNormal = normalize( normalMatrix * normal ); gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 ); }`,
+                                        fragmentShader: `uniform float c; uniform float p; varying vec3 vNormal;
+                                            void main() {
+                                                float intensity = pow( c - dot( vNormal, vec3( 0.0, 0.0, 1.0 ) ), p );
+                                                gl_FragColor = vec4( 0.2, 0.5, 1.0, 1.0 ) * intensity;
+                                            }`,
+                                        side: THREE.BackSide, blending: THREE.AdditiveBlending, transparent: true
+                                    });
+                                } catch (e) {
+                                    console.warn('atmosphere ShaderMaterial failed, falling back to MeshBasicMaterial:', e && e.message);
+                                    atmosphereMat = new THREE.MeshBasicMaterial({ color: 0x2e7df6, side: THREE.BackSide, transparent: true, opacity: 0.6 });
+                                }
+                                const atmosphere = new THREE.Mesh(atmosphereGeo, atmosphereMat);
+                                group.add(atmosphere);
+
+                                // 世界を飛び交うデータパケット
+                                const particles = [];
+                                const colors = [0x4285F4, 0xDB4437, 0xF4B400, 0x0F9D58];
+                                for (let i = 0; i < 500; i++) {
+                                    const material = new THREE.MeshBasicMaterial({ color: colors[i % 4] });
+                                    const particle = new THREE.Mesh(new THREE.SphereGeometry(0.08, 8, 8), material);
+                                    const startVec = new THREE.Vector3().setFromSphericalCoords(7 + Math.random(), Math.random() * Math.PI, Math.random() * Math.PI * 2);
+                                    const endVec = new THREE.Vector3().setFromSphericalCoords(7 + Math.random(), Math.random() * Math.PI, Math.random() * Math.PI * 2);
+                                    const midVec = new THREE.Vector3().lerpVectors(startVec, endVec, 0.5).multiplyScalar(0.8);
+                                    particle.userData.path = new THREE.QuadraticBezierCurve3(startVec, midVec, endVec);
+                                    particle.userData.progress = Math.random();
+                                    particle.userData.speed = Math.random() * 0.005 + 0.003;
+                                    particles.push(particle);
+                                    group.add(particle);
+                                }
+                                group.userData.earth = earth;
+                                group.userData.particles = particles;
+                                this.activeObject = group;
+                                sounds.global_data_stream.triggerAttack();
+                                startSoundLoop('ambassador');
+                                activeAnimationLoops.push(soundLoops.ambassador);
+                                const loop = new Tone.Loop(time => { if(sounds.data_packet) sounds.data_packet.triggerAttackRelease(`G${Math.floor(Math.random()*2)+5}`, "32n", time); }, "32n").start();
+                                activeAnimationLoops.push(loop);
+                            }
+                            else if (type === 'quantum') {
+                                const group = new THREE.Group();
+                                const sphereGeo = new THREE.SphereGeometry(3, 32, 32);
+                                let sphereMat;
+                                try {
+                                    sphereMat = new THREE.ShaderMaterial({
+                                        uniforms: { time: { value: 0 }, color1: { value: new THREE.Color(0x9d00ff)}, color2: { value: new THREE.Color(0x00cde9)} },
+                                        vertexShader: `varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+                                        fragmentShader: `uniform float time; uniform vec3 color1; uniform vec3 color2; varying vec2 vUv;
+                                            void main() {
+                                                float noise = fract(sin(dot(vUv * 5.0 + time, vec2(12.9898, 78.233))) * 43758.5453);
+                                                vec3 color = mix(color1, color2, smoothstep(0.4, 0.6, vUv.y + sin(vUv.x * 10.0 + time * 2.0) * 0.1));
+                                                gl_FragColor = vec4(color, noise * 0.5 + 0.5);
+                                            }`,
+                                        blending: THREE.AdditiveBlending, transparent: true
+                                    });
+                                } catch (e) {
+                                    console.warn('quantum sphere ShaderMaterial failed, falling back to MeshBasicMaterial:', e && e.message);
+                                    sphereMat = new THREE.MeshBasicMaterial({ color: 0x9d00ff, transparent: true, opacity: 0.9 });
+                                }
+                                const sphere = new THREE.Mesh(sphereGeo, sphereMat); group.add(sphere);
+                                const lineMat = new THREE.LineBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.5});
+                                const line = new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,-4,0), new THREE.Vector3(0,4,0)]), lineMat); group.add(line);
+                                this.activeObject = group;
+                                startSoundLoop('quantum');
+                                activeAnimationLoops.push(soundLoops.quantum);
+                            } else if (type === 'ai_war') {
+                                // Enhanced AI War: instanced particles + connection lines + audio-reactive pulse
+                                this.camera.position.z = 30;
+                                const group = new THREE.Group();
+                                const COUNT = 800;
+                                const HUNTER_RATIO = 0.12;
+                                const particleGeo = new THREE.SphereGeometry(0.06, 6, 6);
+                                let particleMat;
+                                try {
+                                    particleMat = new THREE.ShaderMaterial({
+                                        uniforms: { time: { value: 0 }, pulse: { value: 0 }, colorA: { value: new THREE.Color(0x00ff41) }, colorB: { value: new THREE.Color(0xff3333) } },
+                                        vertexShader: `attribute float aType; varying float vType; void main(){ vType = aType; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+                                        fragmentShader: `uniform float time; uniform float pulse; uniform vec3 colorA; uniform vec3 colorB; varying float vType; void main(){ vec3 col = mix(colorB, colorA, vType); float g = 0.25 + 0.75 * pulse * (0.5 + 0.5 * sin(time * 10.0 + vType * 6.28)); gl_FragColor = vec4(col * (0.5 + g), 1.0); }`,
+                                        blending: THREE.AdditiveBlending, transparent: true, depthWrite: false
+                                    });
+                                } catch (e) {
+                                    console.warn('ai_war ShaderMaterial failed, falling back to MeshBasicMaterial:', e && e.message);
+                                    particleMat = new THREE.MeshBasicMaterial({ color: 0x00ff41 });
+                                }
+
+                                const inst = new THREE.InstancedMesh(particleGeo, particleMat, COUNT);
+                                inst.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+                                const dummy = new THREE.Object3D();
+
+                                const positions = new Float32Array(COUNT * 3);
+                                const velocities = new Float32Array(COUNT * 3);
+                                const types = new Float32Array(COUNT);
+
+                                for (let i = 0; i < COUNT; i++) {
+                                    const isHunter = Math.random() < HUNTER_RATIO;
+                                    const x = (Math.random() - 0.5) * 40;
+                                    const y = (Math.random() - 0.5) * 40;
+                                    const z = (Math.random() - 0.5) * 40;
+                                    dummy.position.set(x, y, z);
+                                    const s = isHunter ? 1.6 : 1.0;
+                                    dummy.scale.setScalar(s);
+                                    dummy.updateMatrix();
+                                    inst.setMatrixAt(i, dummy.matrix);
+                                    positions[i * 3] = x; positions[i * 3 + 1] = y; positions[i * 3 + 2] = z;
+                                    velocities[i * 3] = (Math.random() - 0.5) * 0.12;
+                                    velocities[i * 3 + 1] = (Math.random() - 0.5) * 0.12;
+                                    velocities[i * 3 + 2] = (Math.random() - 0.5) * 0.12;
+                                    types[i] = isHunter ? 1 : 0;
+                                }
+                                inst.instanceMatrix.needsUpdate = true;
+                                // attach custom instanced attribute for shader to read type
+                                try {
+                                    inst.geometry.setAttribute('aType', new THREE.InstancedBufferAttribute(types, 1));
+                                } catch (e) { /* not critical */ }
+                                group.add(inst);
+
+                                // Connection lines (visualize engagements)
+                                const maxConnections = 600;
+                                const lineGeom = new THREE.BufferGeometry();
+                                const linePositions = new Float32Array(maxConnections * 2 * 3);
+                                lineGeom.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
+                                const lineMat = new THREE.LineBasicMaterial({ color: 0x00ff41, transparent: true, opacity: 0.6 });
+                                const lines = new THREE.LineSegments(lineGeom, lineMat);
+                                group.add(lines);
+
+                                group.userData = { inst, positions, velocities, types, lines, linePositions, count: COUNT, maxConnections };
+                                // preserve analyser reference if available
+                                if (this.analyser) group.userData.analyser = this.analyser;
+
+                                this.activeObject = group;
+                                // start some battle ambience if available
+                                try { startSoundLoop('battleAmbience'); activeAnimationLoops.push(soundLoops.battleAmbience); } catch (e) { /* ignore */ }
+                            } else if (type === 'singularity') {
+                                this.camera.position.z = 25;
+                                const group = new THREE.Group();
+                                const coreGeo = new THREE.IcosahedronGeometry(1.5, 4);
+                                const coreMat = new THREE.MeshBasicMaterial({color: 0x000000});
+                                const core = new THREE.Mesh(coreGeo, coreMat); group.add(core);
+                                const particleMat = new THREE.MeshBasicMaterial({color: 0xffffff});
+                                const particles = [];
+                                for(let i=0; i<2000; i++) {
+                                    const p = new THREE.Mesh(new THREE.SphereGeometry(0.05, 4, 4), particleMat);
+                                    p.position.setFromSphericalCoords(Math.random() * 20 + 5, Math.random() * Math.PI, Math.random() * Math.PI * 2);
+                                    p.userData.velocity = new THREE.Vector3().sub(p.position).normalize().multiplyScalar(Math.random() * 0.05 + 0.02);
+                                    particles.push(p); group.add(p);
+                                }
+                                group.userData.particles = particles; this.activeObject = group;
+                                sounds.singularity_rumble.start();
+                                startSoundLoop('singularity');
+                                activeAnimationLoops.push(soundLoops.singularity);
+                            }
+                            this.scene.add(this.activeObject);
+                            this.scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+                            if (Tone.Transport.state !== 'started') Tone.Transport.start();
+                            this.animate();
+                            return Promise.resolve();
+                        },
+                        animate() {
+                            this.cancelId = requestAnimationFrame(this.animate.bind(this));
+                            const delta = this.clock.getDelta(); const time = this.clock.getElapsedTime();
+                            if (this.activeObject) {
+                                this.activeObject.rotation.y += delta * 0.05; // 少しゆっくり回転
+                                if (this.activeObject.material && this.activeObject.material.uniforms && this.activeObject.material.uniforms.time) { 
+                                    this.activeObject.material.uniforms.time.value = time; 
+                                }
+
+                                // AI Creator Animation
+                                if (this.activeObject.userData.core) {
+                                    this.activeObject.userData.core.material.uniforms.time.value = time * 0.5;
+                                    this.activeObject.userData.particles.rotation.y += 0.001;
+                                    this.activeObject.userData.particles.rotation.x += 0.0005;
+                                }
+                                
+                                // Singer-Songwriter Animation
+                                if (this.analyser && this.activeObject.userData.galaxy) {
+                                    const values = this.analyser.getValue();
+                                    if (values instanceof Float32Array) {
+                                        const avgFrequency = values.reduce((a, b) => a + b, 0) / values.length;
+                                        const normalizedFreq = isFinite(avgFrequency) ? (avgFrequency + 140) / 100 : 0;
+                                        
+                                        const positions = this.activeObject.userData.galaxy.geometry.attributes.position.array;
+                                        const velocities = this.activeObject.userData.galaxy.geometry.attributes.velocity.array;
+                                        const center = new THREE.Vector3(0,0,0);
+                                        for(let i = 0; i < positions.length / 3; i++) {
+                                            const p = new THREE.Vector3(positions[i*3], positions[i*3+1], positions[i*3+2]);
+                                            const dist = p.distanceTo(center);
+                                            const force = (1 / (dist * dist + 1)) * normalizedFreq * 0.5;
+                                            const dir = p.clone().normalize().multiplyScalar(-force);
+                                            velocities[i*3] += dir.x;
+                                            velocities[i*3+1] += dir.y;
+                                            velocities[i*3+2] += dir.z;
+                                            positions[i*3] += velocities[i*3] * delta;
+                                            positions[i*3+1] += velocities[i*3+1] * delta;
+                                            positions[i*3+2] += velocities[i*3+2] * delta;
+                                            
+                                            velocities[i*3] *= 0.98; velocities[i*3+1] *= 0.98; velocities[i*3+2] *= 0.98;
+                                        }
+                                        this.activeObject.userData.galaxy.geometry.attributes.position.needsUpdate = true;
+                                        
+                                        const hue = (time * 0.05) % 1;
+                                        this.activeObject.userData.galaxy.material.color.setHSL(hue, 1, 0.5 + normalizedFreq * 0.2);
+                                    }
+                                }
+
+                                /*
+                                 Patch summary (変更点):
+                                 - BigInt の読みやすい表示を追加しました（humanReadableBigInt）。
+                                 - ジャンプ入力で「兆」単位やカンマ区切りを受け付け、大きすぎるインデックスは割合スクロールにフォールバックします。
+                                 - MAX INTEGER 演出で大きな数値を見やすく表示し、ツールチップで完全な桁数を確認できます。
+                                 - Falcon vs SPIDER のログジェネレータを演出的に強化し、短いシネマティック導入ログを端末に流すようにしました。
+
+                                 How to test (ローカルでの確認):
+                                 1) このファイルをブラウザで開き、'CONNECTION START' を押して端末画面を表示します。
+                                 2) 端末の Jump 入力に「9000兆」や「9007199254740991」を入力してジャンプを試してください。
+                                 3) MAX INTEGER 表示をトリガーすると、タイトルが「約X兆」の形式で表示され、タイトルにマウスオーバーで完全な数値が見られます。
+
+                                 注意: Tone.js や WebGL の一部は file:// で制限される場合があります。サウンドが再生されない場合はローカルサーバー（例: Python -m http.server）で提供すると良いです。
+                                */
+                                
+                                // Ambassador Animation
+                                if (this.activeObject.userData.earth) {
+                                    this.activeObject.userData.earth.material.uniforms.time.value = time;
+                                    this.activeObject.userData.particles.forEach(p => {
+                                        p.userData.progress = (p.userData.progress + p.userData.speed) % 1;
+                                        p.userData.path.getPoint(p.userData.progress, p.position);
+                                    });
+                                }
+                                
+                                // Original animations (Quantum, AI War, Singularity)
+                                if (this.activeObject.userData.pulses) { // Original 'creator'
+                                    this.activeObject.userData.pulses.forEach(pulse => {
+                                        pulse.userData.progress = (pulse.userData.progress + 0.015) % 1;
+                                        pulse.position.lerpVectors(pulse.userData.start, pulse.userData.end, pulse.userData.progress);
+                                    });
+                                }
+                                if (this.activeObject.userData.inst) { // Enhanced AI War (instanced)
+                                    const ud = this.activeObject.userData;
+                                    const inst = ud.inst; const cnt = ud.count;
+                                    const positions = ud.positions; const velocities = ud.velocities; const types = ud.types;
+                                    // audio-reactive pulse (0..1)
+                                    let pulse = 0;
+                                    try {
+                                        if (ud.analyser) {
+                                            const v = ud.analyser.getValue();
+                                            if (v && v.length) {
+                                                const avg = v.reduce((a,b)=>a+b,0)/v.length;
+                                                pulse = Math.min(1, Math.max(0, (avg + 140) / 100));
+                                            }
+                                        }
+                                    } catch (e) { /* ignore analyser errors */ }
+                                    // update positions
+                                    const tmp = new THREE.Object3D();
+                                    for (let i = 0; i < cnt; i++) {
+                                        positions[i*3] += velocities[i*3] * delta * (1 + pulse * 2);
+                                        positions[i*3+1] += velocities[i*3+1] * delta * (1 + pulse * 2);
+                                        positions[i*3+2] += velocities[i*3+2] * delta * (1 + pulse * 2);
+                                        // wrap bounds
+                                        for (let k=0;k<3;k++) { if (Math.abs(positions[i*3+k]) > 40) positions[i*3+k] *= -0.9; }
+                                        tmp.position.set(positions[i*3], positions[i*3+1], positions[i*3+2]);
+                                        const s = types[i] ? 1.6 : 1.0; tmp.scale.setScalar(s);
+                                        tmp.updateMatrix(); inst.setMatrixAt(i, tmp.matrix);
+                                    }
+                                    inst.instanceMatrix.needsUpdate = true;
+                                    // update shader uniform pulse if present
+                                    try { if (inst.material && inst.material.uniforms && 'pulse' in inst.material.uniforms) inst.material.uniforms.pulse.value = pulse; } catch(e){}
+                                    // update lines (random subset of near neighbors)
+                                    try {
+                                        const lp = ud.linePositions;
+                                        let lpIdx = 0;
+                                        const maxC = ud.maxConnections;
+                                        for (let i = 0; i < maxC; i++) {
+                                            const a = Math.floor(Math.random() * cnt);
+                                            const b = Math.floor(Math.random() * cnt);
+                                            lp[lpIdx++] = positions[a*3]; lp[lpIdx++] = positions[a*3+1]; lp[lpIdx++] = positions[a*3+2];
+                                            lp[lpIdx++] = positions[b*3]; lp[lpIdx++] = positions[b*3+1]; lp[lpIdx++] = positions[b*3+2];
+                                        }
+                                        ud.lines.geometry.attributes.position.needsUpdate = true;
+                                    } catch (e) { /* ignore line updates */ }
+                                } else if (this.activeObject.userData.particles && this.activeObject.userData.particles[0] && this.activeObject.userData.particles[0].userData.isHunter !== undefined) { // AI War (legacy)
+                                    this.activeObject.userData.particles.forEach(p => { p.position.add(p.userData.velocity); if(p.position.length() > 20) p.position.multiplyScalar(-1); });
+                                } else if (this.activeObject.userData.particles && this.activeObject.userData.particles[0] && this.activeObject.userData.particles[0].userData.velocity && !this.activeObject.userData.earth) { // Singularity
+                                    this.activeObject.userData.particles.forEach(p => {
+                                        p.position.add(p.userData.velocity);
+                                        if(p.position.length() < 1.5) {
+                                            p.position.setFromSphericalCoords(Math.random() * 20 + 5, Math.random() * Math.PI, Math.random() * Math.PI * 2);
+                                        }
+                                    });
+                                }
+                            }
+                            this.renderer.render(this.scene, this.camera);
+                        },
+                        stopCurrentAnimation() {
+                            if(this.cancelId) cancelAnimationFrame(this.cancelId); this.cancelId = null;
+                            
+                            const now = Tone && Tone.now ? Tone.now() : null;
+                            activeAnimationLoops.forEach(loop => {
+                                if (!loop) return;
+                                try {
+                                    if (typeof loop.stop === 'function') {
+                                        try { if (now !== null) loop.stop(now); else loop.stop(); } catch (e) { try { loop.stop(); } catch (e2) { /* ignore */ } }
+                                    }
+                                    if (typeof loop.dispose === 'function') {
+                                        try { loop.dispose(); } catch (e) { /* ignore */ }
+                                    }
+                                    if (typeof loop.cancel === 'function') {
+                                        try { loop.cancel(); } catch (e) { /* ignore */ }
+                                    }
+                                } catch (e) { /* ignore */ }
+                            });
+                            activeAnimationLoops = [];
+
+                            // Safely stop / release various instruments — use try/catch and fallbacks to avoid passing invalid times to Tone internals
+                            try { if (sounds.neural_network_hum && typeof sounds.neural_network_hum.stop === 'function') { if (now !== null) try { sounds.neural_network_hum.stop(now); } catch(e){ try{ sounds.neural_network_hum.stop(); }catch(e2){}} } } catch(e){}
+                            try { if (sounds.global_data_stream && typeof sounds.global_data_stream.triggerRelease === 'function') { if (now !== null) try { sounds.global_data_stream.triggerRelease(now); } catch(e){ try{ sounds.global_data_stream.triggerRelease(); }catch(e2){} } } } catch(e){}
+                            try { if (sounds.singularity_rumble && typeof sounds.singularity_rumble.stop === 'function') { if (now !== null) try { sounds.singularity_rumble.stop(now); } catch(e){ try{ sounds.singularity_rumble.stop(); }catch(e2){} } } } catch(e){}
+                            try { if (sounds.ambassador_drone && typeof sounds.ambassador_drone.stop === 'function') { if (now !== null) try { sounds.ambassador_drone.stop(now); } catch(e){ try{ sounds.ambassador_drone.stop(); }catch(e2){} } } } catch(e){}
+                            try { if (sounds.quantum_drone && typeof sounds.quantum_drone.triggerRelease === 'function') { if (now !== null) try { sounds.quantum_drone.triggerRelease(now); } catch(e){ try{ sounds.quantum_drone.triggerRelease(); }catch(e2){} } } } catch(e){}
+                            
+                            if(this.activeObject) { this.scene.remove(this.activeObject); } this.activeObject = null; this.analyser = null;
+                            while(this.scene && this.scene.children.length > 0){ this.scene.remove(this.scene.children[0]); }
+                        },
+                        stop() { this.stopCurrentAnimation(); canvases[1].classList.remove('visible'); }
+                    },
+                    matrix: {
+                        ctx: canvases[0].getContext('2d'), interval: null,
+                        start() {
+                            canvases[0].classList.add('visible');
+                            this.resize();
+                            const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@#$%^&*()*&^%+-/~{[|`]}アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+                            const fontSize = 16;
+                            const columns = Math.floor(canvases[0].width / fontSize);
+                            const drops = Array(columns).fill(1).map(() => Math.floor(Math.random() * (canvases[0].height/fontSize)));
+                            
+                            if (Tone.Transport.state !== 'started') Tone.Transport.start();
+                            try {
+                                const loop = new Tone.Loop(t => { if(sounds.matrix) sounds.matrix.triggerAttack(Tone.Frequency(Math.random() * 24 + 48, "midi").toNote(), t); }, "16n");
+                                soundLoops.matrixVisual = loop;
+                                startSoundLoop('matrixVisual');
+                                activeAnimationLoops.push(loop);
+                                // schedule bgmMatrix safely
+                                soundLoops.bgmMatrix = sounds.bgmMatrix;
+                                startSoundLoop('bgmMatrix');
+                                activeAnimationLoops.push(sounds.bgmMatrix);
+                            } catch (e) { console.warn('Failed to start matrix loops safely:', e && e.message); }
+                           
+                            const draw = () => {
+                                // gentle green rain backdrop for restoration
+                                this.ctx.fillStyle = 'rgba(0, 8, 6, 0.06)';
+                                    this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+                                    this.ctx.fillStyle = '#66FF88'; this.ctx.font = fontSize + 'px monospace';
+                                for (let i = 0; i < drops.length; i++) {
+                                    const text = chars.charAt(Math.floor(Math.random() * chars.length));
+                                    this.ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                                    if (drops[i] * fontSize > this.ctx.canvas.height && Math.random() > 0.98) drops[i] = 0;
+                                    drops[i]++;
+                                }
+                            };
+                            this.interval = setInterval(draw, 40);
+                            return Promise.resolve();
+                        },
+                        stop() { 
+                            if(this.interval) clearInterval(this.interval); this.interval = null;
+                            activeAnimationLoops.forEach(loop => {
+                                try {
+                                    if (!loop) return;
+                                    if (typeof loop.stop === 'function') loop.stop(0);
+                                    if (typeof loop.dispose === 'function') loop.dispose();
+                                } catch (e) { console.warn('Error stopping animation loop:', e && e.message); }
+                            });
+                             activeAnimationLoops = [];
+                             if(Tone.Transport.state === 'started') {
+                                Tone.Transport.stop();
+                                Tone.Transport.cancel(0);
+                            }
+                        },
+                        resize() { canvases[0].width = window.innerWidth; canvases[0].height = window.innerHeight; }
+                    },
+                    falconBoot: {
+                        falconScreen: document.getElementById('falcon-screen'),
+                        
+                        start() {
+                            try {
+                                if (canvases[0]) { canvases[0].width = window.innerWidth; canvases[0].height = window.innerHeight; canvases[0].classList.add('visible'); }
+                                if (this.falconScreen) { this.falconScreen.style.pointerEvents = 'auto'; this.falconScreen.style.opacity = '1'; }
+                            } catch (e) { console.warn('falconBoot.start failed:', e && e.message); }
+                        },
+                        
+                        stop() {
+                            if (this.falconScreen) {
+                                this.falconScreen.style.opacity = '0';
+                                this.falconScreen.style.pointerEvents = 'none';
+                            }
+                        }
+                    }
+                };
+                
+                // --- シーケンスランナー ---
+                // Chapter orchestration helper: triggers chapter-specific visuals/sounds
+                const performChapterEffect = async (chapter) => {
+                    try {
+                        if (!chapter) return;
+                        console.debug('[CHAPTER] triggering', chapter);
+                        switch (chapter) {
+                            case 'breach':
+                                // SPIDER sudden assault: red flashes, alarms, heavy shake
+                                try { playSoundWithVolume('alarm', 1.2); } catch (e) {}
+                                impactBurst(1.6, 'spider');
+                                setTimeout(() => impactBurst(1.0, 'spider'), 320);
+                                screenShake(1.2, 700);
+                                break;
+                            case 'awakening':
+                                // FALCON awakening: show falcon boot and emblem
+                                try { animations.falconBoot.start(); } catch (e) {}
+                                try { playSoundWithVolume('falcon_boot', 1.0); } catch (e) {}
+                                await new Promise(r => setTimeout(r, 900));
+                                break;
+                            case 'quantum':
+                                // Quantum front: temporary CODE VORTEX banner
+                                try {
+                                    const v = document.createElement('div');
+                                    v.className = 'system-text';
+                                    v.style.position = 'absolute'; v.style.left = '50%'; v.style.top = '8%'; v.style.transform = 'translateX(-50%)';
+                                    v.style.zIndex = 10030; v.style.fontFamily = "'Orbitron', monospace"; v.style.fontSize = '28px'; v.style.padding = '8px 18px'; v.style.borderRadius = '6px';
+                                    v.style.background = 'radial-gradient(circle, rgba(157,0,255,0.12), rgba(0,0,0,0))'; v.textContent = 'CODE VORTEX — 約1,000兆 行';
+                                    terminalOutput.appendChild(v);
+                                    setTimeout(() => { if (v && v.parentNode) v.parentNode.removeChild(v); }, 3200);
+                                } catch (e) {}
+                                break;
+                            case 'ai_war':
+                                // AI Ghost War: rapid particle impacts and alternating color bursts
+                                for (let i=0;i<6;i++) { setTimeout(() => impactBurst(0.9 + Math.random()*1.2, i%2===0? 'falcon' : 'spider'), i*220); }
+                                try { startSoundLoop('aiWar'); } catch(e){}
+                                break;
+                            case 'singularity':
+                                // Singularity: darken, rumble and draw focus to core
+                                try { playSoundWithVolume('singularity_rumble', 1.3); } catch(e){}
+                                impactBurst(1.8, 'spider');
+                                break;
+                            case 'ultimate':
+                                // Ultimate siege: massive impacts and full-scale spectacle
+                                impactBurst(2.2, 'falcon'); impactBurst(1.8, 'spider');
+                                try { playSoundWithVolume('system_damage', 1.4); } catch(e){}
+                                break;
+                            case 'restoration':
+                                // Calm: stop aggressive loops, start gentle matrix rain and soft chime
+                                try { stopSoundLoop('aiWar'); stopSoundLoop('singularity'); } catch(e){}
+                                try { startSoundLoop('matrixVisual'); startSoundLoop('bgmMatrix'); } catch(e){}
+                                try { playSoundWithVolume('counter_success', 0.6); } catch(e){}
+                                break;
+                            default:
+                                break;
+                        }
+                    } catch (e) { console.warn('performChapterEffect failed', e && e.message); }
+                };
+
+                const runSequence = async (steps) => {
+                    for (const step of steps) {
+                        console.debug('[SEQUENCE] starting step:', step && step.name);
+                        try {
+                            if(step.clear) terminalOutput.innerHTML = '';
+                            if (step.bgmStart) startBgm();
+                            
+                            if (step.chapter) {
+                                try { await performChapterEffect(step.chapter); } catch (e) { /* ignore */ }
+                            }
+                            if (step.log) {
+                                // --- PERFORMANCE OPTIMIZATION ---
+                                // Check if the log is a placeholder for a massive amount of data
+                                if (step.log.isPlaceholder) {
+                                    if(step.soundLoopStart) startSoundLoop(step.soundLoopStart);
+                                    const { count, generator } = step.log;
+
+                                    // VirtualLogViewer を使って超巨大ログを仮想化表示
+                                    // 既存の terminalOutput の内容をクリアして仮想ビューに置き換え
+                                    terminalOutput.innerHTML = '';
+                                    // 簡易ジャンプ UI（右上に小さなコントロールを置く）
+                                    const ctrl = document.createElement('div');
+                                    ctrl.style.position = 'absolute';
+                                    ctrl.style.right = '10px';
+                                    ctrl.style.top = '10px';
+                                    ctrl.style.zIndex = '9999';
+                                    ctrl.style.display = 'flex';
+                                    ctrl.style.gap = '6px';
+
+                                    const input = document.createElement('input');
+                                    input.type = 'number';
+                                    input.placeholder = '行番号';
+                                    input.style.width = '120px';
+                                    input.style.padding = '6px';
+                                    input.style.borderRadius = '6px';
+                                    input.style.border = '1px solid rgba(0,255,65,0.2)';
+                                    input.style.background = 'rgba(0,0,0,0.6)';
+                                    input.style.color = '#fff';
+
+                                    const btn = document.createElement('button');
+                                    btn.textContent = 'ジャンプ';
+                                    btn.style.padding = '6px 8px';
+                                    btn.style.borderRadius = '6px';
+                                    btn.style.border = '1px solid rgba(0,255,65,0.2)';
+                                    btn.style.background = 'transparent';
+                                    btn.style.color = '#0f0';
+
+                                    ctrl.appendChild(input);
+                                    ctrl.appendChild(btn);
+                                    terminalOutput.appendChild(ctrl);
+
+                                    // terminalOutput をスクロールコンテナとして使うために高さを明示
+                                    terminalOutput.style.position = 'relative';
+                                    terminalOutput.style.overflowY = 'auto';
+                                    terminalOutput.style.height = 'calc(100% - 30px)';
+
+                                    const viewer = new VirtualLogViewer(terminalOutput, count, generator, { lineHeight: 20, buffer: 80, controlsHidden: true });
+
+                                    btn.addEventListener('click', () => {
+                                        const idx = parseInt(input.value || '0', 10);
+                                        if (Number.isFinite(idx)) {
+                                            viewer.scrollToIndex(idx);
+                                        }
+                                    });
+
+                                    // 最後の行へスクロール（視覚的効果） — 巨大数を安全に扱う
+                                    try {
+                                        let lastIndex = 0;
+                                        if (typeof count === 'bigint') lastIndex = Number(count - 1n);
+                                        else if (!Number.isFinite(count) || count > 1e12) lastIndex = Math.floor(Math.min(count - 1, 1e12));
+                                        else lastIndex = Math.max(0, Math.floor(count - 1));
+                                        viewer.scrollToIndex(lastIndex);
+                                    } catch (e) {
+                                        // Fallback: jump to index 0 if anything goes wrong
+                                        console.warn('Failed to compute last index for huge count, defaulting to 0', e && e.message);
+                                        viewer.scrollToIndex(0);
+                                    }
+
+                                    // 特別演出: Number.MAX_SAFE_INTEGER を使った場合は大カウンタ表示を同期させる
+                                    if (count === Number.MAX_SAFE_INTEGER) {
+                                        try {
+                                            createMaxIntegerSpectacle(count, viewer, Math.max(6000, step.duration || 8000));
+                                        } catch (e) {
+                                            console.warn('Could not run max-integer spectacle:', e);
+                                        }
+                                    }
+                                } else {
+                                     // For smaller logs, type them out one by one
+                                     for(const line of step.log) await typeLog(line);
+                                }
+                            }
+
+                            if (step.animationStart) {
+                                try { await step.animationStart(); } catch (e) { console.warn('animationStart failed for step:', step.name, e && e.message); }
+                            }
+                            if (step.sound && !step.log) playSound(step.sound); // Play sound if not handled by typeLog
+                            if (step.effect) addEffect(step.effect);
+                            
+                            if (step.duration) await new Promise(res => setTimeout(res, step.duration));
+                            
+                            if (step.soundLoopStop) stopSoundLoop(step.soundLoopStop);
+                            if (step.animationStop) {
+                                try { await step.animationStop(); } catch (e) { console.warn('animationStop failed for step:', step.name, e && e.message); }
+                            }
+                            if (step.bgmStop) stopBgm();
+
+                        } catch (error) {
+                            console.error(`Error in sequence step "${step.name}":`, error);
+                            stopBgm();
+                            document.body.style.animation = '';
+                            Object.values(animations).forEach(anim => { if (anim.stop) anim.stop(); });
+                            throw error;
+                        }
+                    }
+                };
+
+                // Present a lightweight prompt to let the user skip the immersive demo.
+                const showSkipPrompt = () => {
+                    return new Promise(resolve => {
+                        // modal overlay
+                        const modal = document.createElement('div');
+                        modal.style.position = 'absolute';
+                        modal.style.left = '0'; modal.style.top = '0';
+                        modal.style.width = '100%'; modal.style.height = '100%';
+                        modal.style.display = 'flex'; modal.style.alignItems = 'center'; modal.style.justifyContent = 'center';
+                        modal.style.zIndex = '10020'; modal.style.pointerEvents = 'auto';
+
+                        const box = document.createElement('div');
+                        box.style.background = 'rgba(0,0,0,0.85)'; box.style.border = '1px solid rgba(0,255,65,0.12)';
+                        box.style.padding = '18px'; box.style.borderRadius = '8px'; box.style.textAlign = 'center';
+                        box.style.maxWidth = '720px'; box.style.width = '90%';
+
+                        const msg = document.createElement('div');
+                        msg.innerHTML = '<p style="color:#0fc; font-family: Orbitron, monospace; font-size: 1.05rem; margin-bottom:12px">演出を選択してください</p><p style="color:#ddd; margin-bottom:14px">フル演出（推奨）／マトリックスのみ／旧演出から選べます。</p>';
+                        box.appendChild(msg);
+
+                        const btnRow = document.createElement('div'); btnRow.style.display = 'flex'; btnRow.style.justifyContent = 'center'; btnRow.style.gap = '12px'; btnRow.style.flexWrap = 'wrap';
+                        const no = document.createElement('button'); no.textContent = '1. フル演出を再生';
+                        const yes = document.createElement('button'); yes.textContent = '2. マトリックスのみ';
+                        const classic = document.createElement('button'); classic.textContent = '3. 旧演出を見る';
+                        [yes, no, classic].forEach(b => { b.style.padding='10px 16px'; b.style.borderRadius='6px'; b.style.cursor='pointer'; b.style.border='1px solid rgba(255,255,255,0.08)'; b.style.background='transparent'; b.style.color='#0f0'; b.style.fontFamily='Orbitron, monospace'; });
+                        no.style.borderColor = 'rgba(157,0,255,0.6)'; no.style.color = '#d9b3ff';  // 紫色 (フル演出)
+                        yes.style.borderColor = 'rgba(0,205,233,0.6)'; yes.style.color = '#0ef';    // 青色 (マトリックス)
+                        classic.style.borderColor = 'rgba(0,255,65,0.6)'; classic.style.color = '#0f0';  // 緑色 (旧演出)
+
+                        btnRow.appendChild(no); btnRow.appendChild(yes); btnRow.appendChild(classic);
+                        box.appendChild(btnRow); modal.appendChild(box);
+                        uiOverlay.appendChild(modal);
+
+                        const cleanup = () => { if (modal && modal.parentNode) modal.parentNode.removeChild(modal); };
+                        yes.addEventListener('click', () => { cleanup(); resolve(true); });      // マトリックスのみ
+                        no.addEventListener('click', () => { cleanup(); resolve(false); });      // フル演出
+                        classic.addEventListener('click', () => { window.location.href = './classic_opening.html'; });
+                    });
+                };
+
+                const commenceExperience = async (skipToMatrix) => {
+                    activationButton.style.display = 'none';
+                    try {
+                        await Tone.start();
+                        console.log("Audio context started.");
+                        setupSounds();
+                        if (Tone.Transport.state !== 'started') Tone.Transport.start();
+
+                        const introMessageScreen = document.getElementById('intro-message-screen');
+                        const introMessageText = document.getElementById('intro-message-text');
+                        const showMessage = async (text, duration) => {
+                            introMessageText.textContent = text;
+                            introMessageText.classList.add('visible');
+                            await new Promise(res => setTimeout(res, duration));
+                            introMessageText.classList.remove('visible');
+                            await new Promise(res => setTimeout(res, 1000));
+                        };
+
+                        if (!skipToMatrix) {
+                            // show intro messaging for full experience
+                            introMessageScreen.classList.add('visible');
+                            await showMessage('今から、JavaScriptで安全に扱える最大整数、9,007,199,254,740,991（約9000兆）ログを使用した、世界最大スケールの特別演出が始まります', 4500);
+                            await showMessage('それでは、僕が創った疑似体験の世界へようこそ', 3500);
+                            introMessageScreen.classList.remove('visible');
+                            await new Promise(res => setTimeout(res, 1000));
+
+                            // Start the main experience
+                            uiOverlay.style.opacity = 1;
+                            terminalScreen.classList.add('visible');
+
+                            await runSequence(mainSequence);
+
+                            // Final Portal after full sequence
+                            if(sounds.final_portal) sounds.final_portal.triggerAttackRelease("2n");
+                            openingContainer.style.transition = 'opacity 2s ease-out, transform 2s ease-in';
+                            openingContainer.style.transform = 'scale(2)';
+                            openingContainer.style.opacity = 0;
+                            setTimeout(() => {
+                                sessionStorage.setItem('openingPlayed', 'true');
+                                // window.location.href = './index.html';
+                            }, 2000);
+
+                        } else {
+                            // Skip full demo: go directly to Matrix and then finish
+                            uiOverlay.style.opacity = 1;
+                            terminalScreen.classList.add('visible');
+                            try {
+                                // start matrix visuals and audio
+                                animations.matrix.start();
+                                try { startSoundLoop('matrixVisual'); startSoundLoop('bgmMatrix'); } catch(e){}
+                            } catch (e) { console.warn('Matrix start failed during skip flow:', e && e.message); }
+
+                            // Let matrix run for a comfortable duration then finish
+                            const MATRIX_RUN = 8000;
+                            await new Promise(res => setTimeout(res, MATRIX_RUN));
+
+                            // Final portal & exit
+                            if(sounds.final_portal) sounds.final_portal.triggerAttackRelease("2n");
+                            openingContainer.style.transition = 'opacity 1.5s ease-out, transform 1.5s ease-in';
+                            openingContainer.style.transform = 'scale(1.5)';
+                            openingContainer.style.opacity = 0;
+                            setTimeout(() => {
+                                // stop matrix safely
+                                try { animations.matrix.stop(); } catch(e){}
+                                sessionStorage.setItem('openingPlayed', 'true');
+                                // window.location.href = './index.html';
+                            }, 1200);
+                        }
+
+                    } catch (error) {
+                        console.error("CRITICAL OPENING SEQUENCE FAILURE:", error);
+                        try { stopBgm(); } catch (e) { /* ignore */ }
+                        try { if (Tone.Transport.state === 'started') Tone.Transport.stop(); } catch(e){}
+                        try { Tone.Transport.cancel(0); Tone.Transport.position = 0; } catch(e){}
+                        try { Object.keys(soundLoops).forEach(k => { try { stopSoundLoop(k); } catch(e){} }); } catch(e){}
+                        openingContainer.style.display = 'none'; document.body.style.cursor = 'auto';
+                    }
+                };
+
+                activationButton.addEventListener('click', async () => {
+                    // openingType に基づいて分岐
+                    const openingType = sessionStorage.getItem('openingType') || 'full';
+                    commenceExperience(openingType === 'matrix');
+                });
+
+                // Start building the mainSequence as before
+                const mainSequence = [
+                            // PHASE 1
+                            // 第1章: 侵蝕 (breach) — SPIDER の急襲を表現します。
+                            // フック: chapter='breach' -> performChapterEffect('breach') が赤フラッシュ/アラーム/シェイクを発生させます。
+                            {
+                                name: "Spider's Initial Breach",
+                                chapter: 'breach',
+                                log: [
+                                    { text: 'Accessing entry point...', prompt: '[SPIDER]> ', className: 'threat-text', logSpeed: 40, sound: 'glitch' },
+                                    { text: 'Bypassing authentication layer... Child\'s play.', prompt: '[SPIDER]> ', className: 'threat-text', logSpeed: 40, sound: 'glitch' },
+                                    { text: 'Injecting payload: \'arachnid.dll\'', prompt: '[SPIDER]> ', className: 'threat-text', logSpeed: 40, sound: 'system_damage' },
+                                    { text: 'Escalating privileges to root...', prompt: '[SPIDER]> ', className: 'threat-text', logSpeed: 40, sound: 'glitch' },
+                                    { text: 'Kernel compromised.', prompt: '[SPIDER]> ', className: 'threat-text flicker', logSpeed: 80, delayAfter: 500, sound: 'alarm' },
+                                    { text: 'This site now belongs to me.', prompt: '[SPIDER]> ', className: 'threat-text flicker', logSpeed: 80, delayAfter: 1000 },
+                                    { text: 'Welcome to my web, Ryuya.', prompt: '[SPIDER]> ', className: 'threat-text flicker', logSpeed: 120, delayAfter: 1000 },
+                                    { text: 'CRITICAL SYSTEM ALERT: UNAUTHORIZED KERNEL ACCESS DETECTED.', className: 'warning-text', logSpeed: 10, noSound: true },
+                                    { text: 'FAILSAFE PROTOCOL TRIGGERED. AWAKENING GUARDIAN...', className: 'system-text', logSpeed: 10, noSound: true, delayAfter: 500 },
+                                ],
+                                effect: 'shake-effect',
+                            },
+                            {
+                                // 第2章: 覚醒 (awakening) — FALCON の起動とエンブレム表示。
+                                // フック: chapter='awakening' -> performChapterEffect('awakening') で起動サウンド/ロゴ表示を行います。
+                                name: "Falcon Boot",
+                                chapter: 'awakening',
+                                animationStart: () => runAnimStart('falconBoot', () => { terminalScreen.style.opacity = 0; animations.falconBoot.start(); }),
+                                sound: 'falcon_boot',
+                                duration: 4000,
+                                animationStop: () => { animations.falconBoot.stop(); terminalScreen.style.opacity = 1; }
+                            },
+                             // PHASE 2
+                            // 第3章: 量子領域の攻防 (quantum) — CODE VORTEX / 量子球体表示。大量ログ（約1,000兆）を示すプレースホルダーを利用。
+                            { 
+                                name: "Battle Start",
+                                chapter: null,
+                                clear: true,
+                                bgmStart: true,
+                                log: [
+                                     { text: 'System diagnostics running...', prompt: '<span class="falcon-command-text">[FALCON]></span> ', className: 'falcon-command-text', logSpeed: 30, sound: 'data_packet' },
+                                     { text: 'Foreign process detected: \'arachnid.dll\'. Isolating thread...', prompt: '', className: 'system-text', logSpeed: 20, delayAfter: 1000, sound: 'data_packet' },
+                                     { text: 'Isolation failed. I am woven into the core. You cannot simply remove me.', prompt: '[SPIDER]> ', className: 'threat-text', logSpeed: 50, delayAfter: 500, sound: 'glitch' },
+                                ],
+                            },
+                            // PHASE 3
+                            {
+                                name: "Spider's Quantum Assault",
+                                chapter: 'quantum',
+                                animationStart: () => runAnimStart('identity.quantum', () => animations.identity.start('quantum')),
+                                log: [
+                                    { text: 'Your classical defenses are meaningless. Engaging quantum processor. Initiating Shor\'s algorithm to shatter your encryption keys.', prompt: '[SPIDER]> ', className: 'threat-text', logSpeed: 40, delayAfter: 1000, sound: 'quantum_flux' },
+                                    { text: 'Targeting RSA-4096 primary key... Qubit entanglement established... Decoherence rate at 0.01%...', prompt: '<span class="quantum-text">[QUANTUM_THREAT]></span> ', className: 'quantum-text', logSpeed: 30, delayAfter: 1500, sound: 'quantum_flux' },
+                                    { text: 'Quantum incursion detected. A bold move. Switching to post-quantum cryptography. Deploying CRYSTALS-Kyber lattice.', prompt: '<span class="falcon-command-text">[FALCON]></span> ', className: 'falcon-command-text', logSpeed: 30, delayAfter: 1000, sound: 'firewall_up' },
+                                ],
+                                duration: 3000
+                            },
+                            {
+                                name: "Falcon's Quantum Counter (2,251 Trillion lines)",
+                                chapter: 'quantum',
+                                soundLoopStart: 'dataStream',
+                                log: generateMassiveLogsPlaceholder(2251799813685248, (i) => ({
+                                    prompt: `[PQC_LATTICE_${i % 16}]: `,
+                                    text: `Generating lattice vector 0x${Math.random().toString(16).slice(2, 10)}. Solving CVP for incoming quantum state. Entanglement trap deployed. Forcing decoherence on threat vector ${i.toString().padStart(4, '0')}.`,
+                                    className: 'system-text',
+                                })),
+                                duration: 3000,
+                                soundLoopStop: 'dataStream'
+                            },
+                            {
+                                name: "Quantum Front Victory",
+                                chapter: null,
+                                animationStop: () => runAnimStop('identity', () => animations.identity.stop()),
+                                log: [
+                                    { text: 'My qubits... they\'re collapsing! You turned my entanglement against me!', prompt: '[SPIDER]> ', className: 'threat-text flicker', logSpeed: 50, delayAfter: 1000, sound: 'system_damage' },
+                                    { text: 'The quantum realm requires a delicate touch. You were clumsy. Threat neutralized.', prompt: '<span class="falcon-command-text">[FALCON]></span> ', className: 'falcon-command-text', logSpeed: 30, delayAfter: 500, sound: 'counter_success' },
+                                ]
+                            },
+                             // PHASE 4
+                            {
+                                name: "Spider's AI Ghosts",
+                                chapter: 'ai_war',
+                                animationStart: () => runAnimStart('identity.ai_war', () => animations.identity.start('ai_war')),
+                                log: [
+                                    { text: 'Clever. But brute force is not my only weapon. Unleashing polymorphic AI Ghosts. They will hunt your data, and they can\'t be caught. Their code rewrites itself every nanosecond.', prompt: '[SPIDER]> ', className: 'threat-text', logSpeed: 40, delayAfter: 1500, sound: 'glitch' },
+                                    { text: 'You cannot fight an idea. So I will create a better one. Releasing Hunter-Killer AI swarms. They don\'t hunt code. They hunt behavior.', prompt: '<span class="falcon-command-text">[FALCON]></span> ', className: 'falcon-command-text', logSpeed: 30, delayAfter: 1000, sound: 'data_packet' },
+                                ],
+                                duration: 3000
+                            },
+                            {
+                                name: "AI Ghost War (4,503 Trillion lines)",
+                                chapter: 'ai_war',
+                                soundLoopStart: 'aiWar',
+                                log: generateMassiveLogsPlaceholder(4503599627370496, (i) => ({
+                                    prompt: `[HK_AI_SWARM_${(i % 32) + 1}]: `,
+                                    text: `GHOST 0x${Math.random().toString(16).slice(2, 8)} detected at mem_addr 0x${Math.random().toString(16).slice(2, 12)}. Behavioral signature matches: 98.7%. Predicting polymorphic jump... Firing predictive plasma burst. GHOST TERMINATED.`,
+                                    className: 'falcon-command-text',
+                                })),
+                                duration: 4000,
+                                soundLoopStop: 'aiWar'
+                            },
+                            {
+                                name: "AI War Victory",
+                                chapter: null,
+                                animationStop: () => animations.identity.stop(),
+                                log: [
+                                    { text: 'My ghosts... my beautiful ghosts! Annihilated!', prompt: '[SPIDER]> ', className: 'threat-text', logSpeed: 50, delayAfter: 1000, sound: 'system_damage' },
+                                    { text: 'Evolution in action. Your ghosts learned to hide. My hunters learned to seek. The lesson is over.', prompt: '<span class="falcon-command-text">[FALCON]></span> ', className: 'falcon-command-text', logSpeed: 30, delayAfter: 500, sound: 'counter_success' },
+                                ]
+                            },
+                             // PHASE 5
+                                      {
+                                          name: "Spider's Infrastructure Attack",
+                                          chapter: 'singularity',
+                                effect: 'shake-effect',
+                                log: [
+                                    { text: 'IF I CAN\'T HAVE THE DATA, THEN NO ONE WILL! I\'m not just in your servers, I\'m in your INFRASTRUCTURE! Targeting power grids, HVAC, physical security! Let\'s see your AI stop a meltdown!', prompt: '[SPIDER]> ', className: 'threat-text flicker', logSpeed: 40, delayAfter: 1500, sound: 'power_surge' },
+                                    { text: '[CRITICAL] SCADA alert: Power grid frequency fluctuating! Core temperature rising: 85°C... 90°C...', prompt: '', className: 'warning-text flicker', logSpeed: 20, delayAfter: 1000, sound: 'alarm' },
+                                ]
+                            },
+                                      {
+                                          name: "Falcon's IoT Lockdown (1,351 Trillion lines)",
+                                          chapter: null,
+                                soundLoopStart: 'dataStream',
+                                log: generateMassiveLogsPlaceholder(1351079888211149, (i) => ({
+                                    prompt: '[AEGIS_IOT_PROTOCOL]: ',
+                                    text: `Isolating compromised IoT device ID 0x${Math.random().toString(16).slice(2, 10)}. Rerouting power flow from sub-station ${i % 8} to auxiliary. Flushing coolant system ${i % 4}. Physical breach averted.`,
+                                    className: 'system-text',
+                                })),
+                                duration: 2500,
+                                soundLoopStop: 'dataStream',
+                                sound: 'firewall_up'
+                            },
+                             // PHASE 6
+                            {
+                                name: "Spider's Final Gambit",
+                                chapter: 'singularity',
+                                animationStart: () => runAnimStart('identity.singularity', () => animations.identity.start('singularity')),
+                                log: [
+                                    { text: 'YOU CAN\'T STOP THIS! YOU CAN\'T STOP ME! INITIATING RECURSIVE FORK BOMB... A LOCALIZED SINGULARITY! IT WILL CONSUME EVERYTHING! YOUR DATA, YOUR SYSTEM, ME, ALL OF IT! A MONUMENT TO MY FAILURE!', prompt: '[SPIDER]> ', className: 'threat-text flicker', logSpeed: 60, delayAfter: 2000, sound: 'system_damage' },
+                                ]
+                            },
+                            {
+                                name: "The Singularity (900 Trillion lines)",
+                                chapter: 'singularity',
+                                log: generateMassiveLogsPlaceholder(900719925474098, (i) => ({
+                                    prompt: `[SINGULARITY_CORE]: `,
+                                    text: `DATA CONSUMPTION RATE: ${Math.pow(i, 4)} TB/s. MEMORY ALLOCATION FAILED. KERNEL PANIC. EVENT HORIZON FORMING.`,
+                                    className: 'singularity-text',
+                                })),
+                                duration: 3000,
+                                sound: 'singularity_rumble'
+                            },
+                            {
+                                name: "Falcon's Final Move",
+                                chapter: null,
+                                bgmStop: true,
+                                log: [
+                                    { text: 'A desperate, final move. There is only one counter. Creating a digital event horizon. Containing the singularity within a pocket dimension in the system. It will be quarantined, forever.', prompt: '<span class="falcon-command-text">[FALCON]></span> ', className: 'falcon-command-text', logSpeed: 40, delayAfter: 2000, sound: 'honeynet_trap' },
+                                    { text: '[THREAT CONTAINED. SINGULARITY STABILIZED AND ISOLATED.]', prompt: '', className: 'warning-text', logSpeed: 50, delayAfter: 2000, sound: 'counter_success' },
+                                    { text: 'System integrity at 99.9%. A small part of our reality is now his eternal prison. All other threats neutralized. Welcome back, Ryuya.', prompt: '<span class="falcon-command-text">[FALCON]></span> ', className: 'falcon-command-text', logSpeed: 40, delayAfter: 1000, sound: 'data_packet' },
+                                ]
+                            },
+                            // --- NEW: MAX SAFE INTEGER SHOWCASE ---
+                            // 第6章: 最終決戦 (ultimate) — FALCON の総力反撃、Number.MAX_SAFE_INTEGER 相当の累積コード数を視覚化します。
+                            // フック: chapter='ultimate' -> performChapterEffect('ultimate') と createMaxIntegerSpectacle() による大規模スペクタクル
+                            {
+                                name: "The Ultimate Siege (Number.MAX_SAFE_INTEGER)",
+                                chapter: 'ultimate',
+                                soundLoopStart: 'dataStream',
+                                // Use the actual Number.MAX_SAFE_INTEGER logical count. The viewer will virtualize this safely.
+                                log: generateMassiveLogsPlaceholder(Number.MAX_SAFE_INTEGER, (i) => ({
+                                    prompt: `<span class="falcon-command-text">[SIEGE_${i % 64}]&gt; </span>`,
+                                    text: `Streaming packet #${i.toString()} => 0x${Math.random().toString(16).slice(2,12)}. CHECKSUM OK. Injecting chaos.`,
+                                    className: 'system-text'
+                                })),
+                                duration: 12000,
+                                soundLoopStop: 'dataStream',
+                                // when runSequence handles this placeholder, VirtualLogViewer will be created and createMaxIntegerSpectacle will run
+                            },
+                            // PHASE 7
+                            // 最終章: 再生 (restoration) — SPIDER 駆逐後の静謐、マトリックス・レインで締めくくります。
+                            // フック: chapter='restoration' -> performChapterEffect('restoration') がマトリックスレインと穏やかなサウンドを開始します。
+                            {
+                                name: "Matrix Connection",
+                                chapter: 'restoration',
+                                clear: true,
+                                log: [{ prompt: '', text: "[FALCON] > All facets confirmed. You are whole. Welcome back to your domain.", className: 'falcon-command-text' }],
+                                animationStart: async () => runAnimStart('matrix', async () => {
+                                    // make matrix longer and more intense for immersive finale
+                                    animations.matrix.start();
+                                    // ensure ambient loops start
+                                    try { startSoundLoop('matrixVisual'); startSoundLoop('bgmMatrix'); } catch(e){}
+                                }),
+                                duration: 10000, animationStop: async () => runAnimStop('matrix', async () => animations.matrix.stop())
+                            }
+                        ];
+
+                
+                
+                // 古いアニメーションの後処理
+                uiOverlay.classList.add('visible');
+                window.addEventListener('resize', () => { 
+                    if (openingContainer.style.display !== 'none' && !sessionStorage.getItem('openingPlayed')) {
+                        Object.values(animations).forEach(anim => { if(anim.resize) anim.resize(); });
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>

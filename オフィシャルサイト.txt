@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO & OGP Meta Tags -->
+    <title>Ryuya Official</title>
+    <meta name="description" content="Ryuyaのオフィシャルサイト">
+    <meta name="google-site-verification" content="5U1vhJGLCyd7wfsLuyHzSneCRP_J9kp5XyquhojbiYo" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ryuya-official.netlify.app/">
+    <meta property="og:title" content="Ryuya Official">
+    <meta property="og:description" content="Ryuyaのオフィシャルサイト">
+    <meta property="og:image" content="https://i.ibb.co/RK3h7KM/l-IHf-Ng-Nre-Zw-Mxg68efb-Xa.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://ryuya-official.netlify.app/">
+    <meta property="twitter:title" content="Ryuya Official">
+    <meta property="twitter:description" content="Ryuyaのオフィシャルサイト">
+    <meta property="twitter:image" content="https://i.ibb.co/RK3h7KM/l-IHf-Ng-Nre-Zw-Mxg68efb-Xa.png">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-28VQT4SFJ8"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-28VQT4SFJ8');
+    </script>
+
+    <!-- ===================================================================== -->
+    <!-- HTTP Security Headers -->
+    <!-- ===================================================================== -->
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self'; 
+        script-src 'self' 'unsafe-inline' https://unpkg.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://www.youtube.com https://s.ytimg.com https://www.googletagmanager.com https://platform.twitter.com https://note.com https://api.rss2json.com; 
+        style-src 'self' 'unsafe-inline' https://unpkg.com https://fonts.googleapis.com https://cdnjs.cloudflare.com https://platform.twitter.com https://note.com; 
+        font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; 
+        img-src 'self' https://i.ibb.co https://placehold.co https://pbs.twimg.com data: https://www.googletagmanager.com https://assets.note.com https://*.rss2json.com; 
+        frame-src 'self' https://www.youtube.com https://syndication.twitter.com https://platform.twitter.com https://note.com https://stand.fm https://open.spotify.com;
+        connect-src 'self' https://www.google-analytics.com https://api.rss2json.com;
+        speech-src 'self' blob:;
+    ">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <!-- ===================================================================== -->
+
+    
+    <!-- External Libraries & Fonts -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- JS Libraries for Animation & Sound -->
+    <!-- Three.js 拡張機能（Three.jsの後に読み込む必要がある） -->
+    <script src="https://cdn.jsdelivr.net/npm/three/examples/js/shaders/CopyShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three/examples/js/shaders/DigitalGlitch.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three/examples/js/postprocessing/GlitchPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three/examples/js/objects/Lensflare.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
+
+    <style>
+        /* ==============================================
+        CSS STYLES
+        ==============================================
+        */
+
+        /* 基本スタイル */
+        :root {
+            --primary-color: #8139f5;
+            --secondary-color: #00cde9;
+            --accent-color: #ff00ff;
+            --paypay-color: #d82c1e;
+            --text-color: #e0e0e0;
+            --bg-color: #000;
+            --bg-glass: rgba(18, 18, 18, 0.8);
+            --falcon-red: #ff3333;
+            --system-green: #00ff41;
+            --system-blue: #00cde9;
+            --warning-color: #f4b400;
+            --threat-red: #ff3333;
+            --quantum-purple: #9d00ff;
+            --singularity-black: #ffffff;
+            --background-color: #02040a;
+            --scanline-color: rgba(0, 255, 100, 0.07);
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            overflow-x: hidden;
+            background-color: var(--bg-color);
+            position: relative;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* 画像保存防止のためのスタイル */
+        img {
+            -webkit-touch-callout: none; /* iOS Safari */
+            -webkit-user-select: none;   /* Safari */
+            -khtml-user-select: none;    /* Konqueror HTML */
+            -moz-user-select: none;      /* Old versions of Firefox */
+            -ms-user-select: none;       /* Internet Explorer/Edge */
+            user-select: none;           /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+        }
+
+        /* ヘッダー */
+
+        
+        header {
+            background-color: var(--bg-glass);
+            backdrop-filter: blur(10px);
+            padding: 15px 20px;
+            text-align: center;
+            display: flex;
+            justify-content: center; /* Center navigation */
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            border-bottom: 2px solid rgba(129, 57, 245, 0.5);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            box-sizing: border-box;
+        }
+        
+        .main-nav {
+            display: block;
+        }
+
+        .main-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        .main-nav li {
+            margin: 0 15px;
+        }
+
+        .main-nav a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 1rem;
+            padding: 8px 0;
+            position: relative;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+        }
+
+        .main-nav a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 4px;
+            background-color: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+        
+        .main-nav a.active::after,
+        .main-nav a:hover::after {
+            width: 100%;
+        }
+        
+        .main-nav a.active,
+        .main-nav a:hover {
+            color: var(--secondary-color);
+            text-shadow: 0 0 10px var(--secondary-color);
+        }
+        
+        /* Hamburger Menu */
+        .hamburger-btn {
+            display: none;
+            width: 30px;
+            height: 25px;
+            position: absolute; /* Position relative to header */
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            z-index: 1002;
+            background: none;
+            border: none;
+        }
+        .hamburger-btn span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: var(--text-color);
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+        .hamburger-btn span:nth-child(1) { top: 0px; }
+        .hamburger-btn span:nth-child(2) { top: 10px; }
+        .hamburger-btn span:nth-child(3) { top: 20px; }
+
+        .hamburger-btn.is-active span:nth-child(1) { top: 10px; transform: rotate(135deg); }
+        .hamburger-btn.is-active span:nth-child(2) { opacity: 0; left: -30px; }
+        .hamburger-btn.is-active span:nth-child(3) { top: 10px; transform: rotate(-135deg); }
+
+        /* Mobile Navigation Panel */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 280px;
+            height: 100%;
+            background: rgba(10, 0, 20, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 1001;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            padding-top: 100px;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+        }
+        .mobile-nav.is-active {
+            transform: translateX(0);
+        }
+        .mobile-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .mobile-nav li {
+            width: 100%;
+            text-align: center;
+        }
+        .mobile-nav a {
+            display: block;
+            padding: 20px;
+            font-size: 1.4rem;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .mobile-nav a:hover {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+
+        /* Page Transition Overlay */
+        #page-transition-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 10001;
+            pointer-events: none;
+            display: grid;
+            grid-template-columns: repeat(20, 1fr);
+            grid-template-rows: repeat(20, 1fr);
+        }
+
+        .transition-cell {
+            background-color: var(--bg-color);
+            opacity: 0;
+            transform: scale(0);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        /* メインコンテンツ */
+        main {
+            padding: 20px;
+            padding-top: 120px; /* Header height + margin */
+            position: relative;
+            z-index: 5;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        /* SPA Page Content Styling */
+        .page-content { display: none; }
+        .page-content.is-active { display: block; animation: fadeInPage 0.8s ease-in-out 0.3s; animation-fill-mode: backwards; }
+        @keyframes fadeInPage { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        
+
+        .content-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 15px 30px;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            font-weight: bold;
+            color: var(--secondary-color);
+            background: transparent;
+            border: 2px solid var(--secondary-color);
+            border-radius: 8px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 0 0 8px var(--secondary-color);
+            transition: background-color 0.3s, color 0.3s, text-shadow 0.3s, box-shadow 0.3s;
+        }
+
+        .content-button:hover {
+            background: var(--secondary-color);
+            color: #000;
+            text-shadow: none;
+            box-shadow: 0 0 15px var(--secondary-color), 0 0 30px var(--secondary-color);
+        }
+
+        .content { background-color: rgba(0, 0, 0, 0.8); padding: 50px; margin-bottom: 40px; border-radius: 12px; box-shadow: 0 0 25px rgba(129, 57, 245, 0.4); border: 1px solid rgba(129, 57, 245, 0.3); }
+        .content h2 { font-size: clamp(1.8rem, 5.5vw, 2.8rem); color: var(--primary-color); margin-bottom: 25px; border-bottom: 3px solid rgba(129, 57, 245, 0.6); padding-bottom: 15px; text-shadow: 0 0 15px rgba(129, 57, 245, 0.8); letter-spacing: 1.5px; }
+        .content p { font-size: clamp(1rem, 2.5vw, 1.1rem); line-height: 1.9; color: #c0c0c0; }
+
+        /* 注意書きセクションのスタイル */
+        .notice-section {
+            background-color: rgba(50, 0, 0, 0.3);
+            border: 1px solid #ff4444;
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
+        }
+        .notice-section h2 {
+            color: #ff4444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            font-size: clamp(1.4rem, 3.5vw, 2.0rem);
+        }
+
+        
+
+
+        footer { background-color: var(--bg-glass); padding: 25px; text-align: center; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; border-top: 2px solid rgba(0, 200, 255, 0.5); box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.5); }
+        footer p { margin: 10px; color: #aaa; font-size: 0.9rem; }
+        footer nav ul { list-style: none; padding: 0; margin: 10px 0; display: flex; flex-wrap: wrap; justify-content: center; }
+        footer nav li { margin: 0 12px; }
+        footer nav a { text-decoration: none; color: #aaa; transition: color 0.3s ease; cursor: pointer; font-size: 0.9rem;}
+        footer nav a:hover { color: var(--secondary-color); }
+
+        #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -2; }
+        
+
+        
+        /* ----------- Artist Profile Cards ----------- */
+        .profile-card { display: flex; gap: 40px; align-items: center; padding: 40px; border-radius: 15px; margin-bottom: 50px; }
+        .profile-photo { width: 200px; height: 200px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+        .profile-info { flex-grow: 1; }
+        .profile-info h2 { font-family: 'Major Mono Display', monospace; font-size: clamp(2.2rem, 6.5vw, 3.2rem); margin: 0 0 15px 0; }
+        .profile-info .bio { font-size: clamp(1rem, 2.5vw, 1.1rem); line-height: 1.8; margin-bottom: 25px; }
+
+        .ryuya-card { background-color: rgba(25, 25, 50, 0.3); border: 1px solid var(--primary-color); box-shadow: 0 0 30px rgba(129, 57, 245, 0.3); }
+        .ryuya-card .profile-photo { border: 4px solid var(--primary-color); box-shadow: 0 0 20px var(--primary-color); }
+        .ryuya-card .profile-info h2 { color: var(--primary-color); text-shadow: 0 0 15px var(--primary-color); }
+        .ryuya-card .profile-info .bio { color: #d0d0f0; }
+
+        .shion-card { background-color: rgba(50, 0, 50, 0.3); border: 1px solid var(--accent-color); box-shadow: 0 0 30px rgba(255, 0, 255, 0.3); }
+        .shion-card .profile-photo { border: 4px solid var(--accent-color); box-shadow: 0 0 20px var(--accent-color); }
+        .shion-card .profile-info h2 { color: var(--accent-color); text-shadow: 0 0 15px var(--accent-color); }
+        .shion-card .profile-info .bio { color: #f0d0f0; }
+        
+        .iori-card { background-color: rgba(0, 50, 50, 0.3); border: 1px solid var(--secondary-color); box-shadow: 0 0 30px rgba(0, 205, 233, 0.3); }
+        .iori-card .profile-photo { border: 4px solid var(--secondary-color); box-shadow: 0 0 20px var(--secondary-color); }
+        .iori-card .profile-info h2 { color: var(--secondary-color); text-shadow: 0 0 15px var(--secondary-color); }
+        .iori-card .profile-info .bio { color: #d0f0f0; }
+
+        .social-icons { display: flex; gap: 20px; }
+        .social-icons a { color: #f0d0f0; font-size: 1.8em; transition: color 0.3s, transform 0.3s, text-shadow 0.3s; }
+        .social-icons a:hover { color: #fff; transform: scale(1.2); text-shadow: 0 0 15px #fff; }
+
+        /* ----------- page1 (Ryuya：first) ----------- */
+        .ryuya-gallery-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+            gap: 20px; 
+            padding: 20px; 
+            background-color: rgba(0, 0, 0, 0.7); 
+            border-radius: 15px; 
+        }
+        .ryuya-gallery-item { 
+            position: relative; 
+            overflow: hidden; 
+            border-radius: 10px; 
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); 
+            border: 1px solid rgba(0, 200, 255, 0.2); 
+            transition: transform 0.3s ease, box-shadow 0.3s ease; 
+            cursor: pointer;
+            aspect-ratio: 1 / 1;
+        }
+        .ryuya-gallery-item:hover { 
+            transform: translateY(-8px) scale(1.02); 
+            box-shadow: 0 10px 25px rgba(0, 200, 255, 0.6); 
+        }
+        .ryuya-gallery-item img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            display: block; 
+        }
+
+        /* Lightbox Styles */
+        .lightbox-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10002;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+            animation: fadeInLightbox 0.3s ease;
+        }
+        @keyframes fadeInLightbox { from { opacity: 0; } to { opacity: 1; } }
+        
+        .lightbox-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            width: 100%;
+            max-width: 80vw;
+            max-height: 80vh;
+        }
+
+        .lightbox-content {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 10px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+        }
+        .lightbox-close {
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            color: #000;
+            background-color: #fff;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            z-index: 10;
+        }
+        .lightbox-close:hover {
+            transform: scale(1.1);
+        }
+
+        /* ----------- page2 (紫苑) ----------- */
+        .music-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 30px; 
+        }
+
+        /* ----------- page3 (コンタクト) ----------- */
+        .contact-info { text-align: center; margin-top: 40px; }
+        .contact-info h3 { font-size: 2em; color: var(--secondary-color); margin-bottom: 20px; }
+        .contact-info p { font-size: 1.2em; }
+        .contact-info a { text-decoration: none; color: var(--secondary-color); word-break: break-all; }
+        .contact-info ul { list-style: none; padding: 0; display: flex; flex-direction: column; align-items: center; gap: 15px; font-size: 1.2em; }
+        .contact-info ul a { color: var(--secondary-color); text-decoration: none; display: inline-flex; align-items: center; gap: 10px;}
+        .contact-info ul a i { font-size: 1.5em; }
+        .contact-info ul a[href*="youtube.com"] { color: #FF0000; }
+
+        /* ----------- Commission Page Styles ----------- */
+        .commission-details { 
+            margin-top: 40px; 
+            text-align: left; 
+            max-width: 800px; 
+            margin-left: auto; 
+            margin-right: auto; 
+        }
+        .commission-details h3 { 
+            font-size: 1.8em; 
+            color: var(--secondary-color); 
+            margin-bottom: 20px; 
+            text-align: center;
+        }
+        .commission-details ol { 
+            list-style: none; 
+            padding-left: 0; 
+            counter-reset: step-counter; 
+        }
+        .commission-details ol li {
+            counter-increment: step-counter;
+            margin-bottom: 20px;
+            padding-left: 45px;
+            position: relative;
+            font-size: 1.1em;
+        }
+        .commission-details ol li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 30px;
+            height: 30px;
+            background-color: var(--secondary-color);
+            color: var(--bg-color);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+        }
+        .commission-details p {
+            text-align: center;
+        }
+
+        /* --- Social Feed Styles --- */
+        .social-feeds {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+        @media (min-width: 1024px) {
+            .social-feeds {
+                grid-template-columns: 1fr;
+            }
+        }
+        .feed-column h3 {
+            font-size: 1.8em;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .note-feed-container {
+            max-height: 800px;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        /* --- New Note Feed Card Styles --- */
+        .note-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(129, 57, 245, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            transition: background-color 0.3s, transform 0.3s;
+            text-decoration: none;
+            color: var(--text-color);
+        }
+        .note-card:hover {
+            background-color: rgba(129, 57, 245, 0.2);
+            transform: translateY(-5px);
+        }
+        .note-card-thumbnail {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+        .note-card-content {
+            display: flex;
+            flex-direction: column;
+        }
+        .note-card-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #fff;
+            margin: 0 0 5px 0;
+        }
+        .note-card-date {
+            font-size: 0.8em;
+            color: #aaa;
+            margin-bottom: 10px;
+        }
+        .note-card-snippet {
+            font-size: 0.9em;
+            line-height: 1.5;
+            color: #ccc;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+
+        /* レスポンシブデザイン */
+        @media (max-width: 992px) {
+            .profile-card { flex-direction: column; text-align: center; }
+            .social-icons { justify-content: center; }
+        }
+        @media (max-width: 768px) {
+            /* スマホ表示の改善: 文字サイズを極端に小さくせず、余白を調整 */
+            body { font-size: 14px; }
+            .main-nav { display: none; }
+            .hamburger-btn { display: block; }
+            header { justify-content: flex-end; padding: 15px 20px; }
+            .content { padding: 30px 20px; }
+            .lightbox-content { max-width: 90vw; max-height: 80vh; }
+            
+            
+            footer { justify-content: center; }
+        }
+        @media (max-width: 480px) {
+            /* 小さいスマホ用の調整 */
+            .content { padding: 25px 15px; }
+            .profile-photo { width: 150px; height: 150px; }
+            .ryuya-gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            .music-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            .note-card {
+                flex-direction: column;
+            }
+            .note-card-thumbnail {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 16 / 9;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Page Transition -->
+    <div id="page-transition-overlay"></div>
+
+    
+
+    <!-- DevTools Blocker Overlay -->
+    <div id="devtools-blocker" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #000; z-index: 99999; color: #ff4444; text-align: center; padding-top: 30vh;">
+        <div style="font-size: 3rem; margin-bottom: 20px;"><i class="fas fa-ban"></i></div>
+        <h1 style="font-size: 2rem;">セキュリティ警告</h1>
+        <p style="font-size: 1.2rem;">開発者ツールの使用は許可されていません。<br>このページを閉じてください。</p>
+    </div>
+
+
+    <!-- ヘッダー -->
+    <header data-aos="fade-down" data-aos-duration="1000">
+        <nav class="main-nav">
+            <ul>
+                <li><a data-page="page-home" class="nav-link active">ホーム</a></li>
+                <li><a data-page="page-ryuya-1" class="nav-link">Ryuya：first</a></li>
+                <li><a data-page="page-ryuya-2" class="nav-link">Ryuya：second</a></li>
+                <li><a data-page="page-shion" class="nav-link">紫苑</a></li>
+                <li><a data-page="page-new-artist" class="nav-link">伊織 暁斗</a></li>
+            </ul>
+        </nav>
+        <button class="hamburger-btn" id="hamburger-btn"><span></span><span></span><span></span></button>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav" id="mobile-nav">
+        <ul>
+            <li><a data-page="page-home" class="nav-link active">ホーム</a></li>
+            <li><a data-page="page-ryuya-1" class="nav-link">Ryuya：first</a></li>
+            <li><a data-page="page-ryuya-2" class="nav-link">Ryuya：second</a></li>
+            <li><a data-page="page-shion" class="nav-link">紫苑</a></li>
+            <li><a data-page="page-new-artist" class="nav-link">伊織 暁斗</a></li>
+        </ul>
+    </nav>
+
+    <!-- メインコンテンツ -->
+    <main>
+        <div id="particles-js"></div>
+        <section id="page-home" class="page-content is-active">
+            
+            
+            <section class="content notice-section" data-aos="fade-up">
+                <h2 class="glitch" data-text="【重要】コンテンツの取り扱いに関するお願い"><i class="fas fa-exclamation-triangle"></i>【重要】コンテンツの取り扱いに関するお願い</h2>
+                <p>当サイト内のイラスト、楽曲、文章、写真などのすべてのコンテンツの無断保存、スクリーンショット、画面録画、転載、使用、転用を固く禁じます。すべてのコンテンツの著作権は、りゅうや及び紫苑に帰属します。</p>
+            </section>
+
+            
+        </section>
+        <section id="page-ryuya-1" class="page-content">
+            <div class="profile-card ryuya-card" data-aos="fade-down">
+                <img src="https://i.ibb.co/RK3h7KM/l-IHf-Ng-Nre-Zw-Mxg68efb-Xa.png" alt="りゅうや アイコン" class="profile-photo">
+                <div class="profile-info">
+                    <h2>Ryuya</h2>
+                    <p class="bio">AI Creator. 2023.08.24始動<br>思考をプロンプトに変換し、2,000以上のビジュアルを生成</p>
+                </div>
+            </div>
+            <section class="content" data-aos="fade-up">
+                <h2>AIアートギャラリー</h2>
+                <p>過去作ではなくオフィシャルサイト開設後に創作したイラストのみ貼っています。</p>
+                <div class="ryuya-gallery-grid"></div>
+            </section>
+        </section>
+        <section id="page-ryuya-2" class="page-content">
+            <div class="profile-card ryuya-card" data-aos="fade-down">
+                <img src="https://i.ibb.co/RK3h7KM/l-IHf-Ng-Nre-Zw-Mxg68efb-Xa.png" alt="りゅうや アイコン" class="profile-photo">
+                <div class="profile-info">
+                    <h2>Ryuya</h2>
+                    <p class="bio">Google AI Student Lead Ambassador<br>noteやstand.fmで情報を発信しています</p>
+                </div>
+            </div>
+            <div class="social-feeds">
+                <div class="feed-column">
+                    <h3>Note</h3>
+                    <div class="note-feed-container">
+                        <!-- noteのRSSフィードがここに自動的に表示されます -->
+                    </div>
+                </div>
+                 <div class="feed-column">
+                    <h3>stand.fm</h3>
+                    <div class="note-feed-container">
+                        <iframe src="https://stand.fm/embed/episodes/689c24f6a8a3e00cc8eaaa10" class="standfm-embed-iframe" width="100%" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                        <iframe src="https://stand.fm/embed/episodes/689c04dea8a3e00cc8eaa7f7" class="standfm-embed-iframe" width="100%" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="page-shion" class="page-content">
+            <div class="profile-card shion-card" data-aos="fade-down">
+                <img src="https://i.ibb.co/4RzdYgbF/bt0n-Pu-Cotf55-R6-ARKv0o-O.jpg" onerror="this.onerror=null;this.src='https://placehold.co/200x200/ff00ff/FFFFFF?text=紫苑';" alt="紫苑 アーティスト写真" class="profile-photo">
+                <div class="profile-info">
+                    <h2>紫苑</h2>
+                    <p class="bio">avex所属のSinger-Songwriter<br>僕が目指すのは「聴いた人の心に長く残る物語性のある音楽を届ける表現者」</p>
+                    <div class="social-icons">
+                        <a href="https://big-up.style/artists/302804" target="_blank" rel="noopener noreferrer" title="BIG UP!"><i class="fas fa-music"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="music-grid" data-aos="fade-up">
+                <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/1n60Vom8ookbnCHg9gI3q8?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/3qCpWy4XiDkG8XuOwLkSuv?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/5pA8cBctrkkEhHVyWUpGDR?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/5TK3zOStE4v7RBsZdasJXc?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/4qbELOGhlW16pRbHP8LEEK?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </section>
+        <section id="page-new-artist" class="page-content">
+            <div class="profile-card iori-card" data-aos="fade-down">
+                <img src="https://i.ibb.co/C5K8JZMK/image.png" alt="伊織 暁斗 アイコン" class="profile-photo">
+                <div class="profile-info">
+                    <h2>伊織 暁斗</h2>
+                    <p class="bio">ByteDance所属のSinger-Songwriter<br>僕が目指すのは「聴く人の物語に寄り添い、心で共鳴するアーティスト」</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Lightbox -->
+    <div id="lightbox-overlay" class="lightbox-overlay">
+        <div class="lightbox-container">
+            <span class="lightbox-close">&times;</span>
+            <img class="lightbox-content" id="lightbox-img" alt="拡大表示されたAIイラスト">
+        </div>
+    </div>
+
+    <!-- フッター -->
+    <footer>
+        <p>&copy; 2025 Ryuya Official</p>
+        <nav><ul><li><a class="nav-link" data-page="page-home">ホーム</a></li><li><a class="nav-link" data-page="page-ryuya-1">Ryuya：first</a></li><li><a class="nav-link" data-page="page-ryuya-2">Ryuya：second</a></li><li><a class="nav-link" data-page="page-shion">紫苑</a></li><li><a class="nav-link" data-page="page-new-artist">伊織 暁斗</a></li></ul></nav>
+    </footer>
+
+    <!-- External JS Libraries -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <script async src="https://note.com/scripts/embed.js" charset="utf-8"></script>
+    
+    <!-- Main Application Script -->
+    <script>
+        // グローバルなエラーハンドラー: 非致命的な AbortError を捕捉
+        window.addEventListener('unhandledrejection', function(event) {
+            if (event.reason && event.reason.name === 'AbortError') {
+                event.preventDefault();
+                console.warn('A non-critical AbortError was handled gracefully.');
+            }
+        });
+
+        
+
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // --- グローバルデータ ---
+            const galleryImageUrls = ["https://i.ibb.co/HD81w0Gd/d1tdicte878c73em4u40-webp-image.png", "https://i.ibb.co/pB7wnRY2/d1tdicte878c73em4u4g-webp-image.png"];
+
+            // --- DOM要素セレクター ---
+            const hamburgerBtn = document.getElementById('hamburger-btn');
+            const mobileNav = document.getElementById('mobile-nav');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const transitionOverlay = document.getElementById('page-transition-overlay');
+            const header = document.querySelector('header');
+            const main = document.querySelector('main');
+            const footer = document.querySelector('footer');
+            const particlesJsDiv = document.getElementById('particles-js');
+
+            // --- ハンバーガーメニューロジック ---
+            hamburgerBtn.addEventListener('click', function() {
+                this.classList.toggle('is-active');
+                mobileNav.classList.toggle('is-active');
+            });
+            
+            // --- SPAナビゲーション & 遷移ロジック ---
+            let isTransitioning = false;
+
+            function runGlitchTransition(callback) {
+                if (isTransitioning) return;
+                isTransitioning = true;
+                transitionOverlay.style.pointerEvents = 'auto';
+                const cells = Array.from({ length: 400 }, () => {
+                    const cell = document.createElement('div');
+                    cell.classList.add('transition-cell');
+                    transitionOverlay.appendChild(cell);
+                    return cell;
+                });
+                cells.forEach(cell => setTimeout(() => {
+                    cell.style.opacity = '1';
+                    cell.style.transform = 'scale(1)';
+                }, Math.random() * 500));
+                setTimeout(() => {
+                    callback();
+                    cells.forEach(cell => setTimeout(() => {
+                        cell.style.opacity = '0';
+                        cell.style.transform = 'scale(0)';
+                    }, Math.random() * 500));
+                    setTimeout(() => {
+                        transitionOverlay.innerHTML = '';
+                        transitionOverlay.style.pointerEvents = 'none';
+                        isTransitioning = false;
+                    }, 1000);
+                }, 700);
+            }
+
+            function navigateToPage(pageId) {
+                const currentPage = document.querySelector('.page-content.is-active');
+                if ((currentPage && currentPage.id === pageId) || isTransitioning) {
+                    if (mobileNav.classList.contains('is-active')) {
+                        hamburgerBtn.classList.remove('is-active');
+                        mobileNav.classList.remove('is-active');
+                    }
+                    return;
+                }
+                runGlitchTransition(() => {
+                    if (currentPage) currentPage.classList.remove('is-active');
+                    const nextPage = document.getElementById(pageId);
+                    if (nextPage) nextPage.classList.add('is-active');
+                    document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
+                    document.querySelectorAll(`.nav-link[data-page="${pageId}"]`).forEach(activeLink => activeLink.classList.add('active'));
+                    AOS.refresh();
+                    window.scrollTo(0, 0);
+                    if (mobileNav.classList.contains('is-active')) {
+                        hamburgerBtn.classList.remove('is-active');
+                        mobileNav.classList.remove('is-active');
+                    }
+                });
+            }
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const pageId = link.getAttribute('data-page');
+                    if(pageId) navigateToPage(pageId);
+                });
+            });
+
+            // --- Particles.js設定 ---
+            const particlesConfig = { "particles": { "number": { "value": 80, "density": { "enable": true, "value_area": 800 } }, "color": { "value": ["#8139f5", "#00cde9", "#39f581", "#ff00ff"] }, "shape": { "type": "circle" }, "opacity": { "value": 0.6, "random": true, "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false } }, "size": { "value": 4, "random": true, "anim": { "enable": true, "speed": 10, "size_min": 0.1, "sync": false } }, "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.4, "width": 1 }, "move": { "enable": true, "speed": 3, "direction": "none", "random": true, "straight": false, "out_mode": "out" } }, "interactivity": { "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } }, "modes": { "grab": { "distance": 200, "line_linked": { "opacity": 1 } }, "push": { "particles_nb": 4 } } }, "retina_detect": true };
+
+            // --- メインコンテンツ表示関数 ---
+            function showMainContent() {
+                if (header) header.style.display = 'flex';
+                if (main) main.style.display = 'block';
+                if (footer) footer.style.display = 'flex';
+                if (particlesJsDiv && typeof particlesJS !== 'undefined') {
+                    particlesJS('particles-js', particlesConfig);
+                }
+                document.body.style.cursor = 'auto';
+            }
+
+            // ======================================================
+            // --- AIギャラリーロジック ---
+            // ======================================================
+            const ryuyaGalleryGrid = document.querySelector('.ryuya-gallery-grid');
+            if (ryuyaGalleryGrid) {
+                const uniqueImageUrls = [...new Set(galleryImageUrls)];
+                ryuyaGalleryGrid.innerHTML = uniqueImageUrls.map(url => `<div class="ryuya-gallery-item"><img src="${url}" alt="AI Illustration" loading="lazy" onerror="this.parentElement.style.display='none'"></div>`).join('');
+                
+                const lightboxOverlay = document.getElementById('lightbox-overlay');
+                const lightboxImg = document.getElementById('lightbox-img');
+                const lightboxClose = document.querySelector('.lightbox-close');
+                
+                const closeLightbox = () => lightboxOverlay.style.display = 'none';
+                ryuyaGalleryGrid.addEventListener('click', e => {
+                    if (e.target.tagName === 'IMG') {
+                        lightboxImg.src = e.target.src;
+                        lightboxOverlay.style.display = 'flex';
+                    }
+                });
+                lightboxClose.addEventListener('click', closeLightbox);
+                lightboxOverlay.addEventListener('click', e => { if (e.target === lightboxOverlay) closeLightbox(); });
+            }
+
+            // ======================================================
+            // --- note RSSフィード読み込み ---
+            // ======================================================
+            function loadNoteFeed() {
+                const feedContainer = document.querySelector('#page-ryuya-2 .note-feed-container');
+                if (!feedContainer) return;
+
+                feedContainer.innerHTML = '<p style="text-align: center;">最新の記事を読み込んでいます...</p>';
+
+                const rssUrl = 'https://note.com/ryuya_330/rss';
+                const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
+
+                fetch(apiUrl)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.status === 'ok') {
+                            feedContainer.innerHTML = ''; // ローディングメッセージをクリア
+                            data.items.forEach(item => {
+                                const snippet = item.description.replace(/<[^>]*>/g, "").substring(0, 150) + '...';
+                                const pubDate = new Date(item.pubDate).toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' });
+
+                                const cardHtml = `
+                                    <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="note-card">
+                                        <img src="${item.thumbnail}" alt="" class="note-card-thumbnail" onerror="this.style.display='none'">
+                                        <div class="note-card-content">
+                                            <h4 class="note-card-title">${item.title}</h4>
+                                            <p class="note-card-date">${pubDate}</p>
+                                            <p class="note-card-snippet">${snippet}</p>
+                                        </div>
+                                    </a>
+                                `;
+                                feedContainer.insertAdjacentHTML('beforeend', cardHtml);
+                            });
+                        } else {
+                            throw new Error('RSS feed could not be loaded.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching note feed:', error);
+                        feedContainer.innerHTML = '<p style="text-align: center;">記事の読み込みに失敗しました。後でもう一度お試しください。</p>';
+                    });
+            }
+            loadNoteFeed();
+
+
+            // ======================================================
+            // --- セキュリティ & コンテンツ保護 ---
+            // ======================================================
+            document.addEventListener('contextmenu', event => event.preventDefault());
+            document.addEventListener('dragstart', event => {
+                if (event.target.tagName === 'IMG') event.preventDefault();
+            });
+            
+            if (!/Mobi|Android/i.test(navigator.userAgent)) {
+                const devToolsBlocker = document.getElementById('devtools-blocker');
+                const devtoolsDetector = { isOpen: false };
+                Object.defineProperty(devtoolsDetector, 'toString', { get: function() { this.isOpen = true; return ''; } });
+                setInterval(() => {
+                    devtoolsDetector.isOpen = false;
+                    console.log('%c', devtoolsDetector);
+                    if (devtoolsDetector.isOpen && devToolsBlocker) {
+                        devToolsBlocker.style.display = 'block';
+                    }
+                }, 1500);
+            }
+
+            // ======================================================
+            // --- 一般的なUI & 初期化 ---
+            // ======================================================
+            AOS.init({ once: true, offset: 100, duration: 1000 });
+            
+            
+        });
+    </script>
+</body>
+</html>
