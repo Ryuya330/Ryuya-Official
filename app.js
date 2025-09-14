@@ -63,32 +63,23 @@
             // --- SPAナビゲーション & 遷移ロジック ---
             let isTransitioning = false;
 
-            function runGlitchTransition(callback) {
+            function runFadeTransition(callback) {
                 if (isTransitioning) return;
                 isTransitioning = true;
                 transitionOverlay.style.pointerEvents = 'auto';
-                const cells = Array.from({ length: 400 }, () => {
-                    const cell = document.createElement('div');
-                    cell.classList.add('transition-cell');
-                    transitionOverlay.appendChild(cell);
-                    return cell;
-                });
-                cells.forEach(cell => setTimeout(() => {
-                    cell.style.opacity = '1';
-                    cell.style.transform = 'scale(1)';
-                }, Math.random() * 500));
+                transitionOverlay.style.backgroundColor = 'rgba(0, 0, 0, 1)'; // Solid black overlay
+                transitionOverlay.style.opacity = '1';
+                transitionOverlay.style.transition = 'opacity 0.3s ease-in-out';
+
                 setTimeout(() => {
                     callback();
-                    cells.forEach(cell => setTimeout(() => {
-                        cell.style.opacity = '0';
-                        cell.style.transform = 'scale(0)';
-                    }, Math.random() * 500));
+                    transitionOverlay.style.opacity = '0';
                     setTimeout(() => {
-                        transitionOverlay.innerHTML = '';
+                        transitionOverlay.style.backgroundColor = 'transparent';
                         transitionOverlay.style.pointerEvents = 'none';
                         isTransitioning = false;
-                    }, 1000);
-                }, 700);
+                    }, 300); // Match transition duration
+                }, 300); // Fade out duration
             }
 
             function navigateToPage(pageId) {
@@ -101,7 +92,7 @@
                     }
                     return;
                 }
-                runGlitchTransition(() => {
+                runFadeTransition(() => {
                     if (currentPage) {
                         console.log(`Hiding page: ${currentPage.id}`);
                         currentPage.classList.remove('is-active');

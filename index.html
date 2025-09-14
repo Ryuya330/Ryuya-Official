@@ -265,12 +265,7 @@
             grid-template-rows: repeat(20, 1fr);
         }
 
-        .transition-cell {
-            background-color: var(--bg-color);
-            opacity: 0;
-            transform: scale(0);
-            transition: transform 0.3s ease, opacity 0.3s ease;
-        }
+        
 
         /* メインコンテンツ */
         main {
@@ -602,8 +597,52 @@
             }
         }
     </style>
+
+    <style>
+/* Loading Overlay */
+#loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color); /* Use existing background color */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Ensure it's on top */
+    opacity: 1;
+    transition: opacity 1s ease-out;
+}
+
+.loading-spinner {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid var(--primary-color); /* Use primary color for spinner */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+.loading-text {
+    color: var(--text-color);
+    font-family: 'Noto Sans JP', sans-serif;
+    margin-top: 20px;
+    font-size: 1.2rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+    </style>
 </head>
 <body>
+    <div id="loading-overlay">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">LOADING...</p>
+    </div>
     <!-- Page Transition -->
     <div id="page-transition-overlay"></div>
 
@@ -733,6 +772,20 @@
     <script async src="https://note.com/scripts/embed.js" charset="utf-8"></script>
     
     <!-- Main Application Script -->
+    <script>
+        window.addEventListener('load', function() {
+            const loadingOverlay = document.getElementById('loading-overlay');
+            if (loadingOverlay) {
+                setTimeout(() => {
+                    loadingOverlay.style.opacity = '0';
+                    // After the transition, set display to none
+                    setTimeout(() => {
+                        loadingOverlay.style.display = 'none';
+                    }, 1000); // Wait for the 1s opacity transition to complete
+                }, 1000); // 1 second delay before starting fade out
+            }
+        });
+    </script>
     <script src="app.js" defer></script>
 </body>
 </html>
