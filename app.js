@@ -1,5 +1,4 @@
-
-        // グローバルなエラーハンドラー: 非致命的な AbortError を捕捉
+// グローバルなエラーハンドラー: 非致命的な AbortError を捕捉
         window.addEventListener('unhandledrejection', function(event) {
             if (event.reason && event.reason.name === 'AbortError') {
                 event.preventDefault();
@@ -206,6 +205,8 @@
             }
             loadNoteFeed();
 
+            
+
 
             // ======================================================
             // --- セキュリティ & コンテンツ保護 ---
@@ -266,4 +267,3 @@
                 }
             });
         });
-    
