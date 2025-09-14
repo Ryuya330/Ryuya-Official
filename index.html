@@ -37,16 +37,22 @@
     <!-- HTTP Security Headers -->
     <!-- ===================================================================== -->
     <meta http-equiv="Content-Security-Policy" content="
-        default-src 'self'; 
-        script-src 'self' 'unsafe-inline' https://unpkg.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://www.youtube.com https://s.ytimg.com https://www.googletagmanager.com https://platform.twitter.com https://note.com https://api.rss2json.com; 
-        style-src 'self' 'unsafe-inline' https://unpkg.com https://fonts.googleapis.com https://cdnjs.cloudflare.com https://platform.twitter.com https://note.com; 
-        font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; 
-        img-src 'self' https://i.ibb.co https://placehold.co https://pbs.twimg.com data: https://www.googletagmanager.com https://assets.note.com https://*.rss2json.com; 
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' https://unpkg.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://www.youtube.com https://s.ytimg.com https://www.googletagmanager.com https://platform.twitter.com https://note.com https://api.rss2json.com;
+        style-src 'self' 'unsafe-inline' https://unpkg.com https://fonts.googleapis.com https://cdnjs.cloudflare.com https://platform.twitter.com https://note.com;
+        font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com;
+        img-src 'self' https://i.ibb.co https://placehold.co https://pbs.twimg.com data: https://www.googletagmanager.com https://assets.note.com https://*.rss2json.com;
         frame-src 'self' https://www.youtube.com https://syndication.twitter.com https://platform.twitter.com https://note.com https://stand.fm https://open.spotify.com;
         connect-src 'self' https://www.google-analytics.com https://api.rss2json.com;
         speech-src 'self' blob:;
+        base-uri 'self';
+        form-action 'self';
+        object-src 'none';
     ">
     <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()">
     <!-- ===================================================================== -->
 
     
@@ -964,7 +970,7 @@
         </section>
         <section id="page-shion" class="page-content">
             <div class="profile-card shion-card" data-aos="fade-down">
-                <img src="https://i.ibb.co/4RzdYgbF/bt0n-Pu-Cotf55-R6-ARKv0o-O.jpg" onerror="this.onerror=null;this.src='https://placehold.co/200x200/ff00ff/FFFFFF?text=紫苑';" alt="紫苑 アーティスト写真" class="profile-photo">
+                <img src="https://i.ibb.co/4RzdYgbF/bt0n-Pu-Cotf55-R6-ARKv0o-O.jpg" data-fallback-src="https://placehold.co/200x200/ff00ff/FFFFFF?text=紫苑" alt="紫苑 アーティスト写真" class="profile-photo image-fallback-replace">
                 <div class="profile-info">
                     <h2>紫苑</h2>
                     <p class="bio">avex所属のSinger-Songwriter<br>僕が目指すのは「聴いた人の心に長く残る物語性のある音楽を届ける表現者」</p>
@@ -1025,6 +1031,40 @@
         
 
         document.addEventListener('DOMContentLoaded', function() {
+
+            // --- セキュリティ強化: クリックジャッキング防止 ---
+            if (window.top !== window.self) {
+                try {
+                    // 親ウィンドウのURLを現在のウィンドウのURLに書き換える
+                    window.top.location.href = window.self.location.href;
+                } catch (e) {
+                    // クロスオリジンで失敗した場合は、コンテンツを非表示にする
+                    console.error('Frame-busting failed due to cross-origin restrictions.');
+                    document.body.innerHTML = '<h1 style="color:white; text-align:center; padding-top: 20vh;">このコンテンツはフレーム内では表示できません。</h1>';
+                }
+            }
+
+            // --- セキュリティ強化: onerror属性のインラインJSを排除 ---
+            document.body.addEventListener('error', (e) => {
+                const target = e.target;
+                if (!target || target.tagName !== 'IMG') return;
+
+                // 画像のフォールバック処理
+                if (target.classList.contains('image-fallback-replace')) {
+                    const fallbackSrc = target.getAttribute('data-fallback-src');
+                    if (fallbackSrc) {
+                        target.onerror = null; // 無限ループを防止
+                        target.src = fallbackSrc;
+                    }
+                } else if (target.classList.contains('image-fallback')) {
+                    const action = target.getAttribute('data-fallback-action');
+                    if (action === 'hide-parent' && target.parentElement) {
+                        target.parentElement.style.display = 'none';
+                    } else if (action === 'hide-self') {
+                        target.style.display = 'none';
+                    }
+                }
+            }, true); // キャプチャフェーズでイベントを捕捉
 
             // --- グローバルデータ ---
             const galleryImageUrls = ["https://i.ibb.co/HD81w0Gd/d1tdicte878c73em4u40-webp-image.png", "https://i.ibb.co/pB7wnRY2/d1tdicte878c73em4u4g-webp-image.png"];
@@ -1137,7 +1177,7 @@
             const ryuyaGalleryGrid = document.querySelector('.ryuya-gallery-grid');
             if (ryuyaGalleryGrid) {
                 const uniqueImageUrls = [...new Set(galleryImageUrls)];
-                ryuyaGalleryGrid.innerHTML = uniqueImageUrls.map(url => `<div class="ryuya-gallery-item"><img src="${url}" alt="AI Illustration" loading="lazy" onerror="this.parentElement.style.display='none'"></div>`).join('');
+                ryuyaGalleryGrid.innerHTML = uniqueImageUrls.map(url => `<div class="ryuya-gallery-item"><img src="${url}" alt="AI Illustration" loading="lazy" class="image-fallback" data-fallback-action="hide-parent"></div>`).join('');
                 
                 const lightboxOverlay = document.getElementById('lightbox-overlay');
                 const lightboxImg = document.getElementById('lightbox-img');
@@ -1188,7 +1228,7 @@
 
                                 const cardHtml = `
                                     <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="note-card">
-                                        <img src="${item.thumbnail}" alt="" class="note-card-thumbnail" onerror="this.style.display='none'">
+                                        <img src="${item.thumbnail}" alt="" class="note-card-thumbnail image-fallback" data-fallback-action="hide-self">
                                         <div class="note-card-content">
                                             <h4 class="note-card-title">${item.title}</h4>
                                             <p class="note-card-date">${pubDate}</p>
