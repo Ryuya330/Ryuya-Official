@@ -621,11 +621,10 @@
     <header data-aos="fade-down" data-aos-duration="1000">
         <nav class="main-nav">
             <ul>
-                <li><a data-page="page-home" class="nav-link active">ホーム</a></li>
-                <li><a data-page="page-ryuya-1" class="nav-link">Ryuya：first</a></li>
-                <li><a data-page="page-ryuya-2" class="nav-link">Ryuya：second</a></li>
-                <li><a data-page="page-shion" class="nav-link">紫苑</a></li>
-                <li><a data-page="page-new-artist" class="nav-link">伊織 暁斗</a></li>
+                <li><a data-page="page-home" class="nav-link active">HOME</a></li>
+                <li><a data-page="page-profile" class="nav-link">PROFILE</a></li>
+                <li><a data-page="page-works" class="nav-link">WORKS</a></li>
+                <li><a data-page="page-media" class="nav-link">MEDIA</a></li>
             </ul>
         </nav>
         <button class="hamburger-btn" id="hamburger-btn"><span></span><span></span><span></span></button>
@@ -634,11 +633,10 @@
     <!-- Mobile Navigation -->
     <nav class="mobile-nav" id="mobile-nav">
         <ul>
-            <li><a data-page="page-home" class="nav-link active">ホーム</a></li>
-            <li><a data-page="page-ryuya-1" class="nav-link">Ryuya：first</a></li>
-            <li><a data-page="page-ryuya-2" class="nav-link">Ryuya：second</a></li>
-            <li><a data-page="page-shion" class="nav-link">紫苑</a></li>
-            <li><a data-page="page-new-artist" class="nav-link">伊織 暁斗</a></li>
+            <li><a data-page="page-home" class="nav-link active">HOME</a></li>
+            <li><a data-page="page-profile" class="nav-link">PROFILE</a></li>
+            <li><a data-page="page-works" class="nav-link">WORKS</a></li>
+            <li><a data-page="page-media" class="nav-link">MEDIA</a></li>
         </ul>
     </nav>
 
@@ -660,27 +658,56 @@
                 </div>
             </div>
         </section>
-        <section id="page-ryuya-1" class="page-content">
+
+        <section id="page-profile" class="page-content">
+            <div class="content">
+                <h2>PROFILE</h2>
+                <p>3つの顔を持つアーティスト、Ryuyaの活動を紹介します。</p>
+            </div>
             <div class="profile-card ryuya-card" data-aos="fade-down">
                 <img src="https://i.ibb.co/RK3h7KM/l-IHf-Ng-Nre-Zw-Mxg68efb-Xa.png" alt="りゅうや アイコン" class="profile-photo">
                 <div class="profile-info">
                     <h2>Ryuya</h2>
-                    <p class="bio">AI Creator. 2023.08.24始動<br>思考をプロンプトに変換し、2,000以上のビジュアルを生成</p>
+                    <p class="bio">AI Creator / Google AI Student Lead Ambassador<br>思考をプロンプトに変換し、2,000以上のビジュアルを生成。</p>
                 </div>
             </div>
-            <section class="content" data-aos="fade-up">
-                <h2>AIアートギャラリー</h2>
-                <p>過去作ではなくオフィシャルサイト開設後に創作したイラストのみ貼っています。</p>
-                <div class="ryuya-gallery-grid"></div>
-            </section>
-        </section>
-        <section id="page-ryuya-2" class="page-content">
-            <div class="profile-card ryuya-card" data-aos="fade-down">
-                <img src="https://i.ibb.co/RK3h7KM/l-IHf-Ng-Nre-Zw-Mxg68efb-Xa.png" alt="りゅうや アイコン" class="profile-photo">
+            <div class="profile-card shion-card" data-aos="fade-down">
+                <img src="https://i.ibb.co/4RzdYgbF/bt0n-Pu-Cotf55-R6-ARKv0o-O.jpg" data-fallback-src="https://placehold.co/200x200/ff00ff/FFFFFF?text=紫苑" alt="紫苑 アーティスト写真" class="profile-photo image-fallback-replace">
                 <div class="profile-info">
-                    <h2>Ryuya</h2>
-                    <p class="bio">Google AI Student Lead Ambassador<br>noteやstand.fmで情報を発信しています</p>
+                    <h2>紫苑</h2>
+                    <p class="bio">avex所属のSinger-Songwriter<br>僕が目指すのは「聴いた人の心に長く残る物語性のある音楽を届ける表現者」</p>
+                    <div class="social-icons">
+                        <a href="https://big-up.style/artists/302804" target="_blank" rel="noopener noreferrer" title="BIG UP!"><i class="fas fa-music"></i></a>
+                    </div>
                 </div>
+            </div>
+            <div class="profile-card iori-card" data-aos="fade-down">
+                <img src="https://i.ibb.co/C5K8JZMK/image.png" alt="伊織 暁斗 アイコン" class="profile-photo">
+                <div class="profile-info">
+                    <h2>伊織 暁斗</h2>
+                    <p class="bio">ByteDance所属のSinger-Songwriter<br>僕が目指すのは「聴く人の物語に寄り添い、心で共鳴するアーティスト」</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="page-works" class="page-content">
+            <div class="content">
+                <h2>WORKS</h2>
+                <p>Singer-Songwriterとしての音楽作品を紹介します。</p>
+            </div>
+            <div class="music-grid" data-aos="fade-up">
+                <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/1n60Vom8ookbnCHg9gI3q8?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/3qCpWy4XiDkG8XuOwLkSuv?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/5pA8cBctrkkEhHVyWUpGDR?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/5TK3zOStE4v7RBsZdasJXc?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/4qbELOGhlW16pRbHP8LEEK?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </section>
+
+        <section id="page-media" class="page-content">
+            <div class="content">
+                <h2>MEDIA</h2>
+                <p>Ryuyaとしての情報発信活動です。</p>
             </div>
             <div class="social-feeds">
                 <div class="feed-column">
@@ -698,48 +725,13 @@
                 </div>
             </div>
         </section>
-        <section id="page-shion" class="page-content">
-            <div class="profile-card shion-card" data-aos="fade-down">
-                <img src="https://i.ibb.co/4RzdYgbF/bt0n-Pu-Cotf55-R6-ARKv0o-O.jpg" data-fallback-src="https://placehold.co/200x200/ff00ff/FFFFFF?text=紫苑" alt="紫苑 アーティスト写真" class="profile-photo image-fallback-replace">
-                <div class="profile-info">
-                    <h2>紫苑</h2>
-                    <p class="bio">avex所属のSinger-Songwriter<br>僕が目指すのは「聴いた人の心に長く残る物語性のある音楽を届ける表現者」</p>
-                    <div class="social-icons">
-                        <a href="https://big-up.style/artists/302804" target="_blank" rel="noopener noreferrer" title="BIG UP!"><i class="fas fa-music"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="music-grid" data-aos="fade-up">
-                <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/1n60Vom8ookbnCHg9gI3q8?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/3qCpWy4XiDkG8XuOwLkSuv?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/5pA8cBctrkkEhHVyWUpGDR?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/5TK3zOStE4v7RBsZdasJXc?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/4qbELOGhlW16pRbHP8LEEK?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-            </div>
-        </section>
-        <section id="page-new-artist" class="page-content">
-            <div class="profile-card iori-card" data-aos="fade-down">
-                <img src="https://i.ibb.co/C5K8JZMK/image.png" alt="伊織 暁斗 アイコン" class="profile-photo">
-                <div class="profile-info">
-                    <h2>伊織 暁斗</h2>
-                    <p class="bio">ByteDance所属のSinger-Songwriter<br>僕が目指すのは「聴く人の物語に寄り添い、心で共鳴するアーティスト」</p>
-                </div>
-            </div>
-        </section>
+
     </main>
     
-    <!-- Lightbox -->
-    <div id="lightbox-overlay" class="lightbox-overlay">
-        <div class="lightbox-container">
-            <span class="lightbox-close">&times;</span>
-            <img class="lightbox-content" id="lightbox-img" alt="拡大表示されたAIイラスト">
-        </div>
-    </div>
-
     <!-- フッター -->
     <footer>
         <p>&copy; 2025 Ryuya Official</p>
-        <nav><ul><li><a class="nav-link" data-page="page-home">ホーム</a></li><li><a class="nav-link" data-page="page-ryuya-1">Ryuya：first</a></li><li><a class="nav-link" data-page="page-ryuya-2">Ryuya：second</a></li><li><a class="nav-link" data-page="page-shion">紫苑</a></li><li><a class="nav-link" data-page="page-new-artist">伊織 暁斗</a></li></ul></nav>
+        <nav><ul><li><a class="nav-link" data-page="page-home">HOME</a></li><li><a class="nav-link" data-page="page-profile">PROFILE</a></li><li><a class="nav-link" data-page="page-works">WORKS</a></li><li><a class="nav-link" data-page="page-media">MEDIA</a></li></ul></nav>
     </footer>
 
     <!-- External JS Libraries -->

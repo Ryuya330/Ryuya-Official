@@ -45,10 +45,7 @@
                 }
             }, true); // キャプチャフェーズでイベントを捕捉
 
-            // --- グローバルデータ ---
-            const galleryImageUrls = ["https://i.ibb.co/HD81w0Gd/d1tdicte878c73em4u40-webp-image.png", "https://i.ibb.co/pB7wnRY2/d1tdicte878c73em4u4g-webp-image.png"];
-
-            // --- DOM要素セレクター ---
+            
             const hamburgerBtn = document.getElementById('hamburger-btn');
             const mobileNav = document.getElementById('mobile-nav');
             const navLinks = document.querySelectorAll('.nav-link');
@@ -151,34 +148,15 @@
             }
 
             // ======================================================
-            // --- AIギャラリーロジック ---
+            // --- AIギャラリーロジック (削除済み) ---
             // ======================================================
-            const ryuyaGalleryGrid = document.querySelector('.ryuya-gallery-grid');
-            if (ryuyaGalleryGrid) {
-                const uniqueImageUrls = [...new Set(galleryImageUrls)];
-                ryuyaGalleryGrid.innerHTML = uniqueImageUrls.map(url => `<div class="ryuya-gallery-item"><img src="${url}" alt="AI Illustration" loading="lazy" class="image-fallback" data-fallback-action="hide-parent"></div>`).join('');
-                
-                const lightboxOverlay = document.getElementById('lightbox-overlay');
-                const lightboxImg = document.getElementById('lightbox-img');
-                const lightboxClose = document.querySelector('.lightbox-close');
-                
-                const closeLightbox = () => lightboxOverlay.style.display = 'none';
-                ryuyaGalleryGrid.addEventListener('click', e => {
-                    if (e.target.tagName === 'IMG') {
-                        lightboxImg.src = e.target.src;
-                        lightboxOverlay.style.display = 'flex';
-                    }
-                });
-                lightboxClose.addEventListener('click', closeLightbox);
-                lightboxOverlay.addEventListener('click', e => { if (e.target === lightboxOverlay) closeLightbox(); });
-            }
 
             // ======================================================
             // --- note RSSフィード読み込み ---
             // ======================================================
             function loadNoteFeed() {
                 console.log('Attempting to load Note feed...');
-                const feedContainer = document.querySelector('#page-ryuya-2 .note-feed-container');
+                const feedContainer = document.querySelector('#page-media .note-feed-container');
                 if (!feedContainer) {
                     console.warn('Note feed container not found.');
                     return;
