@@ -270,6 +270,13 @@ document.addEventListener('DOMContentLoaded', () => {
         mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
     }
 
+    function onTouchMove(event) {
+        if (event.touches.length > 0) {
+            mouse.x = (event.touches[0].clientX / window.innerWidth) * 2 - 1;
+            mouse.y = - (event.touches[0].clientY / window.innerHeight) * 2 + 1;
+        }
+    }
+
     const clock = new THREE.Clock();
     function animate() {
         requestAnimationFrame(animate);
@@ -279,6 +286,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     initThree();
+
+    window.addEventListener('touchmove', onTouchMove, { passive: false });
 
     // --- Spotify Lazy Load ---
     const spotifyIframes = document.querySelectorAll('.spotify-lazy-load');
