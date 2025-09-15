@@ -58,10 +58,10 @@
     
     <!-- External Libraries & Fonts -->
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Shippori+Mincho:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500&family=Noto+Serif+JP:wght@400;700&family=Roboto+Condensed:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
     
 
     <style>
@@ -72,24 +72,28 @@
 
         /* 基本スタイル */
         :root {
-            --primary-color: #9a77e9; /* More subtle purple */
-            --secondary-color: #f0f0f0; /* Light grey/off-white */
-            --accent-color: #9a77e9; /* Unified accent color */
-            --text-color: #e0e0e0;
-            --bg-color: #000;
-            --bg-glass: rgba(18, 18, 18, 0.8);
+            --primary-color: #6a0dad; /* Deep Purple - often associated with creativity/luxury */
+            --secondary-color: #f0f0f0; /* Light grey/off-white for contrast */
+            --accent-color: #bb86fc; /* Lighter purple for highlights/interactive elements */
+            --text-color: #e0e0e0; /* Light grey for main text */
+            --bg-color: #121212; /* Dark background */
+            --bg-glass: rgba(30, 30, 30, 0.8); /* Slightly lighter dark glass effect */
+            --card-bg: rgba(40, 40, 40, 0.6); /* Card background with transparency */
+            --border-color: rgba(255, 255, 255, 0.15); /* Subtle border color */
         }
 
         body {
-            font-family: 'Noto Sans JP', 'Segoe UI', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+            font-family: 'Noto Sans JP', 'Roboto Condensed', 'Segoe UI', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
             margin: 0;
             padding: 0;
             color: var(--text-color);
             overflow-x: hidden;
             background-color: var(--bg-color);
             position: relative;
-            font-size: 15px;
-            line-height: 1.6;
+            font-size: 16px; /* Slightly larger base font size */
+            line-height: 1.7; /* Improved readability */
+            -webkit-font-smoothing: antialiased; /* Smoother fonts */
+            -moz-osx-font-smoothing: grayscale;
         }
 
         /* 画像保存防止のためのスタイル */
@@ -106,10 +110,10 @@
         header {
             background-color: transparent; /* Initially transparent */
             backdrop-filter: blur(10px);
-            padding: 15px 20px;
+            padding: 20px 30px; /* Increased padding */
             text-align: center;
             display: flex;
-            justify-content: center; /* Center navigation */
+            justify-content: center;
             align-items: center;
             position: fixed;
             width: 100%;
@@ -122,7 +126,8 @@
 
         header.scrolled {
             background-color: var(--bg-glass);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
         
         .main-nav {
@@ -137,18 +142,19 @@
         }
 
         .main-nav li {
-            margin: 0 15px;
+            margin: 0 20px; /* Increased spacing */
         }
 
         .main-nav a {
             text-decoration: none;
-            color: #fff;
-            font-size: 1rem;
+            color: var(--secondary-color); /* Use secondary color for links */
+            font-size: 1.1rem; /* Slightly larger font size */
+            font-weight: 700; /* Bolder font */
             padding: 8px 0;
             position: relative;
-            transition: color 0.3s ease, text-shadow 0.3s ease;
+            transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.2s ease; /* Added transform */
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px; /* Increased letter spacing */
             cursor: pointer;
         }
 
@@ -156,10 +162,10 @@
             content: '';
             position: absolute;
             left: 0;
-            bottom: 0;
+            bottom: -5px; /* Adjusted position */
             width: 0;
-            height: 2px;
-            background-color: var(--primary-color);
+            height: 3px; /* Thicker underline */
+            background-color: var(--accent-color); /* Use accent color for underline */
             transition: width 0.3s ease;
         }
         
@@ -170,8 +176,9 @@
         
         .main-nav a.active,
         .main-nav a:hover {
-            color: var(--primary-color);
-            text-shadow: 0 0 10px var(--primary-color);
+            color: var(--accent-color);
+            text-shadow: 0 0 15px var(--accent-color); /* More prominent text shadow */
+            transform: translateY(-3px); /* Subtle lift on hover */
         }
         
         /* Hamburger Menu */
@@ -244,11 +251,12 @@
             font-size: 1.4rem;
             color: var(--text-color);
             text-decoration: none;
-            transition: background-color 0.3s, color 0.3s;
+            transition: background-color 0.3s, color 0.3s, transform 0.2s ease; /* Added transform */
         }
         .mobile-nav a:hover {
             background-color: var(--primary-color);
             color: #fff;
+            transform: translateX(-5px); /* Subtle slide on hover */
         }
 
         /* Page Transition Overlay */
@@ -280,18 +288,71 @@
         .page-content.is-active { display: block; animation: fadeInPage 0.8s ease-in-out; animation-fill-mode: backwards; }
         @keyframes fadeInPage { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        .content { background-color: transparent; backdrop-filter: none; padding: 50px; margin-bottom: 40px; border-radius: 0; border: none; border-top: 1px solid rgba(255, 255, 255, 0.1); box-shadow: none; }
-        .content h2 { font-family: 'Shippori Mincho', serif; font-size: clamp(2rem, 6vw, 3.5rem); color: var(--secondary-color); margin-bottom: 25px; border-bottom: 2px solid var(--primary-color); padding-bottom: 15px; text-shadow: none; letter-spacing: 1.5px; text-align: center; }
-        .content p { font-size: clamp(1rem, 2.5vw, 1.1rem); line-height: 1.9; color: #c0c0c0; text-align: center; max-width: 800px; margin-left: auto; margin-right: auto;}
+        .content {
+            background-color: var(--card-bg); /* Use card background for content blocks */
+            backdrop-filter: blur(8px); /* Subtle blur for content */
+            padding: 60px; /* Increased padding */
+            margin-bottom: 60px; /* Increased margin */
+            border-radius: 15px; /* Rounded corners for content blocks */
+            border: 1px solid var(--border-color); /* Subtle border */
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4); /* Soft shadow */
+        }
+        .content h2 {
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(2.5rem, 7vw, 4rem); /* Larger and more prominent */
+            color: var(--accent-color); /* Use accent color for titles */
+            margin-bottom: 30px; /* Increased margin */
+            border-bottom: 3px solid var(--primary-color); /* Thicker underline */
+            padding-bottom: 20px; /* Increased padding */
+            text-shadow: 0 0 10px rgba(187, 134, 252, 0.5); /* Glow effect */
+            letter-spacing: 2px;
+            text-align: center;
+        }
+        .content p { font-size: clamp(1.1rem, 2.8vw, 1.2rem); /* Slightly larger text */
+            line-height: 2; /* Improved readability */
+            color: #c0c0c0;
+            text-align: center;
+            max-width: 900px; /* Wider content area */
+            margin-left: auto;
+            margin-right: auto;
+        }
 
-        footer { background-color: #0a0a0a; padding: 25px; text-align: center; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; border-top: 1px solid rgba(255, 255, 255, 0.1); box-shadow: none; }
-        footer p { margin: 10px; color: #888; font-size: 0.9rem; }
+        footer {
+            background-color: var(--bg-color); /* Use main background color */
+            padding: 30px; /* Increased padding */
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            border-top: 1px solid var(--border-color); /* Use border color */
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.3); /* Soft shadow upwards */
+        }
+        footer p { margin: 10px; color: #a0a0a0; /* Slightly lighter grey */
+            font-size: 1rem; /* Slightly larger font size */
+        }
         footer nav ul { list-style: none; padding: 0; margin: 10px 0; display: flex; flex-wrap: wrap; justify-content: center; }
-        footer nav li { margin: 0 12px; }
-        footer nav a { text-decoration: none; color: #888; transition: color 0.3s ease; cursor: pointer; font-size: 0.9rem;}
-        footer nav a:hover { color: var(--primary-color); }
+        footer nav li { margin: 0 15px; /* Increased spacing */
+        }
+        footer nav a {
+            text-decoration: none;
+            color: #a0a0a0; /* Consistent with paragraph text */
+            transition: color 0.3s ease;
+            cursor: pointer;
+            font-size: 1rem; /* Consistent font size */
+        }
+        footer nav a:hover { color: var(--accent-color); /* Accent color on hover */
+        }
 
-        #particles-js { display: none; } /* Disabled for new design */
+        #particles-js { 
+            /* display: none; */ 
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0; /* Ensure it's behind hero content */
+        }
         
         /* --- New Artist Hero Section --- */
         .artist-hero-section {
@@ -345,72 +406,118 @@
         }
 
         .artist-name-main {
-            font-family: 'Shippori Mincho', serif;
-            font-size: clamp(3.5rem, 10vw, 7rem);
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(4rem, 12vw, 8rem); /* Larger font size */
             font-weight: 700;
             margin: 0;
-            line-height: 1.2;
-            color: #fff;
-            text-shadow: 0 2px 15px rgba(0,0,0,0.5);
+            line-height: 1.1;
+            color: var(--secondary-color); /* Use secondary color for main name */
+            text-shadow: 0 4px 20px rgba(0,0,0,0.7); /* More pronounced shadow */
+            animation: fadeInUp 1s ease-out forwards;
         }
 
         .artist-tagline-main {
             font-family: 'Noto Sans JP', sans-serif;
-            font-size: clamp(1rem, 3vw, 1.5rem);
-            margin: 20px 0;
-            color: #e0e0e0;
-            letter-spacing: 1px;
+            font-size: clamp(1.2rem, 3.5vw, 1.8rem); /* Larger tagline */
+            margin: 25px 0 40px 0; /* Adjusted margins */
+            color: var(--text-color);
+            letter-spacing: 2px; /* Increased letter spacing */
+            text-shadow: 0 1px 10px rgba(0,0,0,0.5);
+            animation: fadeInUp 1s ease-out forwards;
+            animation-delay: 0.3s;
         }
 
         .hero-social-icons-main {
-            margin-top: 30px;
+            margin-top: 40px; /* Increased margin */
         }
 
         .hero-social-icons-main a {
-            color: #fff;
-            font-size: 1.8rem;
-            margin: 0 15px;
+            color: var(--secondary-color); /* Use secondary color for icons */
+            font-size: 2.2rem; /* Larger icons */
+            margin: 0 20px; /* Increased spacing */
             transition: color 0.3s, transform 0.3s;
-        }
-
-        .hero-social-icons-main a:hover {
-            color: var(--primary-color);
-            transform: scale(1.1);
+            animation: fadeInUp 1s ease-out forwards;
+            animation-delay: 0.6s;
         }
 
         /* ----------- Artist Profile Cards ----------- */
-        .profile-card { display: flex; gap: 40px; align-items: center; padding: 40px; margin-bottom: 50px; background: transparent; border: none; box-shadow: none;}
-        .profile-photo { width: 200px; height: 200px; border-radius: 50%; object-fit: cover; flex-shrink: 0; border: 4px solid var(--primary-color); box-shadow: none; }
+        .profile-card {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            padding: 50px; /* Increased padding */
+            margin-bottom: 60px; /* Increased margin */
+            background: var(--card-bg); /* Use card background */
+            border-radius: 15px; /* Rounded corners */
+            border: 1px solid var(--border-color); /* Subtle border */
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4); /* Soft shadow */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .profile-card:hover {
+            transform: translateY(-8px); /* Lift effect on hover */
+            box-shadow: 0 12px 25px rgba(0,0,0,0.6); /* More pronounced shadow on hover */
+        }
+        .profile-photo {
+            width: 220px; /* Slightly larger photo */
+            height: 220px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            border: 5px solid var(--accent-color); /* Accent color border */
+            box-shadow: 0 0 15px rgba(187, 134, 252, 0.6); /* Glow effect for photo */
+        }
         .profile-info { flex-grow: 1; }
-        .profile-info h2 { font-family: 'Shippori Mincho', serif; font-size: clamp(2.5rem, 7vw, 4rem); margin: 0 0 15px 0; color: var(--primary-color); text-shadow: none; }
-        .profile-info .bio { font-size: clamp(1rem, 2.5vw, 1.1rem); line-height: 1.8; margin-bottom: 25px; color: #d0d0f0; }
+        .profile-info h2 {
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(2.8rem, 8vw, 4.5rem); /* Larger profile name */
+            margin: 0 0 20px 0;
+            color: var(--secondary-color); /* Use secondary color for profile name */
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        .profile-info .bio {
+            font-size: clamp(1.1rem, 2.8vw, 1.2rem); /* Consistent with content p */
+            line-height: 1.9;
+            margin-bottom: 30px;
+            color: #d0d0f0;
+        }
 
-        .social-icons { display: flex; gap: 20px; }
-        .social-icons a { color: #d0d0f0; font-size: 1.8em; transition: color 0.3s, transform 0.3s; }
-        .social-icons a:hover { color: var(--primary-color); transform: scale(1.2); }
+        .social-icons { display: flex; gap: 25px; /* Increased gap */
+        }
+        .social-icons a {
+            color: var(--text-color); /* Use text color for social icons */
+            font-size: 2em; /* Slightly larger icons */
+            transition: color 0.3s, transform 0.3s, filter 0.3s ease; /* Added filter */
+        }
+        .social-icons a:hover {
+            color: var(--accent-color); /* Accent color on hover */
+            transform: scale(1.2) rotate(10deg); /* More pronounced hover effect with rotation */
+            filter: drop-shadow(0 0 8px var(--accent-color)); /* Glow effect on hover */
+        }
 
         /* ----------- page1 (Ryuya：first) ----------- */
         .ryuya-gallery-grid { 
             display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
-            gap: 20px; 
-            padding: 20px; 
-            background-color: transparent;
-            border-radius: 0;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Slightly larger min width */
+            gap: 30px; /* Increased gap */
+            padding: 30px; /* Increased padding */
+            background-color: var(--card-bg); /* Use card background */
+            border-radius: 15px; /* Rounded corners */
+            border: 1px solid var(--border-color); /* Subtle border */
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4); /* Soft shadow */
         }
         .ryuya-gallery-item { 
             position: relative; 
             overflow: hidden; 
-            border-radius: 10px; 
-            box-shadow: none; 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
+            border-radius: 12px; /* Slightly more rounded */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Soft shadow */
+            border: 1px solid var(--border-color); /* Subtle border */
             transition: transform 0.3s ease, box-shadow 0.3s ease; 
             cursor: pointer;
             aspect-ratio: 1 / 1;
         }
         .ryuya-gallery-item:hover { 
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); 
+            transform: translateY(-8px); /* Lift effect on hover */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6); /* More pronounced shadow on hover */
         }
         .ryuya-gallery-item img { 
             width: 100%; 
@@ -479,8 +586,14 @@
         /* ----------- page2 (紫苑) ----------- */
         .music-grid { 
             display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Slightly larger min width */
             gap: 30px; 
+            padding: 30px; /* Added padding */
+            background-color: var(--card-bg); /* Card background */
+            border-radius: 15px; /* Rounded corners */
+            border: 1px solid var(--border-color); /* Subtle border */
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4); /* Soft shadow */
+            margin-bottom: 60px; /* Consistent margin */
         }
 
         /* --- Social Feed Styles --- */
@@ -495,7 +608,7 @@
             }
         }
         .feed-column h3 {
-            font-family: 'Shippori Mincho', serif;
+            font-family: 'Noto Serif JP', serif;
             font-size: 1.8em;
             color: var(--secondary-color);
             margin-bottom: 20px;
@@ -504,53 +617,58 @@
         .note-feed-container {
             max-height: 800px;
             overflow-y: auto;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1:px solid var(--border-color); /* Use border variable */
             border-radius: 12px;
             padding: 20px;
+            background-color: var(--card-bg); /* Card background */
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2); /* Soft shadow */
         }
 
         /* --- New Note Feed Card Styles --- */
         .note-card {
-            background-color: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: rgba(255, 255, 255, 0.05); /* Slightly lighter card background */
+            border: 1px solid var(--border-color);
             border-radius: 10px;
-            padding: 15px;
+            padding: 20px; /* Increased padding */
             margin-bottom: 20px;
             display: flex;
-            gap: 15px;
-            transition: background-color 0.3s, transform 0.3s;
+            gap: 20px; /* Increased gap */
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
             text-decoration: none;
             color: var(--text-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2); /* Soft shadow */
         }
         .note-card:hover {
-            background-color: rgba(154, 119, 233, 0.1);
+            background-color: rgba(187, 134, 252, 0.15); /* Accent color on hover */
             transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4); /* More pronounced shadow on hover */
         }
         .note-card-thumbnail {
-            width: 120px;
-            height: 120px;
+            width: 150px; /* Larger thumbnail */
+            height: 150px;
             object-fit: cover;
             border-radius: 8px;
             flex-shrink: 0;
+            border: 1px solid var(--border-color); /* Subtle border */
         }
         .note-card-content {
             display: flex;
             flex-direction: column;
         }
         .note-card-title {
-            font-size: 1.2em;
+            font-size: 1.3em; /* Larger title */
             font-weight: bold;
-            color: #fff;
-            margin: 0 0 5px 0;
+            color: var(--secondary-color); /* Use secondary color */
+            margin: 0 0 8px 0;
         }
         .note-card-date {
-            font-size: 0.8em;
+            font-size: 0.9em; /* Slightly larger date */
             color: #aaa;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
         .note-card-snippet {
-            font-size: 0.9em;
-            line-height: 1.5;
+            font-size: 1em; /* Slightly larger snippet */
+            line-height: 1.6;
             color: #ccc;
             display: -webkit-box;
             -webkit-line-clamp: 3;
@@ -598,51 +716,15 @@
         }
     </style>
 
-    <style>
-/* Loading Overlay */
-#loading-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--bg-color); /* Use existing background color */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999; /* Ensure it's on top */
-    opacity: 1;
-    transition: opacity 1s ease-out;
-}
-
-.loading-spinner {
-    border: 4px solid rgba(255, 255, 255, 0.3);
-    border-top: 4px solid var(--primary-color); /* Use primary color for spinner */
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
-}
-
-.loading-text {
-    color: var(--text-color);
-    font-family: 'Noto Sans JP', sans-serif;
-    margin-top: 20px;
-    font-size: 1.2rem;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-    </style>
+    
 </head>
 <body>
-    <div id="loading-overlay">
-        <div class="loading-spinner"></div>
-        <p class="loading-text">LOADING...</p>
-    </div>
+    
+    <!-- Page Transition -->
+    <div id="page-transition-overlay"></div>
+
+    
+
     <!-- Page Transition -->
     <div id="page-transition-overlay"></div>
 
@@ -772,20 +854,7 @@
     <script async src="https://note.com/scripts/embed.js" charset="utf-8"></script>
     
     <!-- Main Application Script -->
-    <script>
-        window.addEventListener('load', function() {
-            const loadingOverlay = document.getElementById('loading-overlay');
-            if (loadingOverlay) {
-                setTimeout(() => {
-                    loadingOverlay.style.opacity = '0';
-                    // After the transition, set display to none
-                    setTimeout(() => {
-                        loadingOverlay.style.display = 'none';
-                    }, 1000); // Wait for the 1s opacity transition to complete
-                }, 1000); // 1 second delay before starting fade out
-            }
-        });
-    </script>
+    
     <script src="app.js" defer></script>
 </body>
 </html>
