@@ -67,33 +67,7 @@ body:hover #cursor-dot, body:hover #cursor-outline { opacity: 1; }
 ::-webkit-scrollbar-thumb { background: var(--primary-color); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent-color); }
 
-/* --- Loading Screen --- */
-#loading-screen {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background-color: var(--bg-color);
-    display: flex; flex-direction: column; justify-content: center; align-items: center; /* 中央寄せと縦方向の配置 */
-    z-index: 10000; /* 最前面に表示 */
-    transition: opacity 0.8s ease-in-out, visibility 0.8s;
-}
 
-#loading-screen .section-title {
-    font-size: 8rem; /* 画面中央に大きく表示 */
-    line-height: 1;
-    margin-bottom: 2rem;
-}
-
-#loading-screen #loading-spinner {
-    margin-top: 2rem; /* スピナーとの間隔 */
-}
-#loading-screen.hidden { opacity: 0; visibility: hidden; }
-#loading-spinner {
-    width: 50px; height: 50px;
-    border: 4px solid var(--border-color);
-    border-top: 4px solid var(--primary-color);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
 /* --- Header --- */
 header { transition: background-color 0.3s ease; }
@@ -113,7 +87,7 @@ header.scrolled {
 
 /* --- Section Styles --- */
 .section-title {
-    font-family: 'Noto Serif JP', serif;
+    font-family: 'Inter', sans-serif; /* Changed from Noto Serif JP */
     text-shadow: 0 0 20px var(--primary-color), 0 0 40px var(--primary-color);
 }
 
@@ -146,11 +120,11 @@ header.scrolled {
 
 /* --- Spotify Embed --- */
 .spotify-embed {
-    border: 1px solid var(--border-color);
+    /* border: 1px solid var(--border-color); */ /* Removed border */
     transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 .spotify-embed:hover {
-    transform: scale(1.05);
+    transform: scale(1.02); /* Reduced scale from 1.05 */
     box-shadow: 0 0 25px rgba(0, 191, 255, 0.5);
 }
 
@@ -314,9 +288,9 @@ header.scrolled {
     opacity: 0;
     transform: translateY(20px) rotateX(90deg);
     filter: blur(5px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out, filter 0.8s ease-out;
-    transition-delay: calc(var(--char-index) * 0.1s + 0.5s); /* 各文字の遅延 */
-    font-family: 'Noto Serif JP', serif; /* 追加 */
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out, filter 0.5s ease-out; /* 0.8s から 0.5s に短縮 */
+    transition-delay: calc(var(--char-index) * 0.05s + 0.5s); /* 0.1s から 0.05s に短縮 */
+    font-family: 'Inter', sans-serif; /* 変更 */
 }
 
 .ryuya-animate .ryuya-char {
