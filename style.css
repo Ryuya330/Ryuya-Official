@@ -1,0 +1,161 @@
+:root {
+    --bg-color: #050510;
+    --primary-color: #8a2be2;
+    --accent-color: #00bfff;
+    --text-color: #e0e0e0;
+    --card-bg: rgba(10, 10, 25, 0.5);
+    --border-color: rgba(255, 255, 255, 0.1);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Inter', 'Noto Sans JP', sans-serif;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    cursor: none;
+}
+
+#bg-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+/* --- Custom Cursor --- */
+#cursor-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--accent-color);
+    border-radius: 50%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 10000;
+    transition: transform 0.1s ease-out;
+}
+#cursor-outline {
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--primary-color);
+    border-radius: 50%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 10000;
+    transition: all 0.2s ease-out;
+}
+body:hover #cursor-dot, body:hover #cursor-outline { opacity: 1; }
+#cursor-outline.hover {
+    transform: translate(-50%, -50%) scale(1.5);
+    background-color: rgba(138, 43, 226, 0.2);
+}
+
+/* --- Custom Scrollbar --- */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-color); }
+::-webkit-scrollbar-thumb { background: var(--primary-color); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-color); }
+
+/* --- Loading Screen --- */
+#loading-screen {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: var(--bg-color);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 9999;
+    transition: opacity 0.8s ease-in-out, visibility 0.8s;
+}
+#loading-screen.hidden { opacity: 0; visibility: hidden; }
+#loading-spinner {
+    width: 50px; height: 50px;
+    border: 4px solid var(--border-color);
+    border-top: 4px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+/* --- Header --- */
+header { transition: background-color 0.3s ease; }
+header.scrolled {
+    background-color: rgba(5, 5, 16, 0.8);
+    backdrop-filter: blur(10px);
+}
+.nav-link { position: relative; transition: color 0.3s ease; }
+.nav-link::after {
+    content: ''; position: absolute; left: 50%; bottom: -4px;
+    width: 0; height: 2px; background-color: var(--accent-color);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transform: translateX(-50%);
+}
+.nav-link.active::after, .nav-link:hover::after { width: 100%; }
+.nav-link.active, .nav-link:hover { color: var(--accent-color); }
+
+/* --- Section Styles --- */
+.section-title {
+    font-family: 'Noto Serif JP', serif;
+    text-shadow: 0 0 20px var(--primary-color), 0 0 40px var(--primary-color);
+}
+
+/* --- Profile Cards --- */
+.profile-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(10px);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+.profile-card:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 0 40px rgba(138, 43, 226, 0.5);
+}
+.profile-card .glow {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, rgba(138, 43, 226, 0.3) 0%, rgba(138, 43, 226, 0) 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    transform: translate(-50%, -50%);
+}
+.profile-card:hover .glow { opacity: 1; }
+.profile-photo { border: 2px solid var(--primary-color); }
+
+/* --- Spotify Embed --- */
+.spotify-embed {
+    border: 1px solid var(--border-color);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.spotify-embed:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(0, 191, 255, 0.5);
+}
+
+/* --- Note Card --- */
+.note-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease;
+}
+.note-card:hover { background-color: rgba(255, 255, 255, 0.08); }
+
+/* --- Animation --- */
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1s cubic-bezier(0.165, 0.84, 0.44, 1), transform 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.fade-in-up.visible { opacity: 1; transform: translateY(0); }

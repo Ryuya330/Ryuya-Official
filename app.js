@@ -1,364 +1,232 @@
-// グローバルなエラーハンドラー: 非致命的な AbortError を捕捉
-        window.addEventListener('unhandledrejection', function(event) {
-            if (event.reason && event.reason.name === 'AbortError') {
-                event.preventDefault();
-                console.warn('A non-critical AbortError was handled gracefully.');
+document.addEventListener('DOMContentLoaded', () => {
+    // --- Custom Cursor ---
+    const cursorDot = document.getElementById('cursor-dot');
+    const cursorOutline = document.getElementById('cursor-outline');
+    window.addEventListener('mousemove', e => {
+        const posX = e.clientX;
+        const posY = e.clientY;
+        cursorDot.style.left = `${posX}px`;
+        cursorDot.style.top = `${posY}px`;
+        cursorOutline.style.left = `${posX}px`;
+        cursorOutline.style.top = `${posY}px`;
+    });
+
+    document.querySelectorAll('a, button, .profile-card, .spotify-embed, .note-card').forEach(el => {
+        el.addEventListener('mouseover', () => cursorOutline.classList.add('hover'));
+        el.addEventListener('mouseleave', () => cursorOutline.classList.remove('hover'));
+    });
+
+    // --- Loading Screen ---
+    const loadingScreen = document.getElementById('loading-screen');
+    window.addEventListener('load', () => {
+        loadingScreen.classList.add('hidden');
+    });
+
+    // --- Header Scroll Effect ---
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+        header.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // --- Mobile Navigation ---
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const mobileNav = document.getElementById('mobile-nav');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+    hamburgerBtn.addEventListener('click', () => {
+        mobileNav.classList.toggle('translate-x-full');
+    });
+    mobileNavLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            mobileNav.classList.add('translate-x-full');
+        });
+    });
+
+    // --- Navigation Active State ---
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const observerOptions = { root: null, rootMargin: '0px', threshold: 0.4 };
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').substring(1) === entry.target.id) {
+                        link.classList.add('active');
+                    }
+                });
             }
         });
+    }, observerOptions);
+    sections.forEach(section => sectionObserver.observe(section));
 
-        
-
-        document.addEventListener('DOMContentLoaded', function() {
-
-            // --- セキュリティ強化: クリックジャッキング防止 ---
-            if (window.top !== window.self) {
-                try {
-                    // 親ウィンドウのURLを現在のウィンドウのURLに書き換える
-                    window.top.location.href = window.self.location.href;
-                } catch (e) {
-                    // クロスオリジンで失敗した場合は、コンテンツを非表示にする
-                    console.error('Frame-busting failed due to cross-origin restrictions.');
-                    document.body.innerHTML = '<h1 style="color:white; text-align:center; padding-top: 20vh;">このコンテンツはフレーム内では表示できません。</h1>';
-                }
+    // --- Scroll Animations ---
+    const animatedElements = document.querySelectorAll('.fade-in-up');
+    const animationObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
             }
+        });
+    }, { threshold: 0.1 });
+    animatedElements.forEach(el => animationObserver.observe(el));
+    
+    // --- Interactive Card Glow ---
+    const cards = document.querySelectorAll('.profile-card');
+    cards.forEach(card => {
+        const glow = card.querySelector('.glow');
+        card.addEventListener('mousemove', e => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            glow.style.left = `${x}px`;
+            glow.style.top = `${y}px`;
+        });
+    });
 
-            // --- セキュリティ強化: onerror属性のインラインJSを排除 ---
-            document.body.addEventListener('error', (e) => {
-                const target = e.target;
-                if (!target || target.tagName !== 'IMG') return;
+    // --- Note RSS Feed ---
+    const noteFeedContainer = document.getElementById('note-feed-container');
+    if (noteFeedContainer) {
+        loadNoteFeed();
+    }
 
-                // 画像のフォールバック処理
-                if (target.classList.contains('image-fallback-replace')) {
-                    const fallbackSrc = target.getAttribute('data-fallback-src');
-                    if (fallbackSrc) {
-                        target.onerror = null; // 無限ループを防止
-                        target.src = fallbackSrc;
-                    }
-                } else if (target.classList.contains('image-fallback')) {
-                    const action = target.getAttribute('data-fallback-action');
-                    if (action === 'hide-parent' && target.parentElement) {
-                        target.parentElement.style.display = 'none';
-                    } else if (action === 'hide-self') {
-                        target.style.display = 'none';
-                    }
-                }
-            }, true); // キャプチャフェーズでイベントを捕捉
+    function loadNoteFeed() {
+        noteFeedContainer.innerHTML = '<p class="text-center">最新の記事を読み込んでいます...<\/p>';
+        const rssUrl = 'https://note.com/ryuya_330/rss';
+        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
 
-            
-            const hamburgerBtn = document.getElementById('hamburger-btn');
-            const mobileNav = document.getElementById('mobile-nav');
-            const navLinks = document.querySelectorAll('.nav-link');
-            const transitionOverlay = document.getElementById('page-transition-overlay');
-            const header = document.querySelector('header');
-            const main = document.querySelector('main');
-            const footer = document.querySelector('footer');
-            const particlesJsDiv = document.getElementById('particles-js');
-
-            // --- ハンバーガーメニューロジック ---
-            hamburgerBtn.addEventListener('click', function() {
-                this.classList.toggle('is-active');
-                mobileNav.classList.toggle('is-active');
-            });
-            
-            // --- SPAナビゲーション & 遷移ロジック ---
-            let isTransitioning = false;
-
-            function runFadeTransition(callback) {
-                if (isTransitioning) return;
-                isTransitioning = true;
-                transitionOverlay.style.pointerEvents = 'auto';
-                transitionOverlay.style.backgroundColor = 'rgba(0, 0, 0, 1)'; // Solid black overlay
-                transitionOverlay.style.opacity = '1';
-                transitionOverlay.style.transition = 'opacity 0.3s ease-in-out';
-
-                setTimeout(() => {
-                    callback();
-                    transitionOverlay.style.opacity = '0';
-                    setTimeout(() => {
-                        transitionOverlay.style.backgroundColor = 'transparent';
-                        transitionOverlay.style.pointerEvents = 'none';
-                        isTransitioning = false;
-                    }, 300); // Match transition duration
-                }, 300); // Fade out duration
-            }
-
-            function navigateToPage(pageId) {
-                console.log(`Navigating to page: ${pageId}`);
-                const currentPage = document.querySelector('.page-content.is-active');
-                if ((currentPage && currentPage.id === pageId) || isTransitioning) {
-                    if (mobileNav.classList.contains('is-active')) {
-                        hamburgerBtn.classList.remove('is-active');
-                        mobileNav.classList.remove('is-active');
-                    }
-                    return;
-                }
-                runFadeTransition(() => {
-                    if (currentPage) {
-                        console.log(`Hiding page: ${currentPage.id}`);
-                        currentPage.classList.remove('is-active');
-                    }
-                    const nextPage = document.getElementById(pageId);
-                    if (nextPage) {
-                        console.log(`Showing page: ${pageId}`);
-                        nextPage.classList.add('is-active');
-                    } else {
-                        console.error(`Page not found: ${pageId}`);
-                    }
-                    document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
-                    document.querySelectorAll(`.nav-link[data-page="${pageId}"]`).forEach(activeLink => activeLink.classList.add('active'));
-                    AOS.refresh();
-                    window.scrollTo(0, 0);
-                    if (mobileNav.classList.contains('is-active')) {
-                        hamburgerBtn.classList.remove('is-active');
-                        mobileNav.classList.remove('is-active');
-                    }
-                });
-            }
-
-            navLinks.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const pageId = link.getAttribute('data-page');
-                    if(pageId) navigateToPage(pageId);
-                });
-            });
-
-            // --- Particles.js設定 ---
-            const particlesConfig = {
-                "particles": {
-                    "number": {
-                        "value": 60,
-                        "density": {
-                            "enable": true,
-                            "value_area": 1000
-                        }
-                    },
-                    "color": {
-                        "value": ["#bb86fc", "#6a0dad", "#e0e0e0"]
-                    },
-                    "shape": {
-                        "type": "circle",
-                        "stroke": {
-                            "width": 0,
-                            "color": "#000000"
-                        },
-                        "polygon": {
-                            "nb_sides": 5
-                        }
-                    },
-                    "opacity": {
-                        "value": 0.5,
-                        "random": false,
-                        "anim": {
-                            "enable": false,
-                            "speed": 1,
-                            "opacity_min": 0.1,
-                            "sync": false
-                        }
-                    },
-                    "size": {
-                        "value": 3,
-                        "random": true,
-                        "anim": {
-                            "enable": false,
-                            "speed": 40,
-                            "size_min": 0.1,
-                            "sync": false
-                        }
-                    },
-                    "line_linked": {
-                        "enable": true,
-                        "distance": 150,
-                        "color": "#6a0dad",
-                        "opacity": 0.4,
-                        "width": 1
-                    },
-                    "move": {
-                        "enable": true,
-                        "speed": 2,
-                        "direction": "none",
-                        "random": false,
-                        "straight": false,
-                        "out_mode": "out",
-                        "bounce": false,
-                        "attract": {
-                            "enable": false,
-                            "rotateX": 600,
-                            "rotateY": 1200
-                        }
-                    }
-                },
-                "interactivity": {
-                    "detect_on": "canvas",
-                    "events": {
-                        "onhover": {
-                            "enable": true,
-                            "mode": "grab"
-                        },
-                        "onclick": {
-                            "enable": true,
-                            "mode": "push"
-                        },
-                        "resize": true
-                    },
-                    "modes": {
-                        "grab": {
-                            "distance": 140,
-                            "line_linked": {
-                                "opacity": 1
-                            }
-                        },
-                        "bubble": {
-                            "distance": 400,
-                            "size": 40,
-                            "duration": 2,
-                            "opacity": 8,
-                            "speed": 3
-                        },
-                        "repulse": {
-                            "distance": 200,
-                            "duration": 0.4
-                        },
-                        "push": {
-                            "particles_nb": 4
-                        },
-                        "remove": {
-                            "particles_nb": 2
-                        }
-                    }
-                },
-                "retina_detect": true
-            };
-
-            // --- メインコンテンツ表示関数 ---
-            function showMainContent() {
-                if (header) header.style.display = 'flex';
-                if (main) main.style.display = 'block';
-                if (footer) footer.style.display = 'flex';
-                if (particlesJsDiv && typeof particlesJS !== 'undefined') {
-                    particlesJS('particles-js', particlesConfig);
-                }
-                document.body.style.cursor = 'auto';
-            }
-
-            // ======================================================
-            // --- AIギャラリーロジック (削除済み) ---
-            // ======================================================
-
-            // ======================================================
-            // --- note RSSフィード読み込み ---
-            // ======================================================
-            function loadNoteFeed() {
-                console.log('Attempting to load Note feed...');
-                const feedContainer = document.querySelector('#page-media .note-feed-container');
-                if (!feedContainer) {
-                    console.warn('Note feed container not found.');
-                    return;
-                }
-
-                feedContainer.innerHTML = '<p style="text-align: center;">最新の記事を読み込んでいます...</p>';
-
-                const rssUrl = 'https://note.com/ryuya_330/rss';
-                const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
-
-                fetch(apiUrl)
-                    .then(response => {
-                        console.log('Note feed fetch response received:', response);
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! status: ${response.status}`);
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        console.log('Note feed data:', data);
-                        if (data.status === 'ok') {
-                            feedContainer.innerHTML = ''; // ローディングメッセージをクリア
-                            data.items.forEach(item => {
-                                const snippet = item.description.replace(/<[^>]*>/g, "").substring(0, 150) + '...';
-                                const pubDate = new Date(item.pubDate).toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' });
-
-                                const cardHtml = `
-                                    <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="note-card">
-                                        <img src="${item.thumbnail}" alt="" class="note-card-thumbnail image-fallback" data-fallback-action="hide-self">
-                                        <div class="note-card-content">
-                                            <h4 class="note-card-title">${item.title}</h4>
-                                            <p class="note-card-date">${pubDate}</p>
-                                            <p class="note-card-snippet">${snippet}</p>
-                                        </div>
-                                    </a>
-                                `;
-                                feedContainer.insertAdjacentHTML('beforeend', cardHtml);
-                            });
-                        } else {
-                            throw new Error('RSS feed could not be loaded.');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error fetching note feed:', error);
-                        feedContainer.innerHTML = '<p style="text-align: center;">記事の読み込みに失敗しました。後でもう一度お試しください。</p>';
+        fetch(apiUrl)
+            .then(response => response.ok ? response.json() : Promise.reject(`HTTP error! status: ${response.status}`))
+            .then(data => {
+                if (data.status === 'ok') {
+                    noteFeedContainer.innerHTML = '';
+                    data.items.forEach(item => { // Display all articles
+                        const snippet = item.description.replace(/<[^>]*>/g, "").substring(0, 100) + '...';
+                        const pubDate = new Date(item.pubDate).toLocaleDateString('ja-JP');
+                        const thumbnailHtml = item.thumbnail ? `<img src="${item.thumbnail}" alt="${item.title}" class="w-full md:w-48 h-auto rounded-md object-cover">` : '';
+                        const cardHtml = `
+                            <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="note-card block rounded-lg p-6">
+                                <div class="flex flex-col md:flex-row md:items-center gap-6">
+                                    ${thumbnailHtml}
+                                    <div>
+                                        <h4 class="text-xl font-bold mb-2 hover:text-accent-color transition-colors">${item.title}<\/h4>
+                                        <p class="text-sm text-gray-400 mb-3">${pubDate}<\/p>
+                                        <p class="text-gray-300">${snippet}<\/p>
+                                    <\/div>
+                                <\/div>
+                            <\/a>`;
+                        noteFeedContainer.insertAdjacentHTML('beforeend', cardHtml);
                     });
-            }
-            loadNoteFeed();
-
-            
-
-
-            // ======================================================
-            // --- セキュリティ & コンテンツ保護 ---
-            // ======================================================
-            document.addEventListener('contextmenu', event => event.preventDefault());
-            document.addEventListener('dragstart', event => {
-                if (event.target.tagName === 'IMG') event.preventDefault();
-            });
-            
-            if (!/Mobi|Android/i.test(navigator.userAgent)) {
-                const devToolsBlocker = document.getElementById('devtools-blocker');
-                const devtoolsDetector = { isOpen: false };
-                Object.defineProperty(devtoolsDetector, 'toString', { get: function() { this.isOpen = true; return ''; } });
-                setInterval(() => {
-                    devtoolsDetector.isOpen = false;
-                    console.log('%c', devtoolsDetector);
-                    if (devtoolsDetector.isOpen && devToolsBlocker) {
-                        devToolsBlocker.style.display = 'block';
-                    }
-                }, 1500);
-            }
-
-            // ======================================================
-            // --- 一般的なUI & 初期化 ---
-            // ======================================================
-            AOS.init({ once: true, offset: 100, duration: 1000 });
-            showMainContent();
-            
-            document.querySelectorAll('.announcement-toggle').forEach(toggle => {
-                toggle.addEventListener('click', () => {
-                    const item = toggle.parentElement;
-                    const details = item.querySelector('.announcement-details');
-                    const isOpening = !item.classList.contains('is-open');
-                    
-                    document.querySelectorAll('.announcement-item.is-open').forEach(openItem => {
-                        if (openItem !== item) {
-                            openItem.classList.remove('is-open');
-                            openItem.querySelector('.announcement-details').style.maxHeight = null;
-                        }
-                    });
-
-                    if (isOpening) {
-                        item.classList.add('is-open');
-                        details.style.maxHeight = details.scrollHeight + 'px';
-                    } else {
-                        item.classList.remove('is-open');
-                        details.style.maxHeight = null;
-                    }
-                });
-            });
-
-            window.addEventListener('scroll', function() {
-                const header = document.querySelector('header');
-                if (window.scrollY > 50) {
-                    header.classList.add('scrolled');
                 } else {
-                    header.classList.remove('scrolled');
+                    throw new Error('RSS feed could not be loaded.');
                 }
+            })
+            .catch(error => {
+                console.error('Error fetching note feed:', error);
+                noteFeedContainer.innerHTML = '<p class="text-center text-red-400">記事の読み込みに失敗しました。<\/p>';
             });
+    }
+    
+    // --- Three.js Background ---
+    let scene, camera, renderer, material;
+    const mouse = new THREE.Vector2();
+
+    function initThree() {
+        scene = new THREE.Scene();
+        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 2;
+        
+        renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg-canvas'), alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        
+        const geometry = new THREE.PlaneGeometry(window.innerWidth/100, window.innerHeight/100, 1, 1);
+        
+        const vertexShader = `
+            varying vec2 vUv;
+            void main() {
+                vUv = uv;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+        `;
+        
+        const fragmentShader = `
+            varying vec2 vUv;
+            uniform float u_time;
+            uniform vec2 u_mouse;
+            
+            // 2D Random
+            float random (vec2 st) {
+                return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
+            }
+            
+            // 2D Noise
+            float noise (vec2 st) {
+                vec2 i = floor(st);
+                vec2 f = fract(st);
+
+                float a = random(i);
+                float b = random(i + vec2(1.0, 0.0));
+                float c = random(i + vec2(0.0, 1.0));
+                float d = random(i + vec2(1.0, 1.0));
+
+                vec2 u = f*f*(3.0-2.0*f);
+                return mix(a, b, u.x) + (c - a)* u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
+            }
+            
+            void main() {
+                vec2 scaledUv = vUv * 4.0;
+                float n = noise(scaledUv + u_time * 0.1);
+                
+                vec2 mouseEffect = u_mouse * 2.0;
+                float n2 = noise(scaledUv + mouseEffect);
+
+                float baseColor = smoothstep(0.4, 0.6, n + n2 * 0.5);
+                
+                vec3 color1 = vec3(0.53, 0.17, 0.89); // Purple
+                vec3 color2 = vec3(0.0, 0.75, 1.0); // Deep Sky Blue
+                
+                vec3 mixedColor = mix(color1, color2, vUv.y + sin(u_time*0.2)*0.2);
+                
+                gl_FragColor = vec4(mixedColor * baseColor, 1.0);
+            }
+        `;
+
+        material = new THREE.ShaderMaterial({
+            uniforms: {
+                u_time: { value: 0.0 },
+                u_mouse: { value: new THREE.Vector2(0, 0) }
+            },
+            vertexShader,
+            fragmentShader,
         });
+
+        const mesh = new THREE.Mesh(geometry, material);
+        scene.add(mesh);
+
+        window.addEventListener('resize', onWindowResize, false);
+        document.addEventListener('mousemove', onMouseMove, false);
+
+        animate();
+    }
+
+    function onWindowResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    function onMouseMove(event) {
+        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+    }
+
+    const clock = new THREE.Clock();
+    function animate() {
+        requestAnimationFrame(animate);
+        material.uniforms.u_time.value = clock.getElapsedTime();
+        material.uniforms.u_mouse.value.lerp(mouse, 0.05);
+        renderer.render(scene, camera);
+    }
+    
+    initThree();
+});

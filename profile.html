@@ -63,8 +63,8 @@
         <div class="container mx-auto flex justify-between items-center">
             <a href="index.html" class="text-2xl font-bold font-serif tracking-wider text-white">Ryuya</a>
             <nav class="hidden md:flex space-x-8">
-                <a href="index.html" class="nav-link active text-lg" id="nav-home">HOME</a>
-                <a href="profile.html" class="nav-link text-lg" id="nav-profile">PROFILE</a>
+                <a href="index.html" class="nav-link text-lg" id="nav-home">HOME</a>
+                <a href="profile.html" class="nav-link active text-lg" id="nav-profile">PROFILE</a>
                 <a href="songs.html" class="nav-link text-lg" id="nav-songs">SONGS</a>
                 <a href="media.html" class="nav-link text-lg" id="nav-media">MEDIA</a>
             </nav>
@@ -85,16 +85,35 @@
     </nav>
     
     <main>
-        <!-- Home Section -->
-        <section id="home" class="min-h-screen flex items-center justify-center text-center relative px-4">
-            <div class="z-10">
-                <h1 class="text-6xl md:text-8xl font-extrabold section-title fade-in-up">Ryuya</h1>
-                <p class="mt-4 text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto fade-in-up" style="transition-delay: 200ms;">
-                    AI Creator × Singer-Songwriter<br>
-                    Google AI Student Lead Ambassador
-                </p>
-                <div class="mt-8 flex justify-center space-x-6 fade-in-up" style="transition-delay: 400ms;">
-                    <a href="https://x.com/Ryuya_330" target="_blank" rel="noopener noreferrer" class="text-3xl hover:text-blue-400 transition-colors"><i class="fab fa-x-twitter"></i></a>
+        <!-- Profile Section -->
+        <section id="profile" class="py-24 px-6">
+            <div class="container mx-auto">
+                <h2 class="section-title text-5xl font-bold text-center mb-16 fade-in-up">PROFILE</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                    <!-- Ryuya Card -->
+                    <div class="profile-card rounded-xl p-8 text-center fade-in-up">
+                        <div class="glow"></div>
+                        <img src="assets/images/Ryuya.png" alt="Ryuya アイコン" class="profile-photo w-36 h-36 rounded-full mx-auto mb-6">
+                        <h3 class="text-3xl font-bold mb-2">Ryuya</h3>
+                        <p class="text-purple-300 mb-4">AI Creator / Google AI Student Lead Ambassador</p>
+                        <p class="text-gray-400">思考をプロンプトに変換し、2,000以上のビジュアルを生成。</p>
+                    </div>
+                    <!-- 紫苑 Card -->
+                    <div class="profile-card rounded-xl p-8 text-center fade-in-up" style="transition-delay: 200ms;">
+                         <div class="glow"></div>
+                         <img src="assets/images/紫苑.png" alt="紫苑 アーティスト写真" class="profile-photo w-36 h-36 rounded-full mx-auto mb-6" style="border-color: steelblue;">
+                        <h3 class="text-3xl font-bold mb-2">紫苑</h3>
+                        <p class="text-blue-300 mb-4">Singer-Songwriter (avex support)</p>
+                        <p class="text-gray-400">聴いた人の心に長く残る物語性のある音楽を届けるアーティスト。</p>
+                    </div>
+                    <!-- 伊織 暁斗 Card -->
+                    <div class="profile-card rounded-xl p-8 text-center fade-in-up" style="transition-delay: 400ms;">
+                         <div class="glow"></div>
+                         <img src="assets/images/伊織暁斗.png" alt="伊織 暁斗 アイコン" class="profile-photo w-36 h-36 rounded-full mx-auto mb-6" style="border-color: orangered;">
+                        <h3 class="text-3xl font-bold mb-2">伊織 暁斗</h3>
+                        <p class="text-orange-300 mb-4">Singer-Songwriter (ByteDance support)</p>
+                        <p class="text-gray-400">聴く人の物語に寄り添い心で共鳴するアーティスト。</p>
+                    </div>
                 </div>
             </div>
         </section>
