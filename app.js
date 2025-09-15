@@ -62,14 +62,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Scroll Animations ---
     const animatedElements = document.querySelectorAll('.fade-in-up');
-    const animationObserver = new IntersectionObserver((entries) => {
+    const glitchElements = document.querySelectorAll('.glitch'); // 新しく追加
+
+    const animationObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
+                // グリッチエフェクトを適用
+                if (entry.target.classList.contains('glitch')) {
+                    entry.target.classList.add('glitch-active'); // 新しいクラスを追加
+                    setTimeout(() => {
+                        entry.target.classList.remove('glitch-active'); // 一定時間後にグリッチを停止
+                    }, 2000); // 2秒後に停止
+                }
+                observer.unobserve(entry.target); // 一度表示されたら監視を停止
             }
         });
     }, { threshold: 0.1 });
+
     animatedElements.forEach(el => animationObserver.observe(el));
+    glitchElements.forEach(el => animationObserver.observe(el)); // グリッチ要素も監視
     
     // --- Interactive Card Glow ---
     const cards = document.querySelectorAll('.profile-card');
