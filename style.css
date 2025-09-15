@@ -306,6 +306,7 @@ header.scrolled {
     filter: blur(5px);
     transition: opacity 0.8s ease-out, transform 0.8s ease-out, filter 0.8s ease-out;
     transition-delay: calc(var(--char-index) * 0.1s + 0.5s); /* 各文字の遅延 */
+    font-family: 'Noto Serif JP', serif; /* 追加 */
 }
 
 .ryuya-animate .ryuya-char {
