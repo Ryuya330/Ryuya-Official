@@ -2,18 +2,29 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Custom Cursor ---
     const cursorDot = document.getElementById('cursor-dot');
     const cursorOutline = document.getElementById('cursor-outline');
+
+    const updateCursorPosition = (x, y) => {
+        cursorDot.style.left = `${x}px`;
+        cursorDot.style.top = `${y}px`;
+        cursorOutline.style.left = `${x}px`;
+        cursorOutline.style.top = `${y}px`;
+    };
+
     window.addEventListener('mousemove', e => {
-        const posX = e.clientX;
-        const posY = e.clientY;
-        cursorDot.style.left = `${posX}px`;
-        cursorDot.style.top = `${posY}px`;
-        cursorOutline.style.left = `${posX}px`;
-        cursorOutline.style.top = `${posY}px`;
+        updateCursorPosition(e.clientX, e.clientY);
+    });
+
+    window.addEventListener('touchmove', e => {
+        if (e.touches.length > 0) {
+            updateCursorPosition(e.touches[0].clientX, e.touches[0].clientY);
+        }
     });
 
     document.querySelectorAll('a, button, .profile-card, .spotify-embed, .note-card').forEach(el => {
         el.addEventListener('mouseover', () => cursorOutline.classList.add('hover'));
         el.addEventListener('mouseleave', () => cursorOutline.classList.remove('hover'));
+        // For touch devices, we might want to add a similar effect on touchstart/touchend
+        // For now, keeping it mouse-specific to avoid conflicts with native touch behavior
     });
 
     
