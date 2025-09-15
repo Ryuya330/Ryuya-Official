@@ -297,3 +297,26 @@ header.scrolled {
 .glitch-on-hover:hover::after {
     animation: glitch-anim-2 0.5s infinite linear alternate-reverse;
 }
+
+/* Ryuya Title Animation */
+.ryuya-char {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px) rotateX(90deg);
+    filter: blur(5px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out, filter 0.8s ease-out;
+    transition-delay: calc(var(--char-index) * 0.1s + 0.5s); /* 各文字の遅延 */
+}
+
+.ryuya-animate .ryuya-char {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg);
+    filter: blur(0);
+}
+
+/* グリッチエフェクトと組み合わせる場合 */
+.ryuya-animate .ryuya-char.glitch-active::before,
+.ryuya-animate .ryuya-char.glitch-active::after {
+    /* 既存のグリッチアニメーションを適用 */
+    animation: glitch-anim-1 0.3s linear infinite alternate-reverse, glitch-anim-2 0.3s linear infinite alternate-reverse;
+}

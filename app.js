@@ -165,7 +165,8 @@ document.addEventListener('DOMContentLoaded', () => {
             varying vec2 vUv;
             uniform float u_time;
             uniform vec2 u_mouse;
-            
+            uniform vec2 u_resolution; // 解像度を追加
+
             // 2D Random
             float random (vec2 st) {
                 return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
@@ -184,22 +185,59 @@ document.addEventListener('DOMContentLoaded', () => {
                 vec2 u = f*f*(3.0-2.0*f);
                 return mix(a, b, u.x) + (c - a)* u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
             }
+
+            // FBM (Fractal Brownian Motion) for more complex noise
+            float fbm(vec2 st) {
+                float value = 0.0;
+                float amplitude = 0.5;
+                float frequency = 0.0;
+                for (int i = 0; i < 4; i++) {
+                    value += amplitude * noise(st);
+                    st *= 2.0;
+                    amplitude *= 0.5;
+                }
+                return value;
+            }
             
             void main() {
-                vec2 scaledUv = vUv * 4.0;
-                float n = noise(scaledUv + u_time * 0.1);
-                
-                vec2 mouseEffect = u_mouse * 2.0;
-                float n2 = noise(scaledUv + mouseEffect);
+                vec2 uv = vUv;
+                vec2 aspectCorrectedUv = uv * u_resolution / min(u_resolution.x, u_resolution.y);
 
-                float baseColor = smoothstep(0.4, 0.6, n + n2 * 0.5);
+                // Glitch effect based on time and noise
+                float glitchStrength = sin(u_time * 5.0) * 0.02 + 0.02; // 時間で変化するグリッチ強度
+                glitchStrength *= fbm(uv * 10.0 + u_time * 0.5); // ノイズでグリッチを不規則に
+                uv.x += glitchStrength * (random(uv + u_time) - 0.5);
+                uv.y += glitchStrength * (random(uv * 2.0 + u_time) - 0.5);
+
+                // Base noise pattern
+                vec2 scaledUv = uv * 8.0; // より細かく
+                float n = fbm(scaledUv + u_time * 0.05); // FBMを使用
+
+                // Mouse interaction
+                vec2 mouseEffect = (u_mouse + 1.0) * 0.5; // -1 to 1 -> 0 to 1
+                mouseEffect = mix(vec2(0.5), mouseEffect, 0.8); // マウスの影響を強く
+                float mouseDist = distance(uv, mouseEffect);
+                float mouseInfluence = smoothstep(0.3, 0.0, mouseDist) * 0.5; // マウスに近いほど影響
+
+                // Combine noise and mouse influence
+                float finalNoise = n + mouseInfluence;
+
+                // Digital line/grid pattern
+                vec2 gridUv = uv * 20.0;
+                float gridX = step(0.9, fract(gridUv.x));
+                float gridY = step(0.9, fract(gridUv.y));
+                float gridPattern = max(gridX, gridY) * 0.1; // グリッドの強度
+
+                // Colors
+                vec3 color1 = vec3(0.0, 0.0, 0.2); // Dark Blue
+                vec3 color2 = vec3(0.0, 0.7, 1.0); // Cyan
+                vec3 color3 = vec3(0.8, 0.2, 1.0); // Magenta
                 
-                vec3 color1 = vec3(0.53, 0.17, 0.89); // Purple
-                vec3 color2 = vec3(0.0, 0.75, 1.0); // Deep Sky Blue
-                
-                vec3 mixedColor = mix(color1, color2, vUv.y + sin(u_time*0.2)*0.2);
-                
-                gl_FragColor = vec4(mixedColor * baseColor, 1.0);
+                vec3 mixedColor = mix(color1, color2, finalNoise);
+                mixedColor = mix(mixedColor, color3, smoothstep(0.6, 1.0, finalNoise + mouseInfluence));
+
+                // Final color with grid and glitch
+                gl_FragColor = vec4(mixedColor * (finalNoise + gridPattern), 1.0);
             }
         `;
 
@@ -225,6 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
+        material.uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight); // 解像度を更新
     }
 
     function onMouseMove(event) {
@@ -241,4 +280,41 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     initThree();
+
+    // --- Spotify Lazy Load ---
+    const spotifyIframes = document.querySelectorAll('.spotify-lazy-load');
+    const spotifyObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && entry.target.dataset.src) {
+                entry.target.src = entry.target.dataset.src;
+                entry.target.removeAttribute('data-src');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { rootMargin: '0px 0px 200px 0px' }); // ビューポートから200px手前で読み込み開始
+
+    spotifyIframes.forEach(iframe => {
+        spotifyObserver.observe(iframe);
+    });
+
+    // --- Ryuya Title Animation ---
+    const ryuyaTitle = document.querySelector('.section-title.glitch');
+    if (ryuyaTitle) {
+        const text = ryuyaTitle.textContent;
+        ryuyaTitle.textContent = ''; // 元のテキストをクリア
+
+        // 各文字をspanで囲み、DOMに追加
+        text.split('').forEach((char, index) => {
+            const span = document.createElement('span');
+            span.textContent = char;
+            span.classList.add('ryuya-char');
+            span.style.setProperty('--char-index', index);
+            ryuyaTitle.appendChild(span);
+        });
+
+        // アニメーションを適用
+        setTimeout(() => {
+            ryuyaTitle.classList.add('ryuya-animate');
+        }, 500); // ページのロードから少し遅れて開始
+    }
 });
