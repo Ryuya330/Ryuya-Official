@@ -18,9 +18,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Loading Screen ---
     const loadingScreen = document.getElementById('loading-screen');
-    window.addEventListener('load', () => {
-        loadingScreen.classList.add('hidden');
-    });
+    const ryuyaTitle = document.querySelector('#loading-screen .section-title.glitch'); // loading-screen内のRyuyaタイトルを取得
+
+    // Ryuyaタイトルアニメーションの実行
+    if (ryuyaTitle) {
+        const text = ryuyaTitle.textContent;
+        ryuyaTitle.textContent = ''; // 元のテキストをクリア
+
+        // 各文字をspanで囲み、DOMに追加
+        text.split('').forEach((char, index) => {
+            const span = document.createElement('span');
+            span.textContent = char;
+            span.classList.add('ryuya-char');
+            span.style.setProperty('--char-index', index);
+            ryuyaTitle.appendChild(span);
+        });
+
+        // アニメーションを適用
+        setTimeout(() => {
+            ryuyaTitle.classList.add('ryuya-animate');
+            // アニメーション完了後にローディング画面を非表示にする
+            ryuyaTitle.addEventListener('transitionend', (event) => {
+                // 最後の文字のアニメーションが完了したらローディング画面を隠す
+                const lastCharIndex = text.length - 1;
+                if (parseInt(event.target.style.getPropertyValue('--char-index')) === lastCharIndex) {
+                    setTimeout(() => {
+                        loadingScreen.classList.add('hidden');
+                    }, 500); // 少し遅れて隠す
+                }
+            }, { once: true }); // イベントリスナーは一度だけ実行
+        }, 500); // ページのロードから少し遅れて開始
+    } else {
+        // Ryuyaタイトルがない場合は、通常のローディング画面非表示処理
+        window.addEventListener('load', () => {
+            loadingScreen.classList.add('hidden');
+        });
+    }
 
     // --- Header Scroll Effect ---
     const header = document.getElementById('header');
@@ -244,7 +277,8 @@ document.addEventListener('DOMContentLoaded', () => {
         material = new THREE.ShaderMaterial({
             uniforms: {
                 u_time: { value: 0.0 },
-                u_mouse: { value: new THREE.Vector2(0, 0) }
+                u_mouse: { value: new THREE.Vector2(0, 0) },
+                u_resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) } // 解像度を追加
             },
             vertexShader,
             fragmentShader,
@@ -263,7 +297,7 @@ document.addEventListener('DOMContentLoaded', () => {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
-        material.uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight); // 解像度を更新
+        material.uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight);
     }
 
     function onMouseMove(event) {
