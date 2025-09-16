@@ -35,10 +35,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Use a short timeout to ensure the 'hidden' class (opacity 0) is applied before display: none
                 setTimeout(() => {
                     initialDisplay.style.display = 'none';
-                    mainContent.style.display = 'block'; // Make it visible
+                    mainContent.classList.add('main-content-visible'); // Make it visible using the class
                     // Force reflow before setting opacity to ensure transition works
                     void mainContent.offsetWidth;
-                    mainContent.style.opacity = '1'; // Now fade it in
 
                     // Initialize site features after main content is visible
                     if (window.initializeSiteFeatures) {
