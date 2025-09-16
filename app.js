@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+function initializeSiteFeatures() {
     // --- Custom Cursor ---
     const cursorDot = document.getElementById('cursor-dot');
     const cursorOutline = document.getElementById('cursor-outline');
@@ -202,23 +202,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 vec2 aspectCorrectedUv = uv * u_resolution / min(u_resolution.x, u_resolution.y);
 
                 // Glitch effect based on time and noise
-                float glitchStrength = sin(u_time * 5.0) * 0.02 + 0.02; // 時間で変化するグリッチ強度
-                glitchStrength *= fbm(uv * 10.0 + u_time * 0.5); // ノイズでグリッチを不規則に
+                float glitchStrength = sin(u_time * 10.0) * 0.07 + 0.07; // Increased glitch strength
+                glitchStrength *= fbm(uv * 20.0 + u_time * 1.0); // Increased noise impact
                 uv.x += glitchStrength * (random(uv + u_time) - 0.5);
                 uv.y += glitchStrength * (random(uv * 2.0 + u_time) - 0.5);
 
-                // Base noise pattern
-                vec2 scaledUv = uv * 8.0; // より細かく
-                float n = fbm(scaledUv + u_time * 0.05); // FBMを使用
+                // Base noise pattern with additional FBM layer
+                vec2 scaledUv = uv * 8.0;
+                float n = fbm(scaledUv + u_time * 0.05); // First FBM layer
+                float n2 = fbm(uv * 15.0 + u_time * 0.1); // Second FBM layer for more complexity
+                float combinedNoise = (n + n2) * 0.5; // Combine and normalize
 
                 // Mouse interaction
-                vec2 mouseEffect = (u_mouse + 1.0) * 0.5; // -1 to 1 -> 0 to 1
-                mouseEffect = mix(vec2(0.5), mouseEffect, 0.8); // マウスの影響を強く
+                vec2 mouseEffect = (u_mouse + 1.0) * 0.5;
+                mouseEffect = mix(vec2(0.5), mouseEffect, 1.0); // Stronger mouse influence
                 float mouseDist = distance(uv, mouseEffect);
-                float mouseInfluence = smoothstep(0.3, 0.0, mouseDist) * 0.5; // マウスに近いほど影響
+                float mouseInfluence = smoothstep(0.4, 0.0, mouseDist) * 0.7; // Increased influence area and strength
 
                 // Combine noise and mouse influence
-                float finalNoise = n + mouseInfluence;
+                float finalNoise = combinedNoise + mouseInfluence;
 
                 // Digital line/grid pattern
                 vec2 gridUv = uv * 20.0;
@@ -227,9 +229,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 float gridPattern = max(gridX, gridY) * 0.1; // グリッドの強度
 
                 // Colors
-                vec3 color1 = vec3(0.0, 0.0, 0.2); // Dark Blue
-                vec3 color2 = vec3(0.0, 0.7, 1.0); // Cyan
-                vec3 color3 = vec3(0.8, 0.2, 1.0); // Magenta
+                vec3 color1 = vec3(0.0, 0.0, 0.2 + sin(u_time * 0.5) * 0.05); // Dark Blue with subtle pulse
+                vec3 color2 = vec3(0.0, 0.7 + sin(u_time * 0.7) * 0.05, 1.0); // Cyan with subtle pulse
+                vec3 color3 = vec3(0.8 + sin(u_time * 0.9) * 0.05, 0.2, 1.0); // Magenta with subtle pulse
                 
                 vec3 mixedColor = mix(color1, color2, finalNoise);
                 mixedColor = mix(mixedColor, color3, smoothstep(0.6, 1.0, finalNoise + mouseInfluence));
@@ -325,4 +327,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ryuyaTitle.classList.add('ryuya-animate');
         }, 500); // ページのロードから少し遅れて開始
     }
-});
+}
+
+// Make the function globally accessible
+window.initializeSiteFeatures = initializeSiteFeatures;

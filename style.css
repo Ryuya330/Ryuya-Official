@@ -17,6 +17,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     cursor: none;
+    text-shadow: 0 0 1px rgba(255, 255, 255, 0.1), 0 0 2px rgba(255, 255, 255, 0.05); /* Subtle glow */
 }
 
 #bg-canvas {
@@ -75,7 +76,7 @@ header.scrolled {
     background-color: rgba(5, 5, 16, 0.8);
     backdrop-filter: blur(10px);
 }
-.nav-link { position: relative; transition: color 0.3s ease; }
+.nav-link { position: relative; transition: color 0.3s ease, box-shadow 0.3s ease; }
 .nav-link::after {
     content: ''; position: absolute; left: 50%; bottom: -4px;
     width: 0; height: 2px; background-color: var(--accent-color);
@@ -83,12 +84,39 @@ header.scrolled {
     transform: translateX(-50%);
 }
 .nav-link.active::after, .nav-link:hover::after { width: 100%; }
-.nav-link.active, .nav-link:hover { color: var(--accent-color); }
+.nav-link.active, .nav-link:hover { 
+    color: var(--accent-color);
+    box-shadow: 0 0 10px var(--accent-color), 0 0 20px var(--accent-color); /* Digital pulse/glow */
+}
 
 /* --- Section Styles --- */
 .section-title {
     font-family: 'Inter', sans-serif; /* Changed from Noto Serif JP */
     text-shadow: 0 0 20px var(--primary-color), 0 0 40px var(--primary-color);
+    animation: flicker 5s infinite alternate; /* Apply flicker animation */
+}
+
+@keyframes flicker {
+    0%, 100% { opacity: 1; text-shadow: 0 0 20px var(--primary-color), 0 0 40px var(--primary-color); }
+    5% { opacity: 0.95; text-shadow: 0 0 18px var(--primary-color), 0 0 38px var(--primary-color); }
+    10% { opacity: 1; text-shadow: 0 0 20px var(--primary-color), 0 0 40px var(--primary-color); }
+    15% { opacity: 0.97; text-shadow: 0 0 19px var(--primary-color), 0 0 39px var(--primary-color); }
+    20% { opacity: 1; text-shadow: 0 0 20px var(--primary-color), 0 0 40px var(--primary-color); }
+    25% { opacity: 0.96; text-shadow: 0 0 18px var(--primary-color), 0 0 38px var(--primary-color); }
+    30% { opacity: 1; text-shadow: 0 0 20px var(--primary-color), 0 0 40px var(--primary-color); }
+    35% { opacity: 0.98; text-shadow: 0 0 19px var(--primary-color), 0 0 39px var(--primary-color); }
+    40% { opacity: 1; text-shadow: 0 0 20px var(--primary-color), 0 0 40px var(--primary-color); }
+    45% { opacity: 0.95; text-shadow: 0 0 18px var(--primary-color), 0 0 38px var(--primary-color); }
+    50% { opacity: 1; text-shadow: 0 0 20px var(--primary-color), 0 0 40px var(--primary-color); }
+    55% { opacity: 0.97; text-shadow: 0 0 19px var(--primary-color), 0 0 39px var(--primary-color); }
+    60% { opacity: 1; text-shadow: 0 0 20px var(--primary-color), 0 0 40px var(--primary-color); }
+    65% { opacity: 0.96; text-shadow: 0 0 18px var(--primary-color), 0 0 38px var(--primary-color); }
+    70% { opacity: 1; text-shadow: 0 0 20px var(--primary-color), 0 0 40px var(--primary-color); }
+    75% { opacity: 0.98; text-shadow: 0 0 19px var(--primary-color), 0 0 39px var(--primary-color); }
+    80% { opacity: 1; text-shadow: 0 0 20px var(--primary-color), 0 0 40px var(--primary-color); }
+    85% { opacity: 0.95; text-shadow: 0 0 18px var(--primary-color), 0 0 38px var(--primary-color); }
+    90% { opacity: 1; text-shadow: 0 0 20px var(--primary-color), 0 0 40px var(--primary-color); }
+    95% { opacity: 0.97; text-shadow: 0 0 19px var(--primary-color), 0 0 39px var(--primary-color); }
 }
 
 /* --- Profile Cards --- */
@@ -139,17 +167,17 @@ header.scrolled {
 /* --- Animation --- */
 .fade-in-up {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translateY(40px) scale(0.98); /* Added subtle scale */
     transition: opacity 1s cubic-bezier(0.165, 0.84, 0.44, 1), transform 1s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
-.fade-in-up.visible { opacity: 1; transform: translateY(0); }
+.fade-in-up.visible { opacity: 1; transform: translateY(0) scale(1); } /* Transition to scale 1 */
 
 /* Glitch Effect */
 .glitch {
     position: relative;
     display: inline-block;
     color: var(--text-color); /* Adjust as needed */
-    overflow: hidden;
+    /* overflow: hidden; */ /* Removed overflow hidden */
 }
 
 .glitch.glitch-active::before,
@@ -160,24 +188,87 @@ header.scrolled {
     left: 0;
     width: 100%;
     height: 100%;
-    background: var(--bg-color);
-    overflow: hidden;
-    clip: rect(0, 900px, 0, 0);
+    /* background: var(--bg-color); */ /* Removed background */
+    /* overflow: hidden; */ /* Removed overflow hidden */
+    /* clip: rect(0, 900px, 0, 0); */ /* Removed clip */
+    opacity: 0.8; /* Subtle opacity change */
 }
 
 .glitch.glitch-active::before {
-    left: -2px;
+    left: -1px; /* Subtle shift */
     text-shadow: 1px 0 0 var(--primary-color);
-    animation: glitch-anim-1 0.5s linear infinite alternate-reverse; /* 短い時間で実行 */
+    animation: glitch-anim-subtle-1 0.3s linear infinite alternate-reverse; /* New animation */
 }
 
 .glitch.glitch-active::after {
-    left: 2px;
+    left: 1px; /* Subtle shift */
     text-shadow: -1px 0 0 var(--accent-color);
-    animation: glitch-anim-2 0.5s linear infinite alternate-reverse; /* 短い時間で実行 */
+    animation: glitch-anim-subtle-2 0.3s linear infinite alternate-reverse; /* New animation */
 }
 
-@keyframes glitch-anim-1 {
+@keyframes glitch-anim-subtle-1 {
+    0% { transform: translateX(0.5px) translateY(0.5px); opacity: 0.8; }
+    50% { transform: translateX(-0.5px) translateY(-0.5px); opacity: 0.7; }
+    100% { transform: translateX(0.5px) translateY(0.5px); opacity: 0.8; }
+}
+
+@keyframes glitch-anim-subtle-2 {
+    0% { transform: translateX(-0.5px) translateY(-0.5px); opacity: 0.8; }
+    50% { transform: translateX(0.5px) translateY(0.5px); opacity: 0.7; }
+    100% { transform: translateX(-0.5px) translateY(-0.5px); opacity: 0.8; }
+}
+
+/* Glitch on hover for interactive elements */
+.glitch-on-hover:hover {
+    animation: none; /* Disable original glitch animation */
+}
+.glitch-on-hover:hover::before {
+    animation: glitch-anim-subtle-1 0.3s infinite linear alternate-reverse;
+}
+/* Glitch on hover for interactive elements */
+.glitch-on-hover:hover {
+    animation: none; /* Disable original glitch animation */
+}
+.glitch-on-hover:hover::before {
+    animation: glitch-anim-subtle-1 0.3s infinite linear alternate-reverse;
+}
+.glitch-on-hover:hover::after {
+    animation: glitch-anim-subtle-2 0.3s infinite linear alternate-reverse;
+}
+
+/* Initial Glitch for Ryuya on Load */
+.glitch-initial {
+    position: relative;
+    display: inline-block;
+    color: var(--text-color);
+    overflow: hidden; /* Keep overflow hidden for clipping */
+}
+
+.glitch-initial::before,
+.glitch-initial::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-color); /* Cover original text */
+    overflow: hidden;
+}
+
+.glitch-initial::before {
+    left: -2px;
+    text-shadow: 1px 0 0 var(--primary-color);
+    animation: glitch-initial-anim-1 0.8s linear infinite alternate-reverse;
+}
+
+.glitch-initial::after {
+    left: 2px;
+    text-shadow: -1px 0 0 var(--accent-color);
+    animation: glitch-initial-anim-2 0.8s linear infinite alternate-reverse;
+}
+
+@keyframes glitch-initial-anim-1 {
     0% {
         clip: rect(30px, 9999px, 10px, 0);
         transform: skew(-0.5deg);
@@ -217,14 +308,14 @@ header.scrolled {
     90% {
         clip: rect(80px, 9999px, 110px, 0);
         transform: skew(0.2deg);
-    } 
+    }
     100% {
         clip: rect(110px, 9999px, 100px, 0);
         transform: skew(-0.6deg);
     }
 }
 
-@keyframes glitch-anim-2 {
+@keyframes glitch-initial-anim-2 {
     0% {
         clip: rect(10px, 9999px, 30px, 0);
         transform: skew(0.7deg);
@@ -271,25 +362,14 @@ header.scrolled {
     }
 }
 
-/* Glitch on hover for interactive elements */
-.glitch-on-hover:hover {
-    animation: glitch-anim-1 0.5s infinite linear alternate-reverse;
-}
-.glitch-on-hover:hover::before {
-    animation: glitch-anim-1 0.5s infinite linear alternate-reverse;
-}
-.glitch-on-hover:hover::after {
-    animation: glitch-anim-2 0.5s infinite linear alternate-reverse;
-}
-
 /* Ryuya Title Animation */
 .ryuya-char {
     display: inline-block;
     opacity: 0;
-    transform: translateY(20px) rotateX(90deg);
+    transform: translateY(50px) rotateX(120deg); /* Increased values */
     filter: blur(5px);
-    transition: opacity 0.5s ease-out, transform 0.5s ease-out, filter 0.5s ease-out; /* 0.8s から 0.5s に短縮 */
-    transition-delay: calc(var(--char-index) * 0.05s + 0.5s); /* 0.1s から 0.05s に短縮 */
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out, filter 0.4s ease-out; /* Reduced duration */
+    transition-delay: calc(var(--char-index) * 0.04s + 0.3s); /* Adjusted delay */
     font-family: 'Inter', sans-serif; /* 変更 */
 }
 
@@ -304,4 +384,45 @@ header.scrolled {
 .ryuya-animate .ryuya-char.glitch-active::after {
     /* 既存のグリッチアニメーションを適用 */
     animation: glitch-anim-1 0.3s linear infinite alternate-reverse, glitch-anim-2 0.3s linear infinite alternate-reverse;
+}
+
+.ryuya-animate {
+    animation: dynamic-text-effect 4s infinite alternate; /* Apply the new animation */
+}
+
+@keyframes dynamic-text-effect {
+    0%, 100% {
+        text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--accent-color);
+        transform: translateY(0px);
+    }
+    25% {
+        text-shadow: 0 0 12px var(--primary-color), 0 0 25px var(--accent-color);
+        transform: translateY(-1px);
+    }
+    50% {
+        text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--accent-color);
+        transform: translateY(0px);
+    }
+    75% {
+        text-shadow: 0 0 8px var(--primary-color), 0 0 15px var(--accent-color);
+        transform: translateY(1px);
+    }
+}
+
+/* Scanline Overlay */
+#scanline-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999; /* Below cursor, above background */
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.1),
+        rgba(0, 0, 0, 0.1) 1px,
+        transparent 1px,
+        transparent 2px
+    );
 }

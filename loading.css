@@ -1,0 +1,52 @@
+#initial-ryuya-display {
+    background-color: #000;
+    color: #0f0; /* Digital green */
+    font-family: 'Inter', sans-serif; /* Or a more digital-looking font if available */
+    overflow: hidden;
+    transition: opacity 1s ease-out;
+}
+
+#initial-ryuya-display.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+#initial-ryuya-display h1 {
+    font-size: 12rem; /* Increased font size */
+    text-shadow: 0 0 15px #0f0, 0 0 30px #0f0, 0 0 45px #0f0, 0 0 60px #0f0; /* Stronger Neon glow */
+}
+
+#initial-ryuya-display h1 span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(50px) scale(0.5) rotateX(90deg); /* More dynamic initial state */
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out; /* Slower transition */
+}
+
+#initial-ryuya-display h1 span.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotateX(0deg);
+}
+
+/* Optional: Add some glitch effect to the text */
+.glitch-initial {
+    animation: glitch-effect 2.5s infinite linear alternate;
+}
+
+@keyframes glitch-effect {
+    0% { text-shadow: 0 0 15px #0f0, 0 0 30px #0f0, 0 0 45px #0f0; transform: translate(0); }
+    20% { text-shadow: 2px 2px 15px #0f0, -2px -2px 30px #0f0; transform: translate(-2px, 2px); }
+    40% { text-shadow: -2px 2px 15px #0f0, 2px -2px 30px #0f0; transform: translate(2px, -2px); }
+    60% { text-shadow: 3px -3px 15px #0f0, -3px 3px 30px #0f0; transform: translate(-3px, -3px); }
+    80% { text-shadow: -3px -3px 15px #0f0, 3px 3px 30px #0f0; transform: translate(3px, 3px); }
+    100% { text-shadow: 0 0 15px #0f0, 0 0 30px #0f0, 0 0 45px #0f0; transform: translate(0); }
+}
+
+#main-content {
+    transition: opacity 1s ease-in;
+}
+
+#main-content.main-content-visible {
+    display: block;
+    opacity: 1;
+}
