@@ -306,28 +306,6 @@ function initializeSiteFeatures() {
     spotifyIframes.forEach(iframe => {
         spotifyObserver.observe(iframe);
     });
-
-    // --- Ryuya Title Animation ---
-    const ryuyaTitle = document.querySelector('.section-title.ryuya-animate');
-    if (ryuyaTitle) {
-        const text = ryuyaTitle.textContent;
-        ryuyaTitle.textContent = ''; // 元のテキストをクリア
-
-        // 各文字をspanで囲み、DOMに追加
-        text.split('').forEach((char, index) => {
-            const span = document.createElement('span');
-            span.textContent = char;
-            span.classList.add('ryuya-char');
-            span.style.setProperty('--char-index', index);
-            ryuyaTitle.appendChild(span);
-        });
-
-        // アニメーションを適用
-        setTimeout(() => {
-            ryuyaTitle.classList.add('ryuya-animate');
-        }, 500); // ページのロードから少し遅れて開始
-    }
-}
-
+    
 // Make the function globally accessible
 window.initializeSiteFeatures = initializeSiteFeatures;
