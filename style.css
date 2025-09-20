@@ -71,7 +71,7 @@ body:hover #cursor-dot, body:hover #cursor-outline { opacity: 1; }
 
 
 /* --- Header --- */
-header { transition: background-color 0.3s ease; }
+header { transition: background-color: 0.3s ease; }
 header.scrolled {
     background-color: rgba(5, 5, 16, 0.8);
     backdrop-filter: blur(10px);
@@ -163,6 +163,14 @@ header.scrolled {
     transition: background-color 0.3s ease;
 }
 .note-card:hover { background-color: rgba(255, 255, 255, 0.08); }
+
+/* --- TALES Card --- */
+.tales-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease;
+}
+.tales-card:hover { background-color: rgba(255, 255, 255, 0.08); }
 
 /* --- Animation --- */
 .fade-in-up {
@@ -311,7 +319,7 @@ header.scrolled {
     }
     100% {
         clip: rect(110px, 9999px, 100px, 0);
-        transform: skew(-0.6deg);
+        transform: skew(0.3deg);
     }
 }
 

@@ -44,13 +44,8 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="loading.css">
 </head>
 <body class="antialiased">
-    <!-- Initial Ryuya Display -->
-    <div id="initial-ryuya-display" class="fixed inset-0 flex items-center justify-center bg-black z-[10001]">
-        <h1 class="text-8xl md:text-9xl font-extrabold section-title glitch-initial" data-text="Ryuya"></h1>
-    </div>
     <!-- Custom Cursor -->
     <div id="cursor-dot"></div>
     <div id="cursor-outline"></div>
@@ -58,10 +53,6 @@
     <!-- 3D Background -->
     <canvas id="bg-canvas"></canvas>
 
-    <!-- Loading Screen -->
-    <div id="loading-screen">
-        <div id="loading-spinner"></div>
-    </div>
     
     <!-- Header -->
     <header id="header" class="fixed top-0 left-0 w-full z-50 py-4 px-6 md:px-12">
@@ -71,7 +62,8 @@
                 <a href="index.html" class="nav-link text-lg" id="nav-home">HOME</a>
                 <a href="profile.html" class="nav-link active text-lg" id="nav-profile">PROFILE</a>
                 <a href="songs.html" class="nav-link text-lg" id="nav-songs">SONGS</a>
-                <a href="media.html" class="nav-link text-lg" id="nav-media">MEDIA</a>
+                <a href="article.html" class="nav-link text-lg" id="nav-article">ARTICLE</a>
+                <a href="novel.html" class="nav-link text-lg" id="nav-novel">NOVEL</a>
             </nav>
             <button id="hamburger-btn" class="md:hidden z-50">
                 <i class="fas fa-bars text-2xl"></i>
@@ -85,11 +77,12 @@
             <a href="index.html" class="mobile-nav-link text-2xl">HOME</a>
             <a href="profile.html" class="mobile-nav-link text-2xl">PROFILE</a>
             <a href="songs.html" class="mobile-nav-link text-2xl">SONGS</a>
-            <a href="media.html" class="mobile-nav-link text-2xl">MEDIA</a>
+            <a href="article.html" class="mobile-nav-link text-2xl">ARTICLE</a>
+            <a href="novel.html" class="mobile-nav-link text-2xl">NOVEL</a>
         </div>
     </nav>
     
-    <main id="main-content">
+    <main id="main-content" class="main-content-visible">
         <!-- Profile Section -->
         <section id="profile" class="py-24 px-6">
             <div class="container mx-auto">
@@ -100,7 +93,7 @@
                         <div class="glow"></div>
                         <img src="assets/images/Ryuya.png" alt="Ryuya アイコン" class="profile-photo w-36 h-36 rounded-full mx-auto mb-6">
                         <h3 class="text-3xl font-bold mb-2">Ryuya</h3>
-                        <p class="text-purple-300 mb-4">AI Creator / Google AI Student Lead Ambassador</p>
+                        <p class="text-purple-300 mb-4">AI Creator<br>Google AI Student Lead Ambassador<br>Novelist</p>
                         <p class="text-gray-400">思考をプロンプトに変換し、2,000枚以上のイラストや動画を生成</p>
                     </div>
                     <!-- 紫苑 Card -->
@@ -134,10 +127,10 @@
     <!-- Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <!-- Custom JS -->
-    <script src="loading.js"></script>
     <script src="app.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('main-content').classList.add('main-content-visible');
             const currentPath = window.location.pathname.split('/').pop();
             const navLinks = document.querySelectorAll('.nav-link');
             navLinks.forEach(link => {

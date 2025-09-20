@@ -5,28 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- SEO & OGP Meta Tags -->
-    <title>Ryuya Official</title>
-    <meta name="description" content="AI Creator × Singer-Songwriter × Google AI Student Lead Ambassador × Novelist, Ryuyaのオフィシャルサイト。作品、プロフィール、最新情報をお届けします。">
-    <meta name="keywords" content="Ryuya, AI Creator, Singer-Songwriter, Google AI Student Lead Ambassador, Novelist, 紫苑, 伊織暁斗, 音楽, AIアート">
+    <title>Ryuya Official - Novel</title>
+    <meta name="description" content="AI Creator × Singer-Songwriter × Google AI Student Lead Ambassador × Novelist, Ryuyaのオフィシャルサイト。TALESの作品一覧です。">
+    <meta name="keywords" content="Ryuya, AI Creator, Singer-Songwriter, Google AI Student Lead Ambassador, Novelist, 紫苑, 伊織暁斗, 音楽, AIアート, TALES, Novel">
     <meta name="author" content="Ryuya">
-    <meta name="google-site-verification" content="5U1vhJGLCyd7wfsLuyHzSneCRP_J9kp5XyquhojbiYo" />
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://ryuya-official.netlify.app/">
-    <meta property="og:title" content="Ryuya Official">
-    <meta property="og:description" content="AI Creator × Singer-Songwriter, Ryuyaのオフィシャルサイト。">
-    <meta property="og:image" content="https://i.ibb.co/RK3h7KM/l-IHf-Ng-Nre-Zw-Mxg68efb-Xa.png">
-    <meta property="og:site_name" content="Ryuya Official">
-    <meta property="og:locale" content="ja_JP">
-
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@Ryuya_330">
-    <meta name="twitter:creator" content="@Ryuya_330">
-    <meta name="twitter:title" content="Ryuya Official">
-    <meta name="twitter:description" content="AI Creator × Singer-Songwriter × Google AI Student Lead Ambassador × Novelist, Ryuyaのオフィシャルサイト。">
-    <meta name="twitter:image" content="https://i.ibb.co/RK3h7KM/l-IHf-Ng-Nre-Zw-Mxg68efb-Xa.png">
 
     <!-- Favicon -->
     <link rel="icon" href="https://placehold.co/32x32/1a1a2e/bb86fc?text=R" type="image/png">
@@ -63,11 +45,11 @@
         <div class="container mx-auto flex justify-between items-center">
             <a href="index.html" class="text-2xl font-bold font-serif tracking-wider text-white">Ryuya</a>
             <nav class="hidden md:flex space-x-8">
-                <a href="index.html" class="nav-link active text-lg" id="nav-home">HOME</a>
+                <a href="index.html" class="nav-link text-lg" id="nav-home">HOME</a>
                 <a href="profile.html" class="nav-link text-lg" id="nav-profile">PROFILE</a>
                 <a href="songs.html" class="nav-link text-lg" id="nav-songs">SONGS</a>
                 <a href="article.html" class="nav-link text-lg" id="nav-article">ARTICLE</a>
-                <a href="novel.html" class="nav-link text-lg" id="nav-novel">NOVEL</a>
+                <a href="novel.html" class="nav-link active text-lg" id="nav-novel">NOVEL</a>
             </nav>
             <button id="hamburger-btn" class="md:hidden z-50">
                 <i class="fas fa-bars text-2xl"></i>
@@ -86,21 +68,12 @@
         </div>
     </nav>
     
-    <main id="main-content">
-        <!-- Home Section -->
-        <section id="home" class="min-h-screen flex items-center justify-center text-center relative px-4">
-            <div class="z-10">
-                <h1 class="text-6xl md:text-8xl font-extrabold section-title ryuya-animate mb-4" data-text="Ryuya">Ryuya</h1>
-                <p class="mt-4 text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto fade-in-up text-center" style="transition-delay: 200ms;">
-                    <br>
-                    AI Creator<br>
-                    <br>
-                    Singer-Songwriter<br>
-                    <br>
-                    Google AI Student Lead Ambassador<br>
-                    <br>
-                    Novelist
-                </p>
+    <main id="main-content" class="main-content-visible">
+        <!-- Novel Section -->
+        <section id="novel" class="py-20 px-4 pt-32">
+            <div class="container mx-auto">
+                <h2 class="text-4xl md:text-5xl font-extrabold text-center mb-12 section-title" data-text="TALES">TALES</h2>
+                <div id="tales-feed-container" class="max-w-4xl mx-auto"></div>
             </div>
         </section>
     </main>
@@ -116,9 +89,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <!-- Custom JS -->
     <script src="app.js"></script>
+    <script src="novel.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('main-content').classList.add('main-content-visible');
             const currentPath = window.location.pathname.split('/').pop();
             const navLinks = document.querySelectorAll('.nav-link');
             navLinks.forEach(link => {
