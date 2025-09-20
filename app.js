@@ -329,4 +329,4 @@ function initializeSiteFeatures() {
 }
 
 // Make the function globally accessible
-window.initializeSiteFeatures = initializeSiteFeatures;
+initializeSiteFeatures();
