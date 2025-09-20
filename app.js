@@ -1,22 +1,7 @@
 window.animationObserver = null; // Declare globally on window object
 
 function initializeSiteFeatures() {
-    // Initialize animationObserver here
-    const animatedElements = document.querySelectorAll('.fade-in-up');
-    window.animationObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                console.log('Element became visible:', entry.target);
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1 });
-
-    animatedElements.forEach(el => {
-        console.log('Observing element:', el);
-        window.animationObserver.observe(el);
-    });
+    
     // --- Custom Cursor ---
     const cursorDot = document.getElementById('cursor-dot');
     const cursorOutline = document.getElementById('cursor-outline');
@@ -297,7 +282,11 @@ function initializeSiteFeatures() {
         renderer.render(scene, camera);
     }
     
-    initThree();
+    if (window.THREE) {
+        initThree();
+    } else {
+        window.addEventListener('load', initThree);
+    }
 
     window.addEventListener('touchmove', onTouchMove, { passive: false });
 
@@ -334,6 +323,14 @@ function initializeSiteFeatures() {
             ryuyaTitle.classList.add('ryuya-animate');
         }, 500);
     }
+
+    // --- Tales Feed (for novel.html) ---
+    const talesFeedContainer = document.getElementById('tales-feed-container');
+    if (talesFeedContainer && typeof loadTalesFeed === 'function') {
+        // Ensure animationObserver is ready before calling loadTalesFeed
+        // loadTalesFeed will use window.animationObserver
+        loadTalesFeed();
+    }
 }
 
-initializeSiteFeatures();
+document.addEventListener('DOMContentLoaded', initializeSiteFeatures);

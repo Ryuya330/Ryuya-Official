@@ -1,10 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('novel.js: DOMContentLoaded');
-    // Add a small delay to ensure app.js has initialized window.animationObserver
-    setTimeout(() => {
-        loadTalesFeed();
-    }, 100);
-});
+// loadTalesFeed() will be called from app.js after animationObserver is initialized.
 
 function loadTalesFeed() {
     console.log('novel.js: loadTalesFeed called');

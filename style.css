@@ -243,6 +243,9 @@ header.scrolled {
 .glitch-on-hover:hover::after {
     animation: glitch-anim-subtle-2 0.3s infinite linear alternate-reverse;
 }
+.glitch-on-hover:hover::after {
+    animation: glitch-anim-subtle-2 0.3s infinite linear alternate-reverse;
+}
 
 /* Initial Glitch for Ryuya on Load */
 .glitch-initial {

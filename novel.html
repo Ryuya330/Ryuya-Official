@@ -13,7 +13,7 @@
     <!-- Favicon -->
     <link rel="icon" href="https://placehold.co/32x32/1a1a2e/bb86fc?text=R" type="image/png">
 
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS - For production, install as a PostCSS plugin or use the Tailwind CLI: https://tailwindcss.com/docs/installation -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Google Fonts -->
@@ -29,8 +29,7 @@
 </head>
 <body class="antialiased">
 
-    <!-- Scanline Overlay -->
-    <div id="scanline-overlay"></div>
+    
 
     <!-- Custom Cursor -->
     <div id="cursor-dot"></div>
@@ -70,10 +69,13 @@
     
     <main id="main-content" class="main-content-visible">
         <!-- Novel Section -->
-        <section id="novel" class="py-20 px-4 pt-32">
+        <section id="novel" class="py-24 px-6">
             <div class="container mx-auto">
-                <h2 class="text-4xl md:text-5xl font-extrabold text-center mb-12 section-title" data-text="TALES">TALES</h2>
-                <div id="tales-feed-container" class="max-w-4xl mx-auto"></div>
+                <h2 class="section-title text-5xl font-bold text-center mb-16 fade-in-up">NOVEL</h2>
+                <div class="max-w-3xl mx-auto">
+                    <h3 class="text-3xl font-bold text-center mb-8 fade-in-up">TALES</h3> <!-- Added h3 with TALES text -->
+                    <div id="tales-feed-container" class="space-y-6 fade-in-up" style="transition-delay: 200ms;"></div> <!-- Changed classes and added style -->
+                </div>
             </div>
         </section>
     </main>
@@ -92,6 +94,7 @@
     <script src="novel.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('main-content').classList.add('main-content-visible');
             const currentPath = window.location.pathname.split('/').pop();
             const navLinks = document.querySelectorAll('.nav-link');
             navLinks.forEach(link => {
