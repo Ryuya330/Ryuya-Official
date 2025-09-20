@@ -306,8 +306,7 @@ function initializeSiteFeatures() {
     spotifyIframes.forEach(iframe => {
         spotifyObserver.observe(iframe);
     });
-
-    // --- Ryuya Title Animation ---
+        // --- Ryuya Title Animation ---
     const ryuyaTitle = document.querySelector('.section-title.ryuya-animate');
     if (ryuyaTitle) {
         const text = ryuyaTitle.textContent;
