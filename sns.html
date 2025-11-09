@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO & OGP Meta Tags -->
+    <title>Ryuya Official - SNS</title>
+    <meta name="description" content="AI Creator × Singer-Songwriter × Google AI Student Lead Ambassador, RyuyaのSNSアカウント一覧です。">
+    <meta name="keywords" content="Ryuya, SNS, Twitter, Instagram, YouTube, note, 紫苑, 伊織暁斗">
+    <meta name="author" content="Ryuya">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ryuya-official.netlify.app/sns.html">
+    <meta property="og:title" content="Ryuya Official - SNS">
+    <meta property="og:description" content="AI Creator × Singer-Songwriter × Google AI Student Lead Ambassador, RyuyaのSNSアカウント一覧です。">
+    <meta property="og:image" content="https://ryuya-official.netlify.app/assets/images/Ryuya.png">
+    <meta property="og:site_name" content="Ryuya Official">
+    <meta property="og:locale" content="ja_JP">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@Ryuya_330">
+    <meta name="twitter:creator" content="@Ryuya_330">
+    <meta name="twitter:title" content="Ryuya Official - SNS">
+    <meta name="twitter:description" content="AI Creator × Singer-Songwriter × Google AI Student Lead Ambassador, RyuyaのSNSアカウント一覧です。">
+    <meta name="twitter:image" content="https://ryuya-official.netlify.app/assets/images/Ryuya.png">
+
+    <!-- Favicon -->
+    <link rel="icon" href="https://placehold.co/32x32/1a1a2e/bb86fc?text=R" type="image/png">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="antialiased">
+    <!-- Custom Cursor -->
+    <div id="cursor-dot"></div>
+    <div id="cursor-outline"></div>
+
+    <!-- 3D Background -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Header -->
+    <header id="header" class="fixed top-0 left-0 w-full z-50 py-4 px-6 md:px-12">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="site-logo text-2xl">Ryuya</a>
+            <nav class="hidden md:flex space-x-8">
+                <a href="index.html" class="nav-link text-lg" id="nav-home">HOME</a>
+                <a href="profile.html" class="nav-link text-lg" id="nav-profile">PROFILE</a>
+                <a href="songs.html" class="nav-link text-lg" id="nav-songs">SONGS</a>
+                <a href="sns.html" class="nav-link active text-lg" id="nav-sns">SNS</a>
+            </nav>
+            <button id="hamburger-btn" class="md:hidden z-50">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <nav id="mobile-nav" class="fixed top-0 right-0 h-full w-2/3 bg-gray-900/90 backdrop-blur-lg z-40 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden">
+            <div class="flex flex-col items-center justify-center h-full space-y-8">
+            <a href="index.html" class="mobile-nav-link text-2xl">HOME</a>
+            <a href="profile.html" class="mobile-nav-link text-2xl">PROFILE</a>
+            <a href="songs.html" class="mobile-nav-link text-2xl">SONGS</a>
+            <a href="sns.html" class="mobile-nav-link text-2xl">SNS</a>
+        </div>
+    </nav>
+    
+    <main id="main-content" class="main-content-visible">
+        <!-- SNS Section -->
+        <section id="sns" class="py-24 px-6">
+            <div class="container mx-auto">
+                <h2 class="section-title text-5xl font-bold text-center mb-16 fade-in-up">SNS</h2>
+                
+                <!-- SNS Links and Feeds -->
+                <div class="max-w-6xl mx-auto">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                        <!-- Ryuya Section (separate platform blocks like others) -->
+                        <div class="sns-card rounded-xl p-8 text-center fade-in-up bg-black/20 backdrop-blur">
+                            <h3 class="text-2xl font-bold mb-6">Ryuya</h3>
+                            <!-- YouTube -->
+                            <div class="mb-6">
+                                <div class="platform-icon">
+                                    <i class="fab fa-youtube text-5xl text-[#FF0000]"></i>
+                                    <a href="https://www.youtube.com/@Ryuya_330" target="_blank" rel="noopener noreferrer" class="platform-handle" style="background: linear-gradient(90deg,#ff4d4d,#ff0000); color:#05050a;">@Ryuya_330</a>
+                                </div>
+                            </div>
+
+                            <!-- X -->
+                            <div class="mb-6">
+                                <div class="platform-icon">
+                                    <i class="fab fa-x-twitter text-5xl"></i>
+                                    <a href="https://twitter.com/Ryuya_330" target="_blank" rel="noopener noreferrer" class="platform-handle" style="background: linear-gradient(90deg,#000000,#333333); color:white;">@Ryuya_330</a>
+                                </div>
+                            </div>
+
+                            <!-- note  -->
+                            <div>
+                                <div class="platform-icon">
+                                    <div class="app-badge app-badge--note" role="img" aria-label="note">n</div>
+                                    <a href="https://note.com/ryuya_330" target="_blank" rel="noopener noreferrer" class="platform-handle" style="background: #2CB696; color:#05050a;">@ryuya_330</a>
+                                </div>
+                            </div>
+
+                            <!-- TALES -->
+                            <div class="mt-6">
+                                <div class="platform-icon">
+                                    <div class="app-badge app-badge--tales" role="img" aria-label="TALSE">TALSE</div>
+                                    <a href="https://tales.note.com/ryuya_330" target="_blank" rel="noopener noreferrer" class="platform-handle" style="background: #8677E9; color:#05050a;">@ryuya_330</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Iori Section -->
+                        <div class="sns-card rounded-xl p-8 text-center fade-in-up bg-black/20 backdrop-blur" style="transition-delay: 200ms;">
+                            <h3 class="text-2xl font-bold mb-6">伊織暁斗</h3>
+                            <!-- YouTube -->
+                            <div class="mb-6">
+                                <div class="platform-icon">
+                                    <i class="fab fa-youtube text-4xl text-[#FF0000]"></i>
+                                    <a href="https://www.youtube.com/@ioriakito.official.o4" target="_blank" rel="noopener noreferrer" class="platform-handle" style="background: linear-gradient(90deg,#ff4d4d,#ff0000); color:#05050a;">@ioriakito.official.o4</a>
+                                </div>
+                            </div>
+                            <!-- TikTok -->
+                            <div>
+                                <div class="platform-icon">
+                                    <i class="fab fa-tiktok text-4xl"></i>
+                                    <a href="https://www.tiktok.com/@ioriakito.official.o4" target="_blank" rel="noopener noreferrer" class="platform-handle" style="background: linear-gradient(90deg,#00f2ea,#ff0050); color:#05050a;">@ioriakito.official.o4</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Shion Section -->
+                        <div class="sns-card rounded-xl p-8 text-center fade-in-up bg-black/20 backdrop-blur" style="transition-delay: 400ms;">
+                            <h3 class="text-2xl font-bold mb-6">紫苑</h3>
+                            <!-- YouTube -->
+                            <div class="mb-6">
+                                <div class="platform-icon">
+                                    <i class="fab fa-youtube text-4xl text-[#FF0000]"></i>
+                                    <a href="https://www.youtube.com/@shion.official.o4" target="_blank" rel="noopener noreferrer" class="platform-handle" style="background: linear-gradient(90deg,#ff4d4d,#ff0000); color:#05050a;">@shion.official.o4</a>
+                                </div>
+                            </div>
+                            <!-- TikTok -->
+                            <div>
+                                <div class="platform-icon">
+                                    <i class="fab fa-tiktok text-4xl"></i>
+                                    <a href="https://www.tiktok.com/@shion.official.o4" target="_blank" rel="noopener noreferrer" class="platform-handle" style="background: linear-gradient(90deg,#00f2ea,#ff0050); color:#05050a;">@shion.official.o4</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                    </div>
+
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-8 px-6 border-t border-gray-800">
+        <div class="container mx-auto text-center text-gray-400">
+            <p>&copy; 2025 Ryuya Official</p>
+        </div>
+    </footer>
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('main-content').classList.add('main-content-visible');
+            const currentPath = window.location.pathname.split('/').pop();
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

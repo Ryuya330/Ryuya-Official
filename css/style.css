@@ -1,10 +1,33 @@
 :root {
-    --bg-color: #050510;
-    --primary-color: #8a2be2;
-    --accent-color: #00bfff;
+    --bg-color: #05050a;
+    --primary-color: #7c4dff;
+    --accent-color: #00e0ff;
+    --header-height: 88px;
     --text-color: #e0e0e0;
-    --card-bg: rgba(10, 10, 25, 0.5);
+    --card-bg: rgba(15, 15, 30, 0.7);
     --border-color: rgba(255, 255, 255, 0.1);
+    --gradient-start: #8a2be2;
+    --gradient-end: #00bfff;
+}
+
+/* Global styles */
+html {
+    scroll-behavior: smooth;
+    background: var(--bg-color);
+    background-image:
+        radial-gradient(circle at 12% 25%, rgba(124, 77, 255, 0.12), transparent 40%),
+        radial-gradient(circle at 88% 70%, rgba(0, 224, 255, 0.08), transparent 40%),
+        linear-gradient(180deg, rgba(5,5,10,1) 0%, rgba(8,8,16,1) 100%);
+}
+
+body {
+    background-color: transparent;
+    color: var(--text-color);
+    font-family: 'Inter', 'Noto Sans JP', sans-serif;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
 }
 
 html { scroll-behavior: smooth; }
@@ -16,7 +39,6 @@ body {
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    cursor: none;
     text-shadow: 0 0 1px rgba(255, 255, 255, 0.1), 0 0 2px rgba(255, 255, 255, 0.05); /* Subtle glow */
 }
 
@@ -29,39 +51,6 @@ body {
     z-index: -1;
 }
 
-/* --- Custom Cursor --- */
-#cursor-dot {
-    width: 8px;
-    height: 8px;
-    background-color: var(--accent-color);
-    border-radius: 50%;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    z-index: 10000;
-    transition: transform 0.1s ease-out;
-}
-#cursor-outline {
-    width: 40px;
-    height: 40px;
-    border: 2px solid var(--primary-color);
-    border-radius: 50%;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    z-index: 10000;
-    transition: all 0.2s ease-out;
-}
-body:hover #cursor-dot, body:hover #cursor-outline { opacity: 1; }
-#cursor-outline.hover {
-    transform: translate(-50%, -50%) scale(1.5);
-    background-color: rgba(138, 43, 226, 0.2);
-}
-
 /* --- Custom Scrollbar --- */
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--bg-color); }
@@ -71,10 +60,16 @@ body:hover #cursor-dot, body:hover #cursor-outline { opacity: 1; }
 
 
 /* --- Header --- */
-header { transition: background-color: 0.3s ease; }
-header.scrolled {
-    background-color: rgba(5, 5, 16, 0.8);
+header {
+    background-color: rgba(10, 10, 20, 0.8);
     backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+header.scrolled {
+    background-color: rgba(10, 10, 20, 0.95);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 .nav-link { position: relative; transition: color 0.3s ease, box-shadow 0.3s ease; }
 .nav-link::after {
@@ -91,9 +86,14 @@ header.scrolled {
 
 /* --- Section Styles --- */
 .section-title {
-    font-family: 'Inter', sans-serif; /* Changed from Noto Serif JP */
-    text-shadow: 0 0 20px var(--primary-color), 0 0 40px var(--primary-color);
-    animation: flicker 5s infinite alternate; /* Apply flicker animation */
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    background-clip: text; /* Standard property for wider compatibility */
+    -webkit-text-fill-color: transparent;
+    color: transparent; /* Fallback for non-webkit browsers */
+    filter: drop-shadow(0 8px 30px rgba(124,77,255,0.08));
 }
 
 @keyframes flicker {
@@ -143,8 +143,55 @@ header.scrolled {
     transition: opacity 0.3s ease;
     transform: translate(-50%, -50%);
 }
-.profile-card:hover .glow { opacity: 1; }
 .profile-photo { border: 2px solid var(--primary-color); }
+
+/* --- SNS Cards (general) --- */
+.sns-card {
+     background-color: var(--card-bg);
+     border: 1px solid var(--border-color);
+     backdrop-filter: blur(8px);
+     transition: transform 0.36s ease, box-shadow 0.36s ease, background-color 0.3s ease;
+     padding: 1.6rem;
+}
+.sns-card h3 { font-size: 1.375rem; margin-bottom: 0.75rem; }
+.sns-card p { color: rgba(255,255,255,0.78); margin-bottom: 0.9rem; }
+.sns-card .hero-cta { font-size: 0.95rem; padding: 0.6rem 1rem; }
+.sns-card:hover { transform: translateY(-10px); box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
+
+/* Platform handle under icon */
+.platform-icon { display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.platform-icon i, .platform-icon .app-badge { margin-bottom: 0.4rem; }
+.platform-handle {
+    display:inline-block;
+    font-weight:700;
+    font-size:0.95rem;
+    padding:0.35rem 0.7rem;
+    border-radius:999px;
+    text-decoration:none;
+    color: inherit;
+    background: rgba(255,255,255,0.04);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+.platform-handle:hover { box-shadow: 0 10px 28px rgba(0,0,0,0.2); }
+
+/* --- App Icon (for official app icons like note / TALES) --- */
+.app-badge {
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 0.75rem auto;
+    border-radius: 12px; /* rounded rectangle like app icons */
+    background: #ffffff; /* white background per request */
+    box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    color: #000000;
+}
+.app-badge--note { color: #2CB696; font-size: 36px; }
+.app-badge--tales { color: #8677E9; font-size: 14px; letter-spacing: 1px; }
+
 
 /* --- Spotify Embed --- */
 .spotify-embed {
@@ -179,6 +226,22 @@ header.scrolled {
     transition: opacity 1s cubic-bezier(0.165, 0.84, 0.44, 1), transform 1s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 .fade-in-up.visible { opacity: 1; transform: translateY(0) scale(1); } /* Transition to scale 1 */
+
+/* Hero styles */
+.hero-cta {
+    display: inline-block;
+    padding: 0.7rem 1.2rem;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    color: #05050a;
+    border-radius: 999px;
+    font-weight: 700;
+    box-shadow: 0 8px 30px rgba(124,77,255,0.12);
+}
+
+header a {
+    transition: color 0.2s ease, transform 0.18s ease;
+}
+header a:hover { transform: translateY(-2px); }
 
 /* Glitch Effect */
 .glitch {
@@ -447,4 +510,56 @@ header.scrolled {
 #main-content.main-content-visible {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* Ensure fixed header doesn't overlap content */
+main, #main-content {
+    padding-top: var(--header-height);
+}
+
+/* Site logo styling */
+.site-logo {
+    font-family: 'Noto Serif JP', serif;
+    font-weight: 800;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    font-size: 1.25rem;
+    letter-spacing: 0.6px;
+    transition: transform 0.18s ease, opacity 0.18s ease;
+}
+.site-logo:hover { transform: translateY(-3px); opacity: 0.95; }
+
+/* Mobile nav tweaks */
+.mobile-nav-link {
+    color: var(--text-color);
+    transition: color 0.18s ease, transform 0.18s ease;
+}
+.mobile-nav-link:hover { color: var(--accent-color); transform: translateX(6px); }
+
+/* Make CTA slightly smaller on narrow screens */
+@media (max-width: 640px) {
+    .hero-cta { padding: 0.6rem 1rem; font-size: 0.9rem; }
+    main, #main-content { padding-top: 72px; }
+}
+
+/* Responsive tweaks for SNS/cards */
+@media (max-width: 768px) {
+    .sns-card { padding: 1rem; }
+    .sns-card h3 { font-size: 1.25rem; }
+    .sns-card .hero-cta { padding: 0.55rem 0.9rem; font-size: 0.95rem; }
+    /* Stack note+TALES cleanly */
+    .flex.flex-col { gap: 0.75rem; }
+}
+
+@media (min-width: 1200px) {
+    /* Give more breathing room on large displays */
+    .container { max-width: 1200px; }
+    .max-w-6xl { max-width: 1280px; }
+    .sns-card { padding: 1.8rem; }
+    .sns-card h3 { font-size: 1.5rem; }
+    .sns-card .hero-cta { padding: 0.8rem 1.4rem; font-size: 1rem; }
+    .sns-card:hover { transform: translateY(-14px) scale(1.02); }
 }
