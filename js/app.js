@@ -108,6 +108,55 @@ function initializeSiteFeatures() {
     const ryuyaTitle = document.querySelector('.section-title.ryuya-animate');
     if (ryuyaTitle) {
         const text = ryuyaTitle.textContent;
+                // --- Page Transition Animation (墨・光・スライス強化) ---
+                function showPageTransition(callback) {
+                    const overlay = document.querySelector('.page-transition-overlay, #page-transition-overlay');
+                    if (!overlay) { callback && callback(); return; }
+                    overlay.classList.add('active');
+                    overlay.style.background = 'linear-gradient(120deg, #23243a 60%, #1a1a2e 100%), radial-gradient(circle at 60% 40%, rgba(180,180,255,0.15) 0%, rgba(0,0,0,0) 70%), repeating-linear-gradient(-45deg, rgba(80,80,120,0.08) 0 10px, transparent 10px 20px)';
+                    overlay.style.transition = 'clip-path 0.7s cubic-bezier(.77,0,.18,1), opacity 0.5s';
+                    overlay.style.clipPath = 'polygon(0 0, 100% 0, 100% 100%, 0 100%)';
+                    overlay.style.opacity = '1';
+                    overlay.innerHTML = '<div class="slice-flash"></div>';
+                    const flash = overlay.querySelector('.slice-flash');
+                    flash.style.position = 'absolute';
+                    flash.style.top = '0';
+                    flash.style.left = '0';
+                    flash.style.width = '100%';
+                    flash.style.height = '100%';
+                    flash.style.background = 'linear-gradient(120deg, rgba(255,255,255,0.18) 0%, rgba(180,180,255,0.08) 60%, rgba(0,0,0,0) 100%)';
+                    flash.style.opacity = '0';
+                    flash.style.pointerEvents = 'none';
+                    flash.style.transition = 'opacity 0.3s';
+                    setTimeout(() => {
+                        overlay.style.clipPath = 'polygon(0 0, 100% 0, 80% 100%, 20% 100%)';
+                        overlay.style.opacity = '0.7';
+                        flash.style.opacity = '1';
+                        setTimeout(() => {
+                            flash.style.opacity = '0';
+                            overlay.style.opacity = '0';
+                            setTimeout(() => {
+                                overlay.classList.remove('active');
+                                overlay.innerHTML = '';
+                                overlay.style.clipPath = '';
+                                overlay.style.background = '';
+                                overlay.style.opacity = '';
+                                callback && callback();
+                            }, 400);
+                        }, 700);
+                    }, 50);
+                }
+
+                // Attach to navigation links (SPA風遷移)
+                document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(link => {
+                    link.addEventListener('click', e => {
+                        if (link.classList.contains('active')) return;
+                        e.preventDefault();
+                        showPageTransition(() => {
+                            window.location.href = link.getAttribute('href');
+                        });
+                    });
+                });
         ryuyaTitle.textContent = '';
 
         text.split('').forEach((char, index) => {
