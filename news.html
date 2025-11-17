@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
+    
+    <title>お知らせ - Ryuya Official</title>
+    <meta name="description" content="Ryuya Official Websiteの最新情報とアップデート履歴">
+    
+    <!-- OGP Tags -->
+    <meta property="og:title" content="お知らせ - Ryuya Official">
+    <meta property="og:description" content="Ryuya Official Websiteの最新情報とアップデート履歴">
+    <meta property="og:image" content="https://ryuya-official.netlify.app/assets/images/ogp-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:url" content="https://ryuya-official.netlify.app/news.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Ryuya Official">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="お知らせ - Ryuya Official">
+    <meta name="twitter:description" content="Ryuya Official Websiteの最新情報とアップデート履歴">
+    <meta name="twitter:image" content="https://ryuya-official.netlify.app/assets/images/ogp-image.png">
+    <meta name="twitter:image:alt" content="Ryuya Official お知らせ">
+    
+    <!-- Apple Web App -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-black text-white min-h-screen">
+    <!-- Background Effect -->
+    <canvas id="canvas" class="fixed top-0 left-0 w-full h-full -z-10"></canvas>
+
+    <!-- Header Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-purple-500/30">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">
+                    Ryuya Official
+                </a>
+                <div class="flex gap-6">
+                    <a href="index.html" class="hover:text-purple-400 transition-colors">Home</a>
+                    <a href="profile.html" class="hover:text-purple-400 transition-colors">Profile</a>
+                    <a href="songs.html" class="hover:text-purple-400 transition-colors">Songs</a>
+                    <a href="SNS.html" class="hover:text-purple-400 transition-colors">SNS</a>
+                    <a href="news.html" class="text-purple-400">お知らせ</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 pt-32 pb-20">
+        <div class="max-w-4xl mx-auto">
+            <!-- Page Title -->
+            <div class="text-center mb-16">
+                <h1 class="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent">
+                    お知らせ
+                </h1>
+                <p class="text-gray-400 text-lg">最新情報とアップデート履歴</p>
+            </div>
+
+            <!-- News Container -->
+            <div id="newsContainer" class="space-y-6">
+                <!-- News items will be loaded here dynamically -->
+                <div class="text-center py-12">
+                    <div class="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500"></div>
+                    <p class="mt-4 text-gray-400">読み込み中...</p>
+                </div>
+            </div>
+
+            <!-- Empty State (hidden by default) -->
+            <div id="emptyState" class="hidden text-center py-12">
+                <p class="text-gray-400 text-lg">現在、お知らせはありません。</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-purple-500/30 py-8 mt-20">
+        <div class="container mx-auto px-4 text-center text-gray-400">
+            <p>&copy; 2024 Ryuya Official. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script type="module" src="js/app.js"></script>
+    <script src="js/news.js"></script>
+</body>
+</html>
