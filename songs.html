@@ -108,15 +108,28 @@
     <main id="main-content" class="main-content-visible">
         <!-- Songs Section -->
         <section id="songs" class="py-24 px-6 relative">
+            <!-- Audio Wave Visualization -->
+            <div class="audio-wave">
+                <div class="wave-bar" style="animation-delay: 0s;"></div>
+                <div class="wave-bar" style="animation-delay: 0.1s;"></div>
+                <div class="wave-bar" style="animation-delay: 0.2s;"></div>
+                <div class="wave-bar" style="animation-delay: 0.3s;"></div>
+                <div class="wave-bar" style="animation-delay: 0.4s;"></div>
+                <div class="wave-bar" style="animation-delay: 0.5s;"></div>
+                <div class="wave-bar" style="animation-delay: 0.6s;"></div>
+            </div>
             <div class="container mx-auto">
-                <h2 class="section-title text-5xl font-bold text-center mb-16 fade-in-up">SONGS</h2>
+                <h2 class="section-title text-5xl font-bold text-center mb-16 fade-in-up" data-parallax="10">
+                    <span class="glitch-text" data-text="SONGS">SONGS</span>
+                </h2>
                 <h3 class="text-4xl font-bold text-center mb-8 fade-in-up" style="transition-delay: 0ms;">Singles</h3>
                 <div class="max-w-6xl mx-auto">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
                         <!-- 伊織暁斗 - Iori Akito -->
-                        <div class="profile-card rounded-xl p-8 fade-in-up">
+                        <div class="profile-card rounded-xl p-8 fade-in-up premium-card" data-parallax="5">
                             <div class="glow"></div>
-                            <h4 class="text-3xl font-bold text-center mb-4">伊織暁斗 - Iori Akito</h4>
+                            <div class="card-shine"></div>
+                            <h4 class="text-3xl font-bold text-center mb-4 pulse-text">伊織暁斗 - Iori Akito</h4>
                             <ul class="mb-6 text-lg text-gray-300 list-disc list-inside">
                                 <li>現在リリース曲なし</li>
                                 <li><span class="font-bold text-blue-400">11月25日</span> 『君がくれた地図』リリース予定</li>
@@ -125,9 +138,10 @@
                             <div class="text-sm text-gray-400">※リリース後にSpotify埋め込みを追加します</div>
                         </div>
                         <!-- 紫苑 - Shion -->
-                        <div class="profile-card rounded-xl p-8 fade-in-up" style="transition-delay: 200ms;">
+                        <div class="profile-card rounded-xl p-8 fade-in-up premium-card" style="transition-delay: 200ms;" data-parallax="5">
                             <div class="glow"></div>
-                            <h4 class="text-3xl font-bold text-center mb-4">紫苑 - Shion</h4>
+                            <div class="card-shine"></div>
+                            <h4 class="text-3xl font-bold text-center mb-4 pulse-text">紫苑 - Shion</h4>
                             <div class="mb-6 text-lg text-gray-300 text-center">
                                 <span class="font-bold text-pink-400">11月26日</span> 初アルバム『Need for validation Zombies and Hypocrites』リリース決定
                             </div>

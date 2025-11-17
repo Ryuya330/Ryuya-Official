@@ -46,7 +46,12 @@
     <meta name="twitter:image:alt" content="Ryuya Official - AI Creator × Singer-Songwriter × Novelist">
 
     <!-- Favicon -->
-    <link rel="icon" href="https://placehold.co/32x32/1a1a2e/bb86fc?text=R" type="image/png">
+    <link rel="icon" href="https://placehold.co/32x32/7c4dff/ffffff?text=R&font=Montserrat" type="image/png">
+    <link rel="apple-touch-icon" href="https://placehold.co/180x180/7c4dff/ffffff?text=R&font=Montserrat">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#7c4dff">
+    <meta name="msapplication-TileColor" content="#7c4dff">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -116,18 +121,46 @@
     <main id="main-content">
         <!-- Home Section -->
         <section id="home" class="min-h-screen flex items-center justify-center text-center relative px-4">
-            <div class="z-10">
-                <h1 class="text-7xl md:text-8xl font-extrabold section-title ryuya-animate mb-6" data-text="Ryuya">Ryuya</h1>
-                <div class="max-w-2xl mx-auto fade-in-up text-center" style="transition-delay: 200ms;">
-                    <p class="mt-2 text-2xl md:text-3xl text-gray-200 font-serif tracking-wide mb-6">AI Creator / Singer-Songwriter / Novelist</p>
-                    <p class="text-lg md:text-xl text-gray-400 mb-8" style="line-height:2;">
+            <!-- Floating particles -->
+            <div class="particles-container">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+            </div>
+            
+            <div class="z-10 relative">
+                <h1 class="text-7xl md:text-8xl font-extrabold section-title ryuya-animate mb-6 glitch-text holographic neon-text scanline pulse-ring" data-text="Ryuya" data-parallax="15">
+                    <span class="glitch-layer">Ryuya</span>
+                </h1>
+                <div class="max-w-2xl mx-auto fade-in-up text-center animated-gradient-text text-reveal" style="transition-delay: 200ms;" data-parallax="8">
+                    <p class="mt-2 text-2xl md:text-3xl text-gray-200 font-serif tracking-wide mb-6 text-shadow-glow crystal-shimmer">AI Creator / Singer-Songwriter / Novelist</p>
+                    <p class="text-lg md:text-xl text-gray-400 mb-8 pulse-text" style="line-height:2;">
                         Google AI Student Lead Ambassador<br>
-                        <span class="text-primary font-bold">音楽 × 物語 × テクノロジー</span>
+                        <span class="text-primary font-bold gradient-text-animated holographic">音楽 × 物語 × テクノロジー</span>
                     </p>
                 </div>
-                <div class="mt-8 flex items-center justify-center gap-6 fade-in-up" style="transition-delay: 400ms;">
-                    <a href="sns.html" class="hero-cta">最新情報 (SNS)</a>
-                    <a href="songs.html" class="hero-cta" style="background:transparent; color:var(--accent-color); box-shadow:none; border:1.5px solid rgba(124,77,255,0.18);">楽曲一覧</a>
+                <div class="mt-8 flex items-center justify-center gap-6 fade-in-up" style="transition-delay: 400ms;" data-parallax="5">
+                    <a href="sns.html" class="hero-cta premium-btn depth-shadow morphing-border">
+                        <span class="btn-text">最新情報 (SNS)</span>
+                        <span class="btn-shine"></span>
+                    </a>
+                    <a href="songs.html" class="hero-cta premium-btn-outline depth-shadow morphing-border" style="background:transparent; color:var(--accent-color); box-shadow:none; border:1.5px solid rgba(124,77,255,0.18);">
+                        <span class="btn-text">楽曲一覧</span>
+                        <span class="btn-shine"></span>
+                    </a>
+                </div>
+                
+                <!-- Audio wave visual -->
+                <div class="audio-wave-container mt-16">
+                    <div class="audio-bar"></div>
+                    <div class="audio-bar"></div>
+                    <div class="audio-bar"></div>
+                    <div class="audio-bar"></div>
+                    <div class="audio-bar"></div>
+                    <div class="audio-bar"></div>
+                    <div class="audio-bar"></div>
                 </div>
             </div>
         </section>

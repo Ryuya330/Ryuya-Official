@@ -182,3 +182,232 @@ function initializeSiteFeatures() {
 }
 
 document.addEventListener('DOMContentLoaded', initializeSiteFeatures);
+// ===== PREMIUM INTERACTIONS =====
+
+// Parallax effect on mouse move
+document.addEventListener('mousemove', (e) => {
+    const parallaxElements = document.querySelectorAll('[data-parallax]');
+    const mouseX = e.clientX / window.innerWidth - 0.5;
+    const mouseY = e.clientY / window.innerHeight - 0.5;
+    
+    parallaxElements.forEach(el => {
+        const speed = el.dataset.parallax || 20;
+        const x = mouseX * speed;
+        const y = mouseY * speed;
+        el.style.transform = `translate(${x}px, ${y}px)`;
+    });
+});
+
+// Page transition animation
+document.body.classList.add('page-transition');
+
+// Smooth reveal for cards on scroll
+const revealOnScroll = () => {
+    const cards = document.querySelectorAll('.profile-card, .sns-card');
+    cards.forEach((card, index) => {
+        const cardTop = card.getBoundingClientRect().top;
+        const triggerPoint = window.innerHeight * 0.8;
+        
+        if (cardTop < triggerPoint) {
+            setTimeout(() => {
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, index * 100);
+        }
+    });
+};
+
+// Initialize cards with hidden state
+document.querySelectorAll('.profile-card, .sns-card').forEach(card => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(30px)';
+    card.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+});
+
+window.addEventListener('scroll', revealOnScroll);
+revealOnScroll();
+
+// Enhanced button interactions
+document.querySelectorAll('.hero-cta, .premium-btn').forEach(btn => {
+    btn.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-2px)';
+    });
+    
+    btn.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0)';
+    });
+});
+
+// Spotify embed loading optimization
+const spotifyEmbeds = document.querySelectorAll('.spotify-embed iframe');
+spotifyEmbeds.forEach(iframe => {
+    iframe.loading = 'lazy';
+});
+
+// Add premium cursor trail effect
+const createCursorTrail = () => {
+    let lastX = 0, lastY = 0;
+    
+    document.addEventListener('mousemove', (e) => {
+        if (Math.abs(e.clientX - lastX) > 5 || Math.abs(e.clientY - lastY) > 5) {
+            const trail = document.createElement('div');
+            trail.className = 'cursor-trail';
+            trail.style.cssText = `
+                position: fixed;
+                width: 6px;
+                height: 6px;
+                background: radial-gradient(circle, rgba(124, 77, 255, 0.6), transparent);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 9999;
+                left: ${e.clientX}px;
+                top: ${e.clientY}px;
+                transform: translate(-50%, -50%);
+                animation: fade-out 0.6s forwards;
+            `;
+            document.body.appendChild(trail);
+            setTimeout(() => trail.remove(), 600);
+            lastX = e.clientX;
+            lastY = e.clientY;
+        }
+    });
+};
+
+// Add fade-out keyframe
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes fade-out {
+        to {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(2);
+        }
+    }
+`;
+document.head.appendChild(style);
+
+createCursorTrail();
+
+console.log('%c Ryuya Official Website', 'font-size: 20px; font-weight: bold; background: linear-gradient(90deg, #7c4dff, #00e0ff); -webkit-background-clip: text; color: transparent;');
+console.log('%cPowered by Premium Quality Code', 'font-size: 12px; color: #7c4dff;');
+
+// ===== ULTRA PREMIUM INTERACTIONS =====
+
+// 3D Card Tilt on Mouse Move
+document.querySelectorAll('.premium-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const rotateX = (y - centerY) / 10;
+        const rotateY = (centerX - x) / 10;
+        
+        card.style.transform = `translateY(-10px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    });
+    
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = 'translateY(0) rotateX(0) rotateY(0)';
+    });
+});
+
+// Magnetic Button Effect
+document.querySelectorAll('.hero-cta, .premium-btn').forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        
+        btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+    });
+    
+    btn.addEventListener('mouseleave', () => {
+        btn.style.transform = 'translate(0, 0)';
+    });
+});
+
+// Smooth Scroll with Easing
+document.querySelectorAll('a[href^=\"#\"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
+
+// Dynamic Background Color Change on Scroll
+let lastScrollY = window.scrollY;
+window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+    
+    const scrollPercentage = scrollY / (documentHeight - windowHeight);
+    
+    const hue = Math.round(270 - (scrollPercentage * 60)); // 270 (purple) to 210 (blue)
+    document.body.style.backgroundColor = `hsl(${hue}, 30%, 5%)`;
+    
+    lastScrollY = scrollY;
+});
+
+// Intersection Observer for Advanced Animations
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+};
+
+const animateOnScroll = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('animate-in');
+        }
+    });
+}, observerOptions);
+
+document.querySelectorAll('.profile-card, .sns-card, .spotify-embed').forEach(el => {
+    animateOnScroll.observe(el);
+});
+
+// Performance Monitor (Development Only)
+if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    let fps = 0;
+    let lastTime = performance.now();
+    
+    function measureFPS() {
+        const currentTime = performance.now();
+        fps = Math.round(1000 / (currentTime - lastTime));
+        lastTime = currentTime;
+        
+        console.log(`FPS: ${fps}`);
+        requestAnimationFrame(measureFPS);
+    }
+    
+    // measureFPS(); // Uncomment to enable FPS monitoring
+}
+
+// Add ambient sound effect (optional, can be enabled by user)
+const enableAmbientSound = false; // Set to true to enable
+if (enableAmbientSound) {
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    oscillator.frequency.value = 110; // Low A note
+    gainNode.gain.value = 0.01; // Very quiet ambient
+    
+    // oscillator.start(); // Uncomment to enable ambient sound
+}
+
+console.log('%c Ultra Premium Mode Activated', 'font-size: 16px; font-weight: bold; background: linear-gradient(90deg, #7c4dff, #00e0ff, #ff00ff); -webkit-background-clip: text; color: transparent;');
+console.log('%c Performance Optimized', 'font-size: 12px; color: #00e0ff;');
+console.log('%c 3D Effects, Tilt, Magnetic Buttons, Dynamic Colors Active', 'font-size: 12px; color: #7c4dff;');
