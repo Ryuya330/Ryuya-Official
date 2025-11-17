@@ -63,6 +63,14 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="antialiased">
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-purple-500 to-pink-500 z-[60] transition-all duration-300" style="width: 0%;"></div>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 w-14 h-14 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full shadow-2xl flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300 hover:scale-110 z-50">
+        <i class="fas fa-arrow-up text-white text-xl"></i>
+    </button>
+
     <!-- Custom Cursor -->
     <div id="cursor-dot"></div>
     <div id="cursor-outline"></div>
@@ -146,6 +154,29 @@
     <!-- Custom JS -->
     <script src="js/app.js"></script>
     <script>
+        // Scroll Progress Bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('scroll-progress').style.width = scrolled + '%';
+        });
+
+        // Back to Top Button
+        const backToTopBtn = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.style.opacity = '1';
+                backToTopBtn.style.pointerEvents = 'auto';
+            } else {
+                backToTopBtn.style.opacity = '0';
+                backToTopBtn.style.pointerEvents = 'none';
+            }
+        });
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('main-content').classList.add('main-content-visible');
             const currentPath = window.location.pathname.split('/').pop();
