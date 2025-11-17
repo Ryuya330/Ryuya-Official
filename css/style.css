@@ -1620,7 +1620,7 @@ button:focus-visible {
 .spotify-embed {
     max-width: 100%;
     margin: 0 auto;
-    padding: 0.5rem !important;
+    padding: 0.25rem !important;
 }
 
 .spotify-embed iframe {
@@ -1628,14 +1628,17 @@ button:focus-visible {
     height: 80px;
     min-height: 80px;
     max-height: 80px;
+    display: block;
 }
 
 /* Responsive adjustments for Spotify embeds */
 /* iPhone SE, 12 mini, 13 mini (390-393px) */
 @media (max-width: 430px) {
     .spotify-embed {
-        padding: 0.5rem !important;
-        margin-bottom: 1rem;
+        padding: 0.25rem !important;
+        margin-bottom: 0.75rem;
+        margin-left: 0;
+        margin-right: 0;
     }
     
     .spotify-embed iframe {
@@ -1643,12 +1646,16 @@ button:focus-visible {
         min-height: 80px;
         max-height: 80px;
     }
+    
+    .space-y-4 > * + * {
+        margin-top: 0.75rem !important;
+    }
 }
 
 /* iPhone 14/15 Standard, Pro (430px) */
 @media (min-width: 431px) and (max-width: 640px) {
     .spotify-embed {
-        padding: 0.75rem !important;
+        padding: 0.5rem !important;
     }
     
     .spotify-embed iframe {
@@ -1660,6 +1667,10 @@ button:focus-visible {
 
 /* Tablets */
 @media (min-width: 641px) and (max-width: 768px) {
+    .spotify-embed {
+        padding: 0.75rem !important;
+    }
+    
     .spotify-embed iframe {
         height: 80px;
     }
@@ -1686,7 +1697,7 @@ button:focus-visible {
     }
     
     .profile-card {
-        padding: 1.5rem !important;
+        padding: 1.25rem !important;
     }
 }
 
