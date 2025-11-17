@@ -1616,88 +1616,57 @@ button:focus-visible {
 }
 
 
-/* Spotify Embed Responsive Sizing */
-.spotify-embed {
+/* Spotify Embed Compact Mode - New Approach */
+.spotify-embed-compact {
+    width: 100%;
     max-width: 100%;
     margin: 0 auto;
-    padding: 0.25rem !important;
+    padding: 0;
+    overflow: hidden;
 }
 
-.spotify-embed iframe {
-    width: 100%;
-    height: 80px;
-    min-height: 80px;
-    max-height: 80px;
+.spotify-embed-compact iframe {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 152px !important;
     display: block;
+    border: none;
 }
 
-/* Responsive adjustments for Spotify embeds */
-/* iPhone SE, 12 mini, 13 mini (390-393px) */
-@media (max-width: 430px) {
-    .spotify-embed {
-        padding: 0.25rem !important;
-        margin-bottom: 0.75rem;
-        margin-left: 0;
-        margin-right: 0;
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    .spotify-embed-compact {
+        margin-left: -0.5rem;
+        margin-right: -0.5rem;
+        width: calc(100% + 1rem);
     }
     
-    .spotify-embed iframe {
-        height: 80px;
-        min-height: 80px;
-        max-height: 80px;
+    .spotify-embed-compact iframe {
+        height: 152px !important;
     }
     
-    .space-y-4 > * + * {
+    .space-y-3 > * + * {
         margin-top: 0.75rem !important;
     }
 }
 
-/* iPhone 14/15 Standard, Pro (430px) */
-@media (min-width: 431px) and (max-width: 640px) {
-    .spotify-embed {
-        padding: 0.5rem !important;
-    }
-    
-    .spotify-embed iframe {
-        height: 80px;
-        min-height: 80px;
-        max-height: 80px;
-    }
-}
-
-/* Tablets */
-@media (min-width: 641px) and (max-width: 768px) {
-    .spotify-embed {
-        padding: 0.75rem !important;
-    }
-    
-    .spotify-embed iframe {
-        height: 80px;
-    }
-}
-
-/* iPad and larger tablets */
-@media (min-width: 769px) and (max-width: 1024px) {
-    .spotify-embed iframe {
-        height: 80px;
-    }
-}
-
-/* Desktop */
-@media (min-width: 1025px) {
-    .spotify-embed iframe {
-        height: 80px;
-    }
-}
-
-/* Ensure proper spacing on mobile */
-@media (max-width: 768px) {
-    .space-y-8 > * + * {
-        margin-top: 1rem !important;
-    }
-    
+/* iPhone specific (390-430px) */
+@media (max-width: 430px) {
     .profile-card {
-        padding: 1.25rem !important;
+        padding: 1rem !important;
+    }
+    
+    .spotify-embed-compact {
+        margin-left: -0.5rem;
+        margin-right: -0.5rem;
+        width: calc(100% + 1rem);
+    }
+}
+
+/* Tablet adjustments */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .spotify-embed-compact iframe {
+        height: 152px !important;
     }
 }
 
