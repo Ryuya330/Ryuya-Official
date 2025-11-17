@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OG Image Template</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            width: 1200px;
+            height: 630px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0a0a14 0%, #1a1a2e 100%);
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+        /* Background Pattern */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(138, 43, 226, 0.03) 2px, rgba(138, 43, 226, 0.03) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0, 191, 255, 0.03) 2px, rgba(0, 191, 255, 0.03) 4px);
+            opacity: 0.5;
+        }
+        /* Gradient Orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+        }
+        .orb1 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, #8a2be2, transparent);
+            top: -100px;
+            right: -100px;
+        }
+        .orb2 {
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, #00bfff, transparent);
+            bottom: -80px;
+            left: -80px;
+        }
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 60px;
+        }
+        h1 {
+            font-size: 120px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #8a2be2 0%, #00bfff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            letter-spacing: 8px;
+            text-shadow: 0 0 40px rgba(138, 43, 226, 0.5);
+        }
+        .subtitle {
+            font-size: 36px;
+            color: #e0e0e0;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+        }
+        .tagline {
+            font-size: 28px;
+            color: #a0a0a0;
+            margin-bottom: 20px;
+        }
+        .url {
+            font-size: 24px;
+            color: #8a2be2;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+        /* Scanline Effect */
+        .scanline {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, rgba(0, 191, 255, 0.5) 50%, transparent 100%);
+            top: 50%;
+            animation: scan 3s linear infinite;
+        }
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="scanline"></div>
+    
+    <div class="container">
+        <h1>Ryuya</h1>
+        <div class="subtitle">AI Creator × Singer-Songwriter</div>
+        <div class="tagline">音楽 × 物語 × テクノロジー</div>
+        <div class="url">ryuya-official.netlify.app</div>
+    </div>
+</body>
+</html>
