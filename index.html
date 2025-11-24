@@ -121,8 +121,23 @@
     <main id="main-content">
         <!-- Home Section -->
         <section id="home" class="min-h-screen flex items-center justify-center text-center relative px-4">
+            <!-- Background Video -->
+            <div class="absolute inset-0 overflow-hidden" style="z-index: 0;">
+                <video 
+                    autoplay 
+                    loop 
+                    muted 
+                    playsinline
+                    preload="auto"
+                    class="absolute top-1/2 left-1/2 min-w-full min-h-full w-auto h-auto object-cover"
+                    style="transform: translate(-50%, -50%); opacity: 0.3; filter: brightness(0.7);"
+                >
+                    <source src="assets/images/Faik%20ID.mp4" type="video/mp4">
+                </video>
+            </div>
+
             <!-- Floating particles -->
-            <div class="particles-container">
+            <div class="particles-container" style="z-index: 2;">
                 <div class="particle"></div>
                 <div class="particle"></div>
                 <div class="particle"></div>
@@ -130,7 +145,7 @@
                 <div class="particle"></div>
             </div>
             
-            <div class="z-10 relative">
+            <div class="z-10 relative" style="z-index: 10;">
                 <h1 class="text-7xl md:text-8xl font-extrabold section-title ryuya-animate mb-6 glitch-text holographic neon-text scanline pulse-ring" data-text="Ryuya" data-parallax="15">
                     <span class="glitch-layer">Ryuya</span>
                 </h1>
