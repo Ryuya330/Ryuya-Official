@@ -124,6 +124,7 @@
             <!-- Background Video -->
             <div class="absolute inset-0 w-full h-full" style="z-index: 0;">
                 <video 
+                    id="bg-video"
                     autoplay 
                     loop 
                     muted
@@ -249,6 +250,18 @@
         });
 
         document.addEventListener('DOMContentLoaded', () => {
+            // Force video autoplay for mobile
+            const bgVideo = document.getElementById('bg-video');
+            if (bgVideo) {
+                bgVideo.play().catch(e => {
+                    console.log('Autoplay prevented:', e);
+                    // Retry on user interaction
+                    document.addEventListener('touchstart', () => {
+                        bgVideo.play();
+                    }, { once: true });
+                });
+            }
+
             document.getElementById('main-content').classList.add('main-content-visible');
             const currentPath = window.location.pathname.split('/').pop();
             const navLinks = document.querySelectorAll('.nav-link');
