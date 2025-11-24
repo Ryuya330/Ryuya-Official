@@ -250,16 +250,37 @@
         });
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Force video autoplay for mobile
+            // Force video autoplay for all devices
             const bgVideo = document.getElementById('bg-video');
             if (bgVideo) {
-                bgVideo.play().catch(e => {
-                    console.log('Autoplay prevented:', e);
-                    // Retry on user interaction
-                    document.addEventListener('touchstart', () => {
-                        bgVideo.play();
-                    }, { once: true });
-                });
+                // Attempt to play immediately
+                const playPromise = bgVideo.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.catch(e => {
+                        console.log('Autoplay prevented:', e);
+                        // Retry on any user interaction (click, touch, scroll, keypress)
+                        const startVideo = () => {
+                            bgVideo.play();
+                            document.removeEventListener('click', startVideo);
+                            document.removeEventListener('touchstart', startVideo);
+                            document.removeEventListener('scroll', startVideo);
+                            document.removeEventListener('keydown', startVideo);
+                        };
+                        
+                        document.addEventListener('click', startVideo, { once: true });
+                        document.addEventListener('touchstart', startVideo, { once: true });
+                        document.addEventListener('scroll', startVideo, { once: true });
+                        document.addEventListener('keydown', startVideo, { once: true });
+                    });
+                }
+                
+                // Additional check to ensure video is playing
+                setInterval(() => {
+                    if (bgVideo.paused) {
+                        bgVideo.play().catch(() => {});
+                    }
+                }, 1000);
             }
 
             document.getElementById('main-content').classList.add('main-content-visible');
