@@ -200,6 +200,31 @@
             z-index: 30;
             pointer-events: none;
         }
+        .auto-play-btn {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.7);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: white;
+            padding: 10px 16px;
+            border-radius: 9999px;
+            cursor: pointer;
+            z-index: 30;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .auto-play-btn:hover {
+            background: rgba(124,77,255,0.8);
+            border-color: rgba(124,77,255,1);
+        }
+        .auto-play-btn.playing {
+            background: rgba(124,77,255,0.7);
+            border-color: rgba(124,77,255,1);
+        }
         body.devtools-open .art-image {
             filter: blur(20px) brightness(0.3) !important;
         }
@@ -213,6 +238,12 @@
             }
             .slide-nav-btn.prev { left: 5px; }
             .slide-nav-btn.next { right: 5px; }
+            .auto-play-btn {
+                bottom: 70px;
+                right: 10px;
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
@@ -430,11 +461,20 @@
         counter.className = 'slide-counter';
         counter.textContent = `1 / ${artworks.length}`;
 
+        const autoPlayBtn = document.createElement('button');
+        autoPlayBtn.className = 'auto-play-btn';
+        autoPlayBtn.innerHTML = '<i class="fas fa-play"></i><span>自動再生</span>';
+        autoPlayBtn.setAttribute('aria-label', 'Toggle auto play');
+
         slideshow.appendChild(prevBtn);
         slideshow.appendChild(nextBtn);
         slideshow.appendChild(counter);
+        slideshow.appendChild(autoPlayBtn);
 
         // Slideshow functions
+        let autoPlayInterval = null;
+        let isPlaying = false;
+
         function showSlide(n) {
             const slides = document.querySelectorAll('.art-slide');
             if (n >= slides.length) currentSlide = 0;
@@ -458,10 +498,59 @@
         prevBtn.addEventListener('click', prevSlide);
         nextBtn.addEventListener('click', nextSlide);
 
+        // Auto play functionality
+        function startAutoPlay() {
+            if (autoPlayInterval) return;
+            isPlaying = true;
+            autoPlayBtn.classList.add('playing');
+            autoPlayBtn.innerHTML = '<i class="fas fa-pause"></i><span>停止</span>';
+            autoPlayInterval = setInterval(() => {
+                nextSlide();
+            }, 3000); // 3秒ごとに自動で次へ
+        }
+
+        function stopAutoPlay() {
+            if (autoPlayInterval) {
+                clearInterval(autoPlayInterval);
+                autoPlayInterval = null;
+            }
+            isPlaying = false;
+            autoPlayBtn.classList.remove('playing');
+            autoPlayBtn.innerHTML = '<i class="fas fa-play"></i><span>自動再生</span>';
+        }
+
+        function toggleAutoPlay() {
+            if (isPlaying) {
+                stopAutoPlay();
+            } else {
+                startAutoPlay();
+            }
+        }
+
+        autoPlayBtn.addEventListener('click', toggleAutoPlay);
+
+        // Stop auto play when user manually navigates
+        prevBtn.addEventListener('click', () => {
+            if (isPlaying) stopAutoPlay();
+        });
+        nextBtn.addEventListener('click', () => {
+            if (isPlaying) stopAutoPlay();
+        });
+
         // Keyboard navigation
         document.addEventListener('keydown', e => {
-            if (e.key === 'ArrowLeft') prevSlide();
-            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') {
+                prevSlide();
+                if (isPlaying) stopAutoPlay();
+            }
+            if (e.key === 'ArrowRight') {
+                nextSlide();
+                if (isPlaying) stopAutoPlay();
+            }
+            if (e.key === ' ' || e.key === 'Spacebar') {
+                e.preventDefault();
+                toggleAutoPlay();
+            }
         });
 
         // Touch swipe support
@@ -479,8 +568,14 @@
 
         function handleSwipe() {
             const swipeThreshold = 50;
-            if (touchEndX < touchStartX - swipeThreshold) nextSlide();
-            if (touchEndX > touchStartX + swipeThreshold) prevSlide();
+            if (touchEndX < touchStartX - swipeThreshold) {
+                nextSlide();
+                if (isPlaying) stopAutoPlay();
+            }
+            if (touchEndX > touchStartX + swipeThreshold) {
+                prevSlide();
+                if (isPlaying) stopAutoPlay();
+            }
         }
 
         // Scroll Progress Bar
