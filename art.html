@@ -85,10 +85,15 @@
         .art-slide {
             display: none;
             width: 100%;
-            animation: fadeIn 0.6s ease;
+            opacity: 0;
+            transition: opacity 0.8s ease;
         }
         .art-slide.active {
             display: block;
+            opacity: 1;
+        }
+        .art-slide.fade-out {
+            opacity: 0;
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
@@ -474,25 +479,51 @@
         // Slideshow functions
         let autoPlayInterval = null;
         let isPlaying = false;
+        let isTransitioning = false;
 
-        function showSlide(n) {
+        function showSlide(n, withFade = false) {
+            if (isTransitioning && withFade) return;
+            
             const slides = document.querySelectorAll('.art-slide');
             if (n >= slides.length) currentSlide = 0;
             if (n < 0) currentSlide = slides.length - 1;
             
-            slides.forEach(slide => slide.classList.remove('active'));
-            slides[currentSlide].classList.add('active');
-            counter.textContent = `${currentSlide + 1} / ${artworks.length}`;
+            if (withFade) {
+                isTransitioning = true;
+                const currentSlideEl = document.querySelector('.art-slide.active');
+                
+                if (currentSlideEl) {
+                    currentSlideEl.classList.add('fade-out');
+                    
+                    setTimeout(() => {
+                        slides.forEach(slide => {
+                            slide.classList.remove('active', 'fade-out');
+                        });
+                        slides[currentSlide].classList.add('active');
+                        counter.textContent = `${currentSlide + 1} / ${artworks.length}`;
+                        isTransitioning = false;
+                    }, 800);
+                } else {
+                    slides.forEach(slide => slide.classList.remove('active', 'fade-out'));
+                    slides[currentSlide].classList.add('active');
+                    counter.textContent = `${currentSlide + 1} / ${artworks.length}`;
+                    isTransitioning = false;
+                }
+            } else {
+                slides.forEach(slide => slide.classList.remove('active', 'fade-out'));
+                slides[currentSlide].classList.add('active');
+                counter.textContent = `${currentSlide + 1} / ${artworks.length}`;
+            }
         }
 
-        function nextSlide() {
+        function nextSlide(withFade = false) {
             currentSlide++;
-            showSlide(currentSlide);
+            showSlide(currentSlide, withFade);
         }
 
-        function prevSlide() {
+        function prevSlide(withFade = false) {
             currentSlide--;
-            showSlide(currentSlide);
+            showSlide(currentSlide, withFade);
         }
 
         prevBtn.addEventListener('click', prevSlide);
@@ -505,7 +536,7 @@
             autoPlayBtn.classList.add('playing');
             autoPlayBtn.innerHTML = '<i class="fas fa-pause"></i><span>停止</span>';
             autoPlayInterval = setInterval(() => {
-                nextSlide();
+                nextSlide(true); // フェード効果を有効化
             }, 3000); // 3秒ごとに自動で次へ
         }
 
