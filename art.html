@@ -90,6 +90,22 @@
             transition: transform 0.6s ease, opacity 0.6s ease;
             opacity: 0;
             transform: translateY(24px);
+            position: relative;
+        }
+        .art-image::before {
+            content: '© Ryuya Official - All Rights Reserved';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 2.5rem;
+            color: rgba(255,255,255,0.08);
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 10;
+            font-weight: bold;
+            letter-spacing: 0.1em;
+            text-shadow: 0 0 20px rgba(0,0,0,0.5);
         }
         .art-image.loaded {
             opacity: 1;
@@ -107,19 +123,33 @@
             letter-spacing: 0.08em;
             color: #e2e8f0;
             pointer-events: none;
+            z-index: 20;
         }
         .no-save-overlay {
             position: absolute;
             inset: 0;
             background: linear-gradient(135deg, rgba(124,77,255,0.08), rgba(14,165,233,0.05));
             pointer-events: none;
+            z-index: 15;
+        }
+        .protection-layer {
+            position: absolute;
+            inset: 0;
+            background: transparent;
+            pointer-events: auto;
+            z-index: 25;
+            cursor: not-allowed;
         }
         .art-warning {
             border: 1px solid rgba(255,255,255,0.12);
             background: rgba(20,20,30,0.8);
         }
+        body.devtools-open .art-image {
+            filter: blur(20px) brightness(0.3) !important;
+        }
         @media (max-width: 768px) {
             .art-image { min-height: 70vh; }
+            .art-image::before { font-size: 1.5rem; }
         }
     </style>
 </head>
@@ -238,6 +268,37 @@
 
         document.addEventListener('gesturestart', e => e.preventDefault());
 
+        // DevTools detection
+        let devtoolsOpen = false;
+        const checkDevTools = () => {
+            const threshold = 160;
+            const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+            const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+            if (widthThreshold || heightThreshold) {
+                if (!devtoolsOpen) {
+                    devtoolsOpen = true;
+                    document.body.classList.add('devtools-open');
+                }
+            } else {
+                if (devtoolsOpen) {
+                    devtoolsOpen = false;
+                    document.body.classList.remove('devtools-open');
+                }
+            }
+        };
+        setInterval(checkDevTools, 1000);
+        window.addEventListener('resize', checkDevTools);
+
+        // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+        document.addEventListener('keydown', e => {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) ||
+                (e.ctrlKey && (e.key === 'U' || e.key === 'u'))) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
         // Render artworks
         const artworks = Array.from({ length: 195 }, (_, i) => {
             const num = String(195 - i).padStart(3, '0');
@@ -278,12 +339,22 @@
             image.setAttribute('role', 'img');
             image.setAttribute('aria-label', art.label);
 
+            const protectionLayer = document.createElement('div');
+            protectionLayer.className = 'protection-layer';
+            protectionLayer.addEventListener('contextmenu', e => e.preventDefault());
+            protectionLayer.addEventListener('dragstart', e => e.preventDefault());
+            protectionLayer.addEventListener('touchstart', e => {
+                if (e.touches.length > 1) e.preventDefault();
+            }, { passive: false });
+            protectionLayer.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
+
             const badge = document.createElement('div');
             badge.className = 'art-badge';
             badge.textContent = 'NO SAVE / DO NOT REPOST';
 
             card.appendChild(image);
             card.appendChild(overlay);
+            card.appendChild(protectionLayer);
             card.appendChild(badge);
             container.appendChild(card);
             observer.observe(image);
