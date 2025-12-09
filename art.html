@@ -72,24 +72,45 @@
                         radial-gradient(circle at 80% 30%, rgba(14,165,233,0.15), transparent 35%),
                         radial-gradient(circle at 50% 80%, rgba(255,255,255,0.05), transparent 40%);
         }
+        .slideshow-container {
+            position: relative;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .art-slide {
+            display: none;
+            width: 100%;
+            animation: fadeIn 0.6s ease;
+        }
+        .art-slide.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         .art-card {
             position: relative;
             overflow: hidden;
             border: 1px solid rgba(255,255,255,0.08);
             background: rgba(12,12,18,0.85);
             backdrop-filter: blur(8px);
+            border-radius: 1rem;
+            padding: 1rem;
         }
         .art-image {
             width: 100%;
-            min-height: 80vh;
+            height: 75vh;
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
             pointer-events: none;
             filter: drop-shadow(0 15px 45px rgba(0,0,0,0.35));
-            transition: transform 0.6s ease, opacity 0.6s ease;
-            opacity: 0;
-            transform: translateY(24px);
             position: relative;
         }
         .art-image::before {
@@ -106,10 +127,6 @@
             font-weight: bold;
             letter-spacing: 0.1em;
             text-shadow: 0 0 20px rgba(0,0,0,0.5);
-        }
-        .art-image.loaded {
-            opacity: 1;
-            transform: translateY(0);
         }
         .art-badge {
             position: absolute;
@@ -144,12 +161,58 @@
             border: 1px solid rgba(255,255,255,0.12);
             background: rgba(20,20,30,0.8);
         }
+        .slide-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.7);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: white;
+            font-size: 2rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 30;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .slide-nav-btn:hover {
+            background: rgba(124,77,255,0.8);
+            border-color: rgba(124,77,255,1);
+            transform: translateY(-50%) scale(1.1);
+        }
+        .slide-nav-btn.prev { left: 10px; }
+        .slide-nav-btn.next { right: 10px; }
+        .slide-counter {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 8px 20px;
+            border-radius: 9999px;
+            font-size: 0.9rem;
+            color: #e2e8f0;
+            z-index: 30;
+            pointer-events: none;
+        }
         body.devtools-open .art-image {
             filter: blur(20px) brightness(0.3) !important;
         }
         @media (max-width: 768px) {
-            .art-image { min-height: 70vh; }
+            .art-image { height: 60vh; }
             .art-image::before { font-size: 1.5rem; }
+            .slide-nav-btn { 
+                width: 50px; 
+                height: 50px; 
+                font-size: 1.5rem; 
+            }
+            .slide-nav-btn.prev { left: 5px; }
+            .slide-nav-btn.next { right: 5px; }
         }
     </style>
 </head>
@@ -226,7 +289,9 @@
 
         <!-- Art List -->
         <section class="pb-20 px-6 md:px-10 relative">
-            <div class="container mx-auto space-y-10" id="artworks"></div>
+            <div class="slideshow-container" id="slideshow">
+                <!-- Navigation buttons will be added by JS -->
+            </div>
         </section>
     </main>
 
@@ -308,34 +373,24 @@
             };
         });
 
-        const container = document.getElementById('artworks');
+        const slideshow = document.getElementById('slideshow');
+        let currentSlide = 0;
 
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const el = entry.target;
-                    const src = el.dataset.src;
-                    el.style.backgroundImage = `url(${src})`;
-                    el.classList.add('loaded');
-                    observer.unobserve(el);
-                }
-            });
-        }, {
-            rootMargin: '200px 0px',
-            threshold: 0.05
-        });
-
+        // Create slides
         artworks.forEach((art, idx) => {
+            const slide = document.createElement('div');
+            slide.className = 'art-slide';
+            if (idx === 0) slide.classList.add('active');
+
             const card = document.createElement('div');
-            card.className = 'art-card rounded-2xl p-2 md:p-4 fade-in-up premium-card';
-            card.style.transitionDelay = `${idx * 20}ms`;
+            card.className = 'art-card premium-card';
 
             const overlay = document.createElement('div');
             overlay.className = 'no-save-overlay';
 
             const image = document.createElement('div');
             image.className = 'art-image';
-            image.dataset.src = art.src;
+            image.style.backgroundImage = `url(${art.src})`;
             image.setAttribute('role', 'img');
             image.setAttribute('aria-label', art.label);
 
@@ -356,9 +411,77 @@
             card.appendChild(overlay);
             card.appendChild(protectionLayer);
             card.appendChild(badge);
-            container.appendChild(card);
-            observer.observe(image);
+            slide.appendChild(card);
+            slideshow.appendChild(slide);
         });
+
+        // Create navigation buttons
+        const prevBtn = document.createElement('button');
+        prevBtn.className = 'slide-nav-btn prev';
+        prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+        prevBtn.setAttribute('aria-label', 'Previous image');
+        
+        const nextBtn = document.createElement('button');
+        nextBtn.className = 'slide-nav-btn next';
+        nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+        nextBtn.setAttribute('aria-label', 'Next image');
+
+        const counter = document.createElement('div');
+        counter.className = 'slide-counter';
+        counter.textContent = `1 / ${artworks.length}`;
+
+        slideshow.appendChild(prevBtn);
+        slideshow.appendChild(nextBtn);
+        slideshow.appendChild(counter);
+
+        // Slideshow functions
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.art-slide');
+            if (n >= slides.length) currentSlide = 0;
+            if (n < 0) currentSlide = slides.length - 1;
+            
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[currentSlide].classList.add('active');
+            counter.textContent = `${currentSlide + 1} / ${artworks.length}`;
+        }
+
+        function nextSlide() {
+            currentSlide++;
+            showSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide--;
+            showSlide(currentSlide);
+        }
+
+        prevBtn.addEventListener('click', prevSlide);
+        nextBtn.addEventListener('click', nextSlide);
+
+        // Keyboard navigation
+        document.addEventListener('keydown', e => {
+            if (e.key === 'ArrowLeft') prevSlide();
+            if (e.key === 'ArrowRight') nextSlide();
+        });
+
+        // Touch swipe support
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        slideshow.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        slideshow.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            if (touchEndX < touchStartX - swipeThreshold) nextSlide();
+            if (touchEndX > touchStartX + swipeThreshold) prevSlide();
+        }
 
         // Scroll Progress Bar
         window.addEventListener('scroll', () => {
