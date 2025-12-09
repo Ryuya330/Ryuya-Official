@@ -240,7 +240,7 @@
 
         // Render artworks
         const artworks = Array.from({ length: 195 }, (_, i) => {
-            const num = String(i + 1).padStart(3, '0');
+            const num = String(195 - i).padStart(3, '0');
             return {
                 src: `assets/images/Art-${num}.png`,
                 label: `Art ${num}`
