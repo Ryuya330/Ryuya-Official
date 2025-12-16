@@ -129,6 +129,13 @@
             <video id="bg-video" class="absolute inset-0 w-full h-full object-cover" style="z-index:0;" autoplay muted loop playsinline>
                 <source src="assets/images/All images, reborn..MP4" type="video/mp4">
             </video>
+            <!-- Sound Control Button -->
+            <div class="absolute bottom-6 right-6 z-20">
+                <button id="video-sound-btn" class="premium-btn depth-shadow morphing-border" style="padding:10px 14px;">
+                    <span class="btn-text" id="video-sound-label">Sound On</span>
+                    <span class="btn-shine"></span>
+                </button>
+            </div>
 
             <!-- Floating particles -->
             <div class="particles-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
@@ -287,6 +294,41 @@
                         bgVideo.play().catch(() => {});
                     }
                 }, 1000);
+
+                // Allow user to enable audio (policy-friendly: requires a gesture)
+                const soundBtn = document.getElementById('video-sound-btn');
+                const soundLabel = document.getElementById('video-sound-label');
+
+                const updateSoundLabel = () => {
+                    if (!soundLabel) return;
+                    soundLabel.textContent = bgVideo.muted ? 'Sound On' : 'Sound Off';
+                };
+
+                // Auto-unmute once after the first user interaction (click/touch/scroll/key)
+                const enableAudioOnce = () => {
+                    bgVideo.muted = false;
+                    bgVideo.volume = 0.7;
+                    bgVideo.play().catch(() => {});
+                    updateSoundLabel();
+                    ['click', 'touchstart', 'scroll', 'keydown'].forEach(ev => {
+                        document.removeEventListener(ev, enableAudioOnce);
+                    });
+                };
+                ['click', 'touchstart', 'scroll', 'keydown'].forEach(ev => {
+                    document.addEventListener(ev, enableAudioOnce, { once: true });
+                });
+
+                if (soundBtn) {
+                    soundBtn.addEventListener('click', () => {
+                        bgVideo.muted = !bgVideo.muted;
+                        if (!bgVideo.muted) {
+                            bgVideo.volume = 0.7;
+                            bgVideo.play().catch(() => {});
+                        }
+                        updateSoundLabel();
+                    });
+                    updateSoundLabel();
+                }
             }
 
             document.getElementById('main-content').classList.add('main-content-visible');
