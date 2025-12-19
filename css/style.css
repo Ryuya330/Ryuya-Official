@@ -132,14 +132,14 @@ header.scrolled {
 }
 
 .site-logo {
-    font-size: var(--font-2xl);
+    font-size: clamp(1.3rem, 4.5vw, 1.8rem) !important;
     font-weight: 700;
 }
 
 .nav-link { 
     position: relative; 
     transition: color 0.3s ease, box-shadow 0.3s ease;
-    font-size: var(--font-base);
+    font-size: clamp(0.9rem, 2.7vw, 1rem) !important;
     padding: 0.5rem 1rem;
 }
 
@@ -177,7 +177,7 @@ header.scrolled {
 .section-title {
     font-family: 'Inter', sans-serif;
     font-weight: 800;
-    font-size: var(--font-4xl);
+    font-size: clamp(2.2rem, 6vw, 3.6rem) !important;
     background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
     -webkit-background-clip: text;
     background-clip: text;
@@ -190,7 +190,7 @@ header.scrolled {
 
 @media (max-width: 768px) {
     .section-title {
-        font-size: var(--font-3xl);
+        font-size: clamp(1.8rem, 5.2vw, 2.6rem) !important;
     }
 }
 
@@ -256,12 +256,12 @@ header.scrolled {
 }
 
 .profile-card h3 {
-    font-size: var(--font-2xl);
+    font-size: var(--font-xl);
     margin-bottom: 0.5rem;
 }
 
 .profile-card p {
-    font-size: var(--font-sm);
+    font-size: var(--font-xs);
     line-height: 1.6;
 }
 
