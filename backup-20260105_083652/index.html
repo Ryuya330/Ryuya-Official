@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+
+    <!-- SEO & OGP Meta Tags -->
+    <title>Ryuya Official</title>
+    <meta name="description"
+        content="元AI Artist / AI Creator / Singer-Songwriter / Google AI Student Lead Ambassador / 元Novelist, Ryuyaのオフィシャルサイト。作品、プロフィール、最新情報をお届けします。">
+    <meta name="keywords"
+        content="Ryuya, AI Creator, Singer-Songwriter, Google AI Student Lead Ambassador, 元Novelist, 紫苑, 伊織暁斗, 音楽, AIアート">
+    <meta name="author" content="Ryuya">
+    <meta name="google-site-verification" content="5U1vhJGLCyd7wfsLuyHzSneCRP_J9kp5XyquhojbiYo" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ryuya-official.netlify.app/">
+    <meta property="og:title" content="Ryuya Official">
+    <meta property="og:description"
+        content="元AI Artist / AI Creator / Singer-Songwriter / Google AI Student Lead Ambassador / 元Novelist, Ryuyaのオフィシャルサイト。音楽 × 物語 × テクノロジー">
+    <meta property="og:image" content="https://ryuya-official.netlify.app/assets/images/ogp-image.png?v=2">
+    <meta property="og:image:secure_url" content="https://ryuya-official.netlify.app/assets/images/ogp-image.png?v=2">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Ryuya Official - AI Creator × Singer-Songwriter × Novelist">
+    <meta property="og:site_name" content="Ryuya Official">
+    <meta property="og:locale" content="ja_JP">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@Ryuya_330">
+    <meta name="twitter:creator" content="@Ryuya_330">
+    <meta name="twitter:title" content="Ryuya Official">
+    <meta name="twitter:description"
+        content="元AI Artist / AI Creator / Singer-Songwriter / Google AI Student Lead Ambassador / 元Novelist, Ryuyaのオフィシャルサイト。音楽 × 物語 × テクノロジー">
+    <meta property="twitter:image" content="https://ryuya-official.netlify.app/assets/images/ogp-image.png?v=2">
+    <meta name="twitter:image:alt" content="Ryuya Official - AI Creator × Singer-Songwriter × Novelist">
+
+    <!-- Favicon -->
+    <link rel="icon" href="https://placehold.co/32x32/7c4dff/ffffff?text=R&font=Montserrat" type="image/png">
+    <link rel="apple-touch-icon" href="https://placehold.co/180x180/7c4dff/ffffff?text=R&font=Montserrat">
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#7c4dff">
+    <meta name="msapplication-TileColor" content="#7c4dff">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="antialiased">
+
+    <!-- Loading Screen -->
+    <div id="loading-screen"
+        class="fixed inset-0 z-[9999] bg-gradient-to-br from-gray-900 via-purple-900 to-black flex items-center justify-center">
+        <div class="text-center">
+            <div class="loading-spinner mb-8"></div>
+            <h2
+                class="text-4xl font-bold bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent mb-4">
+                Ryuya Official</h2>
+            <p class="text-gray-400 text-lg">Loading Experience...</p>
+        </div>
+    </div>
+
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress"
+        class="fixed top-0 left-0 h-1 bg-gradient-to-r from-purple-500 to-pink-500 z-[60] transition-all duration-300"
+        style="width: 0%;"></div>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top"
+        class="fixed bottom-8 right-8 w-14 h-14 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full shadow-2xl flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300 hover:scale-110 z-50">
+        <i class="fas fa-arrow-up text-white text-xl"></i>
+    </button>
+
+    <!-- Scanline Overlay -->
+    <div id="scanline-overlay"></div>
+
+    <!-- 3D Background -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Header -->
+    <header id="header" class="fixed top-0 left-0 w-full z-50 py-4 px-6 md:px-12">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="site-logo text-2xl">Ryuya</a>
+            <nav class="hidden md:flex space-x-8">
+                <a href="index.html" class="nav-link active text-lg" id="nav-home">HOME</a>
+                <a href="profile.html" class="nav-link text-lg" id="nav-profile">PROFILE</a>
+                <a href="songs.html" class="nav-link text-lg" id="nav-songs">SONGS</a>
+                <a href="art.html" class="nav-link text-lg" id="nav-art">ART</a>
+
+            </nav>
+            <button id="hamburger-btn" class="md:hidden z-50">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <nav id="mobile-nav"
+        class="fixed top-0 right-0 h-full w-2/3 bg-gray-900/90 backdrop-blur-lg z-40 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden">
+        <div class="flex flex-col items-center justify-center h-full space-y-8">
+            <a href="index.html" class="mobile-nav-link text-xl">HOME</a>
+            <a href="profile.html" class="mobile-nav-link text-xl">PROFILE</a>
+            <a href="songs.html" class="mobile-nav-link text-xl">SONGS</a>
+            <a href="art.html" class="mobile-nav-link text-xl">ART</a>
+
+        </div>
+    </nav>
+
+    <main id="main-content">
+        <!-- Home Section -->
+        <section id="home"
+            class="min-h-screen flex flex-col items-center justify-center text-center relative px-4 sm:px-6 md:px-8 py-20"
+            style="position: relative; z-index: 1; overflow: hidden;">
+            <!-- Background Video -->
+            <video id="bg-video" class="absolute inset-0 w-full h-full object-cover" style="z-index:0;" autoplay muted
+                loop playsinline>
+                <source src="assets/images/All images, reborn..MP4" type="video/mp4">
+            </video>
+            <!-- Sound Control Button -->
+            <div class="absolute bottom-6 right-6 z-20">
+                <button id="video-sound-btn" class="premium-btn depth-shadow morphing-border"
+                    style="padding:10px 14px;">
+                    <span class="btn-text" id="video-sound-label">Sound On</span>
+                    <span class="btn-shine"></span>
+                </button>
+            </div>
+
+            <!-- Floating particles -->
+            <div class="particles-container"
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+            </div>
+
+            <div class="relative w-full max-w-4xl mx-auto text-center" style="z-index: 10;">
+                <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold section-title ryuya-animate mb-4 sm:mb-6 glitch-text holographic neon-text text-center gpu-accelerated"
+                    data-text="Ryuya" data-parallax="15">
+                    <span class="glitch-layer">Ryuya</span>
+                </h1>
+                <div class="max-w-2xl mx-auto fade-in-up text-center animated-gradient-text text-reveal px-4"
+                    style="transition-delay: 200ms;" data-parallax="8">
+                    <p
+                        class="mt-2 text-sm sm:text-base md:text-lg text-gray-200 font-serif tracking-wide mb-4 sm:mb-6 text-shadow-glow text-center">
+                        元AI Artist / AI Creator / Singer-Songwriter<br>Google AI Student Lead Ambassador / 元Novelist</p>
+                    <p class="text-sm sm:text-base md:text-lg text-gray-400 mb-6 sm:mb-8 pulse-text text-center"
+                        style="line-height:2;">
+                        <span class="text-primary font-bold gradient-text-animated holographic">アート ×
+                            音楽 × 物語 × テクノロジー</span>
+                    </p>
+                </div>
+
+                <div class="mt-6 sm:mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 fade-in-up px-4"
+                    style="transition-delay: 400ms;" data-parallax="5">
+                    <a href="songs.html"
+                        class="hero-cta premium-btn depth-shadow morphing-border magnetic-btn advanced-shine neon-border w-full sm:w-auto">
+                        <span class="btn-text">楽曲一覧</span>
+                        <span class="btn-shine"></span>
+                    </a>
+                </div>
+
+                <!-- Audio wave visual -->
+                <div class="audio-wave-container mt-12 sm:mt-16">
+                    <div class="audio-bar"></div>
+                    <div class="audio-bar"></div>
+                    <div class="audio-bar"></div>
+                    <div class="audio-bar"></div>
+                    <div class="audio-bar"></div>
+                    <div class="audio-bar"></div>
+                    <div class="audio-bar"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-8 px-6 border-t border-gray-800">
+        <div class="container mx-auto text-center text-gray-400">
+            <p>&copy; 2025 Ryuya Official</p>
+        </div>
+    </footer>
+
+    <!-- Structured Data (JSON-LD) for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Ryuya",
+      "alternateName": ["紫苑", "伊織暁斗"],
+      "url": "https://ryuya-official.netlify.app/",
+      "image": "https://ryuya-official.netlify.app/assets/images/ogp-image.png",
+      "sameAs": [
+        "https://twitter.com/Ryuya_330",
+        "https://www.youtube.com/@Ryuya_330",
+        "https://note.com/ryuya_330"
+      ],
+      "jobTitle": ["AI Creator", "Singer-Songwriter", "Novelist"],
+      "description": "AI Creator × Singer-Songwriter × Google AI Student Lead Ambassador × Novelist",
+      "knowsAbout": ["Music", "AI", "Writing", "Technology"]
+    }
+    </script>
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Performance Optimizer (Load First) -->
+    <!-- Temporarily disabled for debugging
+    <script src="js/performance-optimizer.js"></script>
+
+    <!-- Enhanced Performance Scripts -->
+    <script src="js/enhanced-background.js"></script>
+    <script src="js/cursor-effects.js"></script>
+    -->
+
+    <!-- Custom JS -->
+    <script src="js/app.js"></script>
+    <script>
+        // Loading Screen
+        window.addEventListener('load', () => {
+            const loadingScreen = document.getElementById('loading-screen');
+            setTimeout(() => {
+                loadingScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                }, 500);
+            }, 800);
+        });
+
+        // Scroll Progress Bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('scroll-progress').style.width = scrolled + '%';
+        });
+
+        // Back to Top Button
+        const backToTopBtn = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.style.opacity = '1';
+                backToTopBtn.style.pointerEvents = 'auto';
+            } else {
+                backToTopBtn.style.opacity = '0';
+                backToTopBtn.style.pointerEvents = 'none';
+            }
+        });
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Force video autoplay for all devices
+            const bgVideo = document.getElementById('bg-video');
+            if (bgVideo) {
+                // Set video source to the requested file
+                if (!bgVideo.querySelector('source')) {
+                    const src = document.createElement('source');
+                    src.src = 'assets/images/All images, reborn..MP4';
+                    src.type = 'video/mp4';
+                    bgVideo.appendChild(src);
+                } else {
+                    bgVideo.querySelector('source').src = 'assets/images/All images, reborn..MP4';
+                    bgVideo.querySelector('source').type = 'video/mp4';
+                }
+                bgVideo.setAttribute('loop', '');
+                bgVideo.setAttribute('muted', '');
+                bgVideo.setAttribute('autoplay', '');
+                bgVideo.setAttribute('playsinline', '');
+                // Attempt to play immediately
+                const playPromise = bgVideo.play();
+
+                if (playPromise !== undefined) {
+                    playPromise.catch(e => {
+                        console.log('Autoplay prevented:', e);
+                        // Retry on any user interaction (click, touch, scroll, keypress)
+                        const startVideo = () => {
+                            bgVideo.play();
+                            document.removeEventListener('click', startVideo);
+                            document.removeEventListener('touchstart', startVideo);
+                            document.removeEventListener('scroll', startVideo);
+                            document.removeEventListener('keydown', startVideo);
+                        };
+
+                        document.addEventListener('click', startVideo, { once: true });
+                        document.addEventListener('touchstart', startVideo, { once: true });
+                        document.addEventListener('scroll', startVideo, { once: true });
+                        document.addEventListener('keydown', startVideo, { once: true });
+                    });
+                }
+
+                // Additional check to ensure video is playing
+                setInterval(() => {
+                    if (bgVideo.paused) {
+                        bgVideo.play().catch(() => { });
+                    }
+                }, 1000);
+
+                // Allow user to enable audio (policy-friendly: requires a gesture)
+                const soundBtn = document.getElementById('video-sound-btn');
+                const soundLabel = document.getElementById('video-sound-label');
+
+                const updateSoundLabel = () => {
+                    if (!soundLabel) return;
+                    soundLabel.textContent = bgVideo.muted ? 'Sound On' : 'Sound Off';
+                };
+
+                // Auto-unmute once after the first user interaction (click/touch/scroll/key)
+                const enableAudioOnce = () => {
+                    bgVideo.muted = false;
+                    bgVideo.volume = 0.7;
+                    bgVideo.play().catch(() => { });
+                    updateSoundLabel();
+                    ['click', 'touchstart', 'scroll', 'keydown'].forEach(ev => {
+                        document.removeEventListener(ev, enableAudioOnce);
+                    });
+                };
+                ['click', 'touchstart', 'scroll', 'keydown'].forEach(ev => {
+                    document.addEventListener(ev, enableAudioOnce, { once: true });
+                });
+
+                if (soundBtn) {
+                    soundBtn.addEventListener('click', () => {
+                        bgVideo.muted = !bgVideo.muted;
+                        if (!bgVideo.muted) {
+                            bgVideo.volume = 0.7;
+                            bgVideo.play().catch(() => { });
+                        }
+                        updateSoundLabel();
+                    });
+                    updateSoundLabel();
+                }
+            }
+
+            document.getElementById('main-content').classList.add('main-content-visible');
+            const currentPath = window.location.pathname.split('/').pop();
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

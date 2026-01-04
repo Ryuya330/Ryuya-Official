@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+
+    <!-- SEO & OGP Meta Tags -->
+    <title>Ryuya Official - Songs</title>
+    <meta name="description" content="AI Creator × Singer-Songwriter, Ryuyaのオフィシャルサイト。楽曲一覧です。">
+    <meta name="keywords"
+        content="Ryuya, AI Creator, Singer-Songwriter, Google AI Student Lead Ambassador, 紫苑, 伊織暁斗, 音楽, AIアート">
+    <meta name="author" content="Ryuya">
+    <meta name="google-site-verification" content="5U1vhJGLCyd7wfsLuyHzSneCRP_J9kp5XyquhojbiYo" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ryuya-official.netlify.app/songs.html">
+    <meta property="og:title" content="Ryuya Official - Songs">
+    <meta property="og:description" content="AI Creator × Singer-Songwriter, Ryuyaの楽曲一覧。紫苑・伊織暁斗の音楽作品をお楽しみください。">
+    <meta property="og:image" content="https://ryuya-official.netlify.app/assets/images/ogp-image.png?v=2">
+    <meta property="og:image:secure_url" content="https://ryuya-official.netlify.app/assets/images/ogp-image.png?v=2">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Ryuya Official - AI Creator × Singer-Songwriter × Novelist">
+    <meta property="og:site_name" content="Ryuya Official">
+    <meta property="og:locale" content="ja_JP">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@Ryuya_330">
+    <meta name="twitter:creator" content="@Ryuya_330">
+    <meta name="twitter:title" content="Ryuya Official - Songs">
+    <meta name="twitter:description" content="AI Creator × Singer-Songwriter, Ryuyaの楽曲一覧。紫苑・伊織暁斗の音楽作品をお楽しみください。">
+    <meta property="twitter:image" content="https://ryuya-official.netlify.app/assets/images/ogp-image.png?v=2">
+    <meta name="twitter:image:alt" content="Ryuya Official - AI Creator × Singer-Songwriter × Novelist">
+
+    <!-- Favicon -->
+    <link rel="icon" href="https://placehold.co/32x32/1a1a2e/bb86fc?text=R" type="image/png">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="antialiased">
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress"
+        class="fixed top-0 left-0 h-1 bg-gradient-to-r from-purple-500 to-pink-500 z-[60] transition-all duration-300"
+        style="width: 0%;"></div>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top"
+        class="fixed bottom-8 right-8 w-14 h-14 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full shadow-2xl flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300 hover:scale-110 z-50">
+        <i class="fas fa-arrow-up text-white text-xl"></i>
+    </button>
+
+    <!-- Custom Cursor -->
+    <div id="cursor-dot"></div>
+    <div id="cursor-outline"></div>
+
+    <!-- 3D Background -->
+    <canvas id="bg-canvas"></canvas>
+
+
+    <!-- Header -->
+    <header id="header" class="fixed top-0 left-0 w-full z-50 py-4 px-6 md:px-12">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="site-logo text-2xl">Ryuya</a>
+            <nav class="hidden md:flex space-x-8">
+                <a href="index.html" class="nav-link text-lg" id="nav-home">HOME</a>
+                <a href="profile.html" class="nav-link text-lg" id="nav-profile">PROFILE</a>
+                <a href="songs.html" class="nav-link active text-lg" id="nav-songs">SONGS</a>
+                <a href="art.html" class="nav-link text-lg" id="nav-art">ART</a>
+
+            </nav>
+            <button id="hamburger-btn" class="md:hidden z-50">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <nav id="mobile-nav"
+        class="fixed top-0 right-0 h-full w-2/3 bg-gray-900/90 backdrop-blur-lg z-40 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden">
+        <div class="flex flex-col items-center justify-center h-full space-y-8">
+            <a href="index.html" class="mobile-nav-link text-xl">HOME</a>
+            <a href="profile.html" class="mobile-nav-link text-xl">PROFILE</a>
+            <a href="songs.html" class="mobile-nav-link text-xl">SONGS</a>
+            <a href="art.html" class="mobile-nav-link text-xl">ART</a>
+
+        </div>
+    </nav>
+
+    <main id="main-content" class="main-content-visible">
+        <!-- Songs Section -->
+        <section id="songs" class="py-24 px-6 relative">
+            <!-- Audio Wave Visualization -->
+            <div class="audio-wave">
+                <div class="wave-bar" style="animation-delay: 0s;"></div>
+                <div class="wave-bar" style="animation-delay: 0.1s;"></div>
+                <div class="wave-bar" style="animation-delay: 0.2s;"></div>
+                <div class="wave-bar" style="animation-delay: 0.3s;"></div>
+                <div class="wave-bar" style="animation-delay: 0.4s;"></div>
+                <div class="wave-bar" style="animation-delay: 0.5s;"></div>
+                <div class="wave-bar" style="animation-delay: 0.6s;"></div>
+            </div>
+            <div class="container mx-auto">
+                <h2 class="section-title text-5xl font-bold text-center mb-16 fade-in-up" data-parallax="10">
+                    <span class="glitch-text" data-text="SONGS">SONGS</span>
+                </h2>
+                <div class="max-w-6xl mx-auto">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                        <!-- Fake ID (First) -->
+                        <div class="profile-card rounded-xl p-4 md:p-6 fade-in-up premium-card" data-parallax="5">
+                            <div class="glow"></div>
+                            <div class="card-shine"></div>
+                            <h4 class="text-2xl md:text-3xl font-bold text-center mb-3 md:mb-4 pulse-text">Fake ID</h4>
+                            <div class="spotify-embed-album mt-4">
+                                <iframe data-testid="embed-iframe" style="border-radius:12px"
+                                    src="https://open.spotify.com/embed/album/7CfBIyL6bosCUXH7m2WUTl?utm_source=generator"
+                                    width="100%" height="352" frameBorder="0" allowfullscreen=""
+                                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                                    loading="lazy"></iframe>
+                            </div>
+                        </div>
+                        <!-- 伊織暁斗 - Iori Akito -->
+                        <div class="profile-card rounded-xl p-4 md:p-6 fade-in-up premium-card"
+                            style="transition-delay: 200ms;" data-parallax="5">
+                            <div class="glow"></div>
+                            <div class="card-shine"></div>
+                            <h4 class="text-2xl md:text-3xl font-bold text-center mb-3 md:mb-4 pulse-text">伊織暁斗 - Akito
+                                Iori</h4>
+                            <div class="spotify-embed-album mt-4">
+                                <iframe data-testid="embed-iframe" style="border-radius:12px"
+                                    src="https://open.spotify.com/embed/album/3Yoa9AdHSVlnArEWtROwnq?utm_source=generator"
+                                    width="100%" height="2500" frameBorder="0" allowfullscreen=""
+                                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                                    loading="lazy"></iframe>
+                            </div>
+                        </div>
+                        <!-- 紫苑 - Shion -->
+                        <div class="profile-card rounded-xl p-4 md:p-6 fade-in-up premium-card"
+                            style="transition-delay: 400ms;" data-parallax="5">
+                            <div class="glow"></div>
+                            <div class="card-shine"></div>
+                            <h4 class="text-2xl md:text-3xl font-bold text-center mb-3 md:mb-4 pulse-text">紫苑 - Shion
+                            </h4>
+                            <div class="space-y-3">
+                                <!-- 最新順で表示 - Compactモード -->
+                                <!-- アルバム追加 -->
+                                <div class="spotify-embed-album mt-4">
+                                    <iframe data-testid="embed-iframe" style="border-radius:12px"
+                                        src="https://open.spotify.com/embed/album/2I1LDkqDsDLCyZAwPanv7n?utm_source=generator"
+                                        width="100%" height="720" frameBorder="0" allowfullscreen=""
+                                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                                        loading="lazy"></iframe>
+                                </div>
+                                <!-- シングル追加 -->
+                                <div class="spotify-embed-compact">
+                                    <iframe style="border-radius:12px"
+                                        src="https://open.spotify.com/embed/track/4d1s3iGGoYButLTAoHhFsX?utm_source=generator"
+                                        width="100%" height="152" frameBorder="0" allowfullscreen=""
+                                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                                        loading="lazy"></iframe>
+                                </div>
+                                <!-- シングル追加 -->
+                                <div class="spotify-embed-compact">
+                                    <iframe style="border-radius:12px"
+                                        src="https://open.spotify.com/embed/track/2oTsovrqgCmiMvyb7fNyww?utm_source=generator"
+                                        width="100%" height="152" frameBorder="0" allowfullscreen=""
+                                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                                        loading="lazy"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-8 px-6 border-t border-gray-800">
+        <div class="container mx-auto text-center text-gray-400">
+            <p>&copy; 2025 Ryuya Official</p>
+        </div>
+    </footer>
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Enhanced Performance Scripts -->
+    <!-- Temporarily disabled for debugging
+    <script src="js/performance-optimizer.js"></script>
+    <script src="js/enhanced-background.js"></script>
+    <script src="js/cursor-effects.js"></script>
+    -->
+
+    <!-- Custom JS -->
+    <script src="js/app.js"></script>
+    <script>
+        // Scroll Progress Bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('scroll-progress').style.width = scrolled + '%';
+        });
+
+        // Back to Top Button
+        const backToTopBtn = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.style.opacity = '1';
+                backToTopBtn.style.pointerEvents = 'auto';
+            } else {
+                backToTopBtn.style.opacity = '0';
+                backToTopBtn.style.pointerEvents = 'none';
+            }
+        });
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('main-content').classList.add('main-content-visible');
+            const currentPath = window.location.pathname.split('/').pop();
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
