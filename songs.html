@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    
+
     <!-- Security Headers -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
@@ -18,7 +19,8 @@
     <!-- SEO & OGP Meta Tags -->
     <title>Ryuya Official - Songs</title>
     <meta name="description" content="AI Creator × Singer-Songwriter, Ryuyaのオフィシャルサイト。楽曲一覧です。">
-    <meta name="keywords" content="Ryuya, AI Creator, Singer-Songwriter, Google AI Student Lead Ambassador, 紫苑, 伊織暁斗, 音楽, AIアート">
+    <meta name="keywords"
+        content="Ryuya, AI Creator, Singer-Songwriter, Google AI Student Lead Ambassador, 紫苑, 伊織暁斗, 音楽, AIアート">
     <meta name="author" content="Ryuya">
     <meta name="google-site-verification" content="5U1vhJGLCyd7wfsLuyHzSneCRP_J9kp5XyquhojbiYo" />
 
@@ -54,20 +56,26 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;700&display=swap"
+        rel="stylesheet">
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body class="antialiased">
     <!-- Scroll Progress Bar -->
-    <div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-purple-500 to-pink-500 z-[60] transition-all duration-300" style="width: 0%;"></div>
+    <div id="scroll-progress"
+        class="fixed top-0 left-0 h-1 bg-gradient-to-r from-purple-500 to-pink-500 z-[60] transition-all duration-300"
+        style="width: 0%;"></div>
 
     <!-- Back to Top Button -->
-    <button id="back-to-top" class="fixed bottom-8 right-8 w-14 h-14 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full shadow-2xl flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300 hover:scale-110 z-50">
+    <button id="back-to-top"
+        class="fixed bottom-8 right-8 w-14 h-14 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full shadow-2xl flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300 hover:scale-110 z-50">
         <i class="fas fa-arrow-up text-white text-xl"></i>
     </button>
 
@@ -78,7 +86,7 @@
     <!-- 3D Background -->
     <canvas id="bg-canvas"></canvas>
 
-    
+
     <!-- Header -->
     <header id="header" class="fixed top-0 left-0 w-full z-50 py-4 px-6 md:px-12">
         <div class="container mx-auto flex justify-between items-center">
@@ -88,7 +96,7 @@
                 <a href="profile.html" class="nav-link text-lg" id="nav-profile">PROFILE</a>
                 <a href="songs.html" class="nav-link active text-lg" id="nav-songs">SONGS</a>
                 <a href="art.html" class="nav-link text-lg" id="nav-art">ART</a>
-                
+
             </nav>
             <button id="hamburger-btn" class="md:hidden z-50">
                 <i class="fas fa-bars text-2xl"></i>
@@ -97,16 +105,17 @@
     </header>
 
     <!-- Mobile Navigation -->
-    <nav id="mobile-nav" class="fixed top-0 right-0 h-full w-2/3 bg-gray-900/90 backdrop-blur-lg z-40 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden">
+    <nav id="mobile-nav"
+        class="fixed top-0 right-0 h-full w-2/3 bg-gray-900/90 backdrop-blur-lg z-40 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden">
         <div class="flex flex-col items-center justify-center h-full space-y-8">
             <a href="index.html" class="mobile-nav-link text-xl">HOME</a>
             <a href="profile.html" class="mobile-nav-link text-xl">PROFILE</a>
             <a href="songs.html" class="mobile-nav-link text-xl">SONGS</a>
             <a href="art.html" class="mobile-nav-link text-xl">ART</a>
-            
+
         </div>
     </nav>
-    
+
     <main id="main-content" class="main-content-visible">
         <!-- Songs Section -->
         <section id="songs" class="py-24 px-6 relative">
@@ -124,7 +133,6 @@
                 <h2 class="section-title text-5xl font-bold text-center mb-16 fade-in-up" data-parallax="10">
                     <span class="glitch-text" data-text="SONGS">SONGS</span>
                 </h2>
-                <h3 class="text-4xl font-bold text-center mb-8 fade-in-up" style="transition-delay: 0ms;">Singles</h3>
                 <div class="max-w-6xl mx-auto">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
                         <!-- Fake ID (First) -->
@@ -133,36 +141,60 @@
                             <div class="card-shine"></div>
                             <h4 class="text-2xl md:text-3xl font-bold text-center mb-3 md:mb-4 pulse-text">Fake ID</h4>
                             <div class="spotify-embed-album mt-4">
-                                <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/album/7CfBIyL6bosCUXH7m2WUTl?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                                <iframe data-testid="embed-iframe" style="border-radius:12px"
+                                    src="https://open.spotify.com/embed/album/7CfBIyL6bosCUXH7m2WUTl?utm_source=generator"
+                                    width="100%" height="352" frameBorder="0" allowfullscreen=""
+                                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                                    loading="lazy"></iframe>
                             </div>
                         </div>
                         <!-- 伊織暁斗 - Iori Akito -->
-                        <div class="profile-card rounded-xl p-4 md:p-6 fade-in-up premium-card" style="transition-delay: 200ms;" data-parallax="5">
+                        <div class="profile-card rounded-xl p-4 md:p-6 fade-in-up premium-card"
+                            style="transition-delay: 200ms;" data-parallax="5">
                             <div class="glow"></div>
                             <div class="card-shine"></div>
-                            <h4 class="text-2xl md:text-3xl font-bold text-center mb-3 md:mb-4 pulse-text">伊織暁斗 - Akito Iori</h4>
+                            <h4 class="text-2xl md:text-3xl font-bold text-center mb-3 md:mb-4 pulse-text">伊織暁斗 - Akito
+                                Iori</h4>
                             <div class="spotify-embed-album mt-4">
-                                <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/album/3Yoa9AdHSVlnArEWtROwnq?utm_source=generator" width="100%" height="2500" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                                <iframe data-testid="embed-iframe" style="border-radius:12px"
+                                    src="https://open.spotify.com/embed/album/3Yoa9AdHSVlnArEWtROwnq?utm_source=generator"
+                                    width="100%" height="2500" frameBorder="0" allowfullscreen=""
+                                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                                    loading="lazy"></iframe>
                             </div>
                         </div>
                         <!-- 紫苑 - Shion -->
-                        <div class="profile-card rounded-xl p-4 md:p-6 fade-in-up premium-card" style="transition-delay: 400ms;" data-parallax="5">
+                        <div class="profile-card rounded-xl p-4 md:p-6 fade-in-up premium-card"
+                            style="transition-delay: 400ms;" data-parallax="5">
                             <div class="glow"></div>
                             <div class="card-shine"></div>
-                            <h4 class="text-2xl md:text-3xl font-bold text-center mb-3 md:mb-4 pulse-text">紫苑 - Shion</h4>
+                            <h4 class="text-2xl md:text-3xl font-bold text-center mb-3 md:mb-4 pulse-text">紫苑 - Shion
+                            </h4>
                             <div class="space-y-3">
                                 <!-- 最新順で表示 - Compactモード -->
                                 <!-- アルバム追加 -->
                                 <div class="spotify-embed-album mt-4">
-                                    <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/album/2I1LDkqDsDLCyZAwPanv7n?utm_source=generator" width="100%" height="720" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                                    <iframe data-testid="embed-iframe" style="border-radius:12px"
+                                        src="https://open.spotify.com/embed/album/2I1LDkqDsDLCyZAwPanv7n?utm_source=generator"
+                                        width="100%" height="720" frameBorder="0" allowfullscreen=""
+                                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                                        loading="lazy"></iframe>
                                 </div>
                                 <!-- シングル追加 -->
                                 <div class="spotify-embed-compact">
-                                    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4d1s3iGGoYButLTAoHhFsX?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                                    <iframe style="border-radius:12px"
+                                        src="https://open.spotify.com/embed/track/4d1s3iGGoYButLTAoHhFsX?utm_source=generator"
+                                        width="100%" height="152" frameBorder="0" allowfullscreen=""
+                                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                                        loading="lazy"></iframe>
                                 </div>
                                 <!-- シングル追加 -->
                                 <div class="spotify-embed-compact">
-                                    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/2oTsovrqgCmiMvyb7fNyww?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                                    <iframe style="border-radius:12px"
+                                        src="https://open.spotify.com/embed/track/2oTsovrqgCmiMvyb7fNyww?utm_source=generator"
+                                        width="100%" height="152" frameBorder="0" allowfullscreen=""
+                                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                                        loading="lazy"></iframe>
                                 </div>
                             </div>
                         </div>
@@ -220,4 +252,5 @@
         });
     </script>
 </body>
+
 </html>
