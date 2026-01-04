@@ -13,7 +13,7 @@ class EnhancedBackground {
             alpha: true,
             powerPreference: 'high-performance'
         });
-        
+
         this.particles = [];
         this.geometries = [];
         this.mouseX = 0;
@@ -21,41 +21,41 @@ class EnhancedBackground {
         this.targetX = 0;
         this.targetY = 0;
         this.time = 0;
-        
+
         this.init();
     }
-    
+
     init() {
         // Renderer setup
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         this.renderer.setClearColor(0x000000, 0);
-        
+
         // Camera position
         this.camera.position.z = 50;
-        
+
         // Create advanced particle system
         this.createAdvancedParticles();
-        
+
         // Create flowing geometries
         this.createFlowingGeometries();
-        
+
         // Add nebula effect
         this.createNebulaEffect();
-        
+
         // Add lighting
         this.setupLighting();
-        
+
         // Mouse tracking
         this.setupMouseTracking();
-        
+
         // Window resize handler
         window.addEventListener('resize', () => this.onWindowResize());
-        
+
         // Start animation
         this.animate();
     }
-    
+
     createAdvancedParticles() {
         // Create multiple particle systems with different properties
         const particleConfigs = [
@@ -63,24 +63,24 @@ class EnhancedBackground {
             { count: 1500, color: 0x00e0ff, size: 0.3, speed: 0.5 },
             { count: 1000, color: 0xff00ff, size: 0.7, speed: 0.2 },
         ];
-        
+
         particleConfigs.forEach(config => {
             const geometry = new THREE.BufferGeometry();
             const positions = new Float32Array(config.count * 3);
             const velocities = new Float32Array(config.count * 3);
-            
+
             for (let i = 0; i < config.count * 3; i += 3) {
                 positions[i] = (Math.random() - 0.5) * 200;
                 positions[i + 1] = (Math.random() - 0.5) * 200;
                 positions[i + 2] = (Math.random() - 0.5) * 100;
-                
+
                 velocities[i] = (Math.random() - 0.5) * config.speed;
                 velocities[i + 1] = (Math.random() - 0.5) * config.speed;
                 velocities[i + 2] = (Math.random() - 0.5) * config.speed;
             }
-            
+
             geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            
+
             const material = new THREE.PointsMaterial({
                 color: config.color,
                 size: config.size,
@@ -89,13 +89,13 @@ class EnhancedBackground {
                 blending: THREE.AdditiveBlending,
                 depthWrite: false
             });
-            
+
             const particles = new THREE.Points(geometry, material);
             this.scene.add(particles);
             this.particles.push({ mesh: particles, velocities, speed: config.speed });
         });
     }
-    
+
     createFlowingGeometries() {
         // Create animated geometric shapes
         const geometries = [
@@ -103,7 +103,7 @@ class EnhancedBackground {
             new THREE.OctahedronGeometry(8, 0),
             new THREE.IcosahedronGeometry(6, 0)
         ];
-        
+
         geometries.forEach((geometry, index) => {
             const material = new THREE.MeshPhongMaterial({
                 color: [0x7c4dff, 0x00e0ff, 0xff00ff][index],
@@ -112,14 +112,14 @@ class EnhancedBackground {
                 wireframe: true,
                 blending: THREE.AdditiveBlending
             });
-            
+
             const mesh = new THREE.Mesh(geometry, material);
             mesh.position.set(
                 (Math.random() - 0.5) * 60,
                 (Math.random() - 0.5) * 60,
                 -30 - index * 20
             );
-            
+
             this.scene.add(mesh);
             this.geometries.push({
                 mesh,
@@ -131,7 +131,7 @@ class EnhancedBackground {
             });
         });
     }
-    
+
     createNebulaEffect() {
         // Create large spheres with gradient material for nebula effect
         const nebulaGeometry = new THREE.SphereGeometry(30, 32, 32);
@@ -168,7 +168,7 @@ class EnhancedBackground {
                 }
             `
         });
-        
+
         for (let i = 0; i < 3; i++) {
             const nebula = new THREE.Mesh(nebulaGeometry, nebulaMaterial.clone());
             nebula.position.set(
@@ -184,49 +184,49 @@ class EnhancedBackground {
             });
         }
     }
-    
+
     setupLighting() {
         // Ambient light
         const ambientLight = new THREE.AmbientLight(0x404040, 2);
         this.scene.add(ambientLight);
-        
+
         // Point lights with colors
         const lights = [
             { color: 0x7c4dff, position: [50, 50, 50], intensity: 2 },
             { color: 0x00e0ff, position: [-50, -50, 50], intensity: 2 },
             { color: 0xff00ff, position: [0, 50, -50], intensity: 1.5 }
         ];
-        
+
         lights.forEach(light => {
             const pointLight = new THREE.PointLight(light.color, light.intensity);
             pointLight.position.set(...light.position);
             this.scene.add(pointLight);
         });
     }
-    
+
     setupMouseTracking() {
         document.addEventListener('mousemove', (e) => {
             this.mouseX = (e.clientX / window.innerWidth) * 2 - 1;
             this.mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
         });
     }
-    
+
     updateParticles() {
         this.particles.forEach(particleSystem => {
             const positions = particleSystem.mesh.geometry.attributes.position.array;
             const velocities = particleSystem.velocities;
-            
+
             for (let i = 0; i < positions.length; i += 3) {
                 // Update position with velocity
                 positions[i] += velocities[i] * (1 + Math.sin(this.time * 0.001) * 0.5);
                 positions[i + 1] += velocities[i + 1] * (1 + Math.cos(this.time * 0.001) * 0.5);
                 positions[i + 2] += velocities[i + 2];
-                
+
                 // Wrap around
                 if (Math.abs(positions[i]) > 100) positions[i] *= -0.9;
                 if (Math.abs(positions[i + 1]) > 100) positions[i + 1] *= -0.9;
                 if (Math.abs(positions[i + 2]) > 50) positions[i + 2] *= -0.9;
-                
+
                 // Add mouse interaction
                 const dx = positions[i] - this.mouseX * 50;
                 const dy = positions[i + 1] - this.mouseY * 50;
@@ -236,51 +236,51 @@ class EnhancedBackground {
                     positions[i + 1] += dy * 0.01;
                 }
             }
-            
+
             particleSystem.mesh.geometry.attributes.position.needsUpdate = true;
             particleSystem.mesh.rotation.y += 0.0002;
         });
     }
-    
+
     updateGeometries() {
         this.geometries.forEach(geo => {
             geo.mesh.rotation.x += geo.rotationSpeed.x;
             geo.mesh.rotation.y += geo.rotationSpeed.y;
             geo.mesh.rotation.z += geo.rotationSpeed.z;
-            
+
             // Floating motion
             if (!geo.floatOffset) geo.floatOffset = Math.random() * Math.PI * 2;
             geo.mesh.position.y += Math.sin(this.time * 0.001 + geo.floatOffset) * 0.02;
-            
+
             // Update nebula shader
             if (geo.isnebula && geo.mesh.material.uniforms) {
                 geo.mesh.material.uniforms.time.value = this.time * 0.001;
             }
         });
     }
-    
+
     animate() {
         requestAnimationFrame(() => this.animate());
-        
+
         this.time++;
-        
+
         // Smooth camera movement based on mouse
         this.targetX = this.mouseX * 5;
         this.targetY = this.mouseY * 5;
-        
+
         this.camera.position.x += (this.targetX - this.camera.position.x) * 0.02;
         this.camera.position.y += (this.targetY - this.camera.position.y) * 0.02;
-        
+
         // Update particles and geometries
         this.updateParticles();
         this.updateGeometries();
-        
+
         // Rotate entire scene slightly
         this.scene.rotation.y = Math.sin(this.time * 0.0001) * 0.05;
-        
+
         this.renderer.render(this.scene, this.camera);
     }
-    
+
     onWindowResize() {
         this.camera.aspect = window.innerWidth / window.innerHeight;
         this.camera.updateProjectionMatrix();

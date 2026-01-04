@@ -10,28 +10,28 @@ class PerformanceOptimizer {
         this.frames = 0;
         this.fpsDisplay = null;
         this.quality = 'high'; // 'low', 'medium', 'high', 'ultra'
-        
+
         this.init();
     }
-    
+
     init() {
         this.detectCapabilities();
         this.createFPSMonitor();
         this.optimizeForDevice();
         this.monitorPerformance();
     }
-    
+
     detectCapabilities() {
         // Detect GPU tier
         const canvas = document.createElement('canvas');
         const gl = canvas.getContext('webgl2') || canvas.getContext('webgl');
-        
+
         if (gl) {
             const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
             if (debugInfo) {
                 const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
                 console.log('GPU:', renderer);
-                
+
                 // High-end GPUs
                 if (renderer.includes('RTX') || renderer.includes('RX 6') || renderer.includes('RX 7')) {
                     this.quality = 'ultra';
@@ -42,7 +42,7 @@ class PerformanceOptimizer {
                 }
             }
         }
-        
+
         // Check for high refresh rate
         if (window.screen && window.screen.refreshRate) {
             if (window.screen.refreshRate >= 120) {
@@ -50,7 +50,7 @@ class PerformanceOptimizer {
                 this.quality = 'ultra';
             }
         }
-        
+
         // Check memory
         if (performance.memory) {
             const totalMemory = performance.memory.jsHeapSizeLimit;
@@ -58,11 +58,11 @@ class PerformanceOptimizer {
                 console.log('High memory available');
             }
         }
-        
+
         console.log('Quality setting:', this.quality);
         this.applyQualitySettings();
     }
-    
+
     applyQualitySettings() {
         const settings = {
             low: {
@@ -90,14 +90,14 @@ class PerformanceOptimizer {
                 bloomEnabled: true
             }
         };
-        
+
         const currentSettings = settings[this.quality];
         document.documentElement.setAttribute('data-quality', this.quality);
-        
+
         // Apply settings to CSS variables
         document.documentElement.style.setProperty('--particle-count', currentSettings.particleCount);
     }
-    
+
     createFPSMonitor() {
         // Create FPS display (can be hidden for production)
         this.fpsDisplay = document.createElement('div');
@@ -116,42 +116,42 @@ class PerformanceOptimizer {
             display: none; /* Hidden by default */
         `;
         document.body.appendChild(this.fpsDisplay);
-        
+
         // Show with Ctrl+Shift+P
         document.addEventListener('keydown', (e) => {
             if (e.ctrlKey && e.shiftKey && e.key === 'P') {
-                this.fpsDisplay.style.display = 
+                this.fpsDisplay.style.display =
                     this.fpsDisplay.style.display === 'none' ? 'block' : 'none';
             }
         });
     }
-    
+
     monitorPerformance() {
         const measure = () => {
             const currentTime = performance.now();
             this.frames++;
-            
+
             if (currentTime >= this.lastTime + 1000) {
                 this.fps = Math.round((this.frames * 1000) / (currentTime - this.lastTime));
                 this.fpsDisplay.textContent = `FPS: ${this.fps} | Quality: ${this.quality}`;
-                
+
                 // Auto-adjust quality based on FPS
                 if (this.fps < 30 && this.quality !== 'low') {
                     this.downgradeQuality();
                 } else if (this.fps > 55 && this.quality !== 'ultra') {
                     // Could upgrade quality here if desired
                 }
-                
+
                 this.frames = 0;
                 this.lastTime = currentTime;
             }
-            
+
             requestAnimationFrame(measure);
         };
-        
+
         requestAnimationFrame(measure);
     }
-    
+
     downgradeQuality() {
         const qualityLevels = ['ultra', 'high', 'medium', 'low'];
         const currentIndex = qualityLevels.indexOf(this.quality);
@@ -161,28 +161,28 @@ class PerformanceOptimizer {
             this.applyQualitySettings();
         }
     }
-    
+
     optimizeForDevice() {
         // Preload critical assets
         this.preloadAssets();
-        
+
         // Enable hardware acceleration
         this.enableHardwareAcceleration();
-        
+
         // Optimize animations
         this.optimizeAnimations();
-        
+
         // Lazy load images
         this.lazyLoadImages();
     }
-    
+
     preloadAssets() {
         // Preload critical fonts
         const fonts = [
             'Inter',
             'Noto Serif JP'
         ];
-        
+
         fonts.forEach(font => {
             const link = document.createElement('link');
             link.rel = 'preload';
@@ -191,7 +191,7 @@ class PerformanceOptimizer {
             document.head.appendChild(link);
         });
     }
-    
+
     enableHardwareAcceleration() {
         // Add CSS transforms to key elements for GPU acceleration
         const elements = document.querySelectorAll('.profile-card, .sns-card, h1, h2, section');
@@ -200,7 +200,7 @@ class PerformanceOptimizer {
             el.style.willChange = 'transform';
         });
     }
-    
+
     optimizeAnimations() {
         // Use requestAnimationFrame for smooth animations
         if (this.quality === 'ultra' || this.quality === 'high') {
@@ -211,7 +211,7 @@ class PerformanceOptimizer {
             document.body.classList.add('reduced-animations');
         }
     }
-    
+
     lazyLoadImages() {
         if ('IntersectionObserver' in window) {
             const imageObserver = new IntersectionObserver((entries, observer) => {
@@ -226,18 +226,18 @@ class PerformanceOptimizer {
                     }
                 });
             });
-            
+
             document.querySelectorAll('img[data-src]').forEach(img => {
                 imageObserver.observe(img);
             });
         }
     }
-    
+
     // Public method to get current FPS
     getFPS() {
         return this.fps;
     }
-    
+
     // Public method to change quality manually
     setQuality(quality) {
         if (['low', 'medium', 'high', 'ultra'].includes(quality)) {

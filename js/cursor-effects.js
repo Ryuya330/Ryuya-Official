@@ -9,17 +9,17 @@ class CursorEffects {
         this.trail = [];
         this.trailLength = 20;
         this.ripples = [];
-        
+
         this.init();
     }
-    
+
     init() {
         this.createCustomCursor();
         this.createTrailSystem();
         this.setupEventListeners();
         this.animate();
     }
-    
+
     createCustomCursor() {
         // Custom cursor element
         this.cursor = document.createElement('div');
@@ -37,7 +37,7 @@ class CursorEffects {
             mix-blend-mode: difference;
         `;
         document.body.appendChild(this.cursor);
-        
+
         // Inner dot
         const innerDot = document.createElement('div');
         innerDot.style.cssText = `
@@ -52,7 +52,7 @@ class CursorEffects {
         `;
         this.cursor.appendChild(innerDot);
     }
-    
+
     createTrailSystem() {
         // Create trail particles
         for (let i = 0; i < this.trailLength; i++) {
@@ -82,29 +82,29 @@ class CursorEffects {
             });
         }
     }
-    
+
     setupEventListeners() {
         let mouseX = 0;
         let mouseY = 0;
-        
+
         document.addEventListener('mousemove', (e) => {
             mouseX = e.clientX;
             mouseY = e.clientY;
-            
+
             // Update cursor position immediately
             this.cursor.style.left = mouseX + 'px';
             this.cursor.style.top = mouseY + 'px';
-            
+
             // Update trail target positions
             this.trail[0].targetX = mouseX;
             this.trail[0].targetY = mouseY;
         });
-        
+
         // Click ripple effect
         document.addEventListener('click', (e) => {
             this.createRipple(e.clientX, e.clientY);
         });
-        
+
         // Hover effects on interactive elements
         const interactiveElements = document.querySelectorAll('a, button, .profile-card, .nav-link');
         interactiveElements.forEach(el => {
@@ -113,7 +113,7 @@ class CursorEffects {
                 this.cursor.style.height = '40px';
                 this.cursor.style.borderColor = 'rgba(0, 224, 255, 0.8)';
             });
-            
+
             el.addEventListener('mouseleave', () => {
                 this.cursor.style.width = '20px';
                 this.cursor.style.height = '20px';
@@ -121,7 +121,7 @@ class CursorEffects {
             });
         });
     }
-    
+
     createRipple(x, y) {
         const ripple = document.createElement('div');
         ripple.style.cssText = `
@@ -137,23 +137,23 @@ class CursorEffects {
             transform: translate(-50%, -50%);
             animation: ripple-expand 0.6s ease-out forwards;
         `;
-        
+
         document.body.appendChild(ripple);
         this.ripples.push(ripple);
-        
+
         setTimeout(() => {
             ripple.remove();
             this.ripples = this.ripples.filter(r => r !== ripple);
         }, 600);
     }
-    
+
     animate() {
         requestAnimationFrame(() => this.animate());
-        
+
         // Update trail with smooth following
         for (let i = 0; i < this.trail.length; i++) {
             const particle = this.trail[i];
-            
+
             if (i === 0) {
                 // First particle follows mouse
                 particle.x += (particle.targetX - particle.x) * 0.2;
@@ -166,7 +166,7 @@ class CursorEffects {
                 particle.x += (particle.targetX - particle.x) * 0.15;
                 particle.y += (particle.targetY - particle.y) * 0.15;
             }
-            
+
             particle.element.style.left = particle.x + 'px';
             particle.element.style.top = particle.y + 'px';
         }
@@ -179,12 +179,12 @@ class ParallaxEffect {
         this.elements = document.querySelectorAll('[data-parallax]');
         this.init();
     }
-    
+
     init() {
         window.addEventListener('mousemove', (e) => {
             const mouseX = (e.clientX / window.innerWidth) * 2 - 1;
             const mouseY = (e.clientY / window.innerHeight) * 2 - 1;
-            
+
             this.elements.forEach(el => {
                 const speed = parseFloat(el.dataset.parallax) || 5;
                 const x = mouseX * speed;
@@ -201,21 +201,21 @@ class MagneticButtons {
         this.buttons = document.querySelectorAll('.magnetic-btn, button, a.nav-link');
         this.init();
     }
-    
+
     init() {
         this.buttons.forEach(button => {
             button.addEventListener('mouseenter', () => {
                 button.style.transition = 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)';
             });
-            
+
             button.addEventListener('mousemove', (e) => {
                 const rect = button.getBoundingClientRect();
                 const x = e.clientX - rect.left - rect.width / 2;
                 const y = e.clientY - rect.top - rect.height / 2;
-                
+
                 button.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px) scale(1.05)`;
             });
-            
+
             button.addEventListener('mouseleave', () => {
                 button.style.transform = 'translate(0, 0) scale(1)';
             });
