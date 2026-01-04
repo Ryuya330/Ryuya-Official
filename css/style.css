@@ -1670,3 +1670,325 @@ button:focus-visible {
     }
 }
 
+/* ===== ENHANCED HIGH-PERFORMANCE EFFECTS ===== */
+
+/* Advanced Glow Effects */
+.enhanced-glow {
+    position: relative;
+    overflow: visible;
+}
+
+.enhanced-glow::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(124, 77, 255, 0.3), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    filter: blur(20px);
+}
+
+.enhanced-glow:hover::before {
+    opacity: 1;
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.3;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.6;
+    }
+}
+
+/* Chromatic Aberration Effect */
+.chromatic-text {
+    position: relative;
+    display: inline-block;
+}
+
+.chromatic-text::before,
+.chromatic-text::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    mix-blend-mode: screen;
+}
+
+.chromatic-text::before {
+    color: #ff00ff;
+    animation: chromatic-left 3s ease-in-out infinite;
+}
+
+.chromatic-text::after {
+    color: #00ffff;
+    animation: chromatic-right 3s ease-in-out infinite;
+}
+
+@keyframes chromatic-left {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(-2px);
+    }
+}
+
+@keyframes chromatic-right {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(2px);
+    }
+}
+
+/* Holographic Shimmer */
+.holographic-card {
+    position: relative;
+    background: linear-gradient(45deg, 
+        rgba(124, 77, 255, 0.1), 
+        rgba(0, 224, 255, 0.1),
+        rgba(255, 0, 255, 0.1)
+    );
+    background-size: 200% 200%;
+    animation: holographic-shift 5s ease infinite;
+}
+
+@keyframes holographic-shift {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/* Advanced Card Shine */
+.advanced-shine {
+    position: relative;
+    overflow: hidden;
+}
+
+.advanced-shine::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 70%
+    );
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    transition: transform 0.6s ease;
+}
+
+.advanced-shine:hover::after {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+}
+
+/* Floating Animation Enhanced */
+@keyframes float-enhanced {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-20px) rotate(1deg);
+    }
+    50% {
+        transform: translateY(-10px) rotate(-1deg);
+    }
+    75% {
+        transform: translateY(-15px) rotate(0.5deg);
+    }
+}
+
+.float-enhanced {
+    animation: float-enhanced 6s ease-in-out infinite;
+}
+
+/* Neon Border Effect */
+.neon-border {
+    position: relative;
+    border: 2px solid transparent;
+    background: linear-gradient(var(--bg-color), var(--bg-color)) padding-box,
+                linear-gradient(45deg, #7c4dff, #00e0ff, #ff00ff, #7c4dff) border-box;
+    background-size: 200% 200%;
+    animation: neon-border-animate 3s ease infinite;
+}
+
+@keyframes neon-border-animate {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/* Text Glitter Effect */
+@keyframes glitter {
+    0%, 100% {
+        text-shadow: 
+            0 0 5px rgba(124, 77, 255, 0.5),
+            0 0 10px rgba(124, 77, 255, 0.5),
+            0 0 15px rgba(124, 77, 255, 0.5);
+    }
+    50% {
+        text-shadow: 
+            0 0 10px rgba(0, 224, 255, 0.8),
+            0 0 20px rgba(0, 224, 255, 0.8),
+            0 0 30px rgba(0, 224, 255, 0.8);
+    }
+}
+
+.text-glitter {
+    animation: glitter 2s ease-in-out infinite;
+}
+
+/* Particle Background Layer */
+.particle-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Smooth Transitions */
+* {
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+                opacity 0.3s ease,
+                filter 0.3s ease;
+}
+
+/* Performance Optimization */
+@media (prefers-reduced-motion: no-preference) {
+    .profile-card,
+    .sns-card,
+    .fade-in-up {
+        will-change: transform, opacity;
+    }
+}
+
+/* GPU Acceleration */
+.gpu-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* Blur Backdrop for Modern Browsers */
+@supports (backdrop-filter: blur(10px)) {
+    .modern-blur {
+        backdrop-filter: blur(10px) saturate(150%);
+        -webkit-backdrop-filter: blur(10px) saturate(150%);
+    }
+}
+
+/* Enhanced Card Hover Effects */
+.profile-card {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-style: preserve-3d;
+}
+
+.profile-card:hover {
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 
+        0 25px 50px rgba(124, 77, 255, 0.3),
+        0 0 50px rgba(0, 224, 255, 0.2),
+        inset 0 0 30px rgba(124, 77, 255, 0.1);
+}
+
+/* Ripple Effect on Click */
+@keyframes ripple-effect {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+.ripple-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124, 77, 255, 0.4), transparent);
+    animation: ripple-effect 0.6s ease-out;
+}
+
+/* 3D Transform Effects */
+.transform-3d {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+
+.card-3d {
+    transition: transform 0.5s ease;
+}
+
+.card-3d:hover {
+    transform: rotateX(5deg) rotateY(5deg);
+}
+
+/* Ambient Light Simulation */
+@keyframes ambient-pulse {
+    0%, 100% {
+        filter: brightness(1) saturate(1);
+    }
+    50% {
+        filter: brightness(1.2) saturate(1.3);
+    }
+}
+
+.ambient-light {
+    animation: ambient-pulse 4s ease-in-out infinite;
+}
+
+/* High FPS Scrolling */
+@media (min-width: 1920px) {
+    body {
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+    }
+    
+    section {
+        will-change: transform;
+    }
+}
+
+/* Optimized for 144Hz+ Monitors */
+@media (prefers-reduced-motion: no-preference) and (min-resolution: 144dpi) {
+    * {
+        animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+    }
+}
+
