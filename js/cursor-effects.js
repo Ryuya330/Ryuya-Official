@@ -259,5 +259,7 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// Hide default cursor
-document.body.classList.add('cursor-active');
+// Hide default cursor only on desktop
+if (matchMedia('(pointer:fine)').matches) {
+    document.body.classList.add('cursor-active');
+}

@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    
+
     <!-- Security Headers -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
@@ -18,7 +19,8 @@
     <!-- SEO & OGP Meta Tags -->
     <title>Ryuya Official - Profile</title>
     <meta name="description" content="AI Creator × Singer-Songwriter, Ryuyaのオフィシャルサイト。プロフィールページです。">
-    <meta name="keywords" content="Ryuya, AI Creator, Singer-Songwriter, Google AI Student Lead Ambassador, 紫苑, 伊織暁斗, 音楽, AIアート">
+    <meta name="keywords"
+        content="Ryuya, AI Creator, Singer-Songwriter, Google AI Student Lead Ambassador, 紫苑, 伊織暁斗, 音楽, AIアート">
     <meta name="author" content="Ryuya">
     <meta name="google-site-verification" content="5U1vhJGLCyd7wfsLuyHzSneCRP_J9kp5XyquhojbiYo" />
 
@@ -26,7 +28,8 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://ryuya-official.netlify.app/profile.html">
     <meta property="og:title" content="Ryuya Official - Profile">
-    <meta property="og:description" content="AI Creator × Singer-Songwriter × Google AI Student Lead Ambassador × Novelist, Ryuyaのプロフィールページです。">
+    <meta property="og:description"
+        content="AI Creator × Singer-Songwriter × Google AI Student Lead Ambassador × Novelist, Ryuyaのプロフィールページです。">
     <meta property="og:image" content="https://ryuya-official.netlify.app/assets/images/ogp-image.png?v=2">
     <meta property="og:image:secure_url" content="https://ryuya-official.netlify.app/assets/images/ogp-image.png?v=2">
     <meta property="og:image:type" content="image/png">
@@ -41,7 +44,8 @@
     <meta name="twitter:site" content="@Ryuya_330">
     <meta name="twitter:creator" content="@Ryuya_330">
     <meta name="twitter:title" content="Ryuya Official - Profile">
-    <meta name="twitter:description" content="AI Creator × Singer-Songwriter × Google AI Student Lead Ambassador × Novelist, Ryuyaのプロフィールページです。">
+    <meta name="twitter:description"
+        content="AI Creator × Singer-Songwriter × Google AI Student Lead Ambassador × Novelist, Ryuyaのプロフィールページです。">
     <meta property="twitter:image" content="https://ryuya-official.netlify.app/assets/images/ogp-image.png?v=2">
     <meta name="twitter:image:alt" content="Ryuya Official - AI Creator × Singer-Songwriter × Novelist">
 
@@ -54,20 +58,26 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;700&display=swap"
+        rel="stylesheet">
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body class="antialiased">
     <!-- Scroll Progress Bar -->
-    <div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-purple-500 to-pink-500 z-[60] transition-all duration-300" style="width: 0%;"></div>
+    <div id="scroll-progress"
+        class="fixed top-0 left-0 h-1 bg-gradient-to-r from-purple-500 to-pink-500 z-[60] transition-all duration-300"
+        style="width: 0%;"></div>
 
     <!-- Back to Top Button -->
-    <button id="back-to-top" class="fixed bottom-8 right-8 w-14 h-14 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full shadow-2xl flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300 hover:scale-110 z-50">
+    <button id="back-to-top"
+        class="fixed bottom-8 right-8 w-14 h-14 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full shadow-2xl flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300 hover:scale-110 z-50">
         <i class="fas fa-arrow-up text-white text-xl"></i>
     </button>
 
@@ -78,7 +88,7 @@
     <!-- 3D Background -->
     <canvas id="bg-canvas"></canvas>
 
-    
+
     <!-- Header -->
     <header id="header" class="fixed top-0 left-0 w-full z-50 py-4 px-6 md:px-12">
         <div class="container mx-auto flex justify-between items-center">
@@ -88,7 +98,7 @@
                 <a href="profile.html" class="nav-link active text-lg" id="nav-profile">PROFILE</a>
                 <a href="songs.html" class="nav-link text-lg" id="nav-songs">SONGS</a>
                 <a href="art.html" class="nav-link text-lg" id="nav-art">ART</a>
-                
+
             </nav>
             <button id="hamburger-btn" class="md:hidden z-50">
                 <i class="fas fa-bars text-2xl"></i>
@@ -97,16 +107,17 @@
     </header>
 
     <!-- Mobile Navigation -->
-    <nav id="mobile-nav" class="fixed top-0 right-0 h-full w-2/3 bg-gray-900/90 backdrop-blur-lg z-40 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden">
+    <nav id="mobile-nav"
+        class="fixed top-0 right-0 h-full w-2/3 bg-gray-900/90 backdrop-blur-lg z-40 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden">
         <div class="flex flex-col items-center justify-center h-full space-y-8">
             <a href="index.html" class="mobile-nav-link text-xl">HOME</a>
             <a href="profile.html" class="mobile-nav-link text-xl">PROFILE</a>
             <a href="songs.html" class="mobile-nav-link text-xl">SONGS</a>
             <a href="art.html" class="mobile-nav-link text-xl">ART</a>
-            
+
         </div>
     </nav>
-    
+
     <main id="main-content" class="main-content-visible">
         <!-- Profile Section -->
         <section id="profile" class="py-24 px-6 relative">
@@ -126,37 +137,48 @@
                     <!-- 4人のカード -->
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 md:gap-8 justify-items-center">
                         <!-- Ryuya Card -->
-                        <div class="profile-card rounded-xl p-6 md:p-8 text-center fade-in-up premium-card w-full" style="transition-delay: 0ms;" data-parallax="5">
+                        <div class="profile-card rounded-xl p-6 md:p-8 text-center fade-in-up premium-card w-full"
+                            style="transition-delay: 0ms;" data-parallax="5">
                             <div class="glow"></div>
                             <div class="card-shine"></div>
-                            <img src="assets/images/Ryuya.PNG" alt="Ryuya アイコン" class="profile-photo w-28 h-28 md:w-36 md:h-36 rounded-full mx-auto mb-4 md:mb-6">
+                            <img src="assets/images/Ryuya.PNG" alt="Ryuya アイコン"
+                                class="profile-photo w-28 h-28 md:w-36 md:h-36 rounded-full mx-auto mb-4 md:mb-6">
                             <h3 class="text-2xl md:text-3xl font-bold mb-2 pulse-text">Ryuya</h3>
-                            <p class="text-purple-300 mb-3 md:mb-4 text-xs sm:text-sm leading-relaxed">元AI Artist / AI Creator<br>Google AI Student Lead Ambassador<br>元Novelist</p>
+                            <p class="text-purple-300 mb-3 md:mb-4 text-xs sm:text-sm leading-relaxed">元AI Artist / AI
+                                Creator<br>Google AI Student Lead Ambassador<br>元Novelist</p>
                             <p class="text-gray-400 text-xs md:text-sm">2023/10/15 START</p>
                         </div>
                         <!-- 紫苑 Card -->
-                        <div class="profile-card rounded-xl p-6 md:p-8 text-center fade-in-up premium-card w-full" style="transition-delay: 100ms;" data-parallax="5">
+                        <div class="profile-card rounded-xl p-6 md:p-8 text-center fade-in-up premium-card w-full"
+                            style="transition-delay: 100ms;" data-parallax="5">
                             <div class="glow"></div>
                             <div class="card-shine"></div>
-                            <img src="assets/images/Shion.PNG" alt="紫苑 アーティスト写真" class="profile-photo w-28 h-28 md:w-36 md:h-36 rounded-full mx-auto mb-4 md:mb-6" style="border-color: steelblue;">
+                            <img src="assets/images/Shion.PNG" alt="紫苑 アーティスト写真"
+                                class="profile-photo w-28 h-28 md:w-36 md:h-36 rounded-full mx-auto mb-4 md:mb-6"
+                                style="border-color: steelblue;">
                             <h3 class="text-2xl md:text-3xl font-bold mb-2 pulse-text">紫苑</h3>
                             <p class="text-blue-300 mb-3 md:mb-4 text-sm md:text-base">Singer-Songwriter</p>
                             <p class="text-gray-400 text-xs md:text-sm">2025/05/21 START</p>
                         </div>
                         <!-- 伊織 暁斗 Card -->
-                        <div class="profile-card rounded-xl p-6 md:p-8 text-center fade-in-up premium-card w-full" style="transition-delay: 200ms;" data-parallax="5">
+                        <div class="profile-card rounded-xl p-6 md:p-8 text-center fade-in-up premium-card w-full"
+                            style="transition-delay: 200ms;" data-parallax="5">
                             <div class="glow"></div>
                             <div class="card-shine"></div>
-                            <img src="assets/images/Akito.PNG" alt="伊織 暁斗 アイコン" class="profile-photo w-28 h-28 md:w-36 md:h-36 rounded-full mx-auto mb-4 md:mb-6" style="border-color: orangered;">
+                            <img src="assets/images/Akito.PNG" alt="伊織 暁斗 アイコン"
+                                class="profile-photo w-28 h-28 md:w-36 md:h-36 rounded-full mx-auto mb-4 md:mb-6"
+                                style="border-color: orangered;">
                             <h3 class="text-2xl md:text-3xl font-bold mb-2 pulse-text">伊織 暁斗</h3>
                             <p class="text-orange-300 mb-3 md:mb-4 text-sm md:text-base">Singer-Songwriter</p>
                             <p class="text-gray-400 text-xs md:text-sm">2025/09/24 START</p>
                         </div>
                         <!-- Fake ID RSA Card -->
-                        <div class="profile-card rounded-xl p-6 md:p-8 text-center fade-in-up premium-card w-full" style="transition-delay: 300ms;" data-parallax="5">
+                        <div class="profile-card rounded-xl p-6 md:p-8 text-center fade-in-up premium-card w-full"
+                            style="transition-delay: 300ms;" data-parallax="5">
                             <div class="glow"></div>
                             <div class="card-shine"></div>
-                            <img src="assets/images/Fake ID.PNG" alt="Fake ID アイコン" class="profile-photo w-28 h-28 md:w-36 md:h-36 rounded-full mx-auto mb-4 md:mb-6">
+                            <img src="assets/images/Fake ID.PNG" alt="Fake ID アイコン"
+                                class="profile-photo w-28 h-28 md:w-36 md:h-36 rounded-full mx-auto mb-4 md:mb-6">
                             <h3 class="text-2xl md:text-3xl font-bold mb-2 pulse-text">Fake ID</h3>
                             <p class="text-cyan-300 mb-3 md:mb-4 text-sm md:text-base">Music Unit</p>
                             <p class="text-gray-400 text-xs md:text-sm">2025/12/24 START</p>
@@ -176,12 +198,14 @@
 
     <!-- Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    
+
     <!-- Enhanced Performance Scripts -->
+    <!-- Temporarily disabled for debugging
     <script src="js/performance-optimizer.js"></script>
     <script src="js/enhanced-background.js"></script>
     <script src="js/cursor-effects.js"></script>
-    
+    -->
+
     <!-- Custom JS -->
     <script src="js/app.js"></script>
     <script>
@@ -221,4 +245,5 @@
         });
     </script>
 </body>
+
 </html>

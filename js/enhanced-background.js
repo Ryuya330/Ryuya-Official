@@ -5,10 +5,17 @@
 
 class EnhancedBackground {
     constructor() {
+        // Check if canvas exists
+        const canvas = document.getElementById('bg-canvas');
+        if (!canvas) {
+            console.warn('bg-canvas not found, skipping 3D background');
+            return;
+        }
+
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         this.renderer = new THREE.WebGLRenderer({
-            canvas: document.getElementById('bg-canvas'),
+            canvas: canvas,
             antialias: true,
             alpha: true,
             powerPreference: 'high-performance'
@@ -290,5 +297,14 @@ class EnhancedBackground {
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    new EnhancedBackground();
+    // Check if THREE.js is loaded
+    if (typeof THREE === 'undefined') {
+        console.warn('THREE.js not loaded, skipping 3D background');
+        return;
+    }
+
+    // Check if canvas exists
+    if (document.getElementById('bg-canvas')) {
+        new EnhancedBackground();
+    }
 });
