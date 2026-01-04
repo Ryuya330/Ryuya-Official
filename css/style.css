@@ -1162,6 +1162,11 @@ p {
     display: inline-block;
 }
 
+.glitch-base {
+    position: relative;
+    z-index: 1;
+}
+
 .glitch-layer {
     position: absolute;
     top: 0;
