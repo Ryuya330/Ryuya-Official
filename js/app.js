@@ -16,26 +16,39 @@ function initializeSiteFeatures() {
 
     // Initialize animation observer
 
-    
+
 
     // --- Header Scroll Effect ---
     const header = document.getElementById('header');
-    window.addEventListener('scroll', () => {
-        header.classList.toggle('scrolled', window.scrollY > 50);
-    });
+    if (header) {
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('scrolled', window.scrollY > 50);
+        });
+    }
 
     // --- Mobile Navigation ---
     const hamburgerBtn = document.getElementById('hamburger-btn');
     const mobileNav = document.getElementById('mobile-nav');
     const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
-    hamburgerBtn.addEventListener('click', () => {
-        mobileNav.classList.toggle('translate-x-full');
-    });
-    mobileNavLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            mobileNav.classList.add('translate-x-full');
+
+    console.log('Hamburger button:', hamburgerBtn);
+    console.log('Mobile nav:', mobileNav);
+    console.log('Mobile nav links:', mobileNavLinks.length);
+
+    if (hamburgerBtn && mobileNav) {
+        hamburgerBtn.addEventListener('click', () => {
+            console.log('Hamburger clicked!');
+            mobileNav.classList.toggle('translate-x-full');
         });
-    });
+
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.add('translate-x-full');
+            });
+        });
+    } else {
+        console.error('Hamburger menu elements not found');
+    }
 
     // --- Navigation Active State ---
     const sections = document.querySelectorAll('section');
@@ -73,7 +86,7 @@ function initializeSiteFeatures() {
         console.log('Observing element:', el);
         animationObserver.observe(el);
     });
-    
+
     // --- Interactive Card Glow ---
     const cards = document.querySelectorAll('.profile-card');
     cards.forEach(card => {
@@ -104,59 +117,59 @@ function initializeSiteFeatures() {
     spotifyIframes.forEach(iframe => {
         spotifyObserver.observe(iframe);
     });
-        // --- Ryuya Title Animation ---
+    // --- Ryuya Title Animation ---
     const ryuyaTitle = document.querySelector('.section-title.ryuya-animate');
     if (ryuyaTitle) {
         const text = ryuyaTitle.textContent;
-                // --- Page Transition Animation (墨・光・スライス強化) ---
-                function showPageTransition(callback) {
-                    const overlay = document.querySelector('.page-transition-overlay, #page-transition-overlay');
-                    if (!overlay) { callback && callback(); return; }
-                    overlay.classList.add('active');
-                    overlay.style.background = 'linear-gradient(120deg, #23243a 60%, #1a1a2e 100%), radial-gradient(circle at 60% 40%, rgba(180,180,255,0.15) 0%, rgba(0,0,0,0) 70%), repeating-linear-gradient(-45deg, rgba(80,80,120,0.08) 0 10px, transparent 10px 20px)';
-                    overlay.style.transition = 'clip-path 0.7s cubic-bezier(.77,0,.18,1), opacity 0.5s';
-                    overlay.style.clipPath = 'polygon(0 0, 100% 0, 100% 100%, 0 100%)';
-                    overlay.style.opacity = '1';
-                    overlay.innerHTML = '<div class="slice-flash"></div>';
-                    const flash = overlay.querySelector('.slice-flash');
-                    flash.style.position = 'absolute';
-                    flash.style.top = '0';
-                    flash.style.left = '0';
-                    flash.style.width = '100%';
-                    flash.style.height = '100%';
-                    flash.style.background = 'linear-gradient(120deg, rgba(255,255,255,0.18) 0%, rgba(180,180,255,0.08) 60%, rgba(0,0,0,0) 100%)';
+        // --- Page Transition Animation (墨・光・スライス強化) ---
+        function showPageTransition(callback) {
+            const overlay = document.querySelector('.page-transition-overlay, #page-transition-overlay');
+            if (!overlay) { callback && callback(); return; }
+            overlay.classList.add('active');
+            overlay.style.background = 'linear-gradient(120deg, #23243a 60%, #1a1a2e 100%), radial-gradient(circle at 60% 40%, rgba(180,180,255,0.15) 0%, rgba(0,0,0,0) 70%), repeating-linear-gradient(-45deg, rgba(80,80,120,0.08) 0 10px, transparent 10px 20px)';
+            overlay.style.transition = 'clip-path 0.7s cubic-bezier(.77,0,.18,1), opacity 0.5s';
+            overlay.style.clipPath = 'polygon(0 0, 100% 0, 100% 100%, 0 100%)';
+            overlay.style.opacity = '1';
+            overlay.innerHTML = '<div class="slice-flash"></div>';
+            const flash = overlay.querySelector('.slice-flash');
+            flash.style.position = 'absolute';
+            flash.style.top = '0';
+            flash.style.left = '0';
+            flash.style.width = '100%';
+            flash.style.height = '100%';
+            flash.style.background = 'linear-gradient(120deg, rgba(255,255,255,0.18) 0%, rgba(180,180,255,0.08) 60%, rgba(0,0,0,0) 100%)';
+            flash.style.opacity = '0';
+            flash.style.pointerEvents = 'none';
+            flash.style.transition = 'opacity 0.3s';
+            setTimeout(() => {
+                overlay.style.clipPath = 'polygon(0 0, 100% 0, 80% 100%, 20% 100%)';
+                overlay.style.opacity = '0.7';
+                flash.style.opacity = '1';
+                setTimeout(() => {
                     flash.style.opacity = '0';
-                    flash.style.pointerEvents = 'none';
-                    flash.style.transition = 'opacity 0.3s';
+                    overlay.style.opacity = '0';
                     setTimeout(() => {
-                        overlay.style.clipPath = 'polygon(0 0, 100% 0, 80% 100%, 20% 100%)';
-                        overlay.style.opacity = '0.7';
-                        flash.style.opacity = '1';
-                        setTimeout(() => {
-                            flash.style.opacity = '0';
-                            overlay.style.opacity = '0';
-                            setTimeout(() => {
-                                overlay.classList.remove('active');
-                                overlay.innerHTML = '';
-                                overlay.style.clipPath = '';
-                                overlay.style.background = '';
-                                overlay.style.opacity = '';
-                                callback && callback();
-                            }, 400);
-                        }, 700);
-                    }, 50);
-                }
+                        overlay.classList.remove('active');
+                        overlay.innerHTML = '';
+                        overlay.style.clipPath = '';
+                        overlay.style.background = '';
+                        overlay.style.opacity = '';
+                        callback && callback();
+                    }, 400);
+                }, 700);
+            }, 50);
+        }
 
-                // Attach to navigation links (SPA風遷移)
-                document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(link => {
-                    link.addEventListener('click', e => {
-                        if (link.classList.contains('active')) return;
-                        e.preventDefault();
-                        showPageTransition(() => {
-                            window.location.href = link.getAttribute('href');
-                        });
-                    });
+        // Attach to navigation links (SPA風遷移)
+        document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(link => {
+            link.addEventListener('click', e => {
+                if (link.classList.contains('active')) return;
+                e.preventDefault();
+                showPageTransition(() => {
+                    window.location.href = link.getAttribute('href');
                 });
+            });
+        });
         ryuyaTitle.textContent = '';
 
         text.split('').forEach((char, index) => {
@@ -189,7 +202,7 @@ document.addEventListener('mousemove', (e) => {
     const parallaxElements = document.querySelectorAll('[data-parallax]');
     const mouseX = e.clientX / window.innerWidth - 0.5;
     const mouseY = e.clientY / window.innerHeight - 0.5;
-    
+
     parallaxElements.forEach(el => {
         const speed = el.dataset.parallax || 20;
         const x = mouseX * speed;
@@ -207,7 +220,7 @@ const revealOnScroll = () => {
     cards.forEach((card, index) => {
         const cardTop = card.getBoundingClientRect().top;
         const triggerPoint = window.innerHeight * 0.8;
-        
+
         if (cardTop < triggerPoint) {
             setTimeout(() => {
                 card.style.opacity = '1';
@@ -229,11 +242,11 @@ revealOnScroll();
 
 // Enhanced button interactions
 document.querySelectorAll('.hero-cta, .premium-btn').forEach(btn => {
-    btn.addEventListener('mouseenter', function() {
+    btn.addEventListener('mouseenter', function () {
         this.style.transform = 'translateY(-2px)';
     });
-    
-    btn.addEventListener('mouseleave', function() {
+
+    btn.addEventListener('mouseleave', function () {
         this.style.transform = 'translateY(0)';
     });
 });
@@ -247,7 +260,7 @@ spotifyEmbeds.forEach(iframe => {
 // Add premium cursor trail effect
 const createCursorTrail = () => {
     let lastX = 0, lastY = 0;
-    
+
     document.addEventListener('mousemove', (e) => {
         if (Math.abs(e.clientX - lastX) > 5 || Math.abs(e.clientY - lastY) > 5) {
             const trail = document.createElement('div');
@@ -298,16 +311,16 @@ document.querySelectorAll('.premium-card').forEach(card => {
         const rect = card.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
-        
+
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
-        
+
         const rotateX = (y - centerY) / 10;
         const rotateY = (centerX - x) / 10;
-        
+
         card.style.transform = `translateY(-10px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
     });
-    
+
     card.addEventListener('mouseleave', () => {
         card.style.transform = 'translateY(0) rotateX(0) rotateY(0)';
     });
@@ -319,10 +332,10 @@ document.querySelectorAll('.hero-cta, .premium-btn').forEach(btn => {
         const rect = btn.getBoundingClientRect();
         const x = e.clientX - rect.left - rect.width / 2;
         const y = e.clientY - rect.top - rect.height / 2;
-        
+
         btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
     });
-    
+
     btn.addEventListener('mouseleave', () => {
         btn.style.transform = 'translate(0, 0)';
     });
@@ -330,7 +343,7 @@ document.querySelectorAll('.hero-cta, .premium-btn').forEach(btn => {
 
 // Smooth Scroll with Easing
 document.querySelectorAll('a[href^=\"#\"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
+    anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
@@ -348,12 +361,12 @@ window.addEventListener('scroll', () => {
     const scrollY = window.scrollY;
     const windowHeight = window.innerHeight;
     const documentHeight = document.documentElement.scrollHeight;
-    
+
     const scrollPercentage = scrollY / (documentHeight - windowHeight);
-    
+
     const hue = Math.round(270 - (scrollPercentage * 60)); // 270 (purple) to 210 (blue)
     document.body.style.backgroundColor = `hsl(${hue}, 30%, 5%)`;
-    
+
     lastScrollY = scrollY;
 });
 
@@ -379,16 +392,16 @@ document.querySelectorAll('.profile-card, .sns-card, .spotify-embed').forEach(el
 if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
     let fps = 0;
     let lastTime = performance.now();
-    
+
     function measureFPS() {
         const currentTime = performance.now();
         fps = Math.round(1000 / (currentTime - lastTime));
         lastTime = currentTime;
-        
+
         console.log(`FPS: ${fps}`);
         requestAnimationFrame(measureFPS);
     }
-    
+
     // measureFPS(); // Uncomment to enable FPS monitoring
 }
 
@@ -398,13 +411,13 @@ if (enableAmbientSound) {
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
     const oscillator = audioContext.createOscillator();
     const gainNode = audioContext.createGain();
-    
+
     oscillator.connect(gainNode);
     gainNode.connect(audioContext.destination);
-    
+
     oscillator.frequency.value = 110; // Low A note
     gainNode.gain.value = 0.01; // Very quiet ambient
-    
+
     // oscillator.start(); // Uncomment to enable ambient sound
 }
 
