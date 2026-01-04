@@ -102,6 +102,16 @@ body {
     z-index: -1;
 }
 
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 30%, rgba(0, 0, 0, 0.35), transparent 45%),
+        radial-gradient(circle at 70% 50%, rgba(0, 0, 0, 0.4), transparent 50%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.7) 100%);
+    z-index: 2;
+    pointer-events: none;
+}
+
 /* --- Custom Scrollbar --- */
 ::-webkit-scrollbar {
     width: clamp(6px, 1vw, 10px);
@@ -1165,6 +1175,7 @@ p {
 .glitch-base {
     position: relative;
     z-index: 1;
+    color: #ffffff;
 }
 
 .glitch-layer {
