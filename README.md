@@ -1,141 +1,169 @@
-# Ryuya Official WebsiteRyuya Official — ローカル開発と設定
+# Ryuya Official Website
 
+![Ryuya Official](https://img.shields.io/badge/Status-Active-success)
+![License](https://img.shields.io/badge/License-All%20Rights%20Reserved-blue)
+![Netlify](https://img.shields.io/badge/Deployed-Netlify-00C7B7)
 
+**AI Creator × Singer-Songwriter × Novelist**
 
-AI Creator × Singer-Songwriter × Novelist, Ryuyaのオフィシャルサイトこのリポジトリは静的サイト（HTML/CSS/JS）です。簡単にローカルで確認できます。
+Ryuyaのオフィシャルサイトへようこそ！このリポジトリは最新技術を駆使したプレミアムなポートフォリオサイトです。
 
+🌐 **Live Site**: [https://ryuya-official.netlify.app](https://ryuya-official.netlify.app)
 
+---
 
-## 🎨 Featuresセットアップ（ローカル）
+## ✨ Features
 
+### 🎨 デザイン＆UX
+- **プレミアムデザイン**: モダンでエレガントなUI/UX
+- **3Dエフェクト**: Three.jsによる動的な背景演出
+- **レスポンシブ対応**: スマートフォンからデスクトップまで完全対応（390px〜2560px+）
+- **グラスモーフィズム**: 最先端のガラス風デザイン
+- **スムーズアニメーション**: 洗練されたトランジションとインタラクション
 
-
-- **Premium Design**: 最高品質のUI/UXデザイン1) シンプルな HTTP サーバを起動（Windows PowerShell の例）
-
-- **Ultra Effects**: 3D tilt、ホログラフィック、ネオン、量子パーティクル、ニューラルネットワーク可視化
-
-- **Fully Responsive**: 390px〜2560px+まで完全対応```powershell
-
-- **Security Headers**: セキュリティヘッダー実装済み# Python がインストールされている場合（推奨）
-
-- **OGP Optimized**: SNSシェア用OGP画像最適化済み# カレントディレクトリをこのプロジェクトのルートに合わせてから実行
-
-python -m http.server 8000
-
-## 📁 Project Structure# ブラウザで http://localhost:8000 を開く
-
-```
-
-```
-
-Ryuya-Official/2) API キーの扱い
-
-├── index.html           # ホームページ（プレミアムエフェクト搭載）
-
-├── profile.html         # プロフィール（Ryuya、紫苑、伊織暁斗）- YouTube Data API を使って最新動画を取得したい場合は、API キーを取得して `js/config.local.js` を作成してください。
-
-├── songs.html          # 楽曲一覧（Spotify埋め込み）- 既存の `js/config.example.js` をコピーして `js/config.local.js` とし、`youtubeApiKey` にキーを入れてください。例:
-
-├── SNS.html            # SNSリンク集
-
-├── css/```javascript
-
-│   └── style.css       # カスタムCSS（1600+ lines）window.SITE_CONFIG = {
-
-├── js/  youtubeApiKey: 'YOUR_REAL_API_KEY'
-
-│   ├── app.js          # メインJavaScript（600+ lines）};
-
-│   ├── sns.js          # SNSページ用```
-
-│   └── config.example.js
-
-├── assets/- セキュリティ: `js/config.local.js` は公開リポジトリにコミットしないでください。
-
-│   └── images/         # 画像ファイル
-
-│       ├── ogp-image.png3) 検証ポイント
-
-│       ├── Ryuya.png
-
-│       ├── 紫苑.png- ナビゲーション: 全ページで SNS が右端です。
-
-│       └── 伊織暁斗.png- SNS ページ: `SNS.html`（ルート）を開くと各種埋め込み／フィードが表示されます。API キー未設定の場合は iframe / チャンネルリンクのフォールバックが動作します。
-
-├── tools/
-
-│   └── generate-ogp.html  # OGP画像生成ツール4) 進行中タスク
-
-└── netlify.toml        # Netlify設定
-
-```- デザイン微調整、不要ファイルのクリーンアップ、最終ブラウザ検証を継続します。問題や追加のデザイン要望があれば教えてください。
-
-
-## 🚀 Local Development
-
-### シンプルHTTPサーバーで起動
-
-```powershell
-# Python（推奨）
-python -m http.server 8000
-
-# Node.js（http-server）
-npx http-server -p 8000
-
-# PHP
-php -S localhost:8000
-```
-
-ブラウザで `http://localhost:8000` を開いてください。
-
-### YouTube API設定（オプション）
-
-SNSページで最新動画を表示する場合：
-
-1. `js/config.example.js` をコピーして `js/config.js` を作成
-2. YouTube Data API キーを取得して設定
-
-```javascript
-window.SITE_CONFIG = {
-  youtubeApiKey: 'YOUR_API_KEY'
-};
-```
-
-**注意**: `js/config.js` は `.gitignore` に含まれています。
-
-## 🎮 Keyboard Shortcuts
-
-- `Ctrl + Shift + E`: Extreme Mode切替
-- `Ctrl + Shift + M`: Matrix Rain切替
-
-## 🌐 Deployment
-
-Netlifyにデプロイ済み: https://ryuya-official.netlify.app
-
-### OGP検証ツール
-
-- [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/)
-- [Twitter Card Validator](https://cards-dev.twitter.com/validator)
-- [OGP Image Checker](https://www.opengraph.xyz/)
-
-## 📝 Technologies
-
-- HTML5
-- CSS3 (Tailwind CSS)
-- Vanilla JavaScript
-- Three.js (3D backgrounds)
-- Canvas API (Particle systems)
-- Font Awesome
-- Google Fonts
-
-## 🔒 Security
-
-- CSP Headers
+### 🔐 セキュリティ
+- Content Security Policy (CSP)
 - X-Frame-Options
 - X-Content-Type-Options
 - Referrer Policy
 - Permissions Policy
 
-## 📄 License
+### 📱 ソーシャル対応
+- OGP最適化（SNSシェア用画像）
+- Twitter Card対応
+- 各種SNSプラットフォーム連携
 
-© 2023-2025 Ryuya. All rights reserved.
+---
+
+## 📁 プロジェクト構成
+
+```
+Ryuya-Official/
+├── index.html              # ホームページ
+├── profile.html            # プロフィールページ
+├── songs.html              # 楽曲一覧（Spotify埋め込み）
+├── art.html                # アート作品ギャラリー
+├── netlify.toml            # Netlify設定
+├── README.md               # このファイル
+├── css/
+│   ├── style.css           # メインスタイルシート
+│   └── enhanced-artist-tech.css  # 拡張スタイル
+├── js/
+│   ├── app.js              # メインJavaScript
+│   ├── cursor-effects.js   # カーソルエフェクト
+│   ├── enhanced-background.js  # 背景アニメーション
+│   └── performance-optimizer.js  # パフォーマンス最適化
+├── assets/
+│   └── images/             # 画像アセット
+│       ├── ogp-image.png   # OGP画像
+│       └── logos/          # ロゴファイル
+└── tools/
+    └── generate-ogp.html   # OGP画像生成ツール
+```
+
+---
+
+## 🚀 ローカル開発
+
+### 1. リポジトリをクローン
+
+```bash
+git clone https://github.com/yourusername/Ryuya-Official.git
+cd Ryuya-Official
+```
+
+### 2. ローカルサーバーを起動
+
+**Pythonを使用（推奨）**
+```bash
+python -m http.server 8000
+```
+
+**Node.jsを使用**
+```bash
+npx http-server -p 8000
+```
+
+**PHPを使用**
+```bash
+php -S localhost:8000
+```
+
+### 3. ブラウザでアクセス
+
+ブラウザで `http://localhost:8000` を開いてください。
+
+---
+
+## 🛠️ 技術スタック
+
+### フロントエンド
+- **HTML5** - セマンティックマークアップ
+- **CSS3** - カスタムスタイリング
+- **Tailwind CSS** - ユーティリティファーストCSS
+- **Vanilla JavaScript** - ピュアJSによる実装
+
+### ライブラリ＆フレームワーク
+- **Three.js** - 3D背景アニメーション
+- **Font Awesome** - アイコンライブラリ
+- **Google Fonts** - カスタムフォント（Inter、Noto Serif JP）
+
+### デプロイ＆ホスティング
+- **Netlify** - 継続的デプロイメント
+- **Git** - バージョン管理
+
+---
+
+## 📊 パフォーマンス
+
+- Lighthouse Score: 90+
+- 最適化されたアセット読み込み
+- 遅延読み込み（Lazy Loading）対応
+- パフォーマンス監視とデバッグ機能
+
+---
+
+## 🌐 デプロイ
+
+### Netlify（自動デプロイ）
+
+このサイトはNetlifyにデプロイされており、`main`ブランチへのプッシュで自動的に更新されます。
+
+**デプロイURL**: [https://ryuya-official.netlify.app](https://ryuya-official.netlify.app)
+
+### OGP検証ツール
+
+SNSシェア時の表示を確認：
+- [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/)
+- [Twitter Card Validator](https://cards-dev.twitter.com/validator)
+- [OGP Image Checker](https://www.opengraph.xyz/)
+
+---
+
+## 🎯 今後の予定
+
+- [ ] ブログセクション追加
+- [ ] 多言語対応（英語・日本語）
+- [ ] ダークモード切替機能
+- [ ] コンタクトフォーム実装
+- [ ] パフォーマンスさらなる最適化
+
+---
+
+## 📝 ライセンス
+
+© 2025 Ryuya. All rights reserved.
+
+このサイトのすべてのコンテンツ（デザイン、コード、画像、テキスト）は著作権で保護されています。
+
+---
+
+## 📮 お問い合わせ
+
+- **Twitter**: [@Ryuya_330](https://twitter.com/Ryuya_330)
+- **YouTube**: [Ryuya Official](https://www.youtube.com/@ryuya_official)
+- **Website**: [https://ryuya-official.netlify.app](https://ryuya-official.netlify.app)
+
+---
+
+Made with ❤️ by Ryuya
