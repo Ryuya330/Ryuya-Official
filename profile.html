@@ -18,23 +18,19 @@
     <meta name="referrer" content="strict-origin-when-cross-origin">
 
     <!-- SEO & OGP Meta Tags -->
-    <title>Ryuya Official - Profile</title>
-    <meta name="description" content="元AI Artist / AI Creator / Singer-Songwriter / Google AI Student Lead Ambassador / 元Novelist, Ryuyaのプロフィールページ。世界を魅了する日本発シンガーソングライター。">
-    <meta name="keywords" content="Ryuya, AI Creator, Singer-Songwriter, Google AI Student Lead Ambassador, 元Novelist, 紫苑, 伊織暁斗, 音楽, AIアート">
+    <title>Ryuya Official | PROFILE - From JAPAN to the WORLD</title>
+    <meta name="description" content="From JAPAN to the WORLD — 日本を背負うシンガーソングライターRyuyaのプロフィール。AI Artist / AI Creator / Singer-Songwriter。Google AI Student Lead Ambassador。Japanese Soul × Global Sound。">
+    <meta name="keywords" content="Ryuya, AI Creator, Singer-Songwriter, Google AI Student Lead Ambassador, Novelist, Japanese Soul, Global Sound, 音楽, アーティスト, Japan, 世界, グローバル, プロフィール">
     <meta name="author" content="Ryuya">
     <meta name="google-site-verification" content="5U1vhJGLCyd7wfsLuyHzSneCRP_J9kp5XyquhojbiYo" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://ryuya-official.netlify.app/profile.html">
-    <meta property="og:title" content="Ryuya Official - Profile">
-    <meta property="og:description" content="元AI Artist / AI Creator / Singer-Songwriter / Google AI Student Lead Ambassador / 元Novelist, Ryuyaのプロフィールページ。音楽 × 物語 × テクノロジー">
-    <meta property="og:image" content="https://ryuya-official.netlify.app/assets/images/ogp-image.png?v=2">
-    <meta property="og:image:secure_url" content="https://ryuya-official.netlify.app/assets/images/ogp-image.png?v=2">
-    <meta property="og:image:type" content="image/png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="Ryuya Official - AI Creator × Singer-Songwriter × Novelist">
+    <meta property="og:url" content="https://ryuya-330.com/profile.html">
+    <meta property="og:title" content="Ryuya Official | PROFILE - From JAPAN to the WORLD">
+    <meta property="og:description" content="From JAPAN to the WORLD — 日本を背負うシンガーソングライターRyuyaのプロフィール。AI Artist / AI Creator / Singer-Songwriter。Google AI Student Lead Ambassador。Japanese Soul × Global Sound。">
+    <meta property="og:image" content="assets/images/logos/ogp-profile.png">
+    <meta property="og:image:alt" content="Ryuya Official - Japanese Soul × Global Sound">
     <meta property="og:site_name" content="Ryuya Official">
     <meta property="og:locale" content="ja_JP">
 
@@ -42,11 +38,10 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@Ryuya_330">
     <meta name="twitter:creator" content="@Ryuya_330">
-    <meta name="twitter:title" content="Ryuya Official - Profile">
-    <meta name="twitter:description"
-        content="AI Creator × Singer-Songwriter × Google AI Student Lead Ambassador × Novelist, Ryuyaのプロフィールページです。">
-    <meta property="twitter:image" content="https://ryuya-official.netlify.app/assets/images/ogp-image.png?v=2">
-    <meta name="twitter:image:alt" content="Ryuya Official - AI Creator × Singer-Songwriter × Novelist">
+    <meta name="twitter:title" content="Ryuya Official | PROFILE - From JAPAN to the WORLD">
+    <meta name="twitter:description" content="From JAPAN to the WORLD — 日本を背負うシンガーソングライターRyuyaのプロフィール。AI Artist / AI Creator / Singer-Songwriter。Google AI Student Lead Ambassador。Japanese Soul × Global Sound。">
+    <meta property="twitter:image" content="assets/images/logos/ogp-profile.png">
+    <meta name="twitter:image:alt" content="Ryuya Official - Japanese Soul × Global Sound">
 
     <!-- Favicon -->
     <link rel="icon" href="https://placehold.co/32x32/7c4dff/ffffff?text=R&font=Montserrat" type="image/png">
@@ -73,9 +68,13 @@
 <body class="antialiased">
 
     <!-- Scroll Progress Bar -->
-    <div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-purple-500 to-pink-500 z-[60] transition-all duration-300" style="width: 0%;"></div>
+    <div id="scroll-progress"
+        class="fixed top-0 left-0 h-1 bg-gradient-to-r from-purple-500 to-pink-500 z-[60] transition-all duration-300"
+        style="width: 0%;"></div>
     <!-- Back to Top Button -->
-    <button id="back-to-top" class="fixed bottom-8 right-8 w-14 h-14 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full shadow-2xl flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300 hover:scale-110 z-50"><i class="fas fa-arrow-up text-white text-xl"></i></button>
+    <button id="back-to-top"
+        class="fixed bottom-8 right-8 w-14 h-14 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full shadow-2xl flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300 hover:scale-110 z-50"><i
+            class="fas fa-arrow-up text-white text-xl"></i></button>
     <!-- 3D Background -->
     <canvas id="bg-canvas"></canvas>
 
@@ -86,7 +85,8 @@
             <a href="index.html" class="site-logo text-2xl">Ryuya</a>
             <nav class="hidden md:flex space-x-8 items-center">
                 <a href="index.html" class="nav-link text-lg" id="nav-home" data-i18n="nav-home">HOME</a>
-                <a href="profile.html" class="nav-link active text-lg" id="nav-profile" data-i18n="nav-profile">PROFILE</a>
+                <a href="profile.html" class="nav-link active text-lg" id="nav-profile"
+                    data-i18n="nav-profile">PROFILE</a>
                 <a href="songs.html" class="nav-link text-lg" id="nav-songs" data-i18n="nav-songs">SONGS</a>
                 <a href="news.html" class="nav-link text-lg" id="nav-news" data-i18n="nav-news">NEWS</a>
                 <a href="gallery.html" class="nav-link text-lg" id="nav-gallery" data-i18n="nav-gallery">GALLERY</a>
@@ -105,7 +105,8 @@
     </header>
 
     <!-- Mobile Navigation -->
-    <nav id="mobile-nav" class="fixed top-0 right-0 h-full w-2/3 bg-gray-900/90 backdrop-blur-lg z-40 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden">
+    <nav id="mobile-nav"
+        class="fixed top-0 right-0 h-full w-2/3 bg-gray-900/90 backdrop-blur-lg z-40 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden">
         <div class="flex flex-col items-center justify-center h-full space-y-8">
             <a href="index.html" class="mobile-nav-link text-xl" data-i18n="nav-home">HOME</a>
             <a href="profile.html" class="mobile-nav-link text-xl" data-i18n="nav-profile">PROFILE</a>
@@ -123,9 +124,11 @@
 
     <main id="main-content" class="main-content-visible">
         <!-- Hero/Profile Section -->
-        <section id="profile" class="min-h-screen flex flex-col items-center justify-center text-center relative px-4 sm:px-6 md:px-8 py-20 tech-grid particle-bg ai-circuit-bg aurora-overlay data-stream luxe-hero">
+        <section id="profile"
+            class="min-h-screen flex flex-col items-center justify-center text-center relative px-4 sm:px-6 md:px-8 py-20 tech-grid particle-bg ai-circuit-bg aurora-overlay data-stream luxe-hero">
             <!-- Floating Particles -->
-            <div class="particles-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
+            <div class="particles-container"
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
                 <div class="particle"></div>
                 <div class="particle"></div>
                 <div class="particle"></div>
@@ -133,23 +136,27 @@
                 <div class="particle"></div>
             </div>
             <div class="relative w-full max-w-4xl mx-auto text-center" style="z-index: 30;">
-                <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold section-title ryuya-animate mb-4 sm:mb-6 glitch-text holographic neon-text text-center gpu-accelerated gradient-text-artist text-shadow-artistic" data-text="PROFILE" data-parallax="15">
-                    <span class="glitch-base" data-i18n="profile-title">PROFILE</span>
-                    <span class="glitch-layer" data-i18n="profile-title">PROFILE</span>
-                    <span class="glitch-layer" data-i18n="profile-title">PROFILE</span>
+                <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold section-title ryuya-animate mb-4 sm:mb-6 glitch-text holographic neon-text text-center gpu-accelerated gradient-text-artist text-shadow-artistic"
+                    data-text="PROFILE" data-parallax="15">
+                    <span class="glitch-base" data-i18n="profile-title">PROFILE <span class="inline-block ml-2">🇯🇵</span></span>
+                    <span class="glitch-layer" data-i18n="profile-title">PROFILE <span class="inline-block ml-2">🇯🇵</span></span>
+                    <span class="glitch-layer" data-i18n="profile-title">PROFILE <span class="inline-block ml-2">🇯🇵</span></span>
                 </h1>
                 <!-- キャッチコピー（日英） -->
                 <div class="max-w-2xl mx-auto fade-in-up visible text-center animated-gradient-text text-reveal px-4" style="transition-delay: 200ms;" data-parallax="8">
                     <p class="mt-2 text-lg sm:text-xl md:text-2xl text-white font-bold tracking-wide mb-2 sm:mb-3 text-center">
-                        <span class="gradient-text-tech text-shadow-tech block" data-i18n="hero-catch-ja">世界を魅了する日本発シンガーソングライター</span>
-                        <span class="gradient-text-tech text-shadow-tech block" data-i18n="hero-catch-en">A Singer-Songwriter from Japan to the World</span>
+                        <span class="gradient-text-tech text-shadow-tech block" data-i18n="hero-catch-ja">日本から世界へ。日本を背負うシンガーソングライター</span>
+                        <span class="gradient-text-tech text-shadow-tech block" data-i18n="hero-catch-en">From JAPAN to the WORLD — Singer-Songwriter representing Japan</span>
+                    </p>
+                    <p class="text-base sm:text-lg md:text-xl text-yellow-300 font-bold tracking-wide mb-2 text-center">
+                        <span class="gradient-text-tech text-shadow-tech block">🇯🇵 Japanese Soul × 🌏 Global Sound</span>
                     </p>
                     <p class="text-sm sm:text-base md:text-lg text-gray-200 font-serif tracking-wide mb-4 sm:mb-6 text-center">
-                        <span class="gradient-text-tech text-shadow-tech" data-i18n="hero-desc1">元AI Artist / AI Creator / Singer-Songwriter</span><br>
-                        <span class="gradient-text-artist text-shadow-artistic" data-i18n="hero-desc2">Google AI Student Lead Ambassador / 元Novelist</span>
+                        <span class="gradient-text-tech text-shadow-tech" data-i18n="hero-desc1">AI Artist / AI Creator / Singer-Songwriter</span><br>
+                        <span class="gradient-text-artist text-shadow-artistic" data-i18n="hero-desc2">Google AI Student Lead Ambassador / Novelist</span>
                     </p>
                     <p class="text-sm sm:text-base md:text-lg text-gray-400 mb-6 sm:mb-8 pulse-text text-center" style="line-height:2;">
-                        <span class="text-primary font-bold gradient-text-animated holographic">アート × 音楽 × 物語 × テクノロジー</span>
+                        <span class="text-primary font-bold gradient-text-animated holographic">Art × Music × Story × Technology</span>
                     </p>
                 </div>
                 <!-- SNSアイコン -->
@@ -158,58 +165,89 @@
                     <a href="https://www.instagram.com/ryuya_330/" target="_blank" rel="noopener" aria-label="Instagram" class="text-2xl text-white hover:text-pink-400 transition"><i class="fab fa-instagram"></i></a>
                     <a href="https://www.youtube.com/@Ryuya_330" target="_blank" rel="noopener" aria-label="YouTube" class="text-2xl text-white hover:text-red-500 transition"><i class="fab fa-youtube"></i></a>
                     <a href="https://open.spotify.com/artist/0vQb6QwQ6rQn2yQwQwQwQw" target="_blank" rel="noopener" aria-label="Spotify" class="text-2xl text-white hover:text-green-400 transition"><i class="fab fa-spotify"></i></a>
+                    <a href="https://www.tiktok.com/@ryuya_330" target="_blank" rel="noopener" aria-label="TikTok" class="text-2xl text-white hover:text-black transition"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://www.facebook.com/ryuya.official" target="_blank" rel="noopener" aria-label="Facebook" class="text-2xl text-white hover:text-blue-500 transition"><i class="fab fa-facebook"></i></a>
                 </div>
                 <!-- Spotify/YouTube埋め込み -->
-                <div class="flex flex-col md:flex-row justify-center items-center gap-6 fade-in-up" style="transition-delay: 350ms;">
-                    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/0vQb6QwQ6rQn2yQwQwQwQw?utm_source=generator" width="320" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                    <iframe width="320" height="80" src="https://www.youtube.com/embed?listType=user_uploads&list=Ryuya_330" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                <div class="flex flex-col md:flex-row justify-center items-center gap-6 fade-in-up"
+                    style="transition-delay: 350ms;">
+                    <iframe style="border-radius:12px"
+                        src="https://open.spotify.com/embed/artist/0vQb6QwQ6rQn2yQwQwQwQw?utm_source=generator"
+                        width="320" height="80" frameBorder="0" allowfullscreen=""
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                        loading="lazy"></iframe>
+                    <iframe width="320" height="80"
+                        src="https://www.youtube.com/embed?listType=user_uploads&list=Ryuya_330"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen></iframe>
                 </div>
                 <!-- プロフィールカード -->
                 <div class="max-w-6xl mx-auto mt-8">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 md:gap-8 justify-items-center">
                         <!-- Ryuya Card -->
-                        <div class="profile-card rounded-xl p-6 md:p-8 text-center fade-in-up premium-card profile-card-enhanced perspective-card artistic-hover w-full engineer-card ai-panel" style="transition-delay: 0ms;" data-parallax="5">
+                        <div class="profile-card rounded-xl p-6 md:p-8 text-center fade-in-up premium-card profile-card-enhanced perspective-card artistic-hover w-full engineer-card ai-panel"
+                            style="transition-delay: 0ms;" data-parallax="5">
                             <div class="glow"></div>
                             <div class="card-shine"></div>
                             <div class="holo-border inline-block mb-4 md:mb-6">
-                                <img src="assets/images/Ryuya.png" alt="Ryuya（アーティスト本人のアイコン写真）" class="profile-photo w-28 h-28 md:w-36 md:h-36 rounded-full">
+                                <img src="assets/images/Ryuya.png" alt="Ryuya（アーティスト本人のアイコン写真）"
+                                    class="profile-photo w-28 h-28 md:w-36 md:h-36 rounded-full">
                             </div>
-                            <h3 class="text-2xl md:text-3xl font-bold mb-2 pulse-text gradient-text-artist text-shadow-artistic" data-i18n="card-ryuya-name">Ryuya</h3>
-                            <p class="text-purple-300 mb-3 md:mb-4 text-xs sm:text-sm leading-relaxed" data-i18n="card-ryuya-desc">元AI Artist / AI Creator<br>Google AI Student Lead Ambassador<br>元Novelist / Singer-Songwriter</p>
+                            <h3 class="text-2xl md:text-3xl font-bold mb-2 pulse-text gradient-text-artist text-shadow-artistic"
+                                data-i18n="card-ryuya-name">Ryuya</h3>
+                            <p class="text-purple-300 mb-3 md:mb-4 text-xs sm:text-sm leading-relaxed"
+                                data-i18n="card-ryuya-desc">元AI Artist / AI Creator<br>Google AI Student Lead
+                                Ambassador<br>元Novelist / Singer-Songwriter</p>
                             <p class="text-gray-400 text-xs md:text-sm" data-i18n="card-ryuya-date">2023/10/15 START</p>
                         </div>
                         <!-- 紫苑 Card -->
-                        <div class="profile-card rounded-xl p-6 md:p-8 text-center fade-in-up premium-card profile-card-enhanced perspective-card artistic-hover w-full engineer-card ai-panel" style="transition-delay: 100ms;" data-parallax="5">
+                        <div class="profile-card rounded-xl p-6 md:p-8 text-center fade-in-up premium-card profile-card-enhanced perspective-card artistic-hover w-full engineer-card ai-panel"
+                            style="transition-delay: 100ms;" data-parallax="5">
                             <div class="glow"></div>
                             <div class="card-shine"></div>
                             <div class="holo-border inline-block mb-4 md:mb-6">
-                                <img src="assets/images/Shion.PNG" alt="紫苑（Shion）アーティスト写真" class="profile-photo w-28 h-28 md:w-36 md:h-36 rounded-full" style="border-color: steelblue;">
+                                <img src="assets/images/Shion.PNG" alt="紫苑（Shion）アーティスト写真"
+                                    class="profile-photo w-28 h-28 md:w-36 md:h-36 rounded-full"
+                                    style="border-color: steelblue;">
                             </div>
-                            <h3 class="text-2xl md:text-3xl font-bold mb-2 pulse-text gradient-text-artist text-shadow-artistic" data-i18n="card-shion-name">紫苑</h3>
-                            <p class="text-blue-300 mb-3 md:mb-4 text-sm md:text-base" data-i18n="card-shion-desc">Singer-Songwriter</p>
+                            <h3 class="text-2xl md:text-3xl font-bold mb-2 pulse-text gradient-text-artist text-shadow-artistic"
+                                data-i18n="card-shion-name">紫苑</h3>
+                            <p class="text-blue-300 mb-3 md:mb-4 text-sm md:text-base" data-i18n="card-shion-desc">
+                                Singer-Songwriter</p>
                             <p class="text-gray-400 text-xs md:text-sm" data-i18n="card-shion-date">2025/05/21 START</p>
                         </div>
                         <!-- 伊織 暁斗 Card -->
-                        <div class="profile-card rounded-xl p-6 md:p-8 text-center fade-in-up premium-card profile-card-enhanced perspective-card artistic-hover w-full engineer-card ai-panel" style="transition-delay: 200ms;" data-parallax="5">
+                        <div class="profile-card rounded-xl p-6 md:p-8 text-center fade-in-up premium-card profile-card-enhanced perspective-card artistic-hover w-full engineer-card ai-panel"
+                            style="transition-delay: 200ms;" data-parallax="5">
                             <div class="glow"></div>
                             <div class="card-shine"></div>
                             <div class="holo-border inline-block mb-4 md:mb-6">
-                                <img src="assets/images/Akito.PNG" alt="伊織 暁斗（Akito Iori）アーティスト写真" class="profile-photo w-28 h-28 md:w-36 md:h-36 rounded-full" style="border-color: orangered;">
+                                <img src="assets/images/Akito.PNG" alt="伊織 暁斗（Akito Iori）アーティスト写真"
+                                    class="profile-photo w-28 h-28 md:w-36 md:h-36 rounded-full"
+                                    style="border-color: orangered;">
                             </div>
-                            <h3 class="text-2xl md:text-3xl font-bold mb-2 pulse-text gradient-text-tech text-shadow-tech" data-i18n="card-akito-name">伊織 暁斗</h3>
-                            <p class="text-orange-300 mb-3 md:mb-4 text-sm md:text-base" data-i18n="card-akito-desc">Singer-Songwriter</p>
+                            <h3 class="text-2xl md:text-3xl font-bold mb-2 pulse-text gradient-text-tech text-shadow-tech"
+                                data-i18n="card-akito-name">伊織 暁斗</h3>
+                            <p class="text-orange-300 mb-3 md:mb-4 text-sm md:text-base" data-i18n="card-akito-desc">
+                                Singer-Songwriter</p>
                             <p class="text-gray-400 text-xs md:text-sm" data-i18n="card-akito-date">2025/09/24 START</p>
                         </div>
                         <!-- Fake ID RSA Card -->
-                        <div class="profile-card rounded-xl p-6 md:p-8 text-center fade-in-up premium-card profile-card-enhanced perspective-card artistic-hover w-full engineer-card ai-panel" style="transition-delay: 300ms;" data-parallax="5">
+                        <div class="profile-card rounded-xl p-6 md:p-8 text-center fade-in-up premium-card profile-card-enhanced perspective-card artistic-hover w-full engineer-card ai-panel"
+                            style="transition-delay: 300ms;" data-parallax="5">
                             <div class="glow"></div>
                             <div class="card-shine"></div>
                             <div class="holo-border inline-block mb-4 md:mb-6">
-                                <img src="assets/images/Fake ID.PNG" alt="Fake ID（アーティスト写真）" class="profile-photo w-28 h-28 md:w-36 md:h-36 rounded-full">
+                                <img src="assets/images/Fake ID.PNG" alt="Fake ID（アーティスト写真）"
+                                    class="profile-photo w-28 h-28 md:w-36 md:h-36 rounded-full">
                             </div>
-                            <h3 class="text-2xl md:text-3xl font-bold mb-2 pulse-text gradient-text-artist text-shadow-artistic" data-i18n="card-fakeid-name">Fake ID</h3>
-                            <p class="text-cyan-300 mb-3 md:mb-4 text-sm md:text-base" data-i18n="card-fakeid-desc">Singer-Songwriter</p>
-                            <p class="text-gray-400 text-xs md:text-sm" data-i18n="card-fakeid-date">2025/12/24 START</p>
+                            <h3 class="text-2xl md:text-3xl font-bold mb-2 pulse-text gradient-text-artist text-shadow-artistic"
+                                data-i18n="card-fakeid-name">Fake ID</h3>
+                            <p class="text-cyan-300 mb-3 md:mb-4 text-sm md:text-base" data-i18n="card-fakeid-desc">
+                                Singer-Songwriter</p>
+                            <p class="text-gray-400 text-xs md:text-sm" data-i18n="card-fakeid-date">2025/12/24 START
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -224,24 +262,27 @@
         </div>
     </footer>
     <!-- Structured Data (JSON-LD) for SEO -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Ryuya",
-      "alternateName": ["紫苑", "伊織暁斗"],
-      "url": "https://ryuya-official.netlify.app/profile.html",
-      "image": "https://ryuya-official.netlify.app/assets/images/ogp-image.png",
-      "sameAs": [
-        "https://twitter.com/Ryuya_330",
-        "https://www.youtube.com/@Ryuya_330",
-        "https://note.com/ryuya_330"
-      ],
-      "jobTitle": ["AI Creator", "Singer-Songwriter", "Novelist"],
-      "description": "AI Creator × Singer-Songwriter × Google AI Student Lead Ambassador × Novelist",
-      "knowsAbout": ["Music", "AI", "Writing", "Technology"]
-    }
-    </script>
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "Ryuya",
+            "alternateName": ["紫苑", "伊織暁斗"],
+            "url": "https://ryuya-330.com/profile.html",
+            "image": "https://ryuya-330.com/assets/images/logos/ogp-profile.png",
+            "sameAs": [
+                "https://twitter.com/Ryuya_330",
+                "https://www.instagram.com/ryuya_330/",
+                "https://www.youtube.com/@Ryuya_330",
+                "https://open.spotify.com/artist/0vQb6QwQ6rQn2yQwQwQwQw",
+                "https://www.tiktok.com/@ryuya_330",
+                "https://www.facebook.com/ryuya.official"
+            ],
+            "jobTitle": ["Singer-Songwriter", "AI Artist", "AI Creator", "Google AI Student Lead Ambassador", "Novelist"],
+            "description": "From JAPAN to the WORLD — 日本を背負うシンガーソングライターRyuyaのプロフィール。AI Artist / AI Creator / Singer-Songwriter。Google AI Student Lead Ambassador。Japanese Soul × Global Sound。",
+            "knowsAbout": ["Music", "AI", "Writing", "Technology", "Japan", "Global"]
+        }
+        </script>
 
     <!-- Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
