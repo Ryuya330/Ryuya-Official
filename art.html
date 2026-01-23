@@ -304,7 +304,54 @@
     </style>
 </head>
 
-<body class="antialiased no-save">
+<body class="antialiased no-save" style="font-family: 'Montserrat', 'Noto Serif JP', 'Noto Sans JP', sans-serif;">
+    <!-- 和柄背景 + ゴールドグラデーションバー -->
+    <div class="fixed top-0 left-0 w-full h-2 bg-gradient-to-r from-gold via-sakura to-japanred z-[60] animate-pulse">
+    </div>
+    <div
+        class="fixed inset-0 -z-10 bg-[url('https://www.transparenttextures.com/patterns/wavecut.png')] bg-repeat opacity-10">
+    </div>
+    <style>
+        :root {
+            --gold: #FFD700;
+            --sakura: #F8C3CD;
+            --japanred: #B7282E;
+        }
+
+        .text-gold {
+            color: var(--gold) !important;
+        }
+
+        .bg-gold {
+            background-color: var(--gold) !important;
+        }
+
+        .border-gold {
+            border-color: var(--gold) !important;
+        }
+
+        .from-gold {
+            --tw-gradient-from: #FFD700;
+            --tw-gradient-to: rgb(248 195 205 / 0);
+            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+        }
+
+        .via-sakura {
+            --tw-gradient-stops: var(--tw-gradient-from), #F8C3CD, var(--tw-gradient-to);
+        }
+
+        .to-japanred {
+            --tw-gradient-to: #B7282E;
+        }
+
+        .text-sakura {
+            color: var(--sakura) !important;
+        }
+
+        .text-japanred {
+            color: var(--japanred) !important;
+        }
+    </style>
     <!-- Scroll Progress Bar -->
     <div id="scroll-progress"
         class="fixed top-0 left-0 h-1 bg-gradient-to-r from-purple-500 to-pink-500 z-[60] transition-all duration-300"
@@ -362,18 +409,57 @@
                     <div class="glow"></div>
                     <div class="card-shine"></div>
                     <h1 class="text-3xl md:text-4xl font-bold mb-4 glitch-text gradient-text-artist text-shadow-artistic"
-                        data-text="ART ARCHIVE">ART ARCHIVE</h1>
-                    <p class="text-gray-200 text-base md:text-lg leading-relaxed mb-4">
-                        既に引退したRyuyaが過去に創作した約3,000作品の中から評価が高かった作品を195作品用意しました。順不同なので最新順ではないです。
-                    </p>
+                        data-text="ART ARCHIVE">
+                        <span
+                            class="glitch-base font-['Montserrat','Noto_Serif_JP',sans-serif] tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-gold via-sakura to-japanred drop-shadow-lg"
+                            data-i18n="art-title">ART ARCHIVE <span class="inline-block ml-2">🎨</span></span>
+                        <span
+                            class="glitch-layer font-['Montserrat','Noto_Serif_JP',sans-serif] tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-gold via-sakura to-japanred drop-shadow-lg"
+                            data-i18n="art-title">ART ARCHIVE <span class="inline-block ml-2">🎨</span></span>
+                        <span
+                            class="glitch-layer font-['Montserrat','Noto_Serif_JP',sans-serif] tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-gold via-sakura to-japanred drop-shadow-lg"
+                            data-i18n="art-title">ART ARCHIVE <span class="inline-block ml-2">🎨</span></span>
+                    </h1>
+                    <div class="max-w-2xl mx-auto fade-in-up visible text-center animated-gradient-text text-reveal px-4 mb-4"
+                        style="transition-delay: 100ms;">
+                        <p class="mt-2 text-xl sm:text-2xl md:text-3xl font-bold tracking-tight mb-2 sm:mb-3 text-center text-transparent bg-clip-text bg-gradient-to-r from-japanred via-gold to-indigo-900 font-['Montserrat','Noto_Serif_JP',sans-serif] drop-shadow-lg"
+                            data-i18n="art-catch-ja">世界を魅了する日本発AIアートアーカイブ</p>
+                        <p class="mt-2 text-xl sm:text-2xl md:text-3xl font-bold tracking-tight mb-2 sm:mb-3 text-center text-transparent bg-clip-text bg-gradient-to-r from-japanred via-gold to-indigo-900 font-['Montserrat','Noto_Serif_JP',sans-serif] drop-shadow-lg"
+                            data-i18n="art-catch-en">A Japanese AI Art Archive to the World</p>
+                    </div>
+                    <div class="flex justify-center gap-2 mb-4">
+                        <button
+                            class="lang-btn font-bold px-4 py-1 rounded-full border-2 border-gold bg-white/80 text-japanred shadow hover:bg-gold hover:text-white transition"
+                            data-lang="ja" id="lang-ja">JP</button>
+                        <button
+                            class="lang-btn px-4 py-1 rounded-full border-2 border-gold bg-white/80 text-japanred shadow hover:bg-gold hover:text-white transition"
+                            data-lang="en" id="lang-en">EN</button>
+                    </div>
+                    <div class="flex justify-center gap-6 mb-6 fade-in-up" style="transition-delay: 120ms;">
+                        <a href="https://twitter.com/Ryuya_330" target="_blank" rel="noopener" aria-label="X(Twitter)"
+                            class="text-3xl text-japanred hover:text-gold transition drop-shadow-lg"><i
+                                class="fab fa-x-twitter"></i></a>
+                        <a href="https://www.instagram.com/ryuya_330/" target="_blank" rel="noopener"
+                            aria-label="Instagram"
+                            class="text-3xl text-indigo-900 hover:text-sakura transition drop-shadow-lg"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="https://www.youtube.com/@Ryuya_330" target="_blank" rel="noopener" aria-label="YouTube"
+                            class="text-3xl text-red-600 hover:text-gold transition drop-shadow-lg"><i
+                                class="fab fa-youtube"></i></a>
+                        <a href="https://open.spotify.com/artist/0vQb6QwQ6rQn2yQwQwQwQw" target="_blank" rel="noopener"
+                            aria-label="Spotify"
+                            class="text-3xl text-green-500 hover:text-gold transition drop-shadow-lg"><i
+                                class="fab fa-spotify"></i></a>
+                    </div>
                     <div class="flex flex-col gap-3 text-xs md:text-sm text-gray-300">
                         <div class="flex items-start gap-2">
                             <i class="fas fa-ban text-rose-400 mt-1"></i>
-                            <span>無断転載・無断使用・無断保存・スクリーンショット等の行為を固く禁止します。</span>
+                            <span data-i18n="art-warning-ja">無断転載・無断使用・無断保存・スクリーンショット等の行為を固く禁止します。</span>
                         </div>
                         <div class="flex items-start gap-2">
                             <i class="fas fa-shield-halved text-cyan-300 mt-1"></i>
-                            <span>右クリック禁止 / 長押し禁止 / ドラッグ&ドロップ禁止 / 保存や印刷のショートカット無効化を適用しています。</span>
+                            <span data-i18n="art-protect-ja">右クリック禁止 / 長押し禁止 / ドラッグ&ドロップ禁止 /
+                                保存や印刷のショートカット無効化を適用しています。</span>
                         </div>
                     </div>
                 </div>
