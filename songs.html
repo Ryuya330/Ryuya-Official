@@ -96,6 +96,8 @@
                 <a href="index.html" class="nav-link text-lg" id="nav-home" data-i18n="nav-home">HOME</a>
                 <a href="profile.html" class="nav-link text-lg" id="nav-profile" data-i18n="nav-profile">PROFILE</a>
                 <a href="songs.html" class="nav-link active text-lg" id="nav-songs" data-i18n="nav-songs">SONGS</a>
+                <a href="news.html" class="nav-link text-lg" id="nav-news" data-i18n="nav-news">NEWS</a>
+                <a href="gallery.html" class="nav-link text-lg" id="nav-gallery" data-i18n="nav-gallery">GALLERY</a>
                 <!-- 言語切り替えボタン -->
                 <div class="ml-6 flex items-center space-x-2" id="lang-switcher">
                     <button class="lang-btn font-bold" data-lang="ja" id="lang-ja">JP</button>
@@ -116,6 +118,8 @@
             <a href="index.html" class="mobile-nav-link text-xl" data-i18n="nav-home">HOME</a>
             <a href="profile.html" class="mobile-nav-link text-xl" data-i18n="nav-profile">PROFILE</a>
             <a href="songs.html" class="mobile-nav-link text-xl" data-i18n="nav-songs">SONGS</a>
+            <a href="news.html" class="mobile-nav-link text-xl" data-i18n="nav-news">NEWS</a>
+            <a href="gallery.html" class="mobile-nav-link text-xl" data-i18n="nav-gallery">GALLERY</a>
             <!-- 言語切り替え（モバイル用） -->
             <div class="flex items-center space-x-2 mt-8" id="lang-switcher-mobile">
                 <button class="lang-btn font-bold" data-lang="ja" id="lang-ja-mobile">JP</button>
@@ -142,28 +146,47 @@
             <div class="container mx-auto">
                 <h2 class="section-title text-5xl font-bold text-center mb-16 fade-in-up gradient-text-tech text-shadow-tech"
                     data-parallax="10">
-                    <span class="glitch-text gradient-text-artist" data-text="SONGS" data-i18n="songs-title">SONGS</span>
+                    <span class="glitch-text gradient-text-artist" data-text="SONGS"
+                        data-i18n="songs-title">SONGS</span>
                 </h2>
                 <div class="section-divider"></div>
-                                                <!-- キャッチコピー（日英） -->
-                                                <div class="max-w-2xl mx-auto fade-in-up visible text-center animated-gradient-text text-reveal px-4 mb-4" style="transition-delay: 100ms;">
-                                                    <p class="mt-2 text-lg sm:text-xl md:text-2xl text-white font-bold tracking-wide mb-2 sm:mb-3 text-center">
-                                                        <span class="gradient-text-tech text-shadow-tech block">世界を魅了する日本発シンガーソングライター</span>
-                                                        <span class="gradient-text-tech text-shadow-tech block">A Singer-Songwriter from Japan to the World</span>
-                                                    </p>
-                                                </div>
-                                                <!-- SNSアイコン -->
-                                                <div class="flex justify-center gap-6 mb-6 fade-in-up" style="transition-delay: 120ms;">
-                                                    <a href="https://twitter.com/Ryuya_330" target="_blank" rel="noopener" aria-label="X(Twitter)" class="text-2xl text-white hover:text-purple-400 transition"><i class="fab fa-x-twitter"></i></a>
-                                                    <a href="https://www.instagram.com/ryuya_330/" target="_blank" rel="noopener" aria-label="Instagram" class="text-2xl text-white hover:text-pink-400 transition"><i class="fab fa-instagram"></i></a>
-                                                    <a href="https://www.youtube.com/@Ryuya_330" target="_blank" rel="noopener" aria-label="YouTube" class="text-2xl text-white hover:text-red-500 transition"><i class="fab fa-youtube"></i></a>
-                                                    <a href="https://open.spotify.com/artist/0vQb6QwQ6rQn2yQwQwQwQw" target="_blank" rel="noopener" aria-label="Spotify" class="text-2xl text-white hover:text-green-400 transition"><i class="fab fa-spotify"></i></a>
-                                                </div>
-                                                <!-- Spotify/YouTube埋め込み -->
-                                                <div class="flex flex-col md:flex-row justify-center items-center gap-6 fade-in-up mb-8" style="transition-delay: 140ms;">
-                                                    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/0vQb6QwQ6rQn2yQwQwQwQw?utm_source=generator" width="320" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                                                    <iframe width="320" height="80" src="https://www.youtube.com/embed?listType=user_uploads&list=Ryuya_330" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                                                </div>
+                <!-- キャッチコピー（日英） -->
+                <div class="max-w-2xl mx-auto fade-in-up visible text-center animated-gradient-text text-reveal px-4 mb-4"
+                    style="transition-delay: 100ms;">
+                    <p
+                        class="mt-2 text-lg sm:text-xl md:text-2xl text-white font-bold tracking-wide mb-2 sm:mb-3 text-center">
+                        <span class="gradient-text-tech text-shadow-tech block">世界を魅了する日本発シンガーソングライター</span>
+                        <span class="gradient-text-tech text-shadow-tech block">A Singer-Songwriter from Japan to the
+                            World</span>
+                    </p>
+                </div>
+                <!-- SNSアイコン -->
+                <div class="flex justify-center gap-6 mb-6 fade-in-up" style="transition-delay: 120ms;">
+                    <a href="https://twitter.com/Ryuya_330" target="_blank" rel="noopener" aria-label="X(Twitter)"
+                        class="text-2xl text-white hover:text-purple-400 transition"><i
+                            class="fab fa-x-twitter"></i></a>
+                    <a href="https://www.instagram.com/ryuya_330/" target="_blank" rel="noopener" aria-label="Instagram"
+                        class="text-2xl text-white hover:text-pink-400 transition"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.youtube.com/@Ryuya_330" target="_blank" rel="noopener" aria-label="YouTube"
+                        class="text-2xl text-white hover:text-red-500 transition"><i class="fab fa-youtube"></i></a>
+                    <a href="https://open.spotify.com/artist/0vQb6QwQ6rQn2yQwQwQwQw" target="_blank" rel="noopener"
+                        aria-label="Spotify" class="text-2xl text-white hover:text-green-400 transition"><i
+                            class="fab fa-spotify"></i></a>
+                </div>
+                <!-- Spotify/YouTube埋め込み -->
+                <div class="flex flex-col md:flex-row justify-center items-center gap-6 fade-in-up mb-8"
+                    style="transition-delay: 140ms;">
+                    <iframe style="border-radius:12px"
+                        src="https://open.spotify.com/embed/artist/0vQb6QwQ6rQn2yQwQwQwQw?utm_source=generator"
+                        width="320" height="80" frameBorder="0" allowfullscreen=""
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                        loading="lazy" title="Spotify: Ryuya Artist Profile"></iframe>
+                    <iframe width="320" height="80"
+                        src="https://www.youtube.com/embed?listType=user_uploads&list=Ryuya_330"
+                        title="YouTube: Ryuya Official Channel" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen></iframe>
+                </div>
                 <div class="max-w-6xl mx-auto">
                     <div class="songs-card-grid">
                         <!-- 1. Ryuya -->

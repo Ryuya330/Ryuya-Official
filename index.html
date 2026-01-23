@@ -115,6 +115,8 @@
                 <a href="index.html" class="nav-link active text-lg" id="nav-home" data-i18n="nav-home">HOME</a>
                 <a href="profile.html" class="nav-link text-lg" id="nav-profile" data-i18n="nav-profile">PROFILE</a>
                 <a href="songs.html" class="nav-link text-lg" id="nav-songs" data-i18n="nav-songs">SONGS</a>
+                <a href="news.html" class="nav-link text-lg" id="nav-news" data-i18n="nav-news">NEWS</a>
+                <a href="gallery.html" class="nav-link text-lg" id="nav-gallery" data-i18n="nav-gallery">GALLERY</a>
                 <!-- 言語切り替えボタン -->
                 <div class="ml-6 flex items-center space-x-2" id="lang-switcher">
                     <button class="lang-btn font-bold" data-lang="ja" id="lang-ja">JP</button>
@@ -135,6 +137,8 @@
             <a href="index.html" class="mobile-nav-link text-xl" data-i18n="nav-home">HOME</a>
             <a href="profile.html" class="mobile-nav-link text-xl" data-i18n="nav-profile">PROFILE</a>
             <a href="songs.html" class="mobile-nav-link text-xl" data-i18n="nav-songs">SONGS</a>
+            <a href="news.html" class="mobile-nav-link text-xl" data-i18n="nav-news">NEWS</a>
+            <a href="gallery.html" class="mobile-nav-link text-xl" data-i18n="nav-gallery">GALLERY</a>
             <!-- 言語切り替え（モバイル用） -->
             <div class="flex items-center space-x-2 mt-8" id="lang-switcher-mobile">
                 <button class="lang-btn font-bold" data-lang="ja" id="lang-ja-mobile">JP</button>
@@ -152,7 +156,7 @@
             <!-- Background Video -->
             <video id="bg-video" class="absolute inset-0 w-full h-full object-cover" style="z-index:0;" autoplay muted
                 loop playsinline>
-                <source src="assets/images/All images, reborn..MP4" type="video/mp4">
+                <source src="assets/images/All images, reborn..MP4" type="video/mp4" title="Ryuya MV・ライブ映像・アートワーク動画">
             </video>
             <!-- Dim overlay to keep text readable over video -->
             <div class="hero-overlay"></div>
@@ -177,47 +181,73 @@
 
             <div class="relative w-full max-w-4xl mx-auto text-center" style="z-index: 30;">
 
-                                <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold section-title ryuya-animate mb-4 sm:mb-6 glitch-text holographic neon-text text-center gpu-accelerated gradient-text-artist text-shadow-artistic"
-                                        data-text="Ryuya" data-parallax="15">
-                                        <span class="glitch-base" data-i18n="hero-title">Ryuya</span>
-                                        <span class="glitch-layer" data-i18n="hero-title">Ryuya</span>
-                                        <span class="glitch-layer" data-i18n="hero-title">Ryuya</span>
-                                </h1>
-                                <!-- キャッチコピー（日英） -->
-                                <div class="max-w-2xl mx-auto fade-in-up visible text-center animated-gradient-text text-reveal px-4" style="transition-delay: 200ms;" data-parallax="8">
-                                    <p class="mt-2 text-lg sm:text-xl md:text-2xl text-white font-bold tracking-wide mb-2 sm:mb-3 text-center">
-                                        <span class="gradient-text-tech text-shadow-tech block" data-i18n="hero-catch-ja">世界を魅了する日本発シンガーソングライター</span>
-                                        <span class="gradient-text-tech text-shadow-tech block" data-i18n="hero-catch-en">A Singer-Songwriter from Japan to the World</span>
-                                    </p>
-                                    <p class="text-sm sm:text-base md:text-lg text-gray-200 font-serif tracking-wide mb-4 sm:mb-6 text-center">
-                                        <span class="gradient-text-tech text-shadow-tech" data-i18n="hero-desc1">元AI Artist / AI Creator / Singer-Songwriter</span><br>
-                                        <span class="gradient-text-artist text-shadow-artistic" data-i18n="hero-desc2">Google AI Student Lead Ambassador / 元Novelist</span>
-                                    </p>
-                                    <p class="text-sm sm:text-base md:text-lg text-gray-400 mb-6 sm:mb-8 pulse-text text-center" style="line-height:2;">
-                                        <span class="text-primary font-bold gradient-text-animated holographic">アート × 音楽 × 物語 × テクノロジー</span>
-                                    </p>
-                                </div>
+                <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold section-title ryuya-animate mb-4 sm:mb-6 glitch-text holographic neon-text text-center gpu-accelerated gradient-text-artist text-shadow-artistic"
+                    data-text="Ryuya" data-parallax="15">
+                    <span class="glitch-base" data-i18n="hero-title">Ryuya</span>
+                    <span class="glitch-layer" data-i18n="hero-title">Ryuya</span>
+                    <span class="glitch-layer" data-i18n="hero-title">Ryuya</span>
+                </h1>
+                <!-- キャッチコピー（日英） -->
+                <div class="max-w-2xl mx-auto fade-in-up visible text-center animated-gradient-text text-reveal px-4"
+                    style="transition-delay: 200ms;" data-parallax="8">
+                    <p
+                        class="mt-2 text-lg sm:text-xl md:text-2xl text-white font-bold tracking-wide mb-2 sm:mb-3 text-center">
+                        <span class="gradient-text-tech text-shadow-tech block"
+                            data-i18n="hero-catch-ja">世界を魅了する日本発シンガーソングライター</span>
+                        <span class="gradient-text-tech text-shadow-tech block" data-i18n="hero-catch-en">A
+                            Singer-Songwriter from Japan to the World</span>
+                    </p>
+                    <p
+                        class="text-sm sm:text-base md:text-lg text-gray-200 font-serif tracking-wide mb-4 sm:mb-6 text-center">
+                        <span class="gradient-text-tech text-shadow-tech" data-i18n="hero-desc1">元AI Artist / AI Creator
+                            / Singer-Songwriter</span><br>
+                        <span class="gradient-text-artist text-shadow-artistic" data-i18n="hero-desc2">Google AI Student
+                            Lead Ambassador / 元Novelist</span>
+                    </p>
+                    <p class="text-sm sm:text-base md:text-lg text-gray-400 mb-6 sm:mb-8 pulse-text text-center"
+                        style="line-height:2;">
+                        <span class="text-primary font-bold gradient-text-animated holographic">アート × 音楽 × 物語 ×
+                            テクノロジー</span>
+                    </p>
+                </div>
 
-                                <!-- SNSアイコン -->
-                                <div class="flex justify-center gap-6 mb-6 fade-in-up" style="transition-delay: 300ms;">
-                                    <a href="https://twitter.com/Ryuya_330" target="_blank" rel="noopener" aria-label="X(Twitter)" class="text-2xl text-white hover:text-purple-400 transition"><i class="fab fa-x-twitter"></i></a>
-                                    <a href="https://www.instagram.com/ryuya_330/" target="_blank" rel="noopener" aria-label="Instagram" class="text-2xl text-white hover:text-pink-400 transition"><i class="fab fa-instagram"></i></a>
-                                    <a href="https://www.youtube.com/@Ryuya_330" target="_blank" rel="noopener" aria-label="YouTube" class="text-2xl text-white hover:text-red-500 transition"><i class="fab fa-youtube"></i></a>
-                                    <a href="https://open.spotify.com/artist/0vQb6QwQ6rQn2yQwQwQwQw" target="_blank" rel="noopener" aria-label="Spotify" class="text-2xl text-white hover:text-green-400 transition"><i class="fab fa-spotify"></i></a>
-                                </div>
+                <!-- SNSアイコン -->
+                <div class="flex justify-center gap-6 mb-6 fade-in-up" style="transition-delay: 300ms;">
+                    <a href="https://twitter.com/Ryuya_330" target="_blank" rel="noopener" aria-label="X(Twitter)"
+                        class="text-2xl text-white hover:text-purple-400 transition"><i
+                            class="fab fa-x-twitter"></i></a>
+                    <a href="https://www.instagram.com/ryuya_330/" target="_blank" rel="noopener" aria-label="Instagram"
+                        class="text-2xl text-white hover:text-pink-400 transition"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.youtube.com/@Ryuya_330" target="_blank" rel="noopener" aria-label="YouTube"
+                        class="text-2xl text-white hover:text-red-500 transition"><i class="fab fa-youtube"></i></a>
+                    <a href="https://open.spotify.com/artist/0vQb6QwQ6rQn2yQwQwQwQw" target="_blank" rel="noopener"
+                        aria-label="Spotify" class="text-2xl text-white hover:text-green-400 transition"><i
+                            class="fab fa-spotify"></i></a>
+                </div>
 
-                                <!-- Spotify/YouTube埋め込み -->
-                                <div class="flex flex-col md:flex-row justify-center items-center gap-6 fade-in-up" style="transition-delay: 350ms;">
-                                    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/0vQb6QwQ6rQn2yQwQwQwQw?utm_source=generator" width="320" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                                    <iframe width="320" height="80" src="https://www.youtube.com/embed?listType=user_uploads&list=Ryuya_330" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                                </div>
+                <!-- Spotify/YouTube埋め込み -->
+                <div class="flex flex-col md:flex-row justify-center items-center gap-6 fade-in-up"
+                    style="transition-delay: 350ms;">
+                    <iframe style="border-radius:12px"
+                        src="https://open.spotify.com/embed/artist/0vQb6QwQ6rQn2yQwQwQwQw?utm_source=generator"
+                        width="320" height="80" frameBorder="0" allowfullscreen=""
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                        loading="lazy" title="Spotify: Ryuya Artist Profile"></iframe>
+                    <iframe width="320" height="80"
+                        src="https://www.youtube.com/embed?listType=user_uploads&list=Ryuya_330"
+                        title="YouTube: Ryuya Official Channel" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen></iframe>
+                </div>
 
-                                <div class="mt-6 sm:mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 fade-in-up visible px-4" style="transition-delay: 400ms;" data-parallax="5">
-                                    <a href="songs.html" class="hero-cta premium-btn depth-shadow morphing-border magnetic-btn advanced-shine neon-border btn-futuristic w-full sm:w-auto">
-                                        <span class="btn-text" data-i18n="btn-songs-list">楽曲一覧</span>
-                                        <span class="btn-shine"></span>
-                                    </a>
-                                </div>
+                <div class="mt-6 sm:mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 fade-in-up visible px-4"
+                    style="transition-delay: 400ms;" data-parallax="5">
+                    <a href="songs.html"
+                        class="hero-cta premium-btn depth-shadow morphing-border magnetic-btn advanced-shine neon-border btn-futuristic w-full sm:w-auto">
+                        <span class="btn-text" data-i18n="btn-songs-list">楽曲一覧</span>
+                        <span class="btn-shine"></span>
+                    </a>
+                </div>
 
                 <!-- Audio wave visual -->
                 <div class="audio-wave-container mt-12 sm:mt-16">
