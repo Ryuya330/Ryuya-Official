@@ -2,47 +2,6 @@
 <html lang="ja">
 
 <head>
-    <style>
-        :root {
-            --gold: #FFD700;
-            --sakura: #F8C3CD;
-            --japanred: #B7282E;
-        }
-
-        .text-gold {
-            color: var(--gold) !important;
-        }
-
-        .bg-gold {
-            background-color: var(--gold) !important;
-        }
-
-        .border-gold {
-            border-color: var(--gold) !important;
-        }
-
-        .from-gold {
-            --tw-gradient-from: #FFD700;
-            --tw-gradient-to: rgb(248 195 205 / 0);
-            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-        }
-
-        .via-sakura {
-            --tw-gradient-stops: var(--tw-gradient-from), #F8C3CD, var(--tw-gradient-to);
-        }
-
-        .to-japanred {
-            --tw-gradient-to: #B7282E;
-        }
-
-        .text-sakura {
-            color: var(--sakura) !important;
-        }
-
-        .text-japanred {
-            color: var(--japanred) !important;
-        }
-    </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="format-detection" content="telephone=no">
@@ -60,9 +19,9 @@
     <!-- SEO & OGP Meta Tags -->
     <title>Ryuya Official</title>
     <meta name="description"
-        content="世界を魅了する日本発シンガーソングライターRyuyaのオフィシャルサイト。From Japan to the World. Official site of Ryuya, a singer-songwriter representing Japan to the world. Music, Art, Technology, Story.">
+        content="元AI Artist / AI Creator / Singer-Songwriter / Google AI Student Lead Ambassador / 元Novelist, Ryuyaのオフィシャルサイト。作品、プロフィール、最新情報をお届けします。">
     <meta name="keywords"
-        content="Ryuya, Japan, Japanese Artist, Singer-Songwriter, Global, International, AI Creator, Google AI Student Lead Ambassador, Novelist, 紫苑, 伊織暁斗, 音楽, Music, J-Pop, Japanese Culture, アート, Art, Technology, 世界, World">
+        content="Ryuya, AI Creator, Singer-Songwriter, Google AI Student Lead Ambassador, 元Novelist, 紫苑, 伊織暁斗, 音楽, AIアート">
     <meta name="author" content="Ryuya">
     <meta name="google-site-verification" content="5U1vhJGLCyd7wfsLuyHzSneCRP_J9kp5XyquhojbiYo" />
 
@@ -71,7 +30,7 @@
     <meta property="og:url" content="https://ryuya-official.netlify.app/">
     <meta property="og:title" content="Ryuya Official">
     <meta property="og:description"
-        content="From Japan to the World. 世界を魅了する日本発シンガーソングライターRyuyaのオフィシャルサイト。Music × Story × Technology × Japanese Soul">
+        content="元AI Artist / AI Creator / Singer-Songwriter / Google AI Student Lead Ambassador / 元Novelist, Ryuyaのオフィシャルサイト。音楽 × 物語 × テクノロジー">
     <meta property="og:image" content="https://ryuya-official.netlify.app/assets/images/ogp-image.png?v=2">
     <meta property="og:image:secure_url" content="https://ryuya-official.netlify.app/assets/images/ogp-image.png?v=2">
     <meta property="og:image:type" content="image/png">
@@ -80,7 +39,6 @@
     <meta property="og:image:alt" content="Ryuya Official - AI Creator × Singer-Songwriter × Novelist">
     <meta property="og:site_name" content="Ryuya Official">
     <meta property="og:locale" content="ja_JP">
-    <meta property="og:locale:alternate" content="en_US">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
@@ -88,7 +46,7 @@
     <meta name="twitter:creator" content="@Ryuya_330">
     <meta name="twitter:title" content="Ryuya Official">
     <meta name="twitter:description"
-        content="From Japan to the World. 世界を魅了する日本発シンガーソングライターRyuyaのオフィシャルサイト。Music × Story × Technology × Japanese Soul">
+        content="元AI Artist / AI Creator / Singer-Songwriter / Google AI Student Lead Ambassador / 元Novelist, Ryuyaのオフィシャルサイト。音楽 × 物語 × テクノロジー">
     <meta property="twitter:image" content="https://ryuya-official.netlify.app/assets/images/ogp-image.png?v=2">
     <meta name="twitter:image:alt" content="Ryuya Official - AI Creator × Singer-Songwriter × Novelist">
 
@@ -118,13 +76,7 @@
     <link rel="stylesheet" href="css/enhanced-artist-tech.css">
 </head>
 
-<body class="antialiased" style="font-family: 'Montserrat', 'Noto Serif JP', 'Noto Sans JP', sans-serif;">
-    <!-- 和柄背景 + ゴールドグラデーションバー -->
-    <div class="fixed top-0 left-0 w-full h-2 bg-gradient-to-r from-gold via-sakura to-japanred z-[60] animate-pulse">
-    </div>
-    <div
-        class="fixed inset-0 -z-10 bg-[url('https://www.transparenttextures.com/patterns/wavecut.png')] bg-repeat opacity-10">
-    </div>
+<body class="antialiased">
 
     <!-- Loading Screen -->
     <div id="loading-screen"
@@ -159,18 +111,11 @@
     <header id="header" class="fixed top-0 left-0 w-full z-50 py-4 px-6 md:px-12">
         <div class="container mx-auto flex justify-between items-center">
             <a href="index.html" class="site-logo text-2xl">Ryuya</a>
-            <nav class="hidden md:flex space-x-8 items-center">
-                <a href="index.html" class="nav-link active text-lg" id="nav-home" data-i18n="nav-home">HOME</a>
-                <a href="profile.html" class="nav-link text-lg" id="nav-profile" data-i18n="nav-profile">PROFILE</a>
-                <a href="songs.html" class="nav-link text-lg" id="nav-songs" data-i18n="nav-songs">SONGS</a>
-                <a href="news.html" class="nav-link text-lg" id="nav-news" data-i18n="nav-news">NEWS</a>
-                <a href="gallery.html" class="nav-link text-lg" id="nav-gallery" data-i18n="nav-gallery">GALLERY</a>
-                <!-- 言語切り替えボタン -->
-                <div class="ml-6 flex items-center space-x-2" id="lang-switcher">
-                    <button class="lang-btn font-bold" data-lang="ja" id="lang-ja">JP</button>
-                    <span class="text-gray-400">|</span>
-                    <button class="lang-btn" data-lang="en" id="lang-en">EN</button>
-                </div>
+            <nav class="hidden md:flex space-x-8">
+                <a href="index.html" class="nav-link active text-lg" id="nav-home">HOME</a>
+                <a href="profile.html" class="nav-link text-lg" id="nav-profile">PROFILE</a>
+                <a href="songs.html" class="nav-link text-lg" id="nav-songs">SONGS</a>
+
             </nav>
             <button id="hamburger-btn" class="md:hidden z-50">
                 <i class="fas fa-bars text-2xl"></i>
@@ -182,33 +127,22 @@
     <nav id="mobile-nav"
         class="fixed top-0 right-0 h-full w-2/3 bg-gray-900/90 backdrop-blur-lg z-40 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden">
         <div class="flex flex-col items-center justify-center h-full space-y-8">
-            <a href="index.html" class="mobile-nav-link text-xl" data-i18n="nav-home">HOME</a>
-            <a href="profile.html" class="mobile-nav-link text-xl" data-i18n="nav-profile">PROFILE</a>
-            <a href="songs.html" class="mobile-nav-link text-xl" data-i18n="nav-songs">SONGS</a>
-            <a href="news.html" class="mobile-nav-link text-xl" data-i18n="nav-news">NEWS</a>
-            <a href="gallery.html" class="mobile-nav-link text-xl" data-i18n="nav-gallery">GALLERY</a>
-            <!-- 言語切り替え（モバイル用） -->
-            <div class="flex items-center space-x-2 mt-8" id="lang-switcher-mobile">
-                <button
-                    class="lang-btn font-bold px-4 py-1 rounded-full border-2 border-gold bg-white/80 text-japanred shadow hover:bg-gold hover:text-white transition"
-                    data-lang="ja" id="lang-ja-mobile">JP</button>
-                <span class="text-gray-400">|</span>
-                <button
-                    class="lang-btn px-4 py-1 rounded-full border-2 border-gold bg-white/80 text-japanred shadow hover:bg-gold hover:text-white transition"
-                    data-lang="en" id="lang-en-mobile">EN</button>
-            </div>
+            <a href="index.html" class="mobile-nav-link text-xl">HOME</a>
+            <a href="profile.html" class="mobile-nav-link text-xl">PROFILE</a>
+            <a href="songs.html" class="mobile-nav-link text-xl">SONGS</a>
+
         </div>
     </nav>
 
     <main id="main-content" class="main-content-visible">
         <!-- Home Section -->
         <section id="home"
-            class="min-h-screen flex flex-col items-center justify-center text-center relative px-4 sm:px-6 md:px-8 py-20 bg-gradient-to-br from-white via-sakura to-japanred bg-fixed bg-blend-overlay bg-opacity-90"
+            class="min-h-screen flex flex-col items-center justify-center text-center relative px-4 sm:px-6 md:px-8 py-20 tech-grid particle-bg ai-circuit-bg aurora-overlay data-stream luxe-hero"
             style="position: relative; z-index: 1; overflow: hidden;">
             <!-- Background Video -->
             <video id="bg-video" class="absolute inset-0 w-full h-full object-cover" style="z-index:0;" autoplay muted
                 loop playsinline>
-                <source src="assets/images/All images, reborn..MP4" type="video/mp4" title="Ryuya MV・ライブ映像・アートワーク動画">
+                <source src="assets/images/All images, reborn..MP4" type="video/mp4">
             </video>
             <!-- Dim overlay to keep text readable over video -->
             <div class="hero-overlay"></div>
@@ -232,97 +166,33 @@
             </div>
 
             <div class="relative w-full max-w-4xl mx-auto text-center" style="z-index: 30;">
-
                 <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold section-title ryuya-animate mb-4 sm:mb-6 glitch-text holographic neon-text text-center gpu-accelerated gradient-text-artist text-shadow-artistic"
                     data-text="Ryuya" data-parallax="15">
-                    <span
-                        class="glitch-base font-['Montserrat','Noto_Serif_JP',sans-serif] tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-gold via-sakura to-japanred drop-shadow-lg"
-                        data-i18n="hero-title">Ryuya <span class="inline-block ml-2">🇯🇵</span></span>
-                    <span
-                        class="glitch-layer font-['Montserrat','Noto_Serif_JP',sans-serif] tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-gold via-sakura to-japanred drop-shadow-lg"
-                        data-i18n="hero-title">Ryuya <span class="inline-block ml-2">🇯🇵</span></span>
-                    <span
-                        class="glitch-layer font-['Montserrat','Noto_Serif_JP',sans-serif] tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-gold via-sakura to-japanred drop-shadow-lg"
-                        data-i18n="hero-title">Ryuya <span class="inline-block ml-2">🇯🇵</span></span>
+                    <span class="glitch-base">Ryuya</span>
+                    <span class="glitch-layer">Ryuya</span>
+                    <span class="glitch-layer">Ryuya</span>
                 </h1>
-                <!-- キャッチコピー（日英） -->
                 <div class="max-w-2xl mx-auto fade-in-up visible text-center animated-gradient-text text-reveal px-4"
                     style="transition-delay: 200ms;" data-parallax="8">
                     <p
-                        class="mt-2 text-xl sm:text-2xl md:text-3xl font-bold tracking-tight mb-2 sm:mb-3 text-center text-transparent bg-clip-text bg-gradient-to-r from-japanred via-gold to-indigo-900 font-['Montserrat','Noto_Serif_JP',sans-serif] drop-shadow-lg">
-                        <span class="block" data-i18n="hero-catch-ja">世界を魅了する日本発シンガーソングライター</span>
-                        <span class="block" data-i18n="hero-catch-en">A Singer-Songwriter from Japan to the World</span>
-                    </p>
-                    <p
-                        class="text-lg sm:text-xl md:text-2xl text-gold font-bold tracking-wide mb-2 text-center font-['Montserrat','Noto_Serif_JP',sans-serif]">
-                        <span class="block">🇯🇵 Japanese Soul × 🌏 Global Sound</span>
-                    </p>
-                    <p
-                        class="text-base sm:text-lg md:text-xl text-gray-200 font-serif tracking-wide mb-4 sm:mb-6 text-center">
-                        <span class="block" data-i18n="hero-desc1">元AI Artist / AI Creator /
+                        class="mt-2 text-sm sm:text-base md:text-lg text-gray-200 font-serif tracking-wide mb-4 sm:mb-6 text-center">
+                        <span class="gradient-text-tech text-shadow-tech">元AI Artist / AI Creator /
                             Singer-Songwriter</span><br>
-                        <span class="block" data-i18n="hero-desc2">Google AI Student Lead Ambassador / 元Novelist</span>
+                        <span class="gradient-text-artist text-shadow-artistic">Google AI Student Lead Ambassador /
+                            元Novelist</span>
                     </p>
-                    <p class="text-base sm:text-lg md:text-xl text-gray-400 mb-6 sm:mb-8 pulse-text text-center"
+                    <p class="text-sm sm:text-base md:text-lg text-gray-400 mb-6 sm:mb-8 pulse-text text-center"
                         style="line-height:2;">
-                        <span
-                            class="text-primary font-bold bg-gradient-to-r from-japanred via-gold to-indigo-900 text-transparent bg-clip-text">Art
-                            × Music × Story × Technology</span>
+                        <span class="text-primary font-bold gradient-text-animated holographic">アート ×
+                            音楽 × 物語 × テクノロジー</span>
                     </p>
-                    <div class="flex justify-center gap-2 mb-4">
-                        <button
-                            class="lang-btn font-bold px-4 py-1 rounded-full border-2 border-gold bg-white/80 text-japanred shadow hover:bg-gold hover:text-white transition"
-                            data-lang="ja" id="lang-ja">JP</button>
-                        <button
-                            class="lang-btn px-4 py-1 rounded-full border-2 border-gold bg-white/80 text-japanred shadow hover:bg-gold hover:text-white transition"
-                            data-lang="en" id="lang-en">EN</button>
-                    </div>
-                </div>
-
-                <!-- SNSアイコン -->
-                <div class="flex justify-center gap-6 mb-6 fade-in-up" style="transition-delay: 300ms;">
-                    <a href="https://twitter.com/Ryuya_330" target="_blank" rel="noopener" aria-label="X(Twitter)"
-                        class="text-3xl text-japanred hover:text-gold transition drop-shadow-lg"><i
-                            class="fab fa-x-twitter"></i></a>
-                    <a href="https://www.instagram.com/ryuya_330/" target="_blank" rel="noopener" aria-label="Instagram"
-                        class="text-3xl text-indigo-900 hover:text-sakura transition drop-shadow-lg"><i
-                            class="fab fa-instagram"></i></a>
-                    <a href="https://www.youtube.com/@Ryuya_330" target="_blank" rel="noopener" aria-label="YouTube"
-                        class="text-3xl text-red-600 hover:text-gold transition drop-shadow-lg"><i
-                            class="fab fa-youtube"></i></a>
-                    <a href="https://open.spotify.com/artist/0vQb6QwQ6rQn2yQwQwQwQw" target="_blank" rel="noopener"
-                        aria-label="Spotify"
-                        class="text-3xl text-green-500 hover:text-gold transition drop-shadow-lg"><i
-                            class="fab fa-spotify"></i></a>
-                    <a href="https://www.tiktok.com/@ryuya_330" target="_blank" rel="noopener" aria-label="TikTok"
-                        class="text-3xl text-black hover:text-gold transition drop-shadow-lg"><i
-                            class="fab fa-tiktok"></i></a>
-                    <a href="https://www.facebook.com/ryuya.official" target="_blank" rel="noopener"
-                        aria-label="Facebook"
-                        class="text-3xl text-blue-700 hover:text-gold transition drop-shadow-lg"><i
-                            class="fab fa-facebook"></i></a>
-                </div>
-
-                <!-- Spotify/YouTube埋め込み -->
-                <div class="flex flex-col md:flex-row justify-center items-center gap-6 fade-in-up"
-                    style="transition-delay: 350ms;">
-                    <iframe style="border-radius:12px"
-                        src="https://open.spotify.com/embed/artist/0vQb6QwQ6rQn2yQwQwQwQw?utm_source=generator"
-                        width="320" height="80" frameBorder="0" allowfullscreen=""
-                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                        loading="lazy" title="Spotify: Ryuya Artist Profile"></iframe>
-                    <iframe width="320" height="80"
-                        src="https://www.youtube.com/embed?listType=user_uploads&list=Ryuya_330"
-                        title="YouTube: Ryuya Official Channel" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen></iframe>
                 </div>
 
                 <div class="mt-6 sm:mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 fade-in-up visible px-4"
                     style="transition-delay: 400ms;" data-parallax="5">
                     <a href="songs.html"
                         class="hero-cta premium-btn depth-shadow morphing-border magnetic-btn advanced-shine neon-border btn-futuristic w-full sm:w-auto">
-                        <span class="btn-text" data-i18n="btn-songs-list">楽曲一覧</span>
+                        <span class="btn-text">楽曲一覧</span>
                         <span class="btn-shine"></span>
                     </a>
                 </div>
@@ -383,7 +253,7 @@
     <!-- Custom JS -->
     <script src="js/app.js"></script>
     <script>
-        // --- 既存JS（ローディング・ハンバーガー・動画等） ---
+        // Loading Screen
         window.addEventListener('load', () => {
             const loadingScreen = document.getElementById('loading-screen');
             setTimeout(() => {
@@ -393,12 +263,16 @@
                 }, 500);
             }, 800);
         });
+
+        // Scroll Progress Bar
         window.addEventListener('scroll', () => {
             const winScroll = document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             const scrolled = (winScroll / height) * 100;
             document.getElementById('scroll-progress').style.width = scrolled + '%';
         });
+
+        // Back to Top Button
         const backToTopBtn = document.getElementById('back-to-top');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 300) {
@@ -412,8 +286,9 @@
         backToTopBtn.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
+
         document.addEventListener('DOMContentLoaded', () => {
-            // ハンバーガーメニュー動作
+            // ハンバーガーメニュー動作（全ページ共通JSが効かない場合の保険）
             const hamburgerBtn = document.getElementById('hamburger-btn');
             const mobileNav = document.getElementById('mobile-nav');
             const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
@@ -445,9 +320,10 @@
                     }
                 });
             }
-            // 動画自動再生
+            // Force video autoplay for all devices
             const bgVideo = document.getElementById('bg-video');
             if (bgVideo) {
+                // Set video source to the requested file
                 if (!bgVideo.querySelector('source')) {
                     const src = document.createElement('source');
                     src.src = 'assets/images/All images, reborn..MP4';
@@ -461,9 +337,13 @@
                 bgVideo.setAttribute('muted', '');
                 bgVideo.setAttribute('autoplay', '');
                 bgVideo.setAttribute('playsinline', '');
+                // Attempt to play immediately
                 const playPromise = bgVideo.play();
+
                 if (playPromise !== undefined) {
                     playPromise.catch(e => {
+                        console.log('Autoplay prevented:', e);
+                        // Retry on any user interaction (click, touch, scroll, keypress)
                         const startVideo = () => {
                             bgVideo.play();
                             document.removeEventListener('click', startVideo);
@@ -471,23 +351,31 @@
                             document.removeEventListener('scroll', startVideo);
                             document.removeEventListener('keydown', startVideo);
                         };
+
                         document.addEventListener('click', startVideo, { once: true });
                         document.addEventListener('touchstart', startVideo, { once: true });
                         document.addEventListener('scroll', startVideo, { once: true });
                         document.addEventListener('keydown', startVideo, { once: true });
                     });
                 }
+
+                // Additional check to ensure video is playing
                 setInterval(() => {
                     if (bgVideo.paused) {
                         bgVideo.play().catch(() => { });
                     }
                 }, 1000);
+
+                // Allow user to enable audio (policy-friendly: requires a gesture)
                 const soundBtn = document.getElementById('video-sound-btn');
                 const soundLabel = document.getElementById('video-sound-label');
+
                 const updateSoundLabel = () => {
                     if (!soundLabel) return;
                     soundLabel.textContent = bgVideo.muted ? 'Sound On' : 'Sound Off';
                 };
+
+                // Auto-unmute once after the first user interaction (click/touch/scroll/key)
                 const enableAudioOnce = () => {
                     bgVideo.muted = false;
                     bgVideo.volume = 0.7;
@@ -500,6 +388,7 @@
                 ['click', 'touchstart', 'scroll', 'keydown'].forEach(ev => {
                     document.addEventListener(ev, enableAudioOnce, { once: true });
                 });
+
                 if (soundBtn) {
                     soundBtn.addEventListener('click', () => {
                         bgVideo.muted = !bgVideo.muted;
@@ -512,6 +401,7 @@
                     updateSoundLabel();
                 }
             }
+
             document.getElementById('main-content').classList.add('main-content-visible');
             const currentPath = window.location.pathname.split('/').pop();
             const navLinks = document.querySelectorAll('.nav-link');
@@ -521,61 +411,6 @@
                     link.classList.add('active');
                 }
             });
-        });
-
-        // --- 多言語切り替え ---
-        const i18nTexts = {
-            'ja': {
-                'nav-home': 'HOME',
-                'nav-profile': 'PROFILE',
-                'nav-songs': 'SONGS',
-                'hero-title': 'Ryuya',
-                'hero-desc1': '元AI Artist / AI Creator / Singer-Songwriter',
-                'hero-desc2': 'Google AI Student Lead Ambassador / 元Novelist',
-                'btn-songs-list': '楽曲一覧',
-            },
-            'en': {
-                'nav-home': 'HOME',
-                'nav-profile': 'PROFILE',
-                'nav-songs': 'SONGS',
-                'hero-title': 'Ryuya',
-                'hero-desc1': 'Former AI Artist / AI Creator / Singer-Songwriter',
-                'hero-desc2': 'Google AI Student Lead Ambassador / Former Novelist',
-                'btn-songs-list': 'SONGS LIST',
-            }
-        };
-        function switchLang(lang) {
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (i18nTexts[lang] && i18nTexts[lang][key]) {
-                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-                        el.placeholder = i18nTexts[lang][key];
-                    } else {
-                        el.innerHTML = i18nTexts[lang][key];
-                    }
-                }
-            });
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.toggle('font-bold', btn.dataset.lang === lang);
-            });
-        }
-        document.addEventListener('DOMContentLoaded', () => {
-            let currentLang = 'ja';
-            switchLang(currentLang);
-            // デスクトップ
-            const btnJa = document.getElementById('lang-ja');
-            const btnEn = document.getElementById('lang-en');
-            if (btnJa && btnEn) {
-                btnJa.onclick = () => { currentLang = 'ja'; switchLang('ja'); };
-                btnEn.onclick = () => { currentLang = 'en'; switchLang('en'); };
-            }
-            // モバイル
-            const btnJaM = document.getElementById('lang-ja-mobile');
-            const btnEnM = document.getElementById('lang-en-mobile');
-            if (btnJaM && btnEnM) {
-                btnJaM.onclick = () => { currentLang = 'ja'; switchLang('ja'); };
-                btnEnM.onclick = () => { currentLang = 'en'; switchLang('en'); };
-            }
         });
     </script>
 </body>
