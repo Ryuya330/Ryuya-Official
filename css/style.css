@@ -1,3 +1,26 @@
+/* Homeセクションの動画サイズ調整 */
+#home #bg-video {
+    width: 100vw;
+    height: 100vh;
+    max-width: 1920px;
+    max-height: 900px;
+    object-fit: cover;
+}
+
+@media (max-width: 768px) {
+    #home #bg-video {
+        width: 100vw;
+        height: 60vh;
+        max-height: 420px;
+    }
+}
+
+@media (max-width: 430px) {
+    #home #bg-video {
+        height: 38vh;
+        max-height: 220px;
+    }
+}
 .songs-profile-card.songs-ryuya-card {
     min-height: 340px;
     max-width: 400px;
