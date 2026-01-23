@@ -92,11 +92,16 @@
     <header id="header" class="fixed top-0 left-0 w-full z-50 py-4 px-6 md:px-12">
         <div class="container mx-auto flex justify-between items-center">
             <a href="index.html" class="site-logo text-2xl">Ryuya</a>
-            <nav class="hidden md:flex space-x-8">
-                <a href="index.html" class="nav-link text-lg" id="nav-home">HOME</a>
-                <a href="profile.html" class="nav-link text-lg" id="nav-profile">PROFILE</a>
-                <a href="songs.html" class="nav-link active text-lg" id="nav-songs">SONGS</a>
-
+            <nav class="hidden md:flex space-x-8 items-center">
+                <a href="index.html" class="nav-link text-lg" id="nav-home" data-i18n="nav-home">HOME</a>
+                <a href="profile.html" class="nav-link text-lg" id="nav-profile" data-i18n="nav-profile">PROFILE</a>
+                <a href="songs.html" class="nav-link active text-lg" id="nav-songs" data-i18n="nav-songs">SONGS</a>
+                <!-- 言語切り替えボタン -->
+                <div class="ml-6 flex items-center space-x-2" id="lang-switcher">
+                    <button class="lang-btn font-bold" data-lang="ja" id="lang-ja">JP</button>
+                    <span class="text-gray-400">|</span>
+                    <button class="lang-btn" data-lang="en" id="lang-en">EN</button>
+                </div>
             </nav>
             <button id="hamburger-btn" class="md:hidden z-50">
                 <i class="fas fa-bars text-2xl"></i>
@@ -108,10 +113,15 @@
     <nav id="mobile-nav"
         class="fixed top-0 right-0 h-full w-2/3 bg-gray-900/90 backdrop-blur-lg z-40 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden">
         <div class="flex flex-col items-center justify-center h-full space-y-8">
-            <a href="index.html" class="mobile-nav-link text-xl">HOME</a>
-            <a href="profile.html" class="mobile-nav-link text-xl">PROFILE</a>
-            <a href="songs.html" class="mobile-nav-link text-xl">SONGS</a>
-
+            <a href="index.html" class="mobile-nav-link text-xl" data-i18n="nav-home">HOME</a>
+            <a href="profile.html" class="mobile-nav-link text-xl" data-i18n="nav-profile">PROFILE</a>
+            <a href="songs.html" class="mobile-nav-link text-xl" data-i18n="nav-songs">SONGS</a>
+            <!-- 言語切り替え（モバイル用） -->
+            <div class="flex items-center space-x-2 mt-8" id="lang-switcher-mobile">
+                <button class="lang-btn font-bold" data-lang="ja" id="lang-ja-mobile">JP</button>
+                <span class="text-gray-400">|</span>
+                <button class="lang-btn" data-lang="en" id="lang-en-mobile">EN</button>
+            </div>
         </div>
     </nav>
 
@@ -132,9 +142,28 @@
             <div class="container mx-auto">
                 <h2 class="section-title text-5xl font-bold text-center mb-16 fade-in-up gradient-text-tech text-shadow-tech"
                     data-parallax="10">
-                    <span class="glitch-text gradient-text-artist" data-text="SONGS">SONGS</span>
+                    <span class="glitch-text gradient-text-artist" data-text="SONGS" data-i18n="songs-title">SONGS</span>
                 </h2>
                 <div class="section-divider"></div>
+                                                <!-- キャッチコピー（日英） -->
+                                                <div class="max-w-2xl mx-auto fade-in-up visible text-center animated-gradient-text text-reveal px-4 mb-4" style="transition-delay: 100ms;">
+                                                    <p class="mt-2 text-lg sm:text-xl md:text-2xl text-white font-bold tracking-wide mb-2 sm:mb-3 text-center">
+                                                        <span class="gradient-text-tech text-shadow-tech block">世界を魅了する日本発シンガーソングライター</span>
+                                                        <span class="gradient-text-tech text-shadow-tech block">A Singer-Songwriter from Japan to the World</span>
+                                                    </p>
+                                                </div>
+                                                <!-- SNSアイコン -->
+                                                <div class="flex justify-center gap-6 mb-6 fade-in-up" style="transition-delay: 120ms;">
+                                                    <a href="https://twitter.com/Ryuya_330" target="_blank" rel="noopener" aria-label="X(Twitter)" class="text-2xl text-white hover:text-purple-400 transition"><i class="fab fa-x-twitter"></i></a>
+                                                    <a href="https://www.instagram.com/ryuya_330/" target="_blank" rel="noopener" aria-label="Instagram" class="text-2xl text-white hover:text-pink-400 transition"><i class="fab fa-instagram"></i></a>
+                                                    <a href="https://www.youtube.com/@Ryuya_330" target="_blank" rel="noopener" aria-label="YouTube" class="text-2xl text-white hover:text-red-500 transition"><i class="fab fa-youtube"></i></a>
+                                                    <a href="https://open.spotify.com/artist/0vQb6QwQ6rQn2yQwQwQwQw" target="_blank" rel="noopener" aria-label="Spotify" class="text-2xl text-white hover:text-green-400 transition"><i class="fab fa-spotify"></i></a>
+                                                </div>
+                                                <!-- Spotify/YouTube埋め込み -->
+                                                <div class="flex flex-col md:flex-row justify-center items-center gap-6 fade-in-up mb-8" style="transition-delay: 140ms;">
+                                                    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/0vQb6QwQ6rQn2yQwQwQwQw?utm_source=generator" width="320" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                                                    <iframe width="320" height="80" src="https://www.youtube.com/embed?listType=user_uploads&list=Ryuya_330" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                                </div>
                 <div class="max-w-6xl mx-auto">
                     <div class="songs-card-grid">
                         <!-- 1. Ryuya -->
@@ -142,8 +171,8 @@
                             data-parallax="5">
                             <div class="glow"></div>
                             <div class="card-shine"></div>
-                            <h4
-                                class="text-2xl md:text-3xl font-bold text-center mb-3 md:mb-4 pulse-text gradient-text-artist text-shadow-artistic">
+                            <h4 class="text-2xl md:text-3xl font-bold text-center mb-3 md:mb-4 pulse-text gradient-text-artist text-shadow-artistic"
+                                data-i18n="card-ryuya-name">
                                 Ryuya</h4>
                             <div class="spotify-embed-album mt-4">
                                 <iframe data-testid="embed-iframe"
@@ -158,8 +187,8 @@
                             data-parallax="5">
                             <div class="glow"></div>
                             <div class="card-shine"></div>
-                            <h4
-                                class="text-2xl md:text-3xl font-bold text-center mb-3 md:mb-4 pulse-text gradient-text-artist text-shadow-artistic">
+                            <h4 class="text-2xl md:text-3xl font-bold text-center mb-3 md:mb-4 pulse-text gradient-text-artist text-shadow-artistic"
+                                data-i18n="card-shion-name">
                                 紫苑</h4>
                             <div class="spotify-embed-album mt-4">
                                 <iframe data-testid="embed-iframe"
@@ -188,8 +217,8 @@
                             data-parallax="5">
                             <div class="glow"></div>
                             <div class="card-shine"></div>
-                            <h4
-                                class="text-2xl md:text-3xl font-bold text-center mb-3 md:mb-4 pulse-text gradient-text-tech text-shadow-tech">
+                            <h4 class="text-2xl md:text-3xl font-bold text-center mb-3 md:mb-4 pulse-text gradient-text-tech text-shadow-tech"
+                                data-i18n="card-akito-name">
                                 伊織暁斗</h4>
                             <div class="spotify-embed-album mt-4">
                                 <iframe data-testid="embed-iframe"
@@ -204,8 +233,8 @@
                             data-parallax="5">
                             <div class="glow"></div>
                             <div class="card-shine"></div>
-                            <h4
-                                class="text-2xl md:text-3xl font-bold text-center mb-3 md:mb-4 pulse-text gradient-text-artist text-shadow-artistic">
+                            <h4 class="text-2xl md:text-3xl font-bold text-center mb-3 md:mb-4 pulse-text gradient-text-artist text-shadow-artistic"
+                                data-i18n="card-fakeid-name">
                                 Fake ID</h4>
                             <div class="spotify-embed-album mt-4">
                                 <iframe data-testid="embed-iframe"
@@ -241,15 +270,13 @@
     <!-- Custom JS -->
     <script src="js/app.js"></script>
     <script>
-        // Scroll Progress Bar
+        // --- 既存JS（スクロール・ハンバーガー等） ---
         window.addEventListener('scroll', () => {
             const winScroll = document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             const scrolled = (winScroll / height) * 100;
             document.getElementById('scroll-progress').style.width = scrolled + '%';
         });
-
-        // Back to Top Button
         const backToTopBtn = document.getElementById('back-to-top');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 300) {
@@ -263,7 +290,6 @@
         backToTopBtn.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
-
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('main-content').classList.add('main-content-visible');
             const currentPath = window.location.pathname.split('/').pop();
@@ -274,6 +300,63 @@
                     link.classList.add('active');
                 }
             });
+        });
+
+        // --- 多言語切り替え ---
+        const i18nTexts = {
+            'ja': {
+                'nav-home': 'HOME',
+                'nav-profile': 'PROFILE',
+                'nav-songs': 'SONGS',
+                'songs-title': 'SONGS',
+                'card-ryuya-name': 'Ryuya',
+                'card-shion-name': '紫苑',
+                'card-akito-name': '伊織暁斗',
+                'card-fakeid-name': 'Fake ID',
+            },
+            'en': {
+                'nav-home': 'HOME',
+                'nav-profile': 'PROFILE',
+                'nav-songs': 'SONGS',
+                'songs-title': 'SONGS',
+                'card-ryuya-name': 'Ryuya',
+                'card-shion-name': 'Shion',
+                'card-akito-name': 'Akito Iori',
+                'card-fakeid-name': 'Fake ID',
+            }
+        };
+        function switchLang(lang) {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18nTexts[lang] && i18nTexts[lang][key]) {
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        el.placeholder = i18nTexts[lang][key];
+                    } else {
+                        el.innerHTML = i18nTexts[lang][key];
+                    }
+                }
+            });
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('font-bold', btn.dataset.lang === lang);
+            });
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            let currentLang = 'ja';
+            switchLang(currentLang);
+            // デスクトップ
+            const btnJa = document.getElementById('lang-ja');
+            const btnEn = document.getElementById('lang-en');
+            if (btnJa && btnEn) {
+                btnJa.onclick = () => { currentLang = 'ja'; switchLang('ja'); };
+                btnEn.onclick = () => { currentLang = 'en'; switchLang('en'); };
+            }
+            // モバイル
+            const btnJaM = document.getElementById('lang-ja-mobile');
+            const btnEnM = document.getElementById('lang-en-mobile');
+            if (btnJaM && btnEnM) {
+                btnJaM.onclick = () => { currentLang = 'ja'; switchLang('ja'); };
+                btnEnM.onclick = () => { currentLang = 'en'; switchLang('en'); };
+            }
         });
     </script>
 </body>
