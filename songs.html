@@ -96,6 +96,7 @@
                 <a href="index.html" class="nav-link text-lg" id="nav-home">HOME</a>
                 <a href="profile.html" class="nav-link text-lg" id="nav-profile">PROFILE</a>
                 <a href="songs.html" class="nav-link active text-lg" id="nav-songs">SONGS</a>
+                <a href="news.html" class="nav-link text-lg" id="nav-news">NEWS</a>
 
             </nav>
             <button id="hamburger-btn" class="md:hidden z-50">
@@ -111,7 +112,7 @@
             <a href="index.html" class="mobile-nav-link text-xl">HOME</a>
             <a href="profile.html" class="mobile-nav-link text-xl">PROFILE</a>
             <a href="songs.html" class="mobile-nav-link text-xl">SONGS</a>
-
+            <a href="news.html" class="mobile-nav-link text-xl">NEWS</a>
         </div>
     </nav>
 
@@ -138,82 +139,89 @@
                 <div class="max-w-6xl mx-auto">
                     <div class="songs-card-grid">
                         <!-- 1. Ryuya -->
-                        <div class="profile-card songs-profile-card songs-ryuya-card rounded-xl fade-in-up premium-card profile-card-enhanced spotify-card-enhanced perspective-card artist-card"
-                            data-parallax="5">
-                            <div class="glow"></div>
-                            <div class="card-shine"></div>
-                            <h4
-                                class="text-2xl md:text-3xl font-bold text-center mb-3 md:mb-4 pulse-text gradient-text-artist text-shadow-artistic">
-                                Ryuya</h4>
-                            <div class="spotify-embed-album mt-4">
+                        <div class="bg-neutral-900 rounded-2xl shadow-2xl p-7 flex flex-col items-center border border-gray-800 hover:border-[#8B1C1C] hover:shadow-[#8B1C1C]/40 transition-all duration-300 group relative overflow-hidden"
+                            style="padding:1.75rem !important;" data-parallax="5">
+                            <div class="absolute inset-0 pointer-events-none group-hover:opacity-100 opacity-0 transition-all duration-300"
+                                style="background: radial-gradient(circle at 60% 40%, #7c4dff22 0%, transparent 70%);">
+                            </div>
+                            <img src="assets/images/Ryuya.png" alt="Ryuya アイコン"
+                                class="w-32 h-32 md:w-40 md:h-40 rounded-full mb-6 object-cover border-2 border-gray-600 group-hover:border-[#8B1C1C] shadow-xl transition-all duration-300">
+                            <h4 class="text-3xl md:text-4xl font-bold text-white mb-2 tracking-wide">Ryuya</h4>
+                            <div class="spotify-embed-album mt-4 w-full">
                                 <iframe data-testid="embed-iframe"
                                     src="https://open.spotify.com/embed/album/7pIP0xpZK0WM8UktKSxMRR?utm_source=generator"
                                     width="100%" height="352" frameBorder="0" allowfullscreen=""
                                     allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                                     loading="lazy"></iframe>
                             </div>
+                            <div class="mt-4 text-sm text-gray-400 text-center">リリース後更新</div>
                         </div>
                         <!-- 2. 紫苑 -->
-                        <div class="profile-card songs-profile-card rounded-xl fade-in-up premium-card profile-card-enhanced spotify-card-enhanced perspective-card artist-card"
+                        <div class="bg-neutral-900 rounded-2xl shadow-2xl p-10 flex flex-col items-center border border-gray-800 hover:border-blue-300 hover:shadow-blue-700/40 transition-all duration-300 group relative overflow-hidden"
                             data-parallax="5">
-                            <div class="glow"></div>
-                            <div class="card-shine"></div>
-                            <h4
-                                class="text-2xl md:text-3xl font-bold text-center mb-3 md:mb-4 pulse-text gradient-text-artist text-shadow-artistic">
-                                紫苑</h4>
-                            <div class="spotify-embed-album mt-4">
+                            <div class="absolute inset-0 pointer-events-none group-hover:opacity-100 opacity-0 transition-all duration-300"
+                                style="background: radial-gradient(circle at 40% 60%, #3b82f622 0%, transparent 70%);">
+                            </div>
+                            <img src="assets/images/Shion.PNG" alt="紫苑 アーティスト写真"
+                                class="w-32 h-32 md:w-40 md:h-40 rounded-full mb-6 object-cover border-2 border-gray-600 group-hover:border-blue-400 shadow-xl transition-all duration-300">
+                            <h4 class="text-3xl md:text-4xl font-bold text-blue-200 mb-2 tracking-wide">紫苑</h4>
+                            <div class="spotify-embed-album mt-4 w-full">
                                 <iframe data-testid="embed-iframe"
                                     src="https://open.spotify.com/embed/album/2I1LDkqDsDLCyZAwPanv7n?utm_source=generator"
                                     width="100%" height="352" frameBorder="0" allowfullscreen=""
                                     allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                                     loading="lazy"></iframe>
                             </div>
-                            <div class="spotify-embed-album mt-4">
+                            <div class="spotify-embed-album mt-4 w-full">
                                 <iframe data-testid="embed-iframe"
                                     src="https://open.spotify.com/embed/track/4d1s3iGGoYButLTAoHhFsX?utm_source=generator"
                                     width="100%" height="352" frameBorder="0" allowfullscreen=""
                                     allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                                     loading="lazy"></iframe>
                             </div>
-                            <div class="spotify-embed-album mt-4">
+                            <div class="spotify-embed-album mt-4 w-full">
                                 <iframe data-testid="embed-iframe"
                                     src="https://open.spotify.com/embed/track/2oTsovrqgCmiMvyb7fNyww?utm_source=generator"
                                     width="100%" height="352" frameBorder="0" allowfullscreen=""
                                     allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                                     loading="lazy"></iframe>
                             </div>
+                            <div class="text-sm text-blue-400 mt-2 text-center">a.k.a. Ryuya</div>
                         </div>
                         <!-- 3. 伊織暁斗 -->
-                        <div class="profile-card songs-profile-card rounded-xl fade-in-up premium-card profile-card-enhanced spotify-card-enhanced perspective-card artist-card"
+                        <div class="bg-neutral-900 rounded-2xl shadow-2xl p-10 flex flex-col items-center border border-gray-800 hover:border-orange-300 hover:shadow-orange-700/40 transition-all duration-300 group relative overflow-hidden"
                             data-parallax="5">
-                            <div class="glow"></div>
-                            <div class="card-shine"></div>
-                            <h4
-                                class="text-2xl md:text-3xl font-bold text-center mb-3 md:mb-4 pulse-text gradient-text-tech text-shadow-tech">
-                                伊織暁斗</h4>
-                            <div class="spotify-embed-album mt-4">
+                            <div class="absolute inset-0 pointer-events-none group-hover:opacity-100 opacity-0 transition-all duration-300"
+                                style="background: radial-gradient(circle at 60% 60%, #ffb45022 0%, transparent 70%);">
+                            </div>
+                            <img src="assets/images/Akito.PNG" alt="伊織 暁斗 アイコン"
+                                class="w-32 h-32 md:w-40 md:h-40 rounded-full mb-6 object-cover border-2 border-gray-600 group-hover:border-orange-300 shadow-xl transition-all duration-300">
+                            <h4 class="text-3xl md:text-4xl font-bold text-white mb-2 tracking-wide">伊織 暁斗</h4>
+                            <div class="spotify-embed-album mt-4 w-full">
                                 <iframe data-testid="embed-iframe"
                                     src="https://open.spotify.com/embed/album/3Yoa9AdHSVlnArEWtROwnq?utm_source=generator"
                                     width="100%" height="352" frameBorder="0" allowfullscreen=""
                                     allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                                     loading="lazy"></iframe>
                             </div>
+                            <div class="text-sm text-orange-300 mt-2 text-center">a.k.a. Ryuya</div>
                         </div>
                         <!-- 4. Fake ID -->
-                        <div class="profile-card songs-profile-card rounded-xl fade-in-up premium-card profile-card-enhanced spotify-card-enhanced perspective-card artist-card"
+                        <div class="bg-neutral-900 rounded-2xl shadow-2xl p-10 flex flex-col items-center border border-gray-800 hover:border-purple-400 hover:shadow-purple-700/40 transition-all duration-300 group relative overflow-hidden"
                             data-parallax="5">
-                            <div class="glow"></div>
-                            <div class="card-shine"></div>
-                            <h4
-                                class="text-2xl md:text-3xl font-bold text-center mb-3 md:mb-4 pulse-text gradient-text-artist text-shadow-artistic">
-                                Fake ID</h4>
-                            <div class="spotify-embed-album mt-4">
+                            <div class="absolute inset-0 pointer-events-none group-hover:opacity-100 opacity-0 transition-all duration-300"
+                                style="background: radial-gradient(circle at 60% 40%, #222 0%, transparent 70%);"></div>
+                            <img src="assets/images/Fake ID.PNG" alt="Fake ID アイコン"
+                                class="w-32 h-32 md:w-40 md:h-40 rounded-full mb-6 object-cover border-2 border-gray-600 group-hover:border-purple-400 shadow-xl transition-all duration-300">
+                            <h4 class="text-3xl md:text-4xl font-bold text-gray-200 mb-2 tracking-wide">Fake ID</h4>
+                            <div class="spotify-embed-album mt-4 w-full">
                                 <iframe data-testid="embed-iframe"
                                     src="https://open.spotify.com/embed/track/0QtcjgyuigFz7RLCHPPC85?utm_source=generator"
                                     width="100%" height="352" frameBorder="0" allowfullscreen=""
                                     allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                                     loading="lazy"></iframe>
                             </div>
+                            <div class="text-sm text-purple-300 mt-2 text-center">a.k.a. Ryuya</div>
                         </div>
                     </div>
                 </div>

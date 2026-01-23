@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>News | Ryuya Official</title>
+    <meta name="description" content="Ryuya Official - 最新リリース情報">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/enhanced-artist-tech.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+
+<body class="bg-neutral-950 text-white min-h-screen">
+    <canvas id="bg-canvas"></canvas>
+    <!-- Header -->
+    <header id="header"
+        class="fixed top-0 left-0 w-full z-50 py-4 px-6 md:px-12 bg-black/60 backdrop-blur-md shadow-lg border-b border-gray-800">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html"
+                class="site-logo text-3xl font-extrabold tracking-widest text-white drop-shadow-lg hover:text-purple-400 transition-colors duration-200">Ryuya</a>
+            <nav class="hidden md:flex space-x-8 items-center">
+                <a href="index.html"
+                    class="nav-link flex items-center gap-2 text-lg font-medium text-gray-200 hover:text-purple-400 transition-colors duration-200"
+                    id="nav-home"><i class="fas fa-house"></i><span>HOME</span></a>
+                <a href="profile.html"
+                    class="nav-link flex items-center gap-2 text-lg font-medium text-gray-200 hover:text-purple-400 transition-colors duration-200"
+                    id="nav-profile"><i class="fas fa-user"></i><span>PROFILE</span></a>
+                <a href="songs.html"
+                    class="nav-link flex items-center gap-2 text-lg font-medium text-gray-200 hover:text-purple-400 transition-colors duration-200"
+                    id="nav-songs"><i class="fas fa-music"></i><span>SONGS</span></a>
+                <a href="news.html" class="nav-link flex items-center gap-2 text-lg font-bold text-purple-400"
+                    id="nav-news"><i class="fas fa-newspaper"></i><span>NEWS</span></a>
+            </nav>
+            <button id="hamburger-btn"
+                class="md:hidden z-50 p-2 rounded-full bg-black/40 hover:bg-purple-500/60 transition-colors duration-200 shadow-lg">
+                <i class="fas fa-bars text-2xl text-white"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <nav id="mobile-nav"
+        class="fixed top-0 right-0 h-full w-3/4 max-w-xs bg-black/90 backdrop-blur-lg z-40 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden shadow-2xl border-l border-purple-900">
+        <div class="flex flex-col items-center justify-center h-full space-y-10">
+            <a href="index.html"
+                class="mobile-nav-link flex items-center gap-3 text-2xl text-gray-100 hover:text-purple-400 transition-colors duration-200"><i
+                    class="fas fa-house"></i><span>HOME</span></a>
+            <a href="profile.html"
+                class="mobile-nav-link flex items-center gap-3 text-2xl text-gray-100 hover:text-purple-400 transition-colors duration-200"><i
+                    class="fas fa-user"></i><span>PROFILE</span></a>
+            <a href="songs.html"
+                class="mobile-nav-link flex items-center gap-3 text-2xl text-gray-100 hover:text-purple-400 transition-colors duration-200"><i
+                    class="fas fa-music"></i><span>SONGS</span></a>
+            <a href="news.html" class="mobile-nav-link flex items-center gap-3 text-2xl text-purple-400 font-bold"><i
+                    class="fas fa-newspaper"></i><span>NEWS</span></a>
+        </div>
+    </nav>
+    <main class="container mx-auto px-4 max-w-3xl">
+        <h1 class="text-5xl md:text-6xl font-extrabold text-center mb-12 gradient-text-artist text-shadow-tech tracking-tight"
+            style="letter-spacing:0.06em;">NEWS</h1>
+        <section class="space-y-10">
+            <div class="grid gap-10 md:gap-12">
+                <!-- NEWSカードは全て背景グレー系で統一 -->
+                <!-- ここから全カード共通グレー -->
+                <div
+                    class="news-item bg-gradient-to-br from-neutral-900/90 to-neutral-800/60 rounded-2xl shadow-2xl p-8 border border-gray-700 hover:border-gray-500 hover:shadow-gray-700/40 transition-all duration-300 group relative overflow-hidden fade-in-up">
+                    <div class="absolute inset-0 pointer-events-none group-hover:opacity-100 opacity-0 transition-all duration-300"
+                        style="background: radial-gradient(circle at 60% 40%, #4446 0%, transparent 70%);"></div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="text-xs text-gray-400"><i class="fa-regular fa-calendar"></i> 2026-02-10 12:00
+                            AM</span>
+                        <span
+                            class="px-2 py-0.5 rounded bg-gray-700/80 text-xs font-bold tracking-widest text-gray-100 ml-2">Ryuya</span>
+                    </div>
+                    <div class="text-2xl md:text-3xl font-bold tracking-wide text-white mb-1">Gray Zone</div>
+                    <div class="text-base text-gray-300 font-semibold mb-1">リリース予定</div>
+                </div>
+                <div
+                    class="news-item bg-gradient-to-br from-neutral-900/90 to-neutral-800/60 rounded-2xl shadow-2xl p-8 border border-gray-700 hover:border-gray-500 hover:shadow-gray-700/40 transition-all duration-300 group relative overflow-hidden fade-in-up">
+                    <div class="absolute inset-0 pointer-events-none group-hover:opacity-100 opacity-0 transition-all duration-300"
+                        style="background: radial-gradient(circle at 60% 40%, #4446 0%, transparent 70%);"></div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="text-xs text-gray-400"><i class="fa-regular fa-calendar"></i> 2026-02-02 12:00
+                            AM</span>
+                        <span
+                            class="px-2 py-0.5 rounded bg-gray-700/80 text-xs font-bold tracking-widest text-gray-100 ml-2">Ryuya</span>
+                    </div>
+                    <div class="text-2xl md:text-3xl font-bold tracking-wide text-white mb-1">Awakening</div>
+                    <div class="text-base text-gray-300 font-semibold mb-1">リリース予定</div>
+                </div>
+                <div
+                    class="news-item bg-gradient-to-br from-neutral-900/90 to-neutral-800/60 rounded-2xl shadow-2xl p-8 border border-gray-700 hover:border-gray-500 hover:shadow-gray-700/40 transition-all duration-300 group relative overflow-hidden fade-in-up">
+                    <div class="absolute inset-0 pointer-events-none group-hover:opacity-100 opacity-0 transition-all duration-300"
+                        style="background: radial-gradient(circle at 60% 40%, #4446 0%, transparent 70%);"></div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="text-xs text-gray-400"><i class="fa-regular fa-calendar"></i> 2026-02-01 12:00
+                            AM</span>
+                        <span
+                            class="px-2 py-0.5 rounded bg-gray-700/80 text-xs font-bold tracking-widest text-gray-100 ml-2">Ryuya</span>
+                    </div>
+                    <div class="text-2xl md:text-3xl font-bold tracking-wide text-white mb-1">Vanguard</div>
+                    <div class="text-base text-gray-300 font-semibold mb-1">リリース予定</div>
+                </div>
+                <div
+                    class="news-item bg-gradient-to-br from-neutral-900/90 to-neutral-800/60 rounded-2xl shadow-2xl p-8 border border-gray-700 hover:border-gray-500 hover:shadow-gray-700/40 transition-all duration-300 group relative overflow-hidden fade-in-up">
+                    <div class="absolute inset-0 pointer-events-none group-hover:opacity-100 opacity-0 transition-all duration-300"
+                        style="background: radial-gradient(circle at 60% 40%, #4446 0%, transparent 70%);"></div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="text-xs text-gray-400"><i class="fa-regular fa-calendar"></i> 2026-01-31 12:00
+                            AM</span>
+                        <span
+                            class="px-2 py-0.5 rounded bg-gray-700/80 text-xs font-bold tracking-widest text-gray-100 ml-2">Ryuya</span>
+                    </div>
+                    <div class="text-2xl md:text-3xl font-bold tracking-wide text-white mb-1">Supersonic</div>
+                    <div class="text-base text-gray-300 font-semibold mb-1">リリース予定</div>
+                </div>
+                <div
+                    class="news-item bg-gradient-to-br from-neutral-900/90 to-neutral-800/60 rounded-2xl shadow-2xl p-8 border border-gray-700 hover:border-gray-500 hover:shadow-gray-700/40 transition-all duration-300 group relative overflow-hidden fade-in-up">
+                    <div class="absolute inset-0 pointer-events-none group-hover:opacity-100 opacity-0 transition-all duration-300"
+                        style="background: radial-gradient(circle at 60% 40%, #4446 0%, transparent 70%);"></div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="text-xs text-gray-400"><i class="fa-regular fa-calendar"></i> 2026-01-30 12:00
+                            AM</span>
+                        <span
+                            class="px-2 py-0.5 rounded bg-gray-700/80 text-xs font-bold tracking-widest text-gray-100 ml-2">Ryuya</span>
+                    </div>
+                    <div class="text-2xl md:text-3xl font-bold tracking-wide text-white mb-1">Supersonic</div>
+                    <div class="text-base text-gray-300 font-semibold mb-1">リリース予定</div>
+                </div>
+                <div
+                    class="news-item bg-gradient-to-br from-neutral-900/90 to-neutral-800/60 rounded-2xl shadow-2xl p-8 border border-gray-700 hover:border-gray-500 hover:shadow-gray-700/40 transition-all duration-300 group relative overflow-hidden fade-in-up">
+                    <div class="absolute inset-0 pointer-events-none group-hover:opacity-100 opacity-0 transition-all duration-300"
+                        style="background: radial-gradient(circle at 60% 40%, #4446 0%, transparent 70%);"></div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="text-xs text-gray-400"><i class="fa-regular fa-calendar"></i> 2026-01-30 12:00
+                            AM</span>
+                        <span
+                            class="px-2 py-0.5 rounded bg-gray-700/80 text-xs font-bold tracking-widest text-gray-100 ml-2">Ryuya</span>
+                    </div>
+                    <div class="text-2xl md:text-3xl font-bold tracking-wide text-white mb-1">Phantom Code</div>
+                    <div class="text-base text-gray-300 font-semibold mb-1">リリース予定</div>
+                </div>
+                <div
+                    class="news-item bg-gradient-to-br from-neutral-900/90 to-neutral-800/60 rounded-2xl shadow-2xl p-8 border border-gray-700 hover:border-gray-500 hover:shadow-gray-700/40 transition-all duration-300 group relative overflow-hidden fade-in-up">
+                    <div class="absolute inset-0 pointer-events-none group-hover:opacity-100 opacity-0 transition-all duration-300"
+                        style="background: radial-gradient(circle at 60% 40%, #4446 0%, transparent 70%);"></div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="text-xs text-gray-400"><i class="fa-regular fa-calendar"></i> 2026-01-21 12:00
+                            AM</span>
+                        <span
+                            class="px-2 py-0.5 rounded bg-gray-700/80 text-xs font-bold tracking-widest text-gray-100 ml-2">Ryuya</span>
+                    </div>
+                    <div class="text-2xl md:text-3xl font-bold tracking-wide text-white mb-1">Ignition</div>
+                    <div class="text-base text-gray-300 font-semibold mb-1">リリース予定</div>
+                </div>
+                <div
+                    class="news-item bg-gradient-to-br from-neutral-900/90 to-neutral-800/60 rounded-2xl shadow-2xl p-8 border border-gray-700 hover:border-gray-500 hover:shadow-gray-700/40 transition-all duration-300 group relative overflow-hidden fade-in-up">
+                    <div class="absolute inset-0 pointer-events-none group-hover:opacity-100 opacity-0 transition-all duration-300"
+                        style="background: radial-gradient(circle at 60% 40%, #4446 0%, transparent 70%);"></div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="text-xs text-gray-400"><i class="fa-regular fa-calendar"></i> 2025-12-24 12:00
+                            AM</span>
+                        <span
+                            class="px-2 py-0.5 rounded bg-gray-700/80 text-xs font-bold tracking-widest text-gray-100 ml-2">Fake
+                            ID</span>
+                    </div>
+                    <div class="text-2xl md:text-3xl font-bold tracking-wide text-white mb-1">全部嘘で全部本当だった</div>
+                    <div class="text-base text-gray-300 font-semibold mb-1">リリース予定</div>
+                </div>
+                <div
+                    class="news-item bg-gradient-to-br from-neutral-900/90 to-neutral-800/60 rounded-2xl shadow-2xl p-8 border border-gray-700 hover:border-gray-500 hover:shadow-gray-700/40 transition-all duration-300 group relative overflow-hidden fade-in-up">
+                    <div class="absolute inset-0 pointer-events-none group-hover:opacity-100 opacity-0 transition-all duration-300"
+                        style="background: radial-gradient(circle at 60% 40%, #4446 0%, transparent 70%);"></div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="text-xs text-gray-400"><i class="fa-regular fa-calendar"></i> 2025-12-03 12:00
+                            AM</span>
+                        <span
+                            class="px-2 py-0.5 rounded bg-gray-700/80 text-xs font-bold tracking-widest text-gray-100 ml-2">伊織暁斗</span>
+                    </div>
+                    <div class="text-2xl md:text-3xl font-bold tracking-wide text-white mb-1">Ambiance Etudes,Vol.1
+                    </div>
+                    <div class="text-base text-gray-300 font-semibold mb-1">リリース予定</div>
+                </div>
+                <div
+                    class="news-item bg-gradient-to-br from-neutral-900/90 to-neutral-800/60 rounded-2xl shadow-2xl p-8 border border-gray-700 hover:border-gray-500 hover:shadow-gray-700/40 transition-all duration-300 group relative overflow-hidden fade-in-up">
+                    <div class="absolute inset-0 pointer-events-none group-hover:opacity-100 opacity-0 transition-all duration-300"
+                        style="background: radial-gradient(circle at 60% 40%, #4446 0%, transparent 70%);"></div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="text-xs text-gray-400"><i class="fa-regular fa-calendar"></i> 2025-11-26 12:00
+                            AM</span>
+                        <span
+                            class="px-2 py-0.5 rounded bg-gray-700/80 text-xs font-bold tracking-widest text-gray-100 ml-2">紫苑</span>
+                    </div>
+                    <div class="text-2xl md:text-3xl font-bold tracking-wide text-white mb-1">Need for validation
+                        Zombies and Hypocrites</div>
+                    <div class="text-base text-gray-300 font-semibold mb-1">リリース予定</div>
+                </div>
+                <div
+                    class="news-item bg-gradient-to-br from-neutral-900/90 to-neutral-800/60 rounded-2xl shadow-2xl p-8 border border-gray-700 hover:border-gray-500 hover:shadow-gray-700/40 transition-all duration-300 group relative overflow-hidden fade-in-up">
+                    <div class="absolute inset-0 pointer-events-none group-hover:opacity-100 opacity-0 transition-all duration-300"
+                        style="background: radial-gradient(circle at 60% 40%, #4446 0%, transparent 70%);"></div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="text-xs text-gray-400"><i class="fa-regular fa-calendar"></i> 2025-11-12 12:00
+                            AM</span>
+                        <span
+                            class="px-2 py-0.5 rounded bg-gray-700/80 text-xs font-bold tracking-widest text-gray-100 ml-2">紫苑</span>
+                    </div>
+                    <div class="text-2xl md:text-3xl font-bold tracking-wide text-white mb-1">色褪せないフィルム</div>
+                    <div class="text-base text-gray-300 font-semibold mb-1">リリース予定</div>
+                </div>
+                <div
+                    class="news-item bg-gradient-to-br from-neutral-900/90 to-neutral-800/60 rounded-2xl shadow-2xl p-8 border border-gray-700 hover:border-gray-500 hover:shadow-gray-700/40 transition-all duration-300 group relative overflow-hidden fade-in-up">
+                    <div class="absolute inset-0 pointer-events-none group-hover:opacity-100 opacity-0 transition-all duration-300"
+                        style="background: radial-gradient(circle at 60% 40%, #4446 0%, transparent 70%);"></div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="text-xs text-gray-400"><i class="fa-regular fa-calendar"></i> 2025-11-05 12:00
+                            AM</span>
+                        <span
+                            class="px-2 py-0.5 rounded bg-gray-700/80 text-xs font-bold tracking-widest text-gray-100 ml-2">紫苑</span>
+                    </div>
+                    <div class="text-2xl md:text-3xl font-bold tracking-wide text-white mb-1">夜明け前の独白</div>
+                    <div class="text-base text-gray-300 font-semibold mb-1">リリース予定</div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="py-8 px-6 border-t border-gray-800">
+        <div class="container mx-auto text-center text-gray-400">
+            <p>&copy; 2025 Ryuya Official</p>
+        </div>
+    </footer>
+    <script src="js/app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Scroll Progress Bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                <!-- NEWSカードは全てグレー系で完全統一 -->
+                <div class="news-item bg-gradient-to-br from-neutral-900/90 to-neutral-800/60 rounded-2xl shadow-2xl p-8 border border-gray-700 hover:border-gray-500 hover:shadow-gray-700/40 transition-all duration-300 group relative overflow-hidden fade-in-up">
+                    <div class="absolute inset-0 pointer-events-none group-hover:opacity-100 opacity-0 transition-all duration-300" style="background: radial-gradient(circle at 60% 40%, #4446 0%, transparent 70%);"></div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="text-xs text-gray-400"><i class="fa-regular fa-calendar"></i> 2026-02-10 12:00 AM</span>
+                        <span class="px-2 py-0.5 rounded bg-gray-700/80 text-xs font-bold tracking-widest text-gray-100 ml-2">Ryuya</span>
+                    </div>
+                    <div class="text-2xl md:text-3xl font-bold tracking-wide text-white mb-1">Gray Zone</div>
+                    <div class="text-base text-gray-300 font-semibold mb-1">リリース予定</div>
+                </div>
+                <div class="news-item bg-gradient-to-br from-neutral-900/90 to-neutral-800/60 rounded-2xl shadow-2xl p-8 border border-gray-700 hover:border-gray-500 hover:shadow-gray-700/40 transition-all duration-300 group relative overflow-hidden fade-in-up">
+                    <div class="absolute inset-0 pointer-events-none group-hover:opacity-100 opacity-0 transition-all duration-300" style="background: radial-gradient(circle at 60% 40%, #4446 0%, transparent 70%);"></div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="text-xs text-gray-400"><i class="fa-regular fa-calendar"></i> 2026-02-02 12:00 AM</span>
+                        <span class="px-2 py-0.5 rounded bg-gray-700/80 text-xs font-bold tracking-widest text-gray-100 ml-2">Ryuya</span>
+                    </div>
+                    <div class="text-2xl md:text-3xl font-bold tracking-wide text-white mb-1">Awakening</div>
+                    <div class="text-base text-gray-300 font-semibold mb-1">リリース予定</div>
+                </div>
+                <div class="news-item bg-gradient-to-br from-neutral-900/90 to-neutral-800/60 rounded-2xl shadow-2xl p-8 border border-gray-700 hover:border-gray-500 hover:shadow-gray-700/40 transition-all duration-300 group relative overflow-hidden fade-in-up">
+                    <div class="absolute inset-0 pointer-events-none group-hover:opacity-100 opacity-0 transition-all duration-300" style="background: radial-gradient(circle at 60% 40%, #4446 0%, transparent 70%);"></div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="text-xs text-gray-400"><i class="fa-regular fa-calendar"></i> 2026-02-01 12:00 AM</span>
+                        <span class="px-2 py-0.5 rounded bg-gray-700/80 text-xs font-bold tracking-widest text-gray-100 ml-2">Ryuya</span>
+                    </div>
+                    <div class="text-2xl md:text-3xl font-bold tracking-wide text-white mb-1">Vanguard</div>
+                    <div class="text-base text-gray-300 font-semibold mb-1">リリース予定</div>
+                </div>
+                <div class="news-item bg-gradient-to-br from-neutral-900/90 to-neutral-800/60 rounded-2xl shadow-2xl p-8 border border-gray-700 hover:border-gray-500 hover:shadow-gray-700/40 transition-all duration-300 group relative overflow-hidden fade-in-up">
+                    <div class="absolute inset-0 pointer-events-none group-hover:opacity-100 opacity-0 transition-all duration-300" style="background: radial-gradient(circle at 60% 40%, #4446 0%, transparent 70%);"></div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="text-xs text-gray-400"><i class="fa-regular fa-calendar"></i> 2026-01-31 12:00 AM</span>
+                        <span class="px-2 py-0.5 rounded bg-gray-700/80 text-xs font-bold tracking-widest text-gray-100 ml-2">Ryuya</span>
+                    </div>
+                    <div class="text-2xl md:text-3xl font-bold tracking-wide text-white mb-1">Supersonic</div>
+                    <div class="text-base text-gray-300 font-semibold mb-1">リリース予定</div>
+                </div>
+                <div class="news-item bg-gradient-to-br from-neutral-900/90 to-neutral-800/60 rounded-2xl shadow-2xl p-8 border border-gray-700 hover:border-gray-500 hover:shadow-gray-700/40 transition-all duration-300 group relative overflow-hidden fade-in-up">
+                    <div class="absolute inset-0 pointer-events-none group-hover:opacity-100 opacity-0 transition-all duration-300" style="background: radial-gradient(circle at 60% 40%, #4446 0%, transparent 70%);"></div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="text-xs text-gray-400"><i class="fa-regular fa-calendar"></i> 2026-01-30 12:00 AM</span>
+                        <span class="px-2 py-0.5 rounded bg-gray-700/80 text-xs font-bold tracking-widest text-gray-100 ml-2">Ryuya</span>
+                    </div>
+                    <div class="text-2xl md:text-3xl font-bold tracking-wide text-white mb-1">Phantom Code</div>
+                    <div class="text-base text-gray-300 font-semibold mb-1">リリース予定</div>
+                </div>
+                <div class="news-item bg-gradient-to-br from-neutral-900/90 to-neutral-800/60 rounded-2xl shadow-2xl p-8 border border-gray-700 hover:border-gray-500 hover:shadow-gray-700/40 transition-all duration-300 group relative overflow-hidden fade-in-up">
+                    <div class="absolute inset-0 pointer-events-none group-hover:opacity-100 opacity-0 transition-all duration-300" style="background: radial-gradient(circle at 60% 40%, #4446 0%, transparent 70%);"></div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="text-xs text-gray-400"><i class="fa-regular fa-calendar"></i> 2026-01-21 12:00 AM</span>
+                        <span class="px-2 py-0.5 rounded bg-gray-700/80 text-xs font-bold tracking-widest text-gray-100 ml-2">Ryuya</span>
+                    </div>
+                    <div class="text-2xl md:text-3xl font-bold tracking-wide text-white mb-1">Ignition</div>
+                    <div class="text-base text-gray-300 font-semibold mb-1">リリース予定</div>
+                </div>
+                <div class="news-item bg-gradient-to-br from-neutral-900/90 to-neutral-800/60 rounded-2xl shadow-2xl p-8 border border-gray-700 hover:border-gray-500 hover:shadow-gray-700/40 transition-all duration-300 group relative overflow-hidden fade-in-up">
+                    <div class="absolute inset-0 pointer-events-none group-hover:opacity-100 opacity-0 transition-all duration-300" style="background: radial-gradient(circle at 60% 40%, #4446 0%, transparent 70%);"></div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="text-xs text-gray-400"><i class="fa-regular fa-calendar"></i> 2025-12-24 12:00 AM</span>
+                        <span class="px-2 py-0.5 rounded bg-gray-700/80 text-xs font-bold tracking-widest text-gray-100 ml-2">Fake ID</span>
+                    </div>
+                    <div class="text-2xl md:text-3xl font-bold tracking-wide text-white mb-1">全部嘘で全部本当だった</div>
+                    <div class="text-base text-gray-300 font-semibold mb-1">リリース予定</div>
+                </div>
+                <div class="news-item bg-gradient-to-br from-neutral-900/90 to-neutral-800/60 rounded-2xl shadow-2xl p-8 border border-gray-700 hover:border-gray-500 hover:shadow-gray-700/40 transition-all duration-300 group relative overflow-hidden fade-in-up">
+                    <div class="absolute inset-0 pointer-events-none group-hover:opacity-100 opacity-0 transition-all duration-300" style="background: radial-gradient(circle at 60% 60%, #4446 0%, transparent 70%);"></div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="text-xs text-gray-400"><i class="fa-regular fa-calendar"></i> 2025-12-03 12:00 AM</span>
+                        <span class="px-2 py-0.5 rounded bg-gray-700/80 text-xs font-bold tracking-widest text-gray-100 ml-2">伊織暁斗</span>
+                    </div>
+                    <div class="text-2xl md:text-3xl font-bold tracking-wide text-white mb-1">Ambiance Etudes,Vol.1</div>
+                    <div class="text-base text-gray-300 font-semibold mb-1">リリース予定</div>
+                </div>
+                <div class="news-item bg-gradient-to-br from-neutral-900/90 to-neutral-800/60 rounded-2xl shadow-2xl p-8 border border-gray-700 hover:border-gray-500 hover:shadow-gray-700/40 transition-all duration-300 group relative overflow-hidden fade-in-up">
+                    <div class="absolute inset-0 pointer-events-none group-hover:opacity-100 opacity-0 transition-all duration-300" style="background: radial-gradient(circle at 40% 60%, #4446 0%, transparent 70%);"></div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="text-xs text-gray-400"><i class="fa-regular fa-calendar"></i> 2025-11-26 12:00 AM</span>
+                        <span class="px-2 py-0.5 rounded bg-gray-700/80 text-xs font-bold tracking-widest text-gray-100 ml-2">紫苑</span>
+                    </div>
+                    <div class="text-2xl md:text-3xl font-bold tracking-wide text-white mb-1 whitespace-nowrap">Need for validation Zombies and Hypocrites</div>
+                    <div class="text-base text-gray-300 font-semibold mb-1">リリース予定</div>
+                </div>
+                <div class="news-item bg-gradient-to-br from-neutral-900/90 to-neutral-800/60 rounded-2xl shadow-2xl p-8 border border-gray-700 hover:border-gray-500 hover:shadow-gray-700/40 transition-all duration-300 group relative overflow-hidden fade-in-up">
+                    <div class="absolute inset-0 pointer-events-none group-hover:opacity-100 opacity-0 transition-all duration-300" style="background: radial-gradient(circle at 40% 60%, #4446 0%, transparent 70%);"></div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="text-xs text-gray-400"><i class="fa-regular fa-calendar"></i> 2025-11-12 12:00 AM</span>
+                        <span class="px-2 py-0.5 rounded bg-gray-700/80 text-xs font-bold tracking-widest text-gray-100 ml-2">紫苑</span>
+                    </div>
+                    <div class="text-2xl md:text-3xl font-bold tracking-wide text-white mb-1">色褪せないフィルム</div>
+                    <div class="text-base text-gray-300 font-semibold mb-1">リリース予定</div>
+                </div>
+                <div class="news-item bg-gradient-to-br from-neutral-900/90 to-neutral-800/60 rounded-2xl shadow-2xl p-8 border border-gray-700 hover:border-gray-500 hover:shadow-gray-700/40 transition-all duration-300 group relative overflow-hidden fade-in-up">
+                    <div class="absolute inset-0 pointer-events-none group-hover:opacity-100 opacity-0 transition-all duration-300" style="background: radial-gradient(circle at 40% 60%, #4446 0%, transparent 70%);"></div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="text-xs text-gray-400"><i class="fa-regular fa-calendar"></i> 2025-11-05 12:00 AM</span>
+                        <span class="px-2 py-0.5 rounded bg-gray-700/80 text-xs font-bold tracking-widest text-gray-100 ml-2">紫苑</span>
+                    </div>
+                    <div class="text-2xl md:text-3xl font-bold tracking-wide text-white mb-1">夜明け前の独白</div>
+                    <div class="text-base text-gray-300 font-semibold mb-1">リリース予定</div>
+                </div>

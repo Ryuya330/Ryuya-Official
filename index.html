@@ -115,6 +115,7 @@
                 <a href="index.html" class="nav-link active text-lg" id="nav-home">HOME</a>
                 <a href="profile.html" class="nav-link text-lg" id="nav-profile">PROFILE</a>
                 <a href="songs.html" class="nav-link text-lg" id="nav-songs">SONGS</a>
+                <a href="news.html" class="nav-link text-lg" id="nav-news">NEWS</a>
 
             </nav>
             <button id="hamburger-btn" class="md:hidden z-50">
@@ -130,20 +131,32 @@
             <a href="index.html" class="mobile-nav-link text-xl">HOME</a>
             <a href="profile.html" class="mobile-nav-link text-xl">PROFILE</a>
             <a href="songs.html" class="mobile-nav-link text-xl">SONGS</a>
-
+            <a href="news.html" class="mobile-nav-link text-xl">NEWS</a>
         </div>
     </nav>
 
     <main id="main-content" class="main-content-visible">
         <!-- Home Section -->
         <section id="home"
-            class="min-h-screen flex flex-col items-center justify-center text-center relative px-4 sm:px-6 md:px-8 py-20 tech-grid particle-bg ai-circuit-bg aurora-overlay data-stream luxe-hero"
+            class="min-h-screen flex flex-col items-center justify-center text-center relative px-4 sm:px-6 md:px-8 py-20 tech-grid luxe-hero"
             style="position: relative; z-index: 1; overflow: hidden;">
+            <!-- パーティクルアニメーション（動画の背面） -->
+            <canvas id="ai-particles" class="pointer-events-none absolute inset-0 w-full h-full z-0"
+                style="mix-blend-mode: lighten;"></canvas>
             <!-- Background Video -->
-            <video id="bg-video" class="absolute inset-0 w-full h-full object-cover" style="z-index:0;" autoplay muted
+            <video id="bg-video" class="absolute inset-0 w-full h-full object-cover" style="z-index:1;" autoplay muted
                 loop playsinline>
                 <source src="assets/images/All images, reborn..MP4" type="video/mp4">
             </video>
+            <!-- 上下グラデーションで背景を強調 -->
+            <div class="pointer-events-none absolute inset-0 z-10">
+                <div
+                    style="position:absolute;top:0;left:0;width:100%;height:20vh;background:linear-gradient(to bottom,rgba(10,10,30,0.85) 80%,transparent 100%);">
+                </div>
+                <div
+                    style="position:absolute;bottom:0;left:0;width:100%;height:20vh;background:linear-gradient(to top,rgba(10,10,30,0.85) 80%,transparent 100%);">
+                </div>
+            </div>
             <!-- Dim overlay to keep text readable over video -->
             <div class="hero-overlay"></div>
             <!-- Sound Control Button -->
@@ -166,28 +179,29 @@
             </div>
 
             <div class="relative w-full max-w-4xl mx-auto text-center" style="z-index: 30;">
-                <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold section-title ryuya-animate mb-4 sm:mb-6 glitch-text holographic neon-text text-center gpu-accelerated gradient-text-artist text-shadow-artistic"
-                    data-text="Ryuya" data-parallax="15">
-                    <span class="glitch-base">Ryuya</span>
-                    <span class="glitch-layer">Ryuya</span>
-                    <span class="glitch-layer">Ryuya</span>
-                </h1>
+                <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold section-title ryuya-animate mb-4 sm:mb-6 text-center gradient-text-artist text-shadow-artistic"
+                    data-text="Ryuya" data-parallax="15">Ryuya</h1>
+                <!-- インパクトキャッチコピー -->
+                <div class="mb-6 sm:mb-8">
+                    <div
+                        class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white drop-shadow-lg tracking-wide animate-pulse mb-2">
+                        Shine as a Global Artist</div>
+                    <div class="text-base sm:text-lg md:text-xl text-gray-300 font-medium mb-2">Blending Japanese Soul &
+                        Cutting-edge Artistry for the World</div>
+                </div>
                 <div class="max-w-2xl mx-auto fade-in-up visible text-center animated-gradient-text text-reveal px-4"
                     style="transition-delay: 200ms;" data-parallax="8">
                     <p
-                        class="mt-2 text-sm sm:text-base md:text-lg text-gray-200 font-serif tracking-wide mb-4 sm:mb-6 text-center">
-                        <span class="gradient-text-tech text-shadow-tech">元AI Artist / AI Creator /
-                            Singer-Songwriter</span><br>
-                        <span class="gradient-text-artist text-shadow-artistic">Google AI Student Lead Ambassador /
-                            元Novelist</span>
+                        class="mt-2 text-base sm:text-lg md:text-xl text-gray-200 font-serif tracking-wide mb-4 sm:mb-6 text-center">
+                        <span class="gradient-text-tech text-shadow-tech">AI Creator / Singer-Songwriter</span><br>
+                        <span class="gradient-text-artist text-shadow-artistic">Google AI Student Lead Ambassador</span>
                     </p>
-                    <p class="text-sm sm:text-base md:text-lg text-gray-400 mb-6 sm:mb-8 pulse-text text-center"
+                    <p class="text-base sm:text-lg md:text-xl text-gray-400 mb-6 sm:mb-8 pulse-text text-center"
                         style="line-height:2;">
-                        <span class="text-primary font-bold gradient-text-animated holographic">アート ×
-                            音楽 × 物語 × テクノロジー</span>
+                        <span class="text-primary font-bold gradient-text-animated holographic">Art × Music × Story ×
+                            Technology</span>
                     </p>
                 </div>
-
                 <div class="mt-6 sm:mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 fade-in-up visible px-4"
                     style="transition-delay: 400ms;" data-parallax="5">
                     <a href="songs.html"
@@ -195,17 +209,16 @@
                         <span class="btn-text">楽曲一覧</span>
                         <span class="btn-shine"></span>
                     </a>
-                </div>
-
-                <!-- Audio wave visual -->
-                <div class="audio-wave-container mt-12 sm:mt-16">
-                    <div class="audio-bar"></div>
-                    <div class="audio-bar"></div>
-                    <div class="audio-bar"></div>
-                    <div class="audio-bar"></div>
-                    <div class="audio-bar"></div>
-                    <div class="audio-bar"></div>
-                    <div class="audio-bar"></div>
+                    <a href="profile.html"
+                        class="hero-cta premium-btn depth-shadow morphing-border magnetic-btn advanced-shine neon-border btn-futuristic w-full sm:w-auto bg-gradient-to-r from-pink-500 to-purple-600">
+                        <span class="btn-text">プロフィール</span>
+                        <span class="btn-shine"></span>
+                    </a>
+                    <a href="news.html"
+                        class="hero-cta premium-btn depth-shadow morphing-border magnetic-btn advanced-shine neon-border btn-futuristic w-full sm:w-auto bg-gradient-to-r from-purple-500 to-blue-500">
+                        <span class="btn-text">NEWS</span>
+                        <span class="btn-shine"></span>
+                    </a>
                 </div>
             </div>
         </section>
@@ -247,11 +260,67 @@
 
     <!-- Enhanced Performance Scripts -->
     <script src="js/enhanced-background.js"></script>
-    <script src="js/cursor-effects.js"></script>
     -->
 
     <!-- Custom JS -->
     <script src="js/app.js"></script>
+    <script>
+        // AI/アーティスト感パーティクルアニメーション
+        const canvas = document.getElementById('ai-particles');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            let w = canvas.width = window.innerWidth;
+            let h = canvas.height = window.innerHeight;
+            window.addEventListener('resize', () => {
+                w = canvas.width = window.innerWidth;
+                h = canvas.height = window.innerHeight;
+            });
+            const particles = Array.from({ length: 28 }, () => ({
+                x: Math.random() * w,
+                y: Math.random() * h,
+                r: Math.random() * 2.5 + 1.5,
+                dx: (Math.random() - 0.5) * 0.7,
+                dy: (Math.random() - 0.5) * 0.7,
+                c: `hsla(${Math.random() * 360},80%,70%,0.7)`
+            }));
+            function draw() {
+                ctx.clearRect(0, 0, w, h);
+                for (const p of particles) {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, 2 * Math.PI);
+                    ctx.fillStyle = p.c;
+                    ctx.shadowColor = p.c;
+                    ctx.shadowBlur = 12;
+                    ctx.fill();
+                }
+                // 線でつなぐ
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const a = particles[i], b = particles[j];
+                        const dist = Math.hypot(a.x - b.x, a.y - b.y);
+                        if (dist < 120) {
+                            ctx.beginPath();
+                            ctx.moveTo(a.x, a.y);
+                            ctx.lineTo(b.x, b.y);
+                            ctx.strokeStyle = `rgba(180,180,255,${1 - dist / 120})`;
+                            ctx.lineWidth = 1.1;
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }
+            function animate() {
+                for (const p of particles) {
+                    p.x += p.dx; p.y += p.dy;
+                    if (p.x < 0 || p.x > w) p.dx *= -1;
+                    if (p.y < 0 || p.y > h) p.dy *= -1;
+                }
+                draw();
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
+    </script>
     <script>
         // Loading Screen
         window.addEventListener('load', () => {
@@ -288,38 +357,7 @@
         });
 
         document.addEventListener('DOMContentLoaded', () => {
-            // ハンバーガーメニュー動作（全ページ共通JSが効かない場合の保険）
-            const hamburgerBtn = document.getElementById('hamburger-btn');
-            const mobileNav = document.getElementById('mobile-nav');
-            const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
-            if (mobileNav) {
-                mobileNav.classList.add('translate-x-full');
-            }
-            if (hamburgerBtn && mobileNav) {
-                hamburgerBtn.addEventListener('click', () => {
-                    if (mobileNav.classList.contains('translate-x-full')) {
-                        mobileNav.classList.remove('translate-x-full');
-                    } else {
-                        mobileNav.classList.add('translate-x-full');
-                    }
-                });
-                mobileNavLinks.forEach(link => {
-                    link.addEventListener('click', () => {
-                        mobileNav.classList.add('translate-x-full');
-                    });
-                });
-                document.addEventListener('click', (e) => {
-                    if (
-                        mobileNav &&
-                        !mobileNav.classList.contains('translate-x-full') &&
-                        !mobileNav.contains(e.target) &&
-                        e.target !== hamburgerBtn &&
-                        !hamburgerBtn.contains(e.target)
-                    ) {
-                        mobileNav.classList.add('translate-x-full');
-                    }
-                });
-            }
+            // サイト共通機能初期化はjs/app.jsのDOMContentLoadedで自動実行されるため、ここでは呼び出さない
             // Force video autoplay for all devices
             const bgVideo = document.getElementById('bg-video');
             if (bgVideo) {

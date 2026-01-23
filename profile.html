@@ -91,177 +91,190 @@
 
 
     <!-- Header -->
-    <header id="header" class="fixed top-0 left-0 w-full z-50 py-4 px-6 md:px-12">
+    <header id="header"
+        class="fixed top-0 left-0 w-full z-50 py-4 px-6 md:px-12 bg-black/60 backdrop-blur-md shadow-lg border-b border-gray-800">
         <div class="container mx-auto flex justify-between items-center">
-            <a href="index.html" class="site-logo text-2xl">Ryuya</a>
-            <nav class="hidden md:flex space-x-8">
-                <a href="index.html" class="nav-link text-lg" id="nav-home">HOME</a>
-                <a href="profile.html" class="nav-link active text-lg" id="nav-profile">PROFILE</a>
-                <a href="songs.html" class="nav-link text-lg" id="nav-songs">SONGS</a>
-
+            <a href="index.html"
+                class="site-logo text-3xl font-extrabold tracking-widest text-white drop-shadow-lg hover:text-purple-400 transition-colors duration-200">Ryuya</a>
+            <nav class="hidden md:flex space-x-8 items-center">
+                <a href="index.html"
+                    class="nav-link flex items-center gap-2 text-lg font-medium text-gray-200 hover:text-purple-400 transition-colors duration-200"
+                    id="nav-home"><i class="fas fa-house"></i><span>HOME</span></a>
+                <a href="profile.html" class="nav-link active flex items-center gap-2 text-lg font-bold text-purple-400"
+                    id="nav-profile"><i class="fas fa-user"></i><span>PROFILE</span></a>
+                <a href="songs.html"
+                    class="nav-link flex items-center gap-2 text-lg font-medium text-gray-200 hover:text-purple-400 transition-colors duration-200"
+                    id="nav-songs"><i class="fas fa-music"></i><span>SONGS</span></a>
+                <a href="news.html"
+                    class="nav-link flex items-center gap-2 text-lg font-medium text-gray-200 hover:text-purple-400 transition-colors duration-200"
+                    id="nav-news"><i class="fas fa-newspaper"></i><span>NEWS</span></a>
             </nav>
-            <button id="hamburger-btn" class="md:hidden z-50">
-                <i class="fas fa-bars text-2xl"></i>
+            <button id="hamburger-btn"
+                class="md:hidden z-50 p-2 rounded-full bg-black/40 hover:bg-purple-500/60 transition-colors duration-200 shadow-lg">
+                <i class="fas fa-bars text-2xl text-white"></i>
             </button>
         </div>
     </header>
 
     <!-- Mobile Navigation -->
     <nav id="mobile-nav"
-        class="fixed top-0 right-0 h-full w-2/3 bg-gray-900/90 backdrop-blur-lg z-40 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden">
-        <div class="flex flex-col items-center justify-center h-full space-y-8">
-            <a href="index.html" class="mobile-nav-link text-xl">HOME</a>
-            <a href="profile.html" class="mobile-nav-link text-xl">PROFILE</a>
-            <a href="songs.html" class="mobile-nav-link text-xl">SONGS</a>
-
+        class="fixed top-0 right-0 h-full w-3/4 max-w-xs bg-black/90 backdrop-blur-lg z-40 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden shadow-2xl border-l border-purple-900">
+        <div class="flex flex-col items-center justify-center h-full space-y-10">
+            <a href="index.html"
+                class="mobile-nav-link flex items-center gap-3 text-2xl text-gray-100 hover:text-purple-400 transition-colors duration-200"><i
+                    class="fas fa-house"></i><span>HOME</span></a>
+            <a href="profile.html" class="mobile-nav-link flex items-center gap-3 text-2xl text-purple-400 font-bold"><i
+                    class="fas fa-user"></i><span>PROFILE</span></a>
+            <a href="songs.html"
+                class="mobile-nav-link flex items-center gap-3 text-2xl text-gray-100 hover:text-purple-400 transition-colors duration-200"><i
+                    class="fas fa-music"></i><span>SONGS</span></a>
+            <a href="news.html"
+                class="mobile-nav-link flex items-center gap-3 text-2xl text-gray-100 hover:text-purple-400 transition-colors duration-200"><i
+                    class="fas fa-newspaper"></i><span>NEWS</span></a>
         </div>
     </nav>
 
     <main id="main-content" class="main-content-visible">
         <!-- Profile Section -->
-        <section id="profile"
-            class="py-24 px-6 relative tech-grid particle-bg hex-pattern ai-circuit-bg aurora-overlay data-stream engineer-grid">
-            <!-- Floating Particles Background -->
-            <div class="floating-particles">
-                <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
-                <div class="particle" style="left: 30%; animation-delay: 2s;"></div>
-                <div class="particle" style="left: 50%; animation-delay: 4s;"></div>
-                <div class="particle" style="left: 70%; animation-delay: 1s;"></div>
-                <div class="particle" style="left: 90%; animation-delay: 3s;"></div>
+        <section id="profile" class="py-28 px-4 sm:px-6 relative bg-black border-b border-gray-800 overflow-hidden">
+            <!-- グローバルな輝きと未来感を表現する大胆な光のグラデーション＋動きのあるオーラ -->
+            <div class="absolute inset-0 z-0 pointer-events-none">
+                <div class="animate-spin-slow"
+                    style="background: conic-gradient(from 90deg at 60% 40%, #7c4dff33 0deg, #00e0ff22 120deg, #fff0 360deg); width:120vw; height:120vw; left:-10vw; top:-30vw; position:absolute; filter: blur(60px) brightness(1.2);">
+                </div>
+                <div class="animate-pulse-slow"
+                    style="background: radial-gradient(circle at 50% 60%, #00e0ff22 0%, transparent 70%); width:100%; height:100%; position:absolute;">
+                </div>
+                <div
+                    style="background: url('https://www.transparenttextures.com/patterns/diamond-upholstery.png'); opacity:0.06; width:100%; height:100%; position:absolute;">
+                </div>
             </div>
-            <div class="container mx-auto">
-                <h2 class="section-title text-5xl font-bold text-center mb-16 fade-in-up gradient-text-artist text-shadow-artistic"
-                    data-parallax="10">
-                    <span class="glitch-text gradient-text-tech" data-text="PROFILE">PROFILE</span>
-                </h2>
-                <div class="section-divider"></div>
-                <div class="max-w-6xl mx-auto">
-                    <!-- 4人のカード -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 md:gap-8 justify-items-center">
-                        <!-- Ryuya Card -->
-                        <div class="profile-card rounded-xl p-6 md:p-8 text-center fade-in-up premium-card profile-card-enhanced perspective-card artistic-hover w-full engineer-card ai-panel"
-                            style="transition-delay: 0ms;" data-parallax="5">
-                            <div class="glow"></div>
-                            <div class="card-shine"></div>
-                            <div class="holo-border inline-block mb-4 md:mb-6">
-                                <img src="assets/images/Ryuya.png" alt="Ryuya アイコン"
-                                    class="profile-photo w-28 h-28 md:w-36 md:h-36 rounded-full">
+            <div class="container mx-auto relative z-10">
+                <h2 class="text-5xl md:text-6xl font-extrabold text-center mb-4 tracking-tight text-white drop-shadow-lg"
+                    style="letter-spacing:0.04em;">PROFILE</h2>
+                <div
+                    class="mx-auto mb-8 w-32 h-1 bg-gradient-to-r from-purple-400 via-cyan-400 to-transparent rounded-full opacity-80">
+                </div>
+                <p class="text-center text-lg md:text-2xl font-medium text-white/80 mb-16 tracking-wide"
+                    style="letter-spacing:0.06em;">Shine Uniquely. Stay Global.<br class='hidden md:block'>— The World
+                    is Your Stage —</p>
+                <div class="max-w-5xl mx-auto">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14">
+                        <!-- Ryuya Card（1回だけ表示） -->
+                        <div
+                            class="bg-neutral-900 rounded-2xl shadow-2xl p-7 flex flex-col items-center border border-gray-800 hover:border-[#8B1C1C] hover:shadow-[#8B1C1C]/40 transition-all duration-300 group relative overflow-hidden">
+                            <div class="absolute inset-0 pointer-events-none group-hover:opacity-100 opacity-0 transition-all duration-300"
+                                style="background: radial-gradient(circle at 60% 40%, #7c4dff22 0%, transparent 70%);">
                             </div>
-                            <h3
-                                class="text-2xl md:text-3xl font-bold mb-2 pulse-text gradient-text-artist text-shadow-artistic">
-                                Ryuya</h3>
-                            <p class="text-purple-300 mb-3 md:mb-4 text-xs sm:text-sm leading-relaxed">元AI Artist / AI
-                                Creator<br>Google AI Student Lead Ambassador<br>元Novelist / Singer-Songwriter</p>
-                            <p class="text-gray-400 text-xs md:text-sm">2023/10/15 START</p>
+                            <img src="assets/images/Ryuya.png" alt="Ryuya アイコン"
+                                class="w-32 h-32 md:w-40 md:h-40 rounded-full mb-6 object-cover border-2 border-gray-600 group-hover:border-[#8B1C1C] shadow-xl transition-all duration-300">
+                            <h3 class="text-3xl md:text-4xl font-bold text-white mb-2 tracking-wide"><span
+                                    style="all:unset;filter:none;text-shadow:none;">Ryuya</span></h3>
+                            <p class="text-purple-200 mb-1 text-base text-center font-medium">AI Creator /
+                                Singer-Songwriter<br>Google AI Student Lead Ambassador</p>
+                            <p class="text-neutral-400 text-xs">2023/10/15 START</p>
                         </div>
                         <!-- 紫苑 Card -->
-                        <div class="profile-card rounded-xl p-6 md:p-8 text-center fade-in-up premium-card profile-card-enhanced perspective-card artistic-hover w-full engineer-card ai-panel"
-                            style="transition-delay: 100ms;" data-parallax="5">
-                            <div class="glow"></div>
-                            <div class="card-shine"></div>
-                            <div class="holo-border inline-block mb-4 md:mb-6">
-                                <img src="assets/images/Shion.PNG" alt="紫苑 アーティスト写真"
-                                    class="profile-photo w-28 h-28 md:w-36 md:h-36 rounded-full"
-                                    style="border-color: steelblue;">
+                        <div
+                            class="bg-neutral-900 rounded-2xl shadow-2xl p-10 flex flex-col items-center border border-gray-800 hover:border-blue-300 hover:shadow-blue-700/40 transition-all duration-300 group relative overflow-hidden">
+                            <div class="absolute inset-0 pointer-events-none group-hover:opacity-100 opacity-0 transition-all duration-300"
+                                style="background: radial-gradient(circle at 40% 60%, #3b82f622 0%, transparent 70%);">
                             </div>
-                            <h3
-                                class="text-2xl md:text-3xl font-bold mb-2 pulse-text gradient-text-artist text-shadow-artistic">
-                                紫苑</h3>
-                            <p class="text-blue-300 mb-3 md:mb-4 text-sm md:text-base">Singer-Songwriter</p>
-                            <p class="text-gray-400 text-xs md:text-sm">2025/05/21 START</p>
+                            <img src="assets/images/Shion.PNG" alt="紫苑 アーティスト写真"
+                                class="w-32 h-32 md:w-40 md:h-40 rounded-full mb-6 object-cover border-2 border-gray-600 group-hover:border-blue-400 shadow-xl transition-all duration-300">
+                            <h3 class="text-3xl md:text-4xl font-bold text-blue-200 mb-2 tracking-wide">紫苑</h3>
+                            <p class="text-blue-300 mb-3 text-base text-center font-medium">Singer-Songwriter</p>
+                            <p class="text-blue-400 text-xs">2025/05/21 START</p>
+                            <div class="text-sm text-blue-400 mt-2">a.k.a. Ryuya</div>
                         </div>
                         <!-- 伊織 暁斗 Card -->
-                        <div class="profile-card rounded-xl p-6 md:p-8 text-center fade-in-up premium-card profile-card-enhanced perspective-card artistic-hover w-full engineer-card ai-panel"
-                            style="transition-delay: 200ms;" data-parallax="5">
-                            <div class="glow"></div>
-                            <div class="card-shine"></div>
-                            <div class="holo-border inline-block mb-4 md:mb-6">
-                                <img src="assets/images/Akito.PNG" alt="伊織 暁斗 アイコン"
-                                    class="profile-photo w-28 h-28 md:w-36 md:h-36 rounded-full"
-                                    style="border-color: orangered;">
+                        <div
+                            class="bg-neutral-900 rounded-2xl shadow-2xl p-10 flex flex-col items-center border border-gray-800 hover:border-orange-300 hover:shadow-orange-700/40 transition-all duration-300 group relative overflow-hidden">
+                            <div class="absolute inset-0 pointer-events-none group-hover:opacity-100 opacity-0 transition-all duration-300"
+                                style="background: radial-gradient(circle at 60% 60%, #ffb45022 0%, transparent 70%);">
                             </div>
-                            <h3
-                                class="text-2xl md:text-3xl font-bold mb-2 pulse-text gradient-text-tech text-shadow-tech">
-                                伊織 暁斗</h3>
-                            <p class="text-orange-300 mb-3 md:mb-4 text-sm md:text-base">Singer-Songwriter</p>
-                            <p class="text-gray-400 text-xs md:text-sm">2025/09/24 START</p>
+                            <img src="assets/images/Akito.PNG" alt="伊織 暁斗 アイコン"
+                                class="w-32 h-32 md:w-40 md:h-40 rounded-full mb-6 object-cover border-2 border-gray-600 group-hover:border-orange-300 shadow-xl transition-all duration-300">
+                            <h3 class="text-3xl md:text-4xl font-bold text-white mb-2 tracking-wide">伊織 暁斗</h3>
+                            <p class="text-orange-200 mb-3 text-base text-center font-medium">Singer-Songwriter</p>
+                            <p class="text-neutral-400 text-xs">2025/09/24 START</p>
+                            <div class="text-sm text-orange-300 mt-2">a.k.a. Ryuya</div>
                         </div>
                         <!-- Fake ID RSA Card -->
-                        <div class="profile-card rounded-xl p-6 md:p-8 text-center fade-in-up premium-card profile-card-enhanced perspective-card artistic-hover w-full engineer-card ai-panel"
-                            style="transition-delay: 300ms;" data-parallax="5">
-                            <div class="glow"></div>
-                            <div class="card-shine"></div>
-                            <div class="holo-border inline-block mb-4 md:mb-6">
-                                <img src="assets/images/Fake ID.PNG" alt="Fake ID アイコン"
-                                    class="profile-photo w-28 h-28 md:w-36 md:h-36 rounded-full">
-                            </div>
-                            <h3
-                                class="text-2xl md:text-3xl font-bold mb-2 pulse-text gradient-text-artist text-shadow-artistic">
-                                Fake ID</h3>
-                            <p class="text-cyan-300 mb-3 md:mb-4 text-sm md:text-base">Singer-Songwriter</p>
-                            <p class="text-gray-400 text-xs md:text-sm">2025/12/24 START</p>
+                        <div
+                            class="bg-neutral-900 rounded-2xl shadow-2xl p-10 flex flex-col items-center border border-gray-800 hover:border-purple-400 hover:shadow-purple-700/40 transition-all duration-300 group relative overflow-hidden">
+                            <div class="absolute inset-0 pointer-events-none group-hover:opacity-100 opacity-0 transition-all duration-300"
+                                style="background: radial-gradient(circle at 60% 40%, #222 0%, transparent 70%);"></div>
+                            <img src="assets/images/Fake ID.PNG" alt="Fake ID アイコン"
+                                class="w-32 h-32 md:w-40 md:h-40 rounded-full mb-6 object-cover border-2 border-gray-600 group-hover:border-purple-400 shadow-xl transition-all duration-300">
+                            <h3 class="text-3xl md:text-4xl font-bold text-gray-200 mb-2 tracking-wide">Fake ID</h3>
+                            <p class="text-gray-300 mb-3 text-base text-center font-medium">Singer-Songwriter</p>
+                            <p class="text-gray-500 text-xs">2025/12/24 START</p>
+                            <div class="text-sm text-purple-300 mt-2">a.k.a. Ryuya</div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-    </main>
 
-    <!-- Footer -->
-    <footer class="py-8 px-6 border-t border-gray-800">
-        <div class="container mx-auto text-center text-gray-400">
-            <p>&copy; 2025 Ryuya Official</p>
-        </div>
-    </footer>
+        <!-- Three.js -->
 
-    <!-- Three.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+        <!-- フッター -->
+        <footer class="py-8 px-6 border-t border-gray-800">
+            <div class="container mx-auto text-center text-gray-400">
+                <p>© 2025 Ryuya Official</p>
+            </div>
+        </footer>
 
-    <!-- Enhanced Performance Scripts -->
-    <!-- Temporarily disabled for debugging
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+        <!-- Enhanced Performance Scripts -->
+        <!-- Temporarily disabled for debugging
     <script src="js/performance-optimizer.js"></script>
     <script src="js/enhanced-background.js"></script>
     <script src="js/cursor-effects.js"></script>
     -->
 
-    <!-- Custom JS -->
-    <script src="js/app.js"></script>
-    <script>
-        // Scroll Progress Bar
-        window.addEventListener('scroll', () => {
-            const winScroll = document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (winScroll / height) * 100;
-            document.getElementById('scroll-progress').style.width = scrolled + '%';
-        });
+        <!-- Custom JS -->
+        <script src="js/app.js"></script>
+        <script>
+            // Scroll Progress Bar
+            window.addEventListener('scroll', () => {
+                const winScroll = document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById('scroll-progress').style.width = scrolled + '%';
+            });
 
-        // Back to Top Button
-        const backToTopBtn = document.getElementById('back-to-top');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                backToTopBtn.style.opacity = '1';
-                backToTopBtn.style.pointerEvents = 'auto';
-            } else {
-                backToTopBtn.style.opacity = '0';
-                backToTopBtn.style.pointerEvents = 'none';
-            }
-        });
-        backToTopBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('main-content').classList.add('main-content-visible');
-            const currentPath = window.location.pathname.split('/').pop();
-            const navLinks = document.querySelectorAll('.nav-link');
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === currentPath) {
-                    link.classList.add('active');
+            // Back to Top Button
+            const backToTopBtn = document.getElementById('back-to-top');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    backToTopBtn.style.opacity = '1';
+                    backToTopBtn.style.pointerEvents = 'auto';
+                } else {
+                    backToTopBtn.style.opacity = '0';
+                    backToTopBtn.style.pointerEvents = 'none';
                 }
             });
-        });
-    </script>
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            document.addEventListener('DOMContentLoaded', () => {
+                document.getElementById('main-content').classList.add('main-content-visible');
+                const currentPath = window.location.pathname.split('/').pop();
+                const navLinks = document.querySelectorAll('.nav-link');
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === currentPath) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        </script>
+    </main>
+
 </body>
 
 </html>
