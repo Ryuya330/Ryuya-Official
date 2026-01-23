@@ -115,7 +115,6 @@
                 <a href="index.html" class="nav-link active text-lg" id="nav-home">HOME</a>
                 <a href="profile.html" class="nav-link text-lg" id="nav-profile">PROFILE</a>
                 <a href="songs.html" class="nav-link text-lg" id="nav-songs">SONGS</a>
-                <a href="art.html" class="nav-link text-lg" id="nav-art">ART</a>
 
             </nav>
             <button id="hamburger-btn" class="md:hidden z-50">
@@ -131,7 +130,6 @@
             <a href="index.html" class="mobile-nav-link text-xl">HOME</a>
             <a href="profile.html" class="mobile-nav-link text-xl">PROFILE</a>
             <a href="songs.html" class="mobile-nav-link text-xl">SONGS</a>
-            <a href="art.html" class="mobile-nav-link text-xl">ART</a>
 
         </div>
     </nav>
@@ -290,38 +288,38 @@
         });
 
         document.addEventListener('DOMContentLoaded', () => {
-                        // ハンバーガーメニュー動作（全ページ共通JSが効かない場合の保険）
-                        const hamburgerBtn = document.getElementById('hamburger-btn');
-                        const mobileNav = document.getElementById('mobile-nav');
-                        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
-                        if (mobileNav) {
-                            mobileNav.classList.add('translate-x-full');
-                        }
-                        if (hamburgerBtn && mobileNav) {
-                            hamburgerBtn.addEventListener('click', () => {
-                                if (mobileNav.classList.contains('translate-x-full')) {
-                                    mobileNav.classList.remove('translate-x-full');
-                                } else {
-                                    mobileNav.classList.add('translate-x-full');
-                                }
-                            });
-                            mobileNavLinks.forEach(link => {
-                                link.addEventListener('click', () => {
-                                    mobileNav.classList.add('translate-x-full');
-                                });
-                            });
-                            document.addEventListener('click', (e) => {
-                                if (
-                                    mobileNav &&
-                                    !mobileNav.classList.contains('translate-x-full') &&
-                                    !mobileNav.contains(e.target) &&
-                                    e.target !== hamburgerBtn &&
-                                    !hamburgerBtn.contains(e.target)
-                                ) {
-                                    mobileNav.classList.add('translate-x-full');
-                                }
-                            });
-                        }
+            // ハンバーガーメニュー動作（全ページ共通JSが効かない場合の保険）
+            const hamburgerBtn = document.getElementById('hamburger-btn');
+            const mobileNav = document.getElementById('mobile-nav');
+            const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+            if (mobileNav) {
+                mobileNav.classList.add('translate-x-full');
+            }
+            if (hamburgerBtn && mobileNav) {
+                hamburgerBtn.addEventListener('click', () => {
+                    if (mobileNav.classList.contains('translate-x-full')) {
+                        mobileNav.classList.remove('translate-x-full');
+                    } else {
+                        mobileNav.classList.add('translate-x-full');
+                    }
+                });
+                mobileNavLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileNav.classList.add('translate-x-full');
+                    });
+                });
+                document.addEventListener('click', (e) => {
+                    if (
+                        mobileNav &&
+                        !mobileNav.classList.contains('translate-x-full') &&
+                        !mobileNav.contains(e.target) &&
+                        e.target !== hamburgerBtn &&
+                        !hamburgerBtn.contains(e.target)
+                    ) {
+                        mobileNav.classList.add('translate-x-full');
+                    }
+                });
+            }
             // Force video autoplay for all devices
             const bgVideo = document.getElementById('bg-video');
             if (bgVideo) {
