@@ -1,14 +1,28 @@
+.songs-profile-card.songs-ryuya-card {
+    min-height: 340px;
+    max-width: 400px;
+    padding: 1.2rem 0.7rem;
+}
+@media (max-width: 600px) {
+    .songs-profile-card.songs-ryuya-card {
+        min-height: 200px;
+        max-width: 98vw;
+        padding: 0.5rem 0.1rem;
+    }
+}
 /* --- SONGS カード専用調整 --- */
 .songs-card-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 2rem;
 }
+
 @media (min-width: 768px) {
     .songs-card-grid {
         grid-template-columns: 1fr 1fr;
     }
 }
+
 .songs-profile-card {
     min-height: 480px;
     max-width: 520px;
@@ -17,26 +31,31 @@
     padding: 2rem 1.2rem;
     box-sizing: border-box;
 }
+
 .songs-profile-card .spotify-embed-album {
     margin-bottom: 1.2rem;
 }
+
 .songs-profile-card iframe[data-testid="embed-iframe"] {
     width: 100% !important;
     min-height: 120px;
     max-height: 352px;
     border-radius: 12px;
-    box-shadow: 0 4px 24px rgba(124,77,255,0.10);
+    box-shadow: 0 4px 24px rgba(124, 77, 255, 0.10);
 }
+
 @media (max-width: 600px) {
     .songs-profile-card {
         min-height: 320px;
         padding: 1.2rem 0.3rem;
     }
+
     .songs-profile-card iframe[data-testid="embed-iframe"] {
         min-height: 100px;
         max-height: 220px;
     }
 }
+
 :root {
     --bg-color: #05050a;
     --primary-color: #7c4dff;
