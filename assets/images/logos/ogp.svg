@@ -27,14 +27,14 @@
   <text x="50%" y="56%" text-anchor="middle" fill="#b8b8d1" font-size="22" font-family="Inter,Arial,sans-serif" dy=".3em">Google AI Student Lead Ambassador</text>
   <!-- サブキャッチ -->
   <text x="50%" y="66%" text-anchor="middle" fill="#f7cad0" font-size="28" font-family="Inter,Arial,sans-serif" font-weight="bold" dy=".3em" style="text-shadow:0 1px 8px #0004;">Art × Music × Story × Technology</text>
-  <!-- ボタン風リンク -->
-  <g class="btn-bg">
-    <rect x="370" y="440" rx="16" ry="16" width="130" height="44" fill="#7c4dff" style="filter:drop-shadow(0 4px 16px #7c4dff55);"/>
-    <rect x="535" y="440" rx="16" ry="16" width="130" height="44" fill="#ff7eb3" style="filter:drop-shadow(0 4px 16px #ff7eb355);"/>
-    <rect x="700" y="440" rx="16" ry="16" width="130" height="44" fill="#5ad1e6" style="filter:drop-shadow(0 4px 16px #5ad1e655);"/>
-    <text x="435" y="470" text-anchor="middle" class="btn">楽曲一覧</text>
-    <text x="600" y="470" text-anchor="middle" class="btn">プロフィール</text>
-    <text x="765" y="470" text-anchor="middle" class="btn">NEWS</text>
+  <!-- ボタン削除・全体中央寄せ配置 -->
+  <g>
+    <text x="50%" y="38%" text-anchor="middle" fill="url(#text)" font-size="110" font-family="Inter,Arial,sans-serif" font-weight="bold" letter-spacing="2" dy=".3em" style="text-shadow:0 6px 32px #000a;">Ryuya</text>
+    <text x="50%" y="50%" text-anchor="middle" fill="#fff" font-size="40" font-family="Noto Serif JP,serif" font-weight="700" letter-spacing="1" dy=".3em" style="text-shadow:0 2px 12px #0008;">Shine as a Global Artist</text>
+    <text x="50%" y="58%" text-anchor="middle" fill="#e0d7f7" font-size="26" font-family="Inter,Arial,sans-serif" dy=".3em" style="text-shadow:0 1px 8px #0006;">Blending Japanese Soul &amp; Cutting-edge Artistry for the World</text>
+    <text x="50%" y="65%" text-anchor="middle" fill="#cbb4d4" font-size="22" font-family="Inter,Arial,sans-serif" dy=".3em">AI Creator / Singer-Songwriter</text>
+    <text x="50%" y="70%" text-anchor="middle" fill="#b8b8d1" font-size="20" font-family="Inter,Arial,sans-serif" dy=".3em">Google AI Student Lead Ambassador</text>
+    <text x="50%" y="78%" text-anchor="middle" fill="#f7cad0" font-size="24" font-family="Inter,Arial,sans-serif" font-weight="bold" dy=".3em" style="text-shadow:0 1px 8px #0004;">Art × Music × Story × Technology</text>
   </g>
   <!-- サイトURL -->
   <text x="50%" y="97%" text-anchor="middle" fill="#b8b8d1" font-size="18" font-family="Inter,Arial,sans-serif" dy=".3em">ryuya-official.com</text>
