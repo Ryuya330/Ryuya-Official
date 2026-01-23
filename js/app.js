@@ -31,23 +31,42 @@ function initializeSiteFeatures() {
     const mobileNav = document.getElementById('mobile-nav');
     const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
 
-    console.log('Hamburger button:', hamburgerBtn);
-    console.log('Mobile nav:', mobileNav);
-    console.log('Mobile nav links:', mobileNavLinks.length);
+    // メニューの初期状態を必ず閉じる
+    if (mobileNav) {
+        mobileNav.classList.add('translate-x-full');
+    }
 
     if (hamburgerBtn && mobileNav) {
         hamburgerBtn.addEventListener('click', () => {
-            console.log('Hamburger clicked!');
-            mobileNav.classList.toggle('translate-x-full');
+            // メニューの開閉
+            if (mobileNav.classList.contains('translate-x-full')) {
+                mobileNav.classList.remove('translate-x-full');
+            } else {
+                mobileNav.classList.add('translate-x-full');
+            }
         });
 
+        // モバイルナビのリンクをクリックしたら必ず閉じる
         mobileNavLinks.forEach(link => {
             link.addEventListener('click', () => {
                 mobileNav.classList.add('translate-x-full');
             });
         });
+
+        // 画面外クリックで閉じる（オーバーレイでない場合はbodyクリックで）
+        document.addEventListener('click', (e) => {
+            if (
+                mobileNav &&
+                !mobileNav.classList.contains('translate-x-full') &&
+                !mobileNav.contains(e.target) &&
+                e.target !== hamburgerBtn &&
+                !hamburgerBtn.contains(e.target)
+            ) {
+                mobileNav.classList.add('translate-x-full');
+            }
+        });
     } else {
-        console.error('Hamburger menu elements not found');
+        // 要素がなければ何もしない
     }
 
     // --- Navigation Active State ---
