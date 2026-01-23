@@ -19,7 +19,7 @@
   <rect width="1200" height="630" fill="url(#bg)"/>
   <!-- ボタン削除・全体中央寄せ配置 -->
   <g>
-    <text x="50%" y="36%" text-anchor="middle" fill="url(#text)" font-size="110" font-family="Inter,Arial,sans-serif" font-weight="bold" letter-spacing="2" dy=".3em" style="text-shadow:0 6px 32px #000a;">Ryuya</text>
+    <text x="50%" y="30%" text-anchor="middle" fill="url(#text)" font-size="110" font-family="Inter,Arial,sans-serif" font-weight="bold" letter-spacing="2" dy=".3em" style="text-shadow:0 6px 32px #000a;">Ryuya</text>
     <text x="50%" y="48%" text-anchor="middle" fill="#fff" font-size="40" font-family="Noto Serif JP,serif" font-weight="700" letter-spacing="1" dy=".3em" style="text-shadow:0 2px 12px #0008;">Shine as a Global Artist</text>
     <text x="50%" y="57%" text-anchor="middle" fill="#e0d7f7" font-size="26" font-family="Inter,Arial,sans-serif" dy=".3em" style="text-shadow:0 1px 8px #0006;">Blending Japanese Soul &amp; Cutting-edge Artistry for the World</text>
     <text x="50%" y="65%" text-anchor="middle" fill="#cbb4d4" font-size="22" font-family="Inter,Arial,sans-serif" dy=".3em">AI Creator / Singer-Songwriter</text>
