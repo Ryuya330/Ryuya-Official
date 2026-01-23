@@ -36,6 +36,5 @@
     <text x="50%" y="70%" text-anchor="middle" fill="#b8b8d1" font-size="20" font-family="Inter,Arial,sans-serif" dy=".3em">Google AI Student Lead Ambassador</text>
     <text x="50%" y="78%" text-anchor="middle" fill="#f7cad0" font-size="24" font-family="Inter,Arial,sans-serif" font-weight="bold" dy=".3em" style="text-shadow:0 1px 8px #0004;">Art × Music × Story × Technology</text>
   </g>
-  <!-- サイトURL -->
-  <text x="50%" y="97%" text-anchor="middle" fill="#b8b8d1" font-size="18" font-family="Inter,Arial,sans-serif" dy=".3em">ryuya-official.com</text>
+  <!-- サイトURL削除 -->
 </svg>
